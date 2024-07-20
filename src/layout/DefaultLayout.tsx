@@ -10,7 +10,7 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark">
       <div className="flex h-screen overflow-hidden">
-        {!(pathname === '/auth/signin' || pathname === '/auth/signup' || pathname === '/auth/confirm') && (
+        {!(pathname === '/auth/signin' || pathname === '/auth/signup' || pathname === '/auth/confirm' || pathname.startsWith('/client')) && (
           <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         )}
 
