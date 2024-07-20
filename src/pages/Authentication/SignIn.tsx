@@ -158,6 +158,7 @@ const SignIn = () => {
                   </label>
                   <div className="relative">
                     <input
+                      required
                       type="email"
                       placeholder="Enter your email"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -190,6 +191,7 @@ const SignIn = () => {
                   </label>
                   <div className="relative">
                     <input
+                      required
                       type="password"
                       placeholder="Enter Password"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
