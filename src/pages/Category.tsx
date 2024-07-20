@@ -4,7 +4,7 @@ import { MdDelete, MdEdit, MdOutlineAddCircle } from 'react-icons/md';
 import AddButtons from '../components/buttons/buttons.tsx';
 import GlobalModal from '../components/modal/modal.tsx';
 import { useEffect, useState } from 'react';
-import { addCategory, getAdminCategory } from '../common/logic-functions/category.tsx';
+import { addCategory, deleteCategory, getAdminCategory } from '../common/logic-functions/category.tsx';
 import categoryStore from '../common/state-management/categoryStore.tsx';
 import globalStore from '../common/state-management/globalStore.tsx';
 
@@ -23,7 +23,8 @@ const Category = () => {
   const { categoryData, setCategoryData, setAddValue, addValue } = categoryStore();
   const { isLoading, setIsLoading, resData, setResData } = globalStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editStatus, setEditStatus] = useState<string>('');
+  const [isModalDelete, setIsModalDelete] = useState(false);
+  const [editStatus, setEditStatus] = useState<string | number>('');
 
   useEffect(() => {
     getAdminCategory(setCategoryData);
@@ -43,11 +44,14 @@ const Category = () => {
         retakeDate: ''
       });
       closeModal();
+      closeModalDelete()
       setEditStatus('');
     }
   }, [resData]);
 
   const openModal = () => setIsModalOpen(true);
+  const openModalDelete = () => setIsModalDelete(true);
+
   const closeModal = () => {
     setIsModalOpen(false);
     setEditStatus('');
@@ -60,6 +64,11 @@ const Category = () => {
       durationTime: '',
       retakeDate: ''
     });
+  };
+
+  const closeModalDelete = () => {
+    setIsModalDelete(false);
+    setEditStatus('');
   };
 
   const handleInputChange = (name: string, value: string) => {
@@ -137,7 +146,13 @@ const Category = () => {
                     />
                   </button>
                   <button className="hover:text-red-600">
-                    <MdDelete className={`text-2xl duration-300`} />
+                    <MdDelete
+                      className={`text-2xl duration-300`}
+                      onClick={() => {
+                        openModalDelete();
+                        setEditStatus(item.id);
+                      }}
+                    />
                   </button>
                 </div>
               </td>
@@ -238,6 +253,21 @@ const Category = () => {
               />
             </div>
           </form>
+        </div>
+      </GlobalModal>
+
+      {/*delete modal*/}
+      <GlobalModal onClose={closeModalDelete} isOpen={isModalDelete}>
+        <div className={`w-54 sm:w-64 md:w-96 lg:w-[40rem]`}>
+          <p className={`my-7 text-center font-semibold`}>Do you want to delete Category?</p>
+          <div className={`flex justify-end items-center gap-5 mt-5`}>
+            <AddButtons children={`Close`} onClick={closeModalDelete} />
+            <AddButtons
+              children={isLoading ? 'loading...' : `Delete`}
+              disabled={isLoading}
+              onClick={() => deleteCategory(editStatus, setIsLoading, setResData)}
+            />
+          </div>
         </div>
       </GlobalModal>
     </>

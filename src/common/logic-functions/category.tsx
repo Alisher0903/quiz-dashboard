@@ -17,13 +17,13 @@ export const getAdminCategory = async (setData: (val: null | CategoryList[]) => 
   }
 };
 
-// add category
+// add or edit u/n category
 export const addCategory = async (
   event: React.FormEvent<HTMLFormElement>,
   addData: CategoryList | null,
   resultData: (val: boolean) => void,
   setLoading: (val: boolean) => void,
-  edit?: string
+  edit?: string | number
 ) => {
   event.preventDefault();
   setLoading(true);
@@ -33,15 +33,37 @@ export const addCategory = async (
       if (data.success) {
         setLoading(false);
         resultData(true);
-        toast.success('Successfully category saved');
+        toast.success(edit ? 'Successfully category editing' : 'Successfully category saved');
       } else {
         setLoading(false);
-        toast.error('Error adding category');
+        toast.error(edit ? 'Error editing category' : 'Error adding category');
       }
     }
   } catch (err) {
     setLoading(false);
-    toast.error('Error adding category');
+    toast.error(edit ? 'Error editing category' : 'Error adding category');
     console.error(err);
+  }
+};
+
+// delete category
+export const deleteCategory = async (idIn: string | number, seLoading: (val: boolean) => void, setResData: (val: boolean) => void) => {
+  seLoading(true);
+  try {
+    if (idIn) {
+      const { data } = await axios.delete(`${category_all}/${idIn}`, config);
+      if (data.success) {
+        seLoading(false);
+        setResData(true);
+        toast.success('Successfully deleted category');
+      } else {
+        seLoading(false);
+        toast.error('Error deleting category');
+      }
+    }
+  } catch (err) {
+    seLoading(false);
+    toast.error('Error deleting category');
+    console.log(err);
   }
 };
