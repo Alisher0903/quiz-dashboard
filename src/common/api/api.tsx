@@ -4,10 +4,8 @@ const base_url: string = 'http://161.35.214.247:8080/';
 // ESLATMA: URL OXRIDA => / QUYILGAN BULSA YOKI ID KETADI YOKI TEXT YANI SEARCHLAR UCHUN
 // ============ ALL 50 TA API =============
 
-//=================USER CONTROLLER====================
-export const client_update: string = `${base_url}user/update/`; //id kirib keladi
-export const client_get_all: string = `${base_url}user`; //admin all client get qiladi
-export const client_get_one: string = `${base_url}user/`; //admin bitta client get qiladi
+//================= USER ISHLATILMAYDI RESULT CONTROLLER====================
+export const result_get_all: string = `${base_url}result/users/`; //PAGINATION buladi bu api va yana bittasi detailni kurish uchun  xam ishlatiladi
 
 //=================REGION CONTROLLER====================
 export const region_get_one: string = `${base_url}region/`; // bita region get qilish id keladi
@@ -56,6 +54,3 @@ export const auth_login: string = `${base_url}auth/login`; //login
 
 
 //================STATISTICS CONTROLLER====================== 4 ta api
-
-
-//================RESULT CONTROLLER====================== 2 ta api
