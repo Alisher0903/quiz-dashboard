@@ -5,4 +5,6 @@ export interface Global {
   setIsLoading: (isLoading: boolean) => void
   resData: boolean
   setResData: (data: boolean) => void
+  selectVal: string
+  setSelectVal: (val: string) => void
 }

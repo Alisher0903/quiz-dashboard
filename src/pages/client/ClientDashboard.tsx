@@ -33,7 +33,6 @@ const ClientDashboard = () => {
   const thead: IThead[] = [
     { id: 1, name: 'T/r' },
     { id: 2, name: 'Category name' },
-    // { id: 3, name: 'Description' },
     { id: 4, name: 'Action' },
   ];
   return (

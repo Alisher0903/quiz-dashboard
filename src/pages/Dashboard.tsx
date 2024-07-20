@@ -1,17 +1,38 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CardDataStats from '../components/CardDataStats.tsx';
 import ChartOne from '../components/Charts/ChartOne.tsx';
 import UniversalTable, { IThead } from '../components/Tables/UniversalTable.tsx';
-import { MdDelete, MdEdit } from 'react-icons/md';
 import Select from '../components/select/Select.tsx';
+import { getAdminCategory } from '../common/logic-functions/category.tsx';
+import categoryStore from '../common/state-management/categoryStore.tsx';
+import globalStore from '../common/state-management/globalStore.tsx';
+import { getAdminDashboardStatistic } from '../common/logic-functions/dashboard.tsx';
+import dashboardStore from '../common/state-management/dashboardStore.tsx';
 
-const Dashboard: React.FC = () => {
-  const thead: IThead[] = [
-    { id: 1, name: 'T/r' },
-    { id: 2, name: 'Category name' },
-    { id: 3, name: 'Description' },
-    { id: 4, name: 'Action' }
-  ];
+const thead: IThead[] = [
+  { id: 1, name: 'T/r' },
+  { id: 2, name: 'First Name' },
+  { id: 3, name: 'Last Name' },
+  { id: 4, name: 'Category Name' },
+  { id: 5, name: 'Correct Answers' }
+];
+
+const Dashboard: React.FC = () => { 
+  const { setCategoryData, categoryData } = categoryStore();
+  const { selectVal } = globalStore();
+  const { statisticTable, setStatisticTable } = dashboardStore();
+
+  useEffect(() => {
+    getAdminCategory(setCategoryData);
+  }, []);
+
+  useEffect(() => {
+    if (selectVal) {
+      getAdminDashboardStatistic(setStatisticTable, selectVal);
+    }
+  }, [selectVal]);
+  
+
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
@@ -106,39 +127,57 @@ const Dashboard: React.FC = () => {
       </div>
       <div className={`mt-4 md:mt-6 2xl:mt-7.5`}>
         <div className={`max-w-[30%]`}>
-          <Select />
+          {categoryData && (
+            <Select
+              child={categoryData.map(item => (
+                <option value={item.id} className="text-body dark:text-bodydark" key={item.id}>
+                  {item.name}
+                </option>
+              ))}
+            />
+          )}
         </div>
         <UniversalTable
           key={`category${1}`}
           thead={thead}
         >
-          <tr>
-            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-              <h5 className="font-medium text-black dark:text-white">
-                1
-              </h5>
-            </td>
-            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-              <p className="text-black dark:text-white">
-                packageItem.invoiceDate
-              </p>
-            </td>
-            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-              <p className="text-black dark:text-white">
-                packageItem.invoiceDate
-              </p>
-            </td>
-            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-              <div className="flex items-center space-x-3.5">
-                <button className="hover:text-yellow-500">
-                  <MdEdit className={`text-2xl duration-300`} />
-                </button>
-                <button className="hover:text-red-600">
-                  <MdDelete className={`text-2xl duration-300`} />
-                </button>
-              </div>
-            </td>
-          </tr>
+          {statisticTable ? (
+            statisticTable.map((item, idx) => (
+              <tr key={idx}>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <h5 className="font-medium text-black dark:text-white">
+                    {idx + 1}
+                  </h5>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.firstName}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.lastName}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.categoryName}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.correctAnswers}
+                  </p>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={5} className="border-b border-[#eee] p-5 dark:border-strokedark text-center">
+                Statistics not found
+              </td>
+            </tr>
+          )}
         </UniversalTable>
       </div>
     </>
