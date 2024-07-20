@@ -12,7 +12,8 @@ import Settings from './pages/Settings';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import ConfirmEmailCode from './pages/Authentication/ConfirmEmailCode.tsx';
-import ClientQuizTest from './pages/ClientQuizTest.tsx';
+import ClientQuizTest from './pages/client/ClientQuizTest.tsx';
+import ClientDashboard from './pages/client/ClientDashboard.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -111,8 +112,17 @@ function App() {
           path="/client/quiz/:id"
           element={
             <>
-              <PageTitle title="Client quiz test" />
+              <PageTitle title="Client | Quiz test" />
               <ClientQuizTest />
+            </>
+          }
+        />
+        <Route
+          path="/client/dashboard"
+          element={
+            <>
+              <PageTitle title="Client | Dashboard" />
+              <ClientDashboard />
             </>
           }
         />

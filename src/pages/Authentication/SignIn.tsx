@@ -1,6 +1,27 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { handleSubmit } from '../../common/logic-functions/auth.tsx';
+import authStore from '../../common/state-management/authStore.tsx';
+import { useEffect, useState } from 'react';
+import globalStore from '../../common/state-management/globalStore.tsx';
+import toast from 'react-hot-toast';
 
 const SignIn = () => {
+  const { email, setEmail, password, setPassword } = authStore();
+  const { isLoading, setIsLoading } = globalStore();
+  const [resData, setResData] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (resData) {
+      setResData(false);
+      setEmail('');
+      setPassword('');
+      toast.success('Login successfully');
+      const role = localStorage.getItem('ROLE')
+      if (role === 'ROLE_ADMIN') navigate('/dashboard');
+      else if (role === 'ROLE_CLIENT') navigate('/client/dashboard');
+    }
+  }, [resData]);
   return (
     <>
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -150,7 +171,7 @@ const SignIn = () => {
                 Sign in
               </h2>
 
-              <form>
+              <form onSubmit={e => handleSubmit(e, email, password, setIsLoading, setResData)}>
                 {/*email*/}
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
@@ -159,6 +180,8 @@ const SignIn = () => {
                   <div className="relative">
                     <input
                       required
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
                       type="email"
                       placeholder="Enter your email"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -192,6 +215,8 @@ const SignIn = () => {
                   <div className="relative">
                     <input
                       required
+                      value={password}
+                      onChange={e => setPassword(e.target.value)}
                       type="password"
                       placeholder="Enter Password"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -225,8 +250,8 @@ const SignIn = () => {
                 <div className="mb-5">
                   <input
                     type="submit"
-                    value="Sign In"
-                    className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                    value={isLoading ? 'loading...' : 'Sign In'}
+                    className={`w-full ${isLoading ? 'cursor-not-allowed bg-slate-500' : 'cursor-pointer bg-primary'} rounded-lg border border-primary p-4 text-white transition hover:bg-opacity-90`}
                   />
                 </div>
 
