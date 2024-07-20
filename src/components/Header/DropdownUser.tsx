@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import ClickOutside from '../ClickOutside';
 import UserOne from '../../images/user/user-01.png';
+import globalStore from '../../common/state-management/globalStore.tsx';
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
-
+  const { getMeData } = globalStore();
+  console.log(getMeData,'getMe');
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
       <Link
