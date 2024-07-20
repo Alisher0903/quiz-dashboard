@@ -170,8 +170,13 @@ const Dashboard: React.FC = () => {
                 </td>
               </tr>
             ))
-          ) : ''}
-
+          ) : (
+            <tr>
+              <td colSpan={5} className="border-b border-[#eee] p-5 dark:border-strokedark text-center">
+                Statistics not found
+              </td>
+            </tr>
+          )}
         </UniversalTable>
       </div>
     </>
