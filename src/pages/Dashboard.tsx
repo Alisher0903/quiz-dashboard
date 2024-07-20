@@ -17,7 +17,7 @@ const thead: IThead[] = [
   { id: 5, name: 'Correct Answers' }
 ];
 
-const Dashboard: React.FC = () => {
+const Dashboard: React.FC = () => { 
   const { setCategoryData, categoryData } = categoryStore();
   const { selectVal } = globalStore();
   const { statisticTable, setStatisticTable } = dashboardStore();
@@ -31,6 +31,7 @@ const Dashboard: React.FC = () => {
       getAdminDashboardStatistic(setStatisticTable, selectVal);
     }
   }, [selectVal]);
+  
 
   return (
     <>

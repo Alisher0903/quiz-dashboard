@@ -3,7 +3,7 @@ export interface Category {
   setCategoryData: (val: null | CategoryList[]) => void
 }
 
-export interface CategoryList {
+export interface CategoryList  {
   id: number
   name: string
   description: string
