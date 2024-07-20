@@ -15,6 +15,7 @@ import ConfirmEmailCode from './pages/Authentication/ConfirmEmailCode.tsx';
 import ClientQuizTest from './pages/client/ClientQuizTest.tsx';
 import ClientDashboard from './pages/client/ClientDashboard.tsx';
 import ResetPassword from './pages/Authentication/ResetPasword.tsx';
+import ClientQuizResult from './pages/client/ClientQuizResult.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -124,6 +125,15 @@ function App() {
             <>
               <PageTitle title="Client | Quiz test" />
               <ClientQuizTest />
+            </>
+          }
+        />
+        <Route
+          path="/client/quiz/result"
+          element={
+            <>
+              <PageTitle title="Client | Quiz Result" />
+              <ClientQuizResult />
             </>
           }
         />

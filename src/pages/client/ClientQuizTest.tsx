@@ -11,7 +11,8 @@ const ClientQuizTest = () => {
   const [remainingTime, setRemainingTime] = useState<number>(0);
   const [answers, setAnswers] = useState<{ [key: number]: any }>({});
   const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: boolean }>({});
-  const navigate = useNavigate()
+  const [isNextDisabled, setIsNextDisabled] = useState(true);
+  const navigate = useNavigate();
 
   const payload = quizData.quizList.map((question) => {
     const answer = answers[question.id];
@@ -27,8 +28,7 @@ const ClientQuizTest = () => {
       default:
         return null;
     }
-  })
-    .filter(answer => answer !== null);
+  }).filter(answer => answer !== null);
 
   console.log('payloaddddddddddddddd', payload);
 
@@ -56,6 +56,7 @@ const ClientQuizTest = () => {
 
   useEffect(() => {
     setSelectedOptions({});
+    setIsNextDisabled(true);
   }, [currentIndex]);
 
   useEffect(() => {
@@ -66,22 +67,26 @@ const ClientQuizTest = () => {
         hasSelected = Object.values(selectedOptions).some((value, index) => value && quizData.quizList[currentIndex].optionDtos[index]?.id === answers[currentQuestion.id]);
       } else if (currentQuestion.type === 'MANY_CHOICE') {
         hasSelected = answers[currentQuestion.id]?.length > 0;
+      } else if (currentQuestion.type === 'SUM') {
+        hasSelected = answers[currentQuestion.id] !== undefined;
       }
 
+      setIsNextDisabled(!hasSelected);
     }
   }, [selectedOptions, answers, currentIndex, quizData.quizList]);
-
 
   const handleAnswerChange = (questionId: number, value: any) => {
     setAnswers(prevAnswers => ({
       ...prevAnswers,
       [questionId]: value
     }));
+    setIsNextDisabled(false);
   };
 
   const handleNextQuestion = () => {
     if (currentIndex < quizData.quizList.length - 1) {
       setCurrentIndex(currentIndex + 1);
+      setIsNextDisabled(true);
     }
   };
 
@@ -100,8 +105,8 @@ const ClientQuizTest = () => {
       }
       return newSelectedOptions;
     });
+    setIsNextDisabled(false);
   };
-
 
   const sortQuiz = (type: string, optionList: TestOptionDtos[] | undefined, name: string, attachmentId: string[]) => {
     if (!optionList) return <div></div>;
@@ -230,7 +235,7 @@ const ClientQuizTest = () => {
             <div className="flex gap-5">
               <AddButtons onClick={currentIndex + 1 === quizData.quizList.length ? () => {
                 sendResults(id, quizData.remainingTime, quizData.quiz.countAnswers, payload, navigate)
-              } : handleNextQuestion} >{currentIndex + 1 === quizData.quizList.length ? 'Submit' : 'Next'}</AddButtons>
+              } : handleNextQuestion} disabled={isNextDisabled} >{currentIndex + 1 === quizData.quizList.length ? 'Submit' : 'Next'}</AddButtons>
             </div>
           </div>
         </div>

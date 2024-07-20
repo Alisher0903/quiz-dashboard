@@ -16,7 +16,7 @@ export const sendResults = async (id: string | undefined, duration: number, coun
     try {
         const { data } = await axios.post(`${quiz_pass}/${id}?duration=${duration}&countAnswers=${countAnswers}`, payload, config);
         if (data.success) {
-            navigate('/auth/reset-password');
+            navigate('/client/quiz/result');
         }
     } catch { }
 }
