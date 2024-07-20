@@ -1,6 +1,20 @@
 import { create } from 'zustand';
-import { Test } from '../../types/tes.ts';
+import { Test, TestMainData, TestOptionDtos, TestQuestionDtoList } from '../../types/test.ts';
 
-const testStore = create<Test>((set) => ({}));
+const useTestStore = create<Test>((set) => ({
+    quizData: {
+        quiz: {
+            questionDtoList: [],
+            countAnswers: 0,
+            duration: 0
+        },
+        quizList: [],
+        currentQuestionIndex: 0,
+        remainingTime: 0
+    },
+    setQuizData: (val: TestMainData) => set({ quizData: val }),
+    currentIndex: 0,
+    setCurrentIndex: (val: number) => set({ currentIndex: val })
+}));
 
-export default testStore;
+export default useTestStore;
