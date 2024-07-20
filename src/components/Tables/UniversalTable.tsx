@@ -14,7 +14,7 @@ export interface IThead {
 
 const UniversalTable: React.FC<IMasterTableProps> = ({ thead, children }) => {
   return (
-    <div className="rounded-sm  bg-white dark:border-strokedark dark:bg-boxdark shadow-slate-300 shadow-md dark:shadow-graydark">
+    <div className="rounded-sm  bg-white dark:border-strokedark dark:bg-boxdark shadow-default">
       <div className="max-w-full overflow-x-auto w-[100%]">
         <table className="w-full table-auto">
           <thead>

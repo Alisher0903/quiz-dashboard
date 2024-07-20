@@ -1,10 +1,16 @@
 import React from 'react';
 import CardDataStats from '../components/CardDataStats.tsx';
 import ChartOne from '../components/Charts/ChartOne.tsx';
-import ChartThree from '../components/Charts/ChartThree.tsx';
-import ChartTwo from '../components/Charts/ChartTwo.tsx';
+import UniversalTable, { IThead } from '../components/Tables/UniversalTable.tsx';
+import { MdDelete, MdEdit } from 'react-icons/md';
 
 const Dashboard: React.FC = () => {
+  const thead: IThead[] = [
+    { id: 1, name: 'T/r' },
+    { id: 2, name: 'Category name' },
+    { id: 3, name: 'Description' },
+    { id: 4, name: 'Action' }
+  ];
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
@@ -94,10 +100,42 @@ const Dashboard: React.FC = () => {
         </CardDataStats>
       </div>
 
-      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
+      <div className="mt-4 md:mt-6 2xl:mt-7.5">
         <ChartOne />
-        <ChartTwo />
-        <ChartThree />
+      </div>
+      <div className={`mt-4 md:mt-6 2xl:mt-7.5`}>
+        <UniversalTable
+          key={`category${1}`}
+          thead={thead}
+        >
+          <tr>
+            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+              <h5 className="font-medium text-black dark:text-white">
+                1
+              </h5>
+            </td>
+            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+              <p className="text-black dark:text-white">
+                packageItem.invoiceDate
+              </p>
+            </td>
+            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+              <p className="text-black dark:text-white">
+                packageItem.invoiceDate
+              </p>
+            </td>
+            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+              <div className="flex items-center space-x-3.5">
+                <button className="hover:text-yellow-500">
+                  <MdEdit className={`text-2xl duration-300`} />
+                </button>
+                <button className="hover:text-red-600">
+                  <MdDelete className={`text-2xl duration-300`} />
+                </button>
+              </div>
+            </td>
+          </tr>
+        </UniversalTable>
       </div>
     </>
   );
