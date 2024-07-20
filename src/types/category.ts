@@ -9,8 +9,8 @@ export interface CategoryList {
   id: number
   name: string
   description: string
-  questionCount: number
-  extraQuestionCount: number
-  durationTime: number
-  retakeDate: number
+  questionCount: number | string
+  extraQuestionCount: number | string
+  durationTime: number | string
+  retakeDate: number | string
 }

@@ -23,6 +23,7 @@ const Category = () => {
   const { categoryData, setCategoryData, setAddValue, addValue } = categoryStore();
   const { isLoading, setIsLoading, resData, setResData } = globalStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editStatus, setEditStatus] = useState<string>('');
 
   useEffect(() => {
     getAdminCategory(setCategoryData);
@@ -36,26 +37,28 @@ const Category = () => {
         id: 0,
         name: '',
         description: '',
-        questionCount: 0,
-        extraQuestionCount: 0,
-        durationTime: 0,
-        retakeDate: 0
+        questionCount: '',
+        extraQuestionCount: '',
+        durationTime: '',
+        retakeDate: ''
       });
       closeModal();
+      setEditStatus('');
     }
   }, [resData]);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => {
     setIsModalOpen(false);
+    setEditStatus('');
     setAddValue({
       id: 0,
       name: '',
       description: '',
-      questionCount: 0,
-      extraQuestionCount: 0,
-      durationTime: 0,
-      retakeDate: 0
+      questionCount: '',
+      extraQuestionCount: '',
+      durationTime: '',
+      retakeDate: ''
     });
   };
 
@@ -124,7 +127,14 @@ const Category = () => {
               <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
                 <div className="flex items-center space-x-3.5">
                   <button className="hover:text-yellow-500">
-                    <MdEdit className={`text-2xl duration-300`} />
+                    <MdEdit
+                      className={`text-2xl duration-300`}
+                      onClick={() => {
+                        openModal();
+                        setAddValue(item);
+                        setEditStatus('edit');
+                      }}
+                    />
                   </button>
                   <button className="hover:text-red-600">
                     <MdDelete className={`text-2xl duration-300`} />
@@ -135,8 +145,8 @@ const Category = () => {
           ))
         ) : (
           <tr>
-            <td colSpan={8} className="border-b border-[#eee] p-5 dark:border-strokedark text-center">Category not
-              found
+            <td colSpan={8} className="border-b border-[#eee] p-5 dark:border-strokedark text-center">
+              Category not found
             </td>
           </tr>
         )}
@@ -145,7 +155,10 @@ const Category = () => {
       {/* modal*/}
       <GlobalModal onClose={closeModal} isOpen={isModalOpen}>
         <div className={`w-54 sm:w-64 md:w-96 lg:w-[40rem]`}>
-          <form className={`mt-5`}>
+          <form className={`mt-5`} onSubmit={(e) => {
+            editStatus ? addCategory(e, addValue, setResData, setIsLoading, editStatus)
+              : addCategory(e, addValue, setResData, setIsLoading);
+          }}>
             <div className="mb-4">
               <label className="block text-gray-700 mb-2" htmlFor="categoryName">Category name</label>
               <input
@@ -222,7 +235,6 @@ const Category = () => {
                 children={isLoading ? 'loading...' : `Save`}
                 disabled={isLoading}
                 type={`submit`}
-                onClick={() => addCategory(addValue, setResData, setIsLoading)}
               />
             </div>
           </form>
