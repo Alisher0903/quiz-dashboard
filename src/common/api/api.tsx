@@ -38,7 +38,7 @@ export const category_all: string = `${base_url}category` // all catygory client
 export const category_admin: string = `${base_url}category/list` // all catygory client and admin get save update qilish uchun
 export const category_MAIN: string = `${base_url}category/main` // Admin catycoryning asosiy savolarini get qilishi uchun 
 
-//================AUTH CONTROLLER======================
+//================AUTH CONTROLLER====================== 4ta
 export const auth_reset_password: string = `${base_url}auth/reset-password`; //parolni qayta tiklash
 export const auth_forgot_password: string = `${base_url}auth/forgot-password`; //parolni unitish
 export const auth_activate: string = `${base_url}auth/activate`; //?????? bilmadim
@@ -47,12 +47,21 @@ export const auth_login: string = `${base_url}auth/login`; //login
 
 
 //================VIDEO UPLOAD CONTROLLER====================== 4 ta api
-
+export const api_videos_upload: string = `${base_url}api/videos/upload` // Video apload qilish admin busa kere
+export const api_videos_files: string = `${base_url}api/videos/files/` // video get qilish client uchun busa kerak 
+export const api_videos_files_update: string = `${base_url}api/videos/update/` // video update qilish c
+export const api_videos_delete: string = `${base_url}api/videos/delete/` // video delete qilish Id bilan 
 
 //================QUIZ CONTROLLER====================== 2 ta api
+export const quiz_pass: string = `${base_url}quiz/pass/` // Client Testni Submit qilishi uchun  
+export const quiz_start: string = `${base_url}quiz/start/` // Client Testni Boshlash uchun qilishi uchun  
 
 
 //================CERTIFICATE CONTROLLER====================== 1 ta api
+export const certificate: string = `${base_url}certificate/` // Client result olishi uchun
 
 
 //================STATISTICS CONTROLLER====================== 4 ta api
+export const statistics_week: string = `${base_url}statistics/week/` // Client result olishi uchun
+export const statistics_regionBy: string = `${base_url}statistics/regionBy/` // Client result olishi uchun
+export const statistics_categoryBy: string = `${base_url}statistics/categoryBy/` // Client result olishi uchun
