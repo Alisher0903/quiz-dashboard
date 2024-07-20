@@ -59,19 +59,7 @@ const ClientDashboard = () => {
                     START
                     <MdStart className={`text-2xl duration-300`} />
                   </button>
-                  <GlobalModal isOpen={isOpen} onClose={toggleModal}>
-                    <div className='w-[300px] py-2'>
-                      <p className='text-[#000] dark:text-white text-lg text-center'>Are you sure you want to start this test?</p>
-                      <div className='flex mt-5 gap-5 justify-end'>
-                        <AddButtons onClick={toggleModal}>
-                          Cancel
-                        </AddButtons>
-                        <AddButtons onClick={() => navigation(`/client/quiz/${categoryId}`)}>
-                          Start
-                        </AddButtons>
-                      </div>
-                    </div>
-                  </GlobalModal>
+
                 </p>
               </td>
 
@@ -79,7 +67,19 @@ const ClientDashboard = () => {
           ))}
 
       </UniversalTable>
-
+      <GlobalModal isOpen={isOpen} onClose={toggleModal}>
+        <div className='w-[300px] py-2'>
+          <p className='text-[#000] dark:text-white text-lg text-center'>Are you sure you want to start this test?</p>
+          <div className='flex mt-5 gap-5 justify-end'>
+            <AddButtons onClick={toggleModal}>
+              Cancel
+            </AddButtons>
+            <AddButtons onClick={() => navigation(`/client/quiz/${categoryId}`)}>
+              Start
+            </AddButtons>
+          </div>
+        </div>
+      </GlobalModal>
     </div>
   );
 };

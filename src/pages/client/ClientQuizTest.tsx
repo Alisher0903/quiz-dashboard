@@ -113,10 +113,10 @@ const ClientQuizTest = () => {
             <div className="flex py-5 justify-center">
               <p className="text-xl">{name}</p>
             </div>
-            <div>
+            {attachmentId ? <div>
               <img src={api_videos_files + attachmentId} alt="" />
-            </div>
-            <div>
+            </div> : ''}
+            <div className="flex flex-col">
               <label className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-white">
                 Enter your Answer
               </label>
@@ -142,13 +142,13 @@ const ClientQuizTest = () => {
                   <div className="flex items-center ps-3">
                     <input
                       id={`checkbox-${index}`}
-                      type="checkbox"
+                      type="radio"
                       checked={!!selectedOptions[index]}
                       onChange={() => {
                         handleAnswerChange(item.questionId, item.id);
                         handleOptionChange(index);
                       }}
-                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600"
+                      className="w-5 h-4 text-blue-600 bg-gray-100  focus:ring-blue-500 dark:focus:ring-blue-600"
                     />
                     <label
                       htmlFor={`checkbox-${index}`}
@@ -235,10 +235,10 @@ const ClientQuizTest = () => {
           </div>
         </div>
         :
-        <div className="flex justify-center h-100 items-center">
+        <div className="flex justify-center flex-col h-100 items-center">
           <p>This category not have tests</p>
           <div>
-            <Link to={''}></Link>
+            <Link className="text-blue-600" to={'/client/dashboard'}>Go back</Link>
           </div>
         </div>
       }
