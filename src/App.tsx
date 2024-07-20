@@ -12,6 +12,7 @@ import Settings from './pages/Settings';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import ConfirmEmailCode from './pages/Authentication/ConfirmEmailCode.tsx';
+import ClientQuizTest from './pages/ClientQuizTest.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -103,6 +104,15 @@ function App() {
             <>
               <PageTitle title="Confirm" />
               <ConfirmEmailCode />
+            </>
+          }
+        />
+        <Route
+          path="/client/quiz/:id"
+          element={
+            <>
+              <PageTitle title="Client quiz test" />
+              <ClientQuizTest />
             </>
           }
         />
