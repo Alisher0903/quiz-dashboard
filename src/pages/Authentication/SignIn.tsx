@@ -1,14 +1,13 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { handleSubmit } from '../../common/logic-functions/auth.tsx';
 import authStore from '../../common/state-management/authStore.tsx';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import globalStore from '../../common/state-management/globalStore.tsx';
 import toast from 'react-hot-toast';
 
 const SignIn = () => {
   const { email, setEmail, password, setPassword } = authStore();
-  const { isLoading, setIsLoading } = globalStore();
-  const [resData, setResData] = useState(false);
+  const { isLoading, setIsLoading, resData, setResData } = globalStore();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,6 +21,7 @@ const SignIn = () => {
       else if (role === 'ROLE_CLIENT') navigate('/client/dashboard');
     }
   }, [resData]);
+
   return (
     <>
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">

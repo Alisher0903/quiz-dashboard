@@ -1,6 +1,24 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import authStore from '../../common/state-management/authStore.tsx';
+import globalStore from '../../common/state-management/globalStore.tsx';
+import { registerClientActive } from '../../common/logic-functions/auth.tsx';
+import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 const ConfirmEmailCode = () => {
+  const { confirmEmailCode, setConfirmEmailCode } = authStore();
+  const { isLoading, setIsLoading, setResData, resData } = globalStore();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (resData) {
+      setResData(false);
+      toast.success('You have successfully registered');
+      setConfirmEmailCode('')
+      navigate('/auth/signin')
+    }
+  }, [resData]);
+
   return (
     <>
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -150,7 +168,7 @@ const ConfirmEmailCode = () => {
                 We send code to your email
               </h2>
 
-              <form>
+              <form onSubmit={e => registerClientActive(e, confirmEmailCode, setIsLoading, setResData)}>
                 {/*confirm code*/}
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
@@ -159,6 +177,8 @@ const ConfirmEmailCode = () => {
                   <div className="relative">
                     <input
                       required
+                      value={confirmEmailCode}
+                      onChange={e => setConfirmEmailCode(e.target.value)}
                       type="number"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 px-6 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
@@ -169,8 +189,8 @@ const ConfirmEmailCode = () => {
                 <div className="mb-5">
                   <input
                     type="submit"
-                    value="Confirm"
-                    className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                    value={isLoading ? 'loading...' : `Confirm`}
+                    className={`w-full ${isLoading ? 'cursor-not-allowed bg-slate-500' : 'cursor-pointer bg-primary'} rounded-lg border border-primary p-4 text-white transition hover:bg-opacity-90`}
                   />
                 </div>
 

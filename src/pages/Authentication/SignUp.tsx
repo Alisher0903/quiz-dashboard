@@ -1,6 +1,39 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import authStore from '../../common/state-management/authStore.tsx';
+import globalStore from '../../common/state-management/globalStore.tsx';
+import { authRegister } from '../../common/logic-functions/auth.tsx';
+import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 const SignUp = () => {
+  const navigate = useNavigate();
+  const {
+    firstName,
+    lastName,
+    password,
+    prePassword,
+    email,
+    setFirstName,
+    setEmail,
+    setLastName,
+    setPassword,
+    setPrePassword
+  } = authStore();
+  const {isLoading, setIsLoading, resData, setResData} = globalStore()
+
+  useEffect(() => {
+    if (resData) {
+      setResData(false);
+      setEmail('');
+      setPassword('');
+      setPrePassword('')
+      setFirstName('')
+      setLastName('')
+      toast.success('Enter the verification code you received');
+      navigate('/auth/confirm')
+    }
+  }, [resData]);
+
   return (
     <>
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -150,7 +183,7 @@ const SignUp = () => {
                 Registeration form
               </h2>
 
-              <form>
+              <form onSubmit={e => authRegister(e, firstName, lastName, email, password, prePassword, setIsLoading, setResData)}>
                 {/*first name*/}
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
@@ -159,6 +192,8 @@ const SignUp = () => {
                   <div className="relative">
                     <input
                       required
+                      value={firstName}
+                      onChange={e => setFirstName(e.target.value)}
                       placeholder="Enter Your First name"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
@@ -195,6 +230,8 @@ const SignUp = () => {
                   <div className="relative">
                     <input
                       required
+                      value={lastName}
+                      onChange={e => setLastName(e.target.value)}
                       placeholder="Enter Your Last name"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
@@ -231,6 +268,8 @@ const SignUp = () => {
                   <div className="relative">
                     <input
                       required
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
                       type="email"
                       placeholder="Enter your email"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -264,6 +303,8 @@ const SignUp = () => {
                   <div className="relative">
                     <input
                       required
+                      value={password}
+                      onChange={e => setPassword(e.target.value)}
                       type="password"
                       placeholder="Enter your password"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -301,6 +342,8 @@ const SignUp = () => {
                   <div className="relative">
                     <input
                       required
+                      value={prePassword}
+                      onChange={e => setPrePassword(e.target.value)}
                       type="password"
                       placeholder="Enter the password "
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -334,8 +377,8 @@ const SignUp = () => {
                 <div className="mb-5">
                   <input
                     type="submit"
-                    value="Create account"
-                    className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                    value={isLoading ? 'loading...' : 'Create account'}
+                    className={`w-full ${isLoading ? 'cursor-not-allowed bg-slate-500' : 'cursor-pointer bg-primary'} rounded-lg border border-primary p-4 text-white transition hover:bg-opacity-90`}
                   />
                 </div>
 
