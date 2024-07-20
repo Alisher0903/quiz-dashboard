@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Test, TestMainData, TestOptionDtos, TestQuestionDtoList } from '../../types/test.ts';
+import { Test, TestMainData } from '../../types/test.ts';
 
 const useTestStore = create<Test>((set) => ({
     quizData: {

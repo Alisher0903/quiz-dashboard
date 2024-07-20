@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import useTestStore from "../../common/state-management/testStore";
 import { fetchQuiz, sendResults } from "../../common/logic-functions/test";
 import { TestOptionDtos } from "../../types/test";
@@ -11,6 +11,7 @@ const ClientQuizTest = () => {
   const [remainingTime, setRemainingTime] = useState<number>(0);
   const [answers, setAnswers] = useState<{ [key: number]: any }>({});
   const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: boolean }>({});
+  const navigate = useNavigate()
 
   const payload = quizData.quizList.map((question) => {
     const answer = answers[question.id];
@@ -61,7 +62,6 @@ const ClientQuizTest = () => {
     if (quizData.quizList[currentIndex]) {
       const currentQuestion = quizData.quizList[currentIndex];
       let hasSelected = false;
-
       if (currentQuestion.type === 'ONE_CHOICE' || currentQuestion.type === 'ANY_CORRECT') {
         hasSelected = Object.values(selectedOptions).some((value, index) => value && quizData.quizList[currentIndex].optionDtos[index]?.id === answers[currentQuestion.id]);
       } else if (currentQuestion.type === 'MANY_CHOICE') {
@@ -123,7 +123,7 @@ const ClientQuizTest = () => {
               <input
                 placeholder="Answer"
                 onChange={(e) => handleAnswerChange(optionList[0]?.questionId, e.target.value)}
-                className="rounded-xl px-2 py-1"
+                className="rounded-xl px-2 py-1 border"
                 type="text"
               />
             </div>
@@ -212,25 +212,36 @@ const ClientQuizTest = () => {
 
   return (
     <div className="dark:bg-[#24303F] bg-white shadow-lg w-full p-5 rounded-2xl">
-      <div className="">
-        <p className="text-2xl">{currentIndex + 1} / {quizData.quizList.length}</p>
-      </div>
-      <div>
-        {sortQuiz(
-          quizData.quizList[currentIndex]?.type,
-          quizData.quizList[currentIndex]?.optionDtos,
-          quizData.quizList[currentIndex]?.name,
-          quizData.quizList[currentIndex]?.attachmentName
-        )}
-      </div>
-      <div className="flex justify-between mt-5">
-        <p>Remaining Time: {formatTime(remainingTime ? remainingTime : 0)}</p>
-        <div className="flex gap-5">
-          <AddButtons onClick={currentIndex + 1 === quizData.quizList.length ? () => {
-            sendResults(id, quizData.remainingTime, quizData.quiz.countAnswers, payload)
-          } : handleNextQuestion} >{currentIndex + 1 === quizData.quizList.length ? 'Submit' : 'Next'}</AddButtons>
+      {quizData.quizList[currentIndex] ?
+        <div>
+          <div className="">
+            <p className="text-2xl">{currentIndex + 1} / {quizData.quizList.length}</p>
+          </div>
+          <div>
+            {sortQuiz(
+              quizData.quizList[currentIndex]?.type,
+              quizData.quizList[currentIndex]?.optionDtos,
+              quizData.quizList[currentIndex]?.name,
+              quizData.quizList[currentIndex]?.attachmentName
+            )}
+          </div>
+          <div className="flex justify-between mt-5">
+            <p>Remaining Time: {formatTime(remainingTime ? remainingTime : 0)}</p>
+            <div className="flex gap-5">
+              <AddButtons onClick={currentIndex + 1 === quizData.quizList.length ? () => {
+                sendResults(id, quizData.remainingTime, quizData.quiz.countAnswers, payload, navigate)
+              } : handleNextQuestion} >{currentIndex + 1 === quizData.quizList.length ? 'Submit' : 'Next'}</AddButtons>
+            </div>
+          </div>
         </div>
-      </div>
+        :
+        <div className="flex justify-center h-100 items-center">
+          <p>This category not have tests</p>
+          <div>
+            <Link to={''}></Link>
+          </div>
+        </div>
+      }
     </div>
   );
 };
