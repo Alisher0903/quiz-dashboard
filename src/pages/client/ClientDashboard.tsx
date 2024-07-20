@@ -1,4 +1,3 @@
-// import { MdStart } from "react-icons/md";
 import UniversalTable, { IThead } from '../../components/Tables/UniversalTable';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -45,7 +44,7 @@ const ClientDashboard = () => {
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black  dark:text-white">
-                    <button className="hover:text-yellow-500 flex gap-2">
+                    <button className="hover:text-yellow-500 select-none  flex gap-2">
                       START
                       <MdStart className={`text-2xl duration-300`} />
                     </button>
