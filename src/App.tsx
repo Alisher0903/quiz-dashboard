@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
@@ -11,13 +11,17 @@ import User from './pages/User.tsx';
 import Settings from './pages/Settings';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
+import ConfirmEmailCode from './pages/Authentication/ConfirmEmailCode.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000);
+
+    if (pathname === '/') navigate('/dashboard');
   }, []);
 
   useEffect(() => {
@@ -34,7 +38,7 @@ function App() {
           path={`/dashboard`}
           element={
             <>
-              <PageTitle title="Admin | Dashboard"/>
+              <PageTitle title="Admin | Dashboard" />
               <Dashboard />
             </>
           }
@@ -90,6 +94,15 @@ function App() {
             <>
               <PageTitle title="Signup" />
               <SignUp />
+            </>
+          }
+        />
+        <Route
+          path="/auth/confirm"
+          element={
+            <>
+              <PageTitle title="Confirm" />
+              <ConfirmEmailCode />
             </>
           }
         />
