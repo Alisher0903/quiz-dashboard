@@ -3,6 +3,7 @@ import CardDataStats from '../components/CardDataStats.tsx';
 import ChartOne from '../components/Charts/ChartOne.tsx';
 import UniversalTable, { IThead } from '../components/Tables/UniversalTable.tsx';
 import { MdDelete, MdEdit } from 'react-icons/md';
+import Select from '../components/select/Select.tsx';
 
 const Dashboard: React.FC = () => {
   const thead: IThead[] = [
@@ -104,6 +105,9 @@ const Dashboard: React.FC = () => {
         <ChartOne />
       </div>
       <div className={`mt-4 md:mt-6 2xl:mt-7.5`}>
+        <div className={`max-w-[30%]`}>
+          <Select />
+        </div>
         <UniversalTable
           key={`category${1}`}
           thead={thead}

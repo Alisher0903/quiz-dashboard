@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 
-const SelectGroupOne: React.FC = () => {
+const Select: React.FC = ({ label }: { label?: string }) => {
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
 
-  const changeTextColor = () => {
-    setIsOptionSelected(true);
-  };
+  const changeTextColor = () => setIsOptionSelected(true);
 
   return (
     <div className="mb-4.5">
-      <label className="mb-2.5 block text-black dark:text-white">
-        {' '}
-        Subject{' '}
-      </label>
+      {label && (
+        <label className="mb-1.5 block text-black dark:text-white">
+          {label}
+        </label>
+      )}
 
       <div className="relative z-20 bg-transparent dark:bg-form-input">
         <select
@@ -64,4 +63,4 @@ const SelectGroupOne: React.FC = () => {
   );
 };
 
-export default SelectGroupOne;
+export default Select;

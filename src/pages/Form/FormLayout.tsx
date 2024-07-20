@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import SelectGroupOne from '../../components/Forms/SelectGroup/SelectGroupOne';
+import Select from '../../components/select/Select.tsx';
 
 const FormLayout = () => {
   return (
@@ -64,7 +64,7 @@ const FormLayout = () => {
                   />
                 </div>
 
-                <SelectGroupOne />
+                <Select />
 
                 <div className="mb-6">
                   <label className="mb-2.5 block text-black dark:text-white">
