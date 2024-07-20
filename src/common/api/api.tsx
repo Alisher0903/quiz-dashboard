@@ -54,7 +54,7 @@ export const api_videos_files_update: string = `${base_url}api/videos/update/` /
 export const api_videos_delete: string = `${base_url}api/videos/delete/` // video delete qilish Id bilan 
 
 //================QUIZ CONTROLLER====================== 2 ta api
-export const quiz_pass: string = `${base_url}quiz/pass/` // Client Testni Submit qilishi uchun  
+export const quiz_pass: string = `${base_url}quiz/pass` // Client Testni Submit qilishi uchun  
 export const quiz_start: string = `${base_url}quiz/start/` // Client Testni Boshlash uchun qilishi uchun  
 
 

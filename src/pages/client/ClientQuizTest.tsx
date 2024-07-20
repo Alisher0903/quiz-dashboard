@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useTestStore from "../../common/state-management/testStore";
-import { fetchQuiz } from "../../common/logic-functions/test";
+import { fetchQuiz, sendResults } from "../../common/logic-functions/test";
 import { TestOptionDtos } from "../../types/test";
 import AddButtons from "../../components/buttons/buttons";
 import { api_videos_files } from "../../common/api/api";
@@ -11,24 +11,22 @@ const ClientQuizTest = () => {
   const [remainingTime, setRemainingTime] = useState<number>(0);
   const [answers, setAnswers] = useState<{ [key: number]: any }>({});
   const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: boolean }>({});
-  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
 
-  const payload = quizData.quizList
-    .map((question) => {
-      const answer = answers[question.id];
-      switch (question.type) {
-        case 'ONE_CHOICE':
-          return answer !== undefined ? { questionId: question.id, optionId: answer } : null;
-        case 'SUM':
-          return answer !== undefined ? { questionId: question.id, answer } : null;
-        case 'ANY_CORRECT':
-          return answer !== undefined ? { questionId: question.id, optionId: answer } : null;
-        case 'MANY_CHOICE':
-          return answer && answer.length > 0 ? { questionId: question.id, optionIds: answer } : null;
-        default:
-          return null;
-      }
-    })
+  const payload = quizData.quizList.map((question) => {
+    const answer = answers[question.id];
+    switch (question.type) {
+      case 'ONE_CHOICE':
+        return answer !== undefined ? { questionId: question.id, optionId: answer } : null;
+      case 'SUM':
+        return answer !== undefined ? { questionId: question.id, answer } : null;
+      case 'ANY_CORRECT':
+        return answer !== undefined ? { questionId: question.id, optionId: answer } : null;
+      case 'MANY_CHOICE':
+        return answer && answer.length > 0 ? { questionId: question.id, optionIds: answer } : null;
+      default:
+        return null;
+    }
+  })
     .filter(answer => answer !== null);
 
   console.log('payloaddddddddddddddd', payload);
@@ -53,11 +51,10 @@ const ClientQuizTest = () => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []); 
+  }, []);
 
   useEffect(() => {
     setSelectedOptions({});
-    setIsButtonDisabled(true);
   }, [currentIndex]);
 
   useEffect(() => {
@@ -71,9 +68,9 @@ const ClientQuizTest = () => {
         hasSelected = answers[currentQuestion.id]?.length > 0;
       }
 
-      setIsButtonDisabled(!hasSelected);
     }
   }, [selectedOptions, answers, currentIndex, quizData.quizList]);
+
 
   const handleAnswerChange = (questionId: number, value: any) => {
     setAnswers(prevAnswers => ({
@@ -104,6 +101,7 @@ const ClientQuizTest = () => {
       return newSelectedOptions;
     });
   };
+
 
   const sortQuiz = (type: string, optionList: TestOptionDtos[] | undefined, name: string, attachmentId: string[]) => {
     if (!optionList) return <div></div>;
@@ -228,7 +226,9 @@ const ClientQuizTest = () => {
       <div className="flex justify-between mt-5">
         <p>Remaining Time: {formatTime(remainingTime ? remainingTime : 0)}</p>
         <div className="flex gap-5">
-          <AddButtons onClick={handleNextQuestion} disabled={isButtonDisabled}>{currentIndex + 1 === quizData.quizList.length ? 'Submit' : 'Next'}</AddButtons>
+          <AddButtons onClick={currentIndex + 1 === quizData.quizList.length ? () => {
+            sendResults(id, quizData.remainingTime, quizData.quiz.countAnswers, payload)
+          } : handleNextQuestion} >{currentIndex + 1 === quizData.quizList.length ? 'Submit' : 'Next'}</AddButtons>
         </div>
       </div>
     </div>
