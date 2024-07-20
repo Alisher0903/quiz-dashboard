@@ -14,6 +14,7 @@ import SignUp from './pages/Authentication/SignUp';
 import ConfirmEmailCode from './pages/Authentication/ConfirmEmailCode.tsx';
 import ClientQuizTest from './pages/client/ClientQuizTest.tsx';
 import ClientDashboard from './pages/client/ClientDashboard.tsx';
+import ResetPassword from './pages/Authentication/ResetPasword.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -105,6 +106,15 @@ function App() {
             <>
               <PageTitle title="Confirm" />
               <ConfirmEmailCode />
+            </>
+          }
+        />
+        <Route
+          path="/auth/reset-password"
+          element={
+            <>
+              <PageTitle title="Reset password" />
+              <ResetPassword />
             </>
           }
         />

@@ -1,6 +1,6 @@
 //login or register logic full
 import axios from 'axios';
-import { auth_activate, auth_login, auth_register } from '../api/api.tsx';
+import { auth_activate, auth_forgot_password, auth_login, auth_register, auth_reset_password } from '../api/api.tsx';
 import toast from 'react-hot-toast';
 import React from 'react';
 
@@ -42,6 +42,7 @@ export const authRegister = (
   }
 };
 
+// register qilingan userni tekshirish
 export const registerClientActive = async (
   event: React.FormEvent<HTMLFormElement>,
   code: string,
@@ -92,10 +93,64 @@ export const handleSubmit = (
       })
       .catch(() => {
         setLoading(false);
-        toast.error('An error occurred on the server!!!');
+        toast.error('Something went wrong, please try again');
       });
   } else {
     setLoading(false);
     toast.error('No phone number or password entered!!!');
+  }
+};
+
+//forgot password
+export const forgotPasswordEmail = async (
+  event: React.FormEvent<HTMLFormElement>,
+  setLoading: (val: boolean) => void,
+  email: string,
+  setResData: (val: boolean) => void
+) => {
+  event.preventDefault();
+  setLoading(true);
+  const forgotData = { email };
+
+  try {
+    if (email) {
+      const { data } = await axios.put(auth_forgot_password, forgotData);
+      if (data.success) {
+        setResData(true);
+        setLoading(false);
+      } else toast.error('An error occurred on the server!!!');
+    }
+  } catch (err) {
+    setLoading(false);
+    console.log(err);
+    toast.error('An error occurred on the server!!!');
+  }
+};
+
+//reset password
+export const resetPassword = async (
+  event: React.FormEvent<HTMLFormElement>,
+  passwordToken: string,
+  newPassword: string,
+  confirmPassword: string,
+  setLoading: (val: boolean) => void,
+  setResData: (val: boolean) => void
+) => {
+  event.preventDefault();
+  setLoading(true);
+  const resetData = { passwordToken, newPassword, confirmPassword };
+
+  try {
+    if (passwordToken && newPassword && confirmPassword) {
+      const { data } = await axios.put(auth_reset_password, resetData);
+      if (data.success) {
+        setResData(true);
+        setLoading(false);
+      } else toast.error('An error occurred on the server!!!');
+    }
+  } catch (err) {
+    setLoading(false);
+    console.log(err);
+    toast.error('An error occurred on the server!!!');
   }
 };

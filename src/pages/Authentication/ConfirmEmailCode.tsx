@@ -1,21 +1,30 @@
 import { Link, useNavigate } from 'react-router-dom';
 import authStore from '../../common/state-management/authStore.tsx';
 import globalStore from '../../common/state-management/globalStore.tsx';
-import { registerClientActive } from '../../common/logic-functions/auth.tsx';
+import { forgotPasswordEmail, registerClientActive } from '../../common/logic-functions/auth.tsx';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 
 const ConfirmEmailCode = () => {
-  const { confirmEmailCode, setConfirmEmailCode } = authStore();
+  const { confirmEmailCode, setConfirmEmailCode, email, setEmail } = authStore();
   const { isLoading, setIsLoading, setResData, resData } = globalStore();
   const navigate = useNavigate();
+  const forgot = sessionStorage.getItem('forgot');
 
   useEffect(() => {
-    if (resData) {
+    if (resData && !forgot) {
       setResData(false);
       toast.success('You have successfully registered');
-      setConfirmEmailCode('')
-      navigate('/auth/signin')
+      setConfirmEmailCode('');
+      navigate('/auth/signin');
+    }
+
+    if (resData && forgot) {
+      sessionStorage.removeItem('forgot');
+      toast.success('Check your email and set a new password');
+      setEmail('')
+      setResData(false)
+      navigate('/auth/reset-password')
     }
   }, [resData]);
 
@@ -165,21 +174,29 @@ const ConfirmEmailCode = () => {
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                We send code to your email
+                {forgot === 'forgotPassword' ? 'Enter your email to change your password' : 'We send code to your email'}
               </h2>
 
-              <form onSubmit={e => registerClientActive(e, confirmEmailCode, setIsLoading, setResData)}>
+              <form onSubmit={e => {
+                if (forgot === 'forgotPassword') forgotPasswordEmail(e, setIsLoading, email, setResData);
+                else registerClientActive(e, confirmEmailCode, setIsLoading, setResData);
+              }}
+              >
                 {/*confirm code*/}
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Confirm email code
+                    {forgot === 'forgotPassword' ? 'Enter your email' : 'Confirm email code'}
                   </label>
                   <div className="relative">
                     <input
                       required
-                      value={confirmEmailCode}
-                      onChange={e => setConfirmEmailCode(e.target.value)}
-                      type="number"
+                      value={forgot === 'forgotPassword' ? email : confirmEmailCode}
+                      onChange={e => {
+                        if (forgot === 'forgotPassword') setEmail(e.target.value);
+                        else setConfirmEmailCode(e.target.value);
+                      }}
+                      placeholder={forgot === 'forgotPassword' ? 'Enter your email' : ''}
+                      type={forgot === 'forgotPassword' ? 'email' : 'number'}
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 px-6 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
                   </div>
@@ -197,7 +214,11 @@ const ConfirmEmailCode = () => {
                 <div className="mt-6 text-center">
                   <p>
                     Return to the Register page{' '}
-                    <Link to="/auth/signup" className="text-primary">
+                    <Link
+                      to="/auth/signup"
+                      className="text-primary"
+                      onClick={() => sessionStorage.removeItem('forgot')}
+                    >
                       Sign Up
                     </Link>
                   </p>
