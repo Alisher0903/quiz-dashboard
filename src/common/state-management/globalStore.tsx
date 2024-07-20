@@ -8,6 +8,8 @@ const globalStore = create<Global>((set) => ({
   setIsLoading: (val: boolean) => set({ isLoading: val }),
   resData: false,
   setResData: (val: boolean) => set({ resData: val }),
+  selectVal: '',
+  setSelectVal: (val: string) => set({ selectVal: val }),
 }));
 
 export default globalStore;

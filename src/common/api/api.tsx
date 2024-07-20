@@ -61,7 +61,6 @@ export const quiz_start: string = `${base_url}quiz/start/` // Client Testni Bosh
 export const certificate: string = `${base_url}certificate/` // Client result olishi uchun
 
 
-//================STATISTICS CONTROLLER====================== 4 ta api
-export const statistics_week: string = `${base_url}statistics/week/` // Client result olishi uchun
-export const statistics_regionBy: string = `${base_url}statistics/regionBy/` // Client result olishi uchun
-export const statistics_categoryBy: string = `${base_url}statistics/categoryBy/` // Client result olishi uchun
+//================STATISTICS CONTROLLER======================
+export const statistics_day: string = `${base_url}statistic/dayOfWeek/` // Client result olishi uchun
+export const statistics_categoryBy: string = `${base_url}statistic/categoryBy/` // Client result olishi uchun
