@@ -34,7 +34,9 @@ export const contact_all: string = `${base_url}contact`; //all contact ni get qi
 export const contact_one: string = `${base_url}contact/`; //bitta contact ni get qilish id keladi va delete qilsa xam buladi
 
 //================CATEGORY CONTROLLER====================== 8 ta api
-
+export const category_all: string = `${base_url}category` // all catygory client and admin get save update qilish uchun
+export const category_admin: string = `${base_url}category/list` // all catygory client and admin get save update qilish uchun
+export const category_MAIN: string = `${base_url}category/main` // Admin catycoryning asosiy savolarini get qilishi uchun 
 
 //================AUTH CONTROLLER======================
 export const auth_reset_password: string = `${base_url}auth/reset-password`; //parolni qayta tiklash
