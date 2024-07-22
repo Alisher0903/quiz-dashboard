@@ -16,20 +16,33 @@ import ClientQuizTest from './pages/client/ClientQuizTest.tsx';
 import ClientDashboard from './pages/client/ClientDashboard.tsx';
 import ResetPassword from './pages/Authentication/ResetPasword.tsx';
 import ClientQuizResult from './pages/client/ClientQuizResult.tsx';
+import { setConfig } from './common/api/token.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const tokens = localStorage.getItem('token')
 
   useEffect(() => {
+    setConfig()
+    const refresh = sessionStorage.getItem('refreshes');
     setTimeout(() => setLoading(false), 1000);
-
-    if (pathname === '/') navigate('/dashboard');
+    if (!refresh) {
+      navigate('/auth/signin');
+      sessionStorage.setItem('refreshes', 'true');
+    }
   }, []);
 
   useEffect(() => {
+    setConfig()
     window.scrollTo(0, 0);
+
+    if (!tokens) {
+      if (pathname === '/') window.location.reload();
+      navigate(`/auth/signin`);
+      sessionStorage.clear();
+    }
   }, [pathname]);
 
   return loading ? (
