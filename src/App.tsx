@@ -22,28 +22,31 @@ function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const tokens = localStorage.getItem('token')
+  const tokens = localStorage.getItem('token');
 
   useEffect(() => {
-    setConfig()
+    setConfig();
     const refresh = sessionStorage.getItem('refreshes');
     setTimeout(() => setLoading(false), 1000);
-    if (!refresh) {
+
+    if (!tokens) {
+      sessionStorage.removeItem('refreshes');
       navigate('/auth/signin');
+    } else if (!refresh) {
+      navigate('/dashboard');
       sessionStorage.setItem('refreshes', 'true');
     }
-  }, []);
+  }, [tokens, navigate]);
 
   useEffect(() => {
-    setConfig()
+    setConfig();
     window.scrollTo(0, 0);
 
     if (!tokens) {
-      if (pathname === '/') window.location.reload();
-      navigate(`/auth/signin`);
+      if (pathname !== '/auth/signin') navigate('/auth/signin');
       sessionStorage.clear();
     }
-  }, [pathname]);
+  }, [pathname, tokens, navigate]);
 
   return loading ? (
     <Loader />

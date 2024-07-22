@@ -21,7 +21,7 @@ const Select = ({ label, child, defOption, val, onChange }: {
           onChange={onChange}
           className={`relative z-20 w-full text-black dark:text-white appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary`}
         >
-          <option value="" disabled className="text-body dark:text-bodydark">
+          <option value="" disabled selected className="text-body dark:text-bodydark">
             {defOption}
           </option>
           {child}
