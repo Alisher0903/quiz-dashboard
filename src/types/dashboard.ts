@@ -1,6 +1,8 @@
 export interface Dashboard {
   statisticTable: null | DashboardListStatistic[]
   setStatisticTable(statisticTable: DashboardListStatistic[] | null): void
+  statisticsCard: DashboardListStatisticCards | null
+  setStatisticsCard(val: DashboardListStatisticCards | null): void
 }
 
 export interface DashboardListStatistic {
@@ -8,4 +10,11 @@ export interface DashboardListStatistic {
   lastName: string
   categoryName: string
   correctAnswers: number
+}
+
+export interface DashboardListStatisticCards {
+  categoryCount: number
+  questionCount: number
+  userCount: number
+  resultCount: number
 }
