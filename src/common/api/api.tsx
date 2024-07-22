@@ -27,9 +27,7 @@ export const district_delete: string = `${base_url}district/`; // district delet
 export const district_region_filter: string = `${base_url}district/districts/`; // districtni region lar id buyicha get qilish
 
 //=================QUESTION CONTROLLER===================
-export const question_update: string = `${base_url}question/`; // edit or delete id keladi admin uchun
-export const question_delete: string = `${base_url}question/`;
-export const question_add: string = `${base_url}question`; //admin question qushadi
+export const question_add: string = `${base_url}question`; //admin question crud
 export const question_search: string = `${base_url}question/searchText/`; //admin or client question search qiladi
 export const question_category_all: string = `${base_url}question/list/`; //admin category buyicha question get qiladi
 

@@ -47,7 +47,10 @@ const Test = () => {
           <Select
             defOption={`Type select`}
             child={<>
-              <option value="">salom</option>
+              <option value="SUM">Sum</option>
+              <option value="ONE_CHOICE">One choice</option>
+              <option value="MANY_CHOICE">Many choice</option>
+              <option value="ANY_CORRECT">Any correct</option>
             </>}
           />
         </div>
