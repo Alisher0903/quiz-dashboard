@@ -69,6 +69,7 @@ const Test = () => {
   const closeModal = () => {
     setIsModal(false);
     setCrudTest(defData)
+    setTestType('')
   };
 
   const handleChange = (name: string, value: string | any) => {

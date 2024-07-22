@@ -4,10 +4,15 @@ import testStore from '../common/state-management/testStore.tsx';
 const TestCrudCheck = ({ type }: { type: string }) => {
   const { setOptionDto } = testStore();
   const [questions, setQuestions] = useState([{ id: 1, answer: '', isCorrect: false }]);
+  const [checkedId, setCheckedId] = useState<number | null>(null);
 
   useEffect(() => {
     setOptionDto(questions);
   }, [questions]);
+
+  useEffect(() => {
+    setQuestions([{ id: 1, answer: '', isCorrect: false }]);
+  }, [type]);
 
   const addQuestion = () => {
     const newQuestion = {
@@ -25,11 +30,25 @@ const TestCrudCheck = ({ type }: { type: string }) => {
   };
 
   const handleCheckboxChange = (id: number) => {
-    setQuestions(questions.map(question =>
-      question.id === id
-        ? { ...question, isCorrect: !question.isCorrect }
-        : { ...question, isCorrect: false }
-    ));
+    if (type === 'ANY_CORRECT') {
+      setCheckedId(id);
+      setQuestions(questions.map(question => ({
+        ...question,
+        isCorrect: true
+      })));
+    } else if (type === 'MANY_CHOICE') {
+      setQuestions(questions.map(question =>
+        question.id === id
+          ? { ...question, isCorrect: !question.isCorrect }
+          : question
+      ));
+    } else {
+      setQuestions(questions.map(question =>
+        question.id === id
+          ? { ...question, isCorrect: !question.isCorrect }
+          : { ...question, isCorrect: false }
+      ));
+    }
   };
 
   const handleTextChange = (id: number, newText: string) => {
@@ -122,7 +141,7 @@ const TestCrudCheck = ({ type }: { type: string }) => {
             <div key={question.id} className="flex items-center mb-2">
               <input
                 type="checkbox"
-                checked={question.isCorrect}
+                checked={checkedId === question.id}
                 onChange={() => handleCheckboxChange(question.id)}
                 className="form-checkbox h-5 w-5 text-blue-600"
               />

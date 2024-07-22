@@ -22,8 +22,8 @@ const DropdownUser = () => {
           <span className="block text-xs">Front end developer</span>
         </span>
 
-        <span className="h-12 w-12 rounded-full">
-          <img src={`https://as1.ftcdn.net/v2/jpg/03/46/83/96/1000_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg`} alt="User" />
+        <span className="h-12 w-12 rounded-full overflow-hidden">
+          <img src={`https://as1.ftcdn.net/v2/jpg/03/46/83/96/1000_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg`} alt="User" className={`w-full h-full`} />
         </span>
 
         {/*<svg*/}
