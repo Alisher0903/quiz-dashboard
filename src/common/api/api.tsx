@@ -27,8 +27,8 @@ export const district_delete: string = `${base_url}district/`; // district delet
 export const district_region_filter: string = `${base_url}district/districts/`; // districtni region lar id buyicha get qilish
 
 //=================QUESTION CONTROLLER===================
-export const question_add: string = `${base_url}question`; //admin question crud
-export const question_search: string = `${base_url}question/searchText/`; //admin or client question search qiladi
+export const question_crud: string = `${base_url}question`; //admin question crud
+export const question_search: string = `${base_url}question/searchText/?searchText=`; //admin or client question search qiladi
 export const question_category_all: string = `${base_url}question/list/`; //admin category buyicha question get qiladi
 
 //================CONTACT CONTROLLER======================
@@ -36,9 +36,9 @@ export const contact_all: string = `${base_url}contact`; //all contact ni get qi
 export const contact_one: string = `${base_url}contact/`; //bitta contact ni get qilish id keladi va delete qilsa xam buladi
 
 //================CATEGORY CONTROLLER======================
-export const category_all: string = `${base_url}category` // all catygory client and admin get save update qilish uchun
-export const category_admin: string = `${base_url}category/list` // all catygory client and admin get save update qilish uchun
-export const category_MAIN: string = `${base_url}category/main` // Admin catycoryning asosiy savolarini get qilishi uchun 
+export const category_all: string = `${base_url}category`; // all catygory client and admin get save update qilish uchun
+export const category_admin: string = `${base_url}category/list`; // all catygory client and admin get save update qilish uchun
+export const category_MAIN: string = `${base_url}category/main`; // Admin catycoryning asosiy savolarini get qilishi uchun
 
 //================AUTH CONTROLLER======================
 export const auth_reset_password: string = `${base_url}auth/reset-password`; //parolni qayta tiklash
@@ -49,20 +49,20 @@ export const auth_login: string = `${base_url}auth/login`; //login
 
 
 //================VIDEO UPLOAD CONTROLLER====================== 4 ta api
-export const api_videos_upload: string = `${base_url}api/videos/upload` // Video apload qilish admin busa kere
-export const api_videos_files: string = `${base_url}api/videos/files/` // video get qilish client uchun busa kerak 
-export const api_videos_files_update: string = `${base_url}api/videos/update/` // video update qilish c
-export const api_videos_delete: string = `${base_url}api/videos/delete/` // video delete qilish Id bilan 
+export const api_videos_upload: string = `${base_url}api/videos/upload`; // Video apload qilish admin busa kere
+export const api_videos_files: string = `${base_url}api/videos/files/`; // video get qilish client uchun busa kerak
+export const api_videos_files_update: string = `${base_url}api/videos/update/`; // video update qilish c
+export const api_videos_delete: string = `${base_url}api/videos/delete/`; // video delete qilish Id bilan
 
 //================QUIZ CONTROLLER======================
-export const quiz_pass: string = `${base_url}quiz/pass` // Client Testni Submit qilishi uchun  
-export const quiz_start: string = `${base_url}quiz/start/` // Client Testni Boshlash uchun qilishi uchun  
+export const quiz_pass: string = `${base_url}quiz/pass`; // Client Testni Submit qilishi uchun
+export const quiz_start: string = `${base_url}quiz/start/`; // Client Testni Boshlash uchun qilishi uchun
 
 
 //================CERTIFICATE CONTROLLER====================== 1 ta api
-export const certificate: string = `${base_url}certificate/` // Client result olishi uchun
+export const certificate: string = `${base_url}certificate/`; // Client result olishi uchun
 
 
 //================STATISTICS CONTROLLER======================
-export const statistics_day: string = `${base_url}statistic/dayOfWeek/` // Client result olishi uchun
-export const statistics_categoryBy: string = `${base_url}statistic/categoryBy/` // Client result olishi uchun
+export const statistics_day: string = `${base_url}statistic/dayOfWeek/`; // Client result olishi uchun
+export const statistics_categoryBy: string = `${base_url}statistic/categoryBy/`; // Client result olishi uchun

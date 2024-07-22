@@ -91,13 +91,10 @@ const Category = () => {
           </div>}
         />
       </div>
-      <UniversalTable
-        key={`category${1}`}
-        thead={thead}
-      >
+      <UniversalTable thead={thead}>
         {categoryData ? (
           categoryData.map((item, i) => (
-            <tr>
+            <tr key={i}>
               <td className="border-b border-[#eee] p-5 dark:border-strokedark">
                 <h5 className="font-medium text-black dark:text-white">
                   {i + 1}

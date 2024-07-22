@@ -2,13 +2,17 @@ import { ReactNode, useEffect, useState } from 'react';
 import globalStore from '../../common/state-management/globalStore.tsx';
 
 const Select = ({ label, child, defOption }: { label?: string, child: ReactNode, defOption: string }) => {
+  const {setSelectVal, selectVal} = globalStore()
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
-  const {setSelectVal} = globalStore()
 
   useEffect(() => {
     setSelectVal(selectedOption)
   }, [selectedOption]);
+
+  useEffect(() => {
+    !selectVal && setSelectedOption('')
+  }, [selectVal]);
 
   const changeTextColor = () => setIsOptionSelected(true);
 
