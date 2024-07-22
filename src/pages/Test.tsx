@@ -81,7 +81,7 @@ const Test = () => {
     setCrudTest(defData);
     setTestType('');
     setEditOrDeleteStatus('');
-    serEditOrDeleteID('')
+    serEditOrDeleteID('');
   };
 
   const handleChange = (name: string, value: string | any) => {
@@ -175,15 +175,16 @@ const Test = () => {
                       openModal();
                       getOneTest(setCrudTest, item.id);
                       setEditOrDeleteStatus('put');
-                      serEditOrDeleteID(item.id)
+                      serEditOrDeleteID(item.id);
                     }} />
                   </button>
                   <button className="hover:text-red-600">
                     <MdDelete
                       className={`text-2xl duration-300`}
                       onClick={() => {
-                        serEditOrDeleteID(item.id)
+                        serEditOrDeleteID(item.id);
                         setEditOrDeleteStatus('delete');
+                        openModal();
                       }}
                     />
                   </button>
@@ -206,51 +207,57 @@ const Test = () => {
       {/*ADD EDIT MODAL*/}
       <GlobalModal onClose={closeModal} isOpen={isModal}>
         <div className={`w-54 sm:w-64 md:w-96 lg:w-[40rem]`}>
-          <input
-            type="text"
-            value={crudTest.name}
-            onChange={(e) => handleChange('name', e.target.value)}
-            placeholder="Enter question"
-            className="w-full rounded-lg border border-stroke bg-transparent py-2 px-5 my-4 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-          />
-          <input
-            type="number"
-            value={crudTest.score}
-            onChange={(e) => handleChange('score', e.target.value)}
-            placeholder="Enter ball"
-            className="w-full rounded-lg border border-stroke bg-transparent py-2 px-5 mb-4 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-          />
-          <div className={`flex flex-col gap-4`}>
-            <Select
-              val={`${crudTest.categoryId}`}
-              onChange={e => handleChange('categoryId', e.target.value)}
-              defOption={`Category select`}
-              child={categoryData && (
-                categoryData.map((item, idx) => (
-                  <option value={item.id} key={idx}>{item.name}</option>
-                )))}
-            />
-            <Select
-              val={`${crudTest.type}`}
-              onChange={e => {
-                setTestType(e.target.value);
-                handleChange('type', e.target.value);
-              }}
-              defOption={`Type select`}
-              child={<>
-                <option value="SUM">Sum</option>
-                <option value="ONE_CHOICE">One choice</option>
-                <option value="MANY_CHOICE">Many choice</option>
-                <option value="ANY_CORRECT">Any correct</option>
-              </>}
-            />
-          </div>
-          <TestCrudCheck type={crudTest.type ? crudTest.type : testType} />
+          {editOrDeleteStatus === 'delete' ? (
+            <p className={`my-7 text-center font-semibold`}>Do you want to delete Category?</p>
+          ) : (
+            <>
+              <input
+                type="text"
+                value={crudTest.name}
+                onChange={(e) => handleChange('name', e.target.value)}
+                placeholder="Enter question"
+                className="w-full rounded-lg border border-stroke bg-transparent py-2 px-5 my-4 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+              />
+              <input
+                type="number"
+                value={crudTest.score}
+                onChange={(e) => handleChange('score', e.target.value)}
+                placeholder="Enter ball"
+                className="w-full rounded-lg border border-stroke bg-transparent py-2 px-5 mb-4 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+              />
+              <div className={`flex flex-col gap-4`}>
+                <Select
+                  val={`${crudTest.categoryId}`}
+                  onChange={e => handleChange('categoryId', e.target.value)}
+                  defOption={`Category select`}
+                  child={categoryData && (
+                    categoryData.map((item, idx) => (
+                      <option value={item.id} key={idx}>{item.name}</option>
+                    )))}
+                />
+                <Select
+                  val={`${crudTest.type}`}
+                  onChange={e => {
+                    setTestType(e.target.value);
+                    handleChange('type', e.target.value);
+                  }}
+                  defOption={`Type select`}
+                  child={<>
+                    <option value="SUM">Sum</option>
+                    <option value="ONE_CHOICE">One choice</option>
+                    <option value="MANY_CHOICE">Many choice</option>
+                    <option value="ANY_CORRECT">Any correct</option>
+                  </>}
+                />
+              </div>
+              <TestCrudCheck type={crudTest.type ? crudTest.type : testType} />
+            </>
+          )}
           <div className={`flex justify-end items-center mt-5 mb-3 gap-5`}>
             <AddButtons children={`Close`} onClick={closeModal} />
             <AddButtons
               children={isLoading ? 'loading...' : `Save`}
-              disabled={!(crudTest.type && crudTest.score && crudTest.name && crudTest.categoryId && crudTest.optionDtos)}
+              disabled={editOrDeleteStatus === 'delete' ? false : !(crudTest.type && crudTest.score && crudTest.name && crudTest.categoryId && crudTest.optionDtos)}
               onClick={() => {
                 editOrDeleteStatus ? (
                   adminTestCrud({
