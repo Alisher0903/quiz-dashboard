@@ -9,32 +9,34 @@ import GlobalModal from '../../components/modal/modal';
 import AddButtons from '../../components/buttons/buttons';
 import { useNavigate } from 'react-router-dom';
 
+const thead: IThead[] = [
+  { id: 1, name: 'T/r' },
+  { id: 2, name: 'Category name' },
+  { id: 4, name: 'Action' },
+];
+
 const ClientDashboard = () => {
   const [Category, setCategory] = useState([]);
   const [categoryId, setCategoryId] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const navigation = useNavigate()
 
-  const toggleModal = () => setIsOpen(!isOpen)
+  useEffect(() => {
+    getCategory();
+  }, []);
 
   const getCategory = async () => {
     try {
       const res = await axios.get(`${category_all}`, config);
       setCategory(res.data.body);
-      console.log(res.data.body);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error('error to fetching');
     }
   };
-  useEffect(() => {
-    getCategory();
-  }, []);
-  const thead: IThead[] = [
-    { id: 1, name: 'T/r' },
-    { id: 2, name: 'Category name' },
-    { id: 4, name: 'Action' },
-  ];
+
+  const toggleModal = () => setIsOpen(!isOpen)
+
   return (
     <div className='lg:px-40'>
       <UniversalTable thead={thead}>

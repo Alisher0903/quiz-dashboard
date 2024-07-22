@@ -37,7 +37,6 @@ const Dashboard: React.FC = () => {
   }, [page, catwgoryID]);
 
   const onChange = (page: number): void => setPage(page - 1);
-  console.log(page);
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">

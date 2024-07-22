@@ -29,7 +29,6 @@ function App() {
     const refresh = sessionStorage.getItem('refreshes');
     setTimeout(() => setLoading(false), 1000);
     if (!refresh) {
-      console.log(!refresh);
       navigate('/auth/signin');
       sessionStorage.setItem('refreshes', 'true');
     }

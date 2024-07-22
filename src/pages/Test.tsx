@@ -119,8 +119,8 @@ const Test = () => {
             onChange={e => testFilterCategory(e.target.value, setTestList)}
             defOption={`Category select`}
             child={categoryData && (
-              categoryData.map((item, idx) => (
-                <option value={item.id} key={idx}>{item.name}</option>
+              categoryData.map(item => (
+                <option value={item.id} key={item.id}>{item.name}</option>
               )))}
           />
           <Select
@@ -142,7 +142,7 @@ const Test = () => {
       <UniversalTable thead={thead}>
         {testList ? (
           testList.map((item, idx) => (
-            <tr key={idx}>
+            <tr key={item.id}>
               <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                 <h5 className="font-medium text-black dark:text-white">
                   {idx + 1}
@@ -232,7 +232,7 @@ const Test = () => {
                   defOption={`Category select`}
                   child={categoryData && (
                     categoryData.map((item, idx) => (
-                      <option value={item.id} key={idx}>{item.name}</option>
+                      <option value={item.id} key={item.id}>{item.name}</option>
                     )))}
                 />
                 <Select

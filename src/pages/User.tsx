@@ -76,11 +76,6 @@ const User = () => {
     fetchUsers(currentPage);
   }, [currentPage]);
 
-  useEffect(() => {
-    console.log('Total Pages:', totalPages);
-    console.log('Page Size:', pageSize);
-  }, [totalPages, pageSize]);
-
   return (
     <>
       <Breadcrumb pageName="User" />

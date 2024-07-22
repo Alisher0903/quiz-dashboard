@@ -1,24 +1,21 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import useTestStore from "../../common/state-management/testStore";
-import { fetchQuiz, getCertificate, sendResults } from "../../common/logic-functions/test";
-import { TestOptionDtos } from "../../types/test";
-import AddButtons from "../../components/buttons/buttons";
-import { api_videos_files } from "../../common/api/api";
-import globalStore from "../../common/state-management/globalStore";
-import { Skeleton } from "antd";
+import { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import useTestStore from '../../common/state-management/testStore';
+import { fetchQuiz, sendResults } from '../../common/logic-functions/test';
+import { TestOptionDtos } from '../../types/test';
+import AddButtons from '../../components/buttons/buttons';
+import { api_videos_files } from '../../common/api/api';
+import globalStore from '../../common/state-management/globalStore';
+import { Skeleton } from 'antd';
 
 const ClientQuizTest = () => {
-  const { quizData, setQuizData, setCurrentIndex, currentIndex, setResult, resultId } = useTestStore();
-  const { isLoading, setIsLoading } = globalStore()
+  const { quizData, setQuizData, setCurrentIndex, currentIndex, setResult } = useTestStore();
+  const { isLoading, setIsLoading } = globalStore();
   const [remainingTime, setRemainingTime] = useState<number>(0);
   const [answers, setAnswers] = useState<{ [key: number]: any }>({});
   const [isNextDisabled, setIsNextDisabled] = useState(true);
   const [isBtnLoading, setIsBtnLoading] = useState(false);
-
   const navigate = useNavigate();
-  console.log('Result id', resultId);
-
 
   const payload = quizData.quizList.map((question) => {
     const answer = answers[question.id];
@@ -229,9 +226,10 @@ const ClientQuizTest = () => {
             <p>Remaining Time: {formatTime(remainingTime ? remainingTime : 0)}</p>
             <div className="flex gap-5">
               <AddButtons onClick={currentIndex + 1 === quizData.quizList.length ? () => {
-                sendResults(id, time, quizData.quiz.countAnswers, payload, navigate, setResult, setIsBtnLoading, setIsLoading)
+                sendResults(id, time, quizData.quiz.countAnswers, payload, navigate, setResult, setIsBtnLoading, setIsLoading);
 
-              } : handleNextQuestion} disabled={isBtnLoading ? isBtnLoading : isNextDisabled} >{currentIndex + 1 === quizData.quizList.length ? `${isBtnLoading ? 'Loading...' : 'Submit'}` : 'Next'}</AddButtons>
+              } : handleNextQuestion}
+                          disabled={isBtnLoading ? isBtnLoading : isNextDisabled}>{currentIndex + 1 === quizData.quizList.length ? `${isBtnLoading ? 'Loading...' : 'Submit'}` : 'Next'}</AddButtons>
             </div>
           </div>
         </div>

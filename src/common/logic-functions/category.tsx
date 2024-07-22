@@ -64,6 +64,6 @@ export const deleteCategory = async (idIn: string | number, seLoading: (val: boo
   } catch (err) {
     seLoading(false);
     toast.error('Error deleting category');
-    console.log(err);
+    console.error(err);
   }
 };
