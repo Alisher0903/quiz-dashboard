@@ -9,6 +9,8 @@ export interface Test {
   setCurrentIndex: (val: number) => void
   testList: TestList[] | null
   setTestList: (val: TestList[] | null) => void
+  optionDto: OptionsDto[] | null
+  setOptionDto: (val: OptionsDto[] | null) => void
 }
 
 export interface TestMainData {
@@ -60,5 +62,11 @@ export interface OptionDtoList {
   id: number;
   answer: string;
   questionId: number;
+  isCorrect: boolean;
+}
+
+export interface OptionsDto {
+  id: number;
+  answer: string;
   isCorrect: boolean;
 }

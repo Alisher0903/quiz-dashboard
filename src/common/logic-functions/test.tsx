@@ -51,19 +51,19 @@ export const getCertificate = async (id: number, setResult: (val: string) => voi
 //===================ADMIN=========================
 // test crud function
 export const adminTestCrud = async (
-    {
-        urlType,
-        crudData,
-        setLoading,
-        setResData,
-        editOrDeleteID
-    }: {
-        urlType: string,
-        crudData: TestList,
-        setLoading: (val: boolean) => void,
-        setResData: (val: boolean) => void,
-        editOrDeleteID?: string
-    }
+  {
+    urlType,
+    crudData,
+    setLoading,
+    setResData,
+    editOrDeleteID
+  }: {
+    urlType: string,
+    crudData: any,
+    setLoading: (val: boolean) => void,
+    setResData: (val: boolean) => void,
+    editOrDeleteID?: string
+  }
 ) => {
     setLoading(true);
     if (urlType === 'post') {

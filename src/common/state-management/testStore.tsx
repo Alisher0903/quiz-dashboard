@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Test, TestList, TestMainData } from '../../types/test.ts';
+import { OptionsDto, Test, TestList, TestMainData } from '../../types/test.ts';
 
 const useTestStore = create<Test>((set) => ({
   quizData: {
@@ -22,7 +22,9 @@ const useTestStore = create<Test>((set) => ({
 
   // admin u/n
   testList: null,
-  setTestList: (val: TestList[] | null) => set({ testList: val })
+  setTestList: (val: TestList[] | null) => set({ testList: val }),
+  optionDto: null,
+  setOptionDto: (val: null | OptionsDto[]) => set({ optionDto: val })
 }));
 
 export default useTestStore;
