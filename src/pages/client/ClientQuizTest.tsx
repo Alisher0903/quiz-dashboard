@@ -14,6 +14,8 @@ const ClientQuizTest = () => {
   const [remainingTime, setRemainingTime] = useState<number>(0);
   const [answers, setAnswers] = useState<{ [key: number]: any }>({});
   const [isNextDisabled, setIsNextDisabled] = useState(true);
+  const [isBtnLoading, setIsBtnLoading] = useState(false);
+
   const navigate = useNavigate();
   console.log('Result id', resultId);
 
@@ -107,9 +109,9 @@ const ClientQuizTest = () => {
             <div className="flex py-5 justify-center">
               <p className="text-xl">{name}</p>
             </div>
-            {attachmentId ? <div>
-              <img src={api_videos_files + attachmentId} alt="" />
-            </div> : ''}
+            {attachmentId.length > 0 && <div>
+              <img src={api_videos_files + attachmentId[0]} alt="" />
+            </div>}
             <div className="flex flex-col">
               <label className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-white">
                 Enter your Answer
@@ -130,6 +132,9 @@ const ClientQuizTest = () => {
             <div className="flex py-5 justify-center">
               <p className="text-xl">{name}</p>
             </div>
+            {attachmentId.length > 0 && <div>
+              <img src={api_videos_files + attachmentId[0]} alt="" />
+            </div>}
             <ul className="text-sm flex flex-col gap-2 font-medium dark:border-gray-600 dark:text-white">
               {optionList.map((item, index) => (
                 <li key={index} className="w-full border rounded-lg border-gray-200 dark:border-gray-600">
@@ -159,6 +164,9 @@ const ClientQuizTest = () => {
             <div className="flex py-5 justify-center">
               <p className="text-xl">{name}</p>
             </div>
+            {attachmentId.length > 0 && <div>
+              <img src={api_videos_files + attachmentId[0]} alt="" />
+            </div>}
             <ul className="text-sm flex flex-col gap-2 font-medium dark:border-gray-600 dark:text-white">
               {optionList.map((item, index) => (
                 <li key={index} className="w-full border rounded-lg border-gray-200 dark:border-gray-600">
@@ -221,9 +229,9 @@ const ClientQuizTest = () => {
             <p>Remaining Time: {formatTime(remainingTime ? remainingTime : 0)}</p>
             <div className="flex gap-5">
               <AddButtons onClick={currentIndex + 1 === quizData.quizList.length ? () => {
-                sendResults(id, time, quizData.quiz.countAnswers, payload, navigate, setResult, setIsLoading)
+                sendResults(id, time, quizData.quiz.countAnswers, payload, navigate, setResult, setIsBtnLoading, setIsLoading)
 
-              } : handleNextQuestion} disabled={isLoading ? isLoading : isNextDisabled} >{currentIndex + 1 === quizData.quizList.length ? `${isLoading ? 'Loading...' : 'Submit'}` : 'Next'}</AddButtons>
+              } : handleNextQuestion} disabled={isBtnLoading ? isBtnLoading : isNextDisabled} >{currentIndex + 1 === quizData.quizList.length ? `${isBtnLoading ? 'Loading...' : 'Submit'}` : 'Next'}</AddButtons>
             </div>
           </div>
         </div>
