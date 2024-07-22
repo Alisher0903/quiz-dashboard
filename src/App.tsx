@@ -33,7 +33,7 @@ function App() {
       sessionStorage.removeItem('refreshes');
       navigate('/auth/signin');
     } else if (!refresh) {
-      navigate('/dashboard');
+      // navigate('/dashboard');
       sessionStorage.setItem('refreshes', 'true');
     }
   }, [tokens, navigate]);
