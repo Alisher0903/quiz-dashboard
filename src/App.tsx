@@ -8,7 +8,7 @@ import Dashboard from './pages/Dashboard.tsx';
 import Category from './pages/Category.tsx';
 import Test from './pages/Test.tsx';
 import User from './pages/User.tsx';
-import Settings from './pages/Settings';
+// import Settings from './pages/Settings';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import ConfirmEmailCode from './pages/Authentication/ConfirmEmailCode.tsx';
@@ -29,6 +29,7 @@ function App() {
     const refresh = sessionStorage.getItem('refreshes');
     setTimeout(() => setLoading(false), 1000);
     if (!refresh) {
+      console.log(!refresh);
       navigate('/auth/signin');
       sessionStorage.setItem('refreshes', 'true');
     }
@@ -87,15 +88,15 @@ function App() {
             </>
           }
         />
-        <Route
-          path="/settings"
-          element={
-            <>
-              <PageTitle title="Admin | Settings" />
-              <Settings />
-            </>
-          }
-        />
+        {/*<Route*/}
+        {/*  path="/settings"*/}
+        {/*  element={*/}
+        {/*    <>*/}
+        {/*      <PageTitle title="Admin | Settings" />*/}
+        {/*      <Settings />*/}
+        {/*    </>*/}
+        {/*  }*/}
+        {/*/>*/}
         <Route
           path="/auth/signin"
           element={

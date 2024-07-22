@@ -12,20 +12,42 @@ interface ChartData {
 
 const ChartOne: React.FC = () => {
   const [chart, setChart] = useState<ChartData[]>([]);
+  const [state, setState] = useState<any>({
+    series: [
+      {
+        name: 'Number of employed',
+        data: chart.map((item) => item.value),
+      },
+    ],
+  });
 
-  const getStatistics = async () => {
-    try {
-      const { data } = await axios.get(statistics_day, config);
-      setChart(data.body);
-      console.log(data.body);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  console.log(chart);
 
   useEffect(() => {
     getStatistics();
   }, []);
+
+  useEffect(() => {
+    setState({
+      series: [
+        {
+          name: 'Number of employed',
+          data: chart.map((item: any) => item.count),
+        },
+      ],
+    });
+  }, [chart]);
+
+  const getStatistics = async () => {
+    try {
+      const { data } = await axios.get(statistics_day, config);
+      if (data.success) setChart(data.body);
+      else setChart([])
+    } catch (error) {
+      setChart([])
+      console.log(error);
+    }
+  };
 
   const options: ApexOptions = {
     legend: {
@@ -121,41 +143,6 @@ const ChartOne: React.FC = () => {
       max: 100,
     },
   };
-
-  const [state, setState] = useState({
-    series: [
-      {
-        name: 'Product One',
-        data: chart.map((item) => item.value), // Example data mapping
-      },
-      {
-        name: 'Product Two',
-        data: chart.map((item) => item.value), // Example data mapping
-      },
-    ],
-  });
-
-  const handleReset = () => {
-    setState((prevState) => ({
-      ...prevState,
-    }));
-  };
-
-  useEffect(() => {
-    // Update chart series data when chart state changes
-    setState({
-      series: [
-        {
-          name: 'Product One',
-          data: chart.map((item: any) => item.count), 
-        },
-        // {
-        //   name: 'Product Two',
-        //   data: chart.map((item) => item.value), // Example data mapping
-        // },
-      ],
-    });
-  }, [chart]);
 
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-8">
