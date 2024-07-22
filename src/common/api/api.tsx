@@ -37,12 +37,12 @@ export const question_category_all: string = `${base_url}question/list/`; //admi
 export const contact_all: string = `${base_url}contact`; //all contact ni get qilish shu yulni uzidan edit xam qilsa buladi va add xam
 export const contact_one: string = `${base_url}contact/`; //bitta contact ni get qilish id keladi va delete qilsa xam buladi
 
-//================CATEGORY CONTROLLER====================== 8 ta api
+//================CATEGORY CONTROLLER======================
 export const category_all: string = `${base_url}category` // all catygory client and admin get save update qilish uchun
 export const category_admin: string = `${base_url}category/list` // all catygory client and admin get save update qilish uchun
 export const category_MAIN: string = `${base_url}category/main` // Admin catycoryning asosiy savolarini get qilishi uchun 
 
-//================AUTH CONTROLLER====================== 4ta
+//================AUTH CONTROLLER======================
 export const auth_reset_password: string = `${base_url}auth/reset-password`; //parolni qayta tiklash
 export const auth_forgot_password: string = `${base_url}auth/forgot-password`; //parolni unitish
 export const auth_activate: string = `${base_url}auth/activate`; //?????? bilmadim
@@ -56,7 +56,7 @@ export const api_videos_files: string = `${base_url}api/videos/files/` // video 
 export const api_videos_files_update: string = `${base_url}api/videos/update/` // video update qilish c
 export const api_videos_delete: string = `${base_url}api/videos/delete/` // video delete qilish Id bilan 
 
-//================QUIZ CONTROLLER====================== 2 ta api
+//================QUIZ CONTROLLER======================
 export const quiz_pass: string = `${base_url}quiz/pass` // Client Testni Submit qilishi uchun  
 export const quiz_start: string = `${base_url}quiz/start/` // Client Testni Boshlash uchun qilishi uchun  
 
