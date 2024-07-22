@@ -26,6 +26,9 @@ const ClientQuizResult = () => {
           </div>
           <div>
             <p>{result}</p>
+            <p className={`text-center my-3`}>
+              <Link className="text-blue-600 hover:underline" to={'/client/dashboard'}>Back to home</Link>
+            </p>
           </div>
         </div>
       </div>

@@ -15,7 +15,7 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
         )}
 
         <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
-          {!(pathname.startsWith('/auth') || pathname.startsWith('/client')) && (
+          {!(pathname.startsWith('/auth')) && (
             <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           )}
 
