@@ -71,7 +71,7 @@ const DropdownUser = () => {
                     fill=""
                   />
                 </svg>
-                My Profile
+                Users
               </Link>
             </li>
             <li>
@@ -96,7 +96,7 @@ const DropdownUser = () => {
                     fill=""
                   />
                 </svg>
-                Settings
+                Category settings
               </Link>
             </li>
           </ul>
