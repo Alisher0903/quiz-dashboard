@@ -128,14 +128,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </li>
 
               {/* <!-- Menu Item Settings --> */}
-              <li>
-                <NavLink
-                  to="/settings"
-                  className={`${styles.sidebar} ${pathname.includes('settings') && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
-                >
-                  Settings
-                </NavLink>
-              </li>
+              {/*<li>*/}
+              {/*  <NavLink*/}
+              {/*    to="/settings"*/}
+              {/*    className={`${styles.sidebar} ${pathname.includes('settings') && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}*/}
+              {/*  >*/}
+              {/*    Settings*/}
+              {/*  </NavLink>*/}
+              {/*</li>*/}
             </ul>
           </div>
         </nav>
