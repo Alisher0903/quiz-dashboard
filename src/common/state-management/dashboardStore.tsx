@@ -3,9 +3,11 @@ import { Dashboard, DashboardListStatistic, DashboardListStatisticCards } from '
 
 const dashboardStore = create<Dashboard>((set) => ({
   statisticTable: null,
-  setStatisticTable: (val: DashboardListStatistic[] | null) => set({statisticTable: val}),
+  setStatisticTable: (val: DashboardListStatistic[] | null) => set({ statisticTable: val }),
   statisticsCard: null,
-  setStatisticsCard: (val: DashboardListStatisticCards | null) => set({statisticsCard: val}),
+  setStatisticsCard: (val: DashboardListStatisticCards | null) => set({ statisticsCard: val }),
+  page: 0,
+  setPage: (val: number | string) => set({ page: val })
 }));
 
 export default dashboardStore;

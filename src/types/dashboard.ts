@@ -3,6 +3,8 @@ export interface Dashboard {
   setStatisticTable(statisticTable: DashboardListStatistic[] | null): void
   statisticsCard: DashboardListStatisticCards | null
   setStatisticsCard(val: DashboardListStatisticCards | null): void
+  page: number | string
+  setPage(page: number | string): void
 }
 
 export interface DashboardListStatistic {

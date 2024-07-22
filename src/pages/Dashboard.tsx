@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import CardDataStats from '../components/CardDataStats.tsx';
 import ChartOne from '../components/Charts/ChartOne.tsx';
 import UniversalTable, { IThead } from '../components/Tables/UniversalTable.tsx';
@@ -8,9 +8,10 @@ import categoryStore from '../common/state-management/categoryStore.tsx';
 import { getAdminDashboardStatistic, getAdminDashboardStatisticCard } from '../common/logic-functions/dashboard.tsx';
 import dashboardStore from '../common/state-management/dashboardStore.tsx';
 import { BiCategory } from 'react-icons/bi';
-import { FaCircleQuestion, FaFileCircleQuestion } from 'react-icons/fa6';
+import { FaCircleQuestion } from 'react-icons/fa6';
 import { PiArrowsOutCardinal } from 'react-icons/pi';
 import { FaUsers } from 'react-icons/fa';
+import { Pagination } from 'antd';
 
 const thead: IThead[] = [
   { id: 1, name: 'T/r' },
@@ -22,13 +23,21 @@ const thead: IThead[] = [
 
 const Dashboard: React.FC = () => {
   const { setCategoryData, categoryData } = categoryStore();
-  const { statisticTable, setStatisticTable, statisticsCard, setStatisticsCard } = dashboardStore();
+  const { statisticTable, setStatisticTable, statisticsCard, setStatisticsCard, page, setPage } = dashboardStore();
+  const [totalPage, setTotalPage] = useState(0);
+  const [catwgoryID, setCategoryID] = useState(null);
 
   useEffect(() => {
     getAdminCategory(setCategoryData);
     getAdminDashboardStatisticCard(setStatisticsCard);
   }, []);
 
+  useEffect(() => {
+    catwgoryID && getAdminDashboardStatistic(setStatisticTable, catwgoryID, page, setTotalPage);
+  }, [page, catwgoryID]);
+
+  const onChange = (page: number): void => setPage(page - 1);
+  console.log(page);
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
@@ -61,7 +70,7 @@ const Dashboard: React.FC = () => {
         <div className={`max-w-[30%] mb-6`}>
           {categoryData && (
             <Select
-              onChange={e => getAdminDashboardStatistic(setStatisticTable, e.target.value)}
+              onChange={e => setCategoryID(e.target.value)}
               defOption={`Select your subject`}
               child={categoryData.map(item => (
                 <option value={item.id} className="text-body dark:text-bodydark" key={item.id}>
@@ -80,7 +89,7 @@ const Dashboard: React.FC = () => {
               <tr key={idx}>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <h5 className="font-medium text-black dark:text-white">
-                    {idx + 1}
+                    {(+page * 10) + idx + 1}
                   </h5>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
@@ -113,6 +122,16 @@ const Dashboard: React.FC = () => {
             </tr>
           )}
         </UniversalTable>
+        {totalPage > 0 && (
+          <Pagination
+            showSizeChanger={false}
+            responsive={true}
+            defaultCurrent={1}
+            total={totalPage}
+            onChange={onChange}
+            rootClassName={`mt-10 mb-5`}
+          />
+        )}
       </div>
     </>
   );
