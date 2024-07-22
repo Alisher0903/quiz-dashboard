@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import useTestStore from "../../common/state-management/testStore";
-import { fetchQuiz, sendResults } from "../../common/logic-functions/test";
+import { fetchQuiz, getCertificate, sendResults } from "../../common/logic-functions/test";
 import { TestOptionDtos } from "../../types/test";
 import AddButtons from "../../components/buttons/buttons";
 import { api_videos_files } from "../../common/api/api";
+import globalStore from "../../common/state-management/globalStore";
+import { Skeleton } from "antd";
 
 const ClientQuizTest = () => {
-  const { quizData, setQuizData, setCurrentIndex, currentIndex } = useTestStore();
+  const { quizData, setQuizData, setCurrentIndex, currentIndex, setResult, resultId } = useTestStore();
+  const { isLoading, setIsLoading } = globalStore()
   const [remainingTime, setRemainingTime] = useState<number>(0);
   const [answers, setAnswers] = useState<{ [key: number]: any }>({});
-  const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: boolean }>({});
   const [isNextDisabled, setIsNextDisabled] = useState(true);
   const navigate = useNavigate();
+  console.log('Result id', resultId);
+
 
   const payload = quizData.quizList.map((question) => {
     const answer = answers[question.id];
@@ -30,13 +34,11 @@ const ClientQuizTest = () => {
     }
   }).filter(answer => answer !== null);
 
-  console.log('payloaddddddddddddddd', payload);
-
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
     if (id) {
-      fetchQuiz(id, setQuizData);
+      fetchQuiz(id, setQuizData, setIsLoading);
     }
   }, [id, setQuizData]);
 
@@ -54,58 +56,45 @@ const ClientQuizTest = () => {
     return () => clearInterval(timer);
   }, []);
 
+  const time = Math.round(remainingTime / 60);
+
   useEffect(() => {
-    setSelectedOptions({});
     setIsNextDisabled(true);
   }, [currentIndex]);
 
   useEffect(() => {
-    if (quizData.quizList[currentIndex]) {
-      const currentQuestion = quizData.quizList[currentIndex];
-      let hasSelected = false;
-      if (currentQuestion.type === 'ONE_CHOICE' || currentQuestion.type === 'ANY_CORRECT') {
-        hasSelected = Object.values(selectedOptions).some((value, index) => value && quizData.quizList[currentIndex].optionDtos[index]?.id === answers[currentQuestion.id]);
-      } else if (currentQuestion.type === 'MANY_CHOICE') {
-        hasSelected = answers[currentQuestion.id]?.length > 0;
-      } else if (currentQuestion.type === 'SUM') {
-        hasSelected = answers[currentQuestion.id] !== undefined;
+    const currentQuestion = quizData.quizList[currentIndex];
+    let hasSelected = false;
+    if (currentQuestion) {
+      switch (currentQuestion.type) {
+        case 'ONE_CHOICE':
+        case 'ANY_CORRECT':
+          hasSelected = answers[currentQuestion.id] !== undefined;
+          break;
+        case 'MANY_CHOICE':
+          hasSelected = answers[currentQuestion.id]?.length > 0;
+          break;
+        case 'SUM':
+          hasSelected = answers[currentQuestion.id] !== undefined;
+          break;
+        default:
+          break;
       }
-
-      setIsNextDisabled(!hasSelected);
     }
-  }, [selectedOptions, answers, currentIndex, quizData.quizList]);
+    setIsNextDisabled(!hasSelected);
+  }, [answers, currentIndex, quizData.quizList]);
 
   const handleAnswerChange = (questionId: number, value: any) => {
     setAnswers(prevAnswers => ({
       ...prevAnswers,
       [questionId]: value
     }));
-    setIsNextDisabled(false);
   };
 
   const handleNextQuestion = () => {
     if (currentIndex < quizData.quizList.length - 1) {
       setCurrentIndex(currentIndex + 1);
-      setIsNextDisabled(true);
     }
-  };
-
-  const handleOptionChange = (index: number) => {
-    setSelectedOptions((prevSelectedOptions) => {
-      const newSelectedOptions = { ...prevSelectedOptions };
-      if (quizData.quizList[currentIndex].type === 'ONE_CHOICE' || quizData.quizList[currentIndex].type === 'ANY_CORRECT') {
-        newSelectedOptions[index] = !newSelectedOptions[index];
-        for (const key in newSelectedOptions) {
-          if (key !== index.toString()) {
-            newSelectedOptions[key] = false;
-          }
-        }
-      } else {
-        newSelectedOptions[index] = !newSelectedOptions[index];
-      }
-      return newSelectedOptions;
-    });
-    setIsNextDisabled(false);
   };
 
   const sortQuiz = (type: string, optionList: TestOptionDtos[] | undefined, name: string, attachmentId: string[]) => {
@@ -146,17 +135,14 @@ const ClientQuizTest = () => {
                 <li key={index} className="w-full border rounded-lg border-gray-200 dark:border-gray-600">
                   <div className="flex items-center ps-3">
                     <input
-                      id={`checkbox-${index}`}
+                      id={`radio-${index}`}
                       type="radio"
-                      checked={!!selectedOptions[index]}
-                      onChange={() => {
-                        handleAnswerChange(item.questionId, item.id);
-                        handleOptionChange(index);
-                      }}
+                      checked={answers[item.questionId] === item.id}
+                      onChange={() => handleAnswerChange(item.questionId, item.id)}
                       className="w-5 h-4 text-blue-600 bg-gray-100  focus:ring-blue-500 dark:focus:ring-blue-600"
                     />
                     <label
-                      htmlFor={`checkbox-${index}`}
+                      htmlFor={`radio-${index}`}
                       className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
                       {item.answer}
@@ -180,7 +166,7 @@ const ClientQuizTest = () => {
                     <input
                       id={`checkbox-${index}`}
                       type="checkbox"
-                      checked={!!selectedOptions[index]}
+                      checked={answers[item.questionId]?.includes(item.id)}
                       onChange={(e) => {
                         const newValues = answers[item.questionId] || [];
                         if (e.target.checked) {
@@ -188,7 +174,6 @@ const ClientQuizTest = () => {
                         } else {
                           handleAnswerChange(item.questionId, newValues.filter((id: number) => id !== item.id));
                         }
-                        handleOptionChange(index);
                       }}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600"
                     />
@@ -217,7 +202,9 @@ const ClientQuizTest = () => {
 
   return (
     <div className="dark:bg-[#24303F] bg-white shadow-lg w-full p-5 rounded-2xl">
-      {quizData.quizList[currentIndex] ?
+      {isLoading ? <div>
+        <Skeleton />
+      </div> : quizData.quizList[currentIndex] ?
         <div>
           <div className="">
             <p className="text-2xl">{currentIndex + 1} / {quizData.quizList.length}</p>
@@ -234,8 +221,9 @@ const ClientQuizTest = () => {
             <p>Remaining Time: {formatTime(remainingTime ? remainingTime : 0)}</p>
             <div className="flex gap-5">
               <AddButtons onClick={currentIndex + 1 === quizData.quizList.length ? () => {
-                sendResults(id, quizData.remainingTime, quizData.quiz.countAnswers, payload, navigate)
-              } : handleNextQuestion} disabled={isNextDisabled} >{currentIndex + 1 === quizData.quizList.length ? 'Submit' : 'Next'}</AddButtons>
+                sendResults(id, time, quizData.quiz.countAnswers, payload, navigate, setResult, setIsLoading)
+
+              } : handleNextQuestion} disabled={isLoading ? isLoading : isNextDisabled} >{currentIndex + 1 === quizData.quizList.length ? `${isLoading ? 'Loading...' : 'Submit'}` : 'Next'}</AddButtons>
             </div>
           </div>
         </div>

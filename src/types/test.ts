@@ -1,6 +1,10 @@
 export interface Test {
     quizData: TestMainData,
     setQuizData: (val: TestMainData) => void
+    resultId: number,
+    setResult: (val: string) => void
+    result: string,
+    setResultId: (val: number) => void
     currentIndex: number,
     setCurrentIndex: (val: number) => void
 }
