@@ -31,21 +31,16 @@ function App() {
 
     if (!tokens) {
       sessionStorage.removeItem('refreshes');
-      navigate('/auth/signin');
-    } else if (!refresh) {
-      // navigate('/dashboard');
-      sessionStorage.setItem('refreshes', 'true');
-    }
-  }, [tokens, navigate]);
+      if (!pathname.startsWith('/auth')) navigate('/auth/signin');
+    } else if (!refresh) sessionStorage.setItem('refreshes', 'true');
+  }, [tokens, pathname, navigate]);
 
   useEffect(() => {
     setConfig();
     window.scrollTo(0, 0);
 
-    if (!tokens) {
-      if (pathname !== '/auth/signin') navigate('/auth/signin');
-      sessionStorage.clear();
-    }
+    if (!tokens && !pathname.startsWith('/auth')) navigate('/auth/signin');
+    if (!tokens && pathname.startsWith('/auth')) sessionStorage.removeItem('refreshes');
   }, [pathname, tokens, navigate]);
 
   return loading ? (
