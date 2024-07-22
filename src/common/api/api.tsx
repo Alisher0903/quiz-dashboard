@@ -30,6 +30,8 @@ export const district_region_filter: string = `${base_url}district/districts/`; 
 export const question_crud: string = `${base_url}question`; //admin question crud
 export const question_search: string = `${base_url}question/searchText/?searchText=`; //admin or client question search qiladi
 export const question_category_all: string = `${base_url}question/list/`; //admin category buyicha question get qiladi
+export const question_get_all: string = `${base_url}question/getAllQuestions`; //admin category buyicha question get qiladi
+export const question_type_filter: string = `${base_url}question/byType?type=`; //admin category buyicha question get qiladi
 
 //================CONTACT CONTROLLER======================
 export const contact_all: string = `${base_url}contact`; //all contact ni get qilish shu yulni uzidan edit xam qilsa buladi va add xam

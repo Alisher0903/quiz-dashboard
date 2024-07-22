@@ -7,7 +7,13 @@ import categoryStore from '../common/state-management/categoryStore.tsx';
 import { useEffect, useState } from 'react';
 import { getAdminCategory } from '../common/logic-functions/category.tsx';
 import testStore from '../common/state-management/testStore.tsx';
-import { adminTestCrud, testFilterCategory, testFilterName } from '../common/logic-functions/test.tsx';
+import {
+  adminTestCrud,
+  getAllTest,
+  getTypeFilter,
+  testFilterCategory,
+  testFilterName
+} from '../common/logic-functions/test.tsx';
 import TestCrudCheck from '../components/test-crud-check.tsx';
 import GlobalModal from '../components/modal/modal.tsx';
 import globalStore from '../common/state-management/globalStore.tsx';
@@ -44,10 +50,11 @@ const Test = () => {
     attachmentName: [],
     optionDtos: null,
     isMain: false
-  }
+  };
 
   useEffect(() => {
     getAdminCategory(setCategoryData);
+    getAllTest(setTestList);
   }, []);
 
   useEffect(() => {
@@ -57,8 +64,8 @@ const Test = () => {
 
   useEffect(() => {
     if (resData) {
-      setResData(false)
-      closeModal()
+      setResData(false);
+      closeModal();
     }
   }, [resData]);
 
@@ -68,8 +75,8 @@ const Test = () => {
 
   const closeModal = () => {
     setIsModal(false);
-    setCrudTest(defData)
-    setTestType('')
+    setCrudTest(defData);
+    setTestType('');
   };
 
   const handleChange = (name: string, value: string | any) => {
@@ -97,7 +104,7 @@ const Test = () => {
           <input
             onChange={e => {
               if (e.target.value) testFilterName(e.target.value, setTestList);
-              else setTestList(null);
+              else getAllTest(setTestList);
             }}
             placeholder="🔎  Search..."
             className="w-full rounded-lg border border-stroke bg-transparent py-3 pl-5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -112,7 +119,8 @@ const Test = () => {
           />
           <Select
             onChange={e => {
-              console.log(e.target.value);
+              if (e.target.value) getTypeFilter(setTestList, e.target.value);
+              else getAllTest(setTestList);
             }}
             defOption={`Type select`}
             child={<>
@@ -136,7 +144,7 @@ const Test = () => {
               </td>
               <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                 <p className="text-black dark:text-white">
-                  {item.name}
+                  {item.name || item.question}
                 </p>
               </td>
               <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
