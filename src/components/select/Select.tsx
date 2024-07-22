@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useState } from 'react';
 import globalStore from '../../common/state-management/globalStore.tsx';
 
-const Select = ({ label, child }: { label?: string, child: ReactNode }) => {
+const Select = ({ label, child, defOption }: { label?: string, child: ReactNode, defOption: string }) => {
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
   const {setSelectVal} = globalStore()
@@ -13,7 +13,7 @@ const Select = ({ label, child }: { label?: string, child: ReactNode }) => {
   const changeTextColor = () => setIsOptionSelected(true);
 
   return (
-    <div className="mb-4.5">
+    <div className={`w-full`}>
       {label && (
         <label className="mb-1.5 block text-black dark:text-white">
           {label}
@@ -32,7 +32,7 @@ const Select = ({ label, child }: { label?: string, child: ReactNode }) => {
           }`}
         >
           <option value="" disabled className="text-body dark:text-bodydark">
-            Select your subject
+            {defOption}
           </option>
           {child}
         </select>

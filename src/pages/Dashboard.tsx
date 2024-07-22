@@ -126,9 +126,10 @@ const Dashboard: React.FC = () => {
         <ChartOne />
       </div>
       <div className={`mt-4 md:mt-6 2xl:mt-7.5`}>
-        <div className={`max-w-[30%]`}>
+        <div className={`max-w-[30%] mb-6`}>
           {categoryData && (
             <Select
+              defOption={`Select your subject`}
               child={categoryData.map(item => (
                 <option value={item.id} className="text-body dark:text-bodydark" key={item.id}>
                   {item.name}
