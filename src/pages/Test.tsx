@@ -9,7 +9,7 @@ import { getAdminCategory } from '../common/logic-functions/category.tsx';
 import testStore from '../common/state-management/testStore.tsx';
 import {
   adminTestCrud,
-  getAllTest,
+  getAllTest, getOneTest,
   getTypeFilter,
   testFilterCategory,
   testFilterName
@@ -17,6 +17,7 @@ import {
 import TestCrudCheck from '../components/test-crud-check.tsx';
 import GlobalModal from '../components/modal/modal.tsx';
 import globalStore from '../common/state-management/globalStore.tsx';
+import toast from 'react-hot-toast';
 
 const thead: IThead[] = [
   { id: 1, name: 'T/r' },
@@ -32,6 +33,8 @@ const Test = () => {
   const { testList, setTestList, optionDto } = testStore();
   const { isLoading, setIsLoading, resData, setResData } = globalStore();
   const [testType, setTestType] = useState('');
+  const [editOrDeleteStatus, setEditOrDeleteStatus] = useState('');
+  const [editOrDeleteID, serEditOrDeleteID] = useState<any>('');
   const [crudTest, setCrudTest] = useState({
     name: '',
     categoryId: null,
@@ -77,6 +80,8 @@ const Test = () => {
     setIsModal(false);
     setCrudTest(defData);
     setTestType('');
+    setEditOrDeleteStatus('');
+    serEditOrDeleteID('')
   };
 
   const handleChange = (name: string, value: string | any) => {
@@ -85,15 +90,16 @@ const Test = () => {
     });
   };
 
-  console.log('crud data: ', crudTest);
-
   return (
     <>
       <Breadcrumb pageName="Test" />
 
       <div className={`mb-5 w-full flex justify-between items-center flex-wrap xl:flex-nowrap gap-5`}>
         <AddButtons
-          onClick={openModal}
+          onClick={() => {
+            openModal();
+            setEditOrDeleteStatus('post');
+          }}
           children={<div className={`flex justify-center items-center`}>
             <MdOutlineAddCircle className={`text-4xl mr-3`} />
             <p className={`text-lg font-bold`}>Add</p>
@@ -165,10 +171,21 @@ const Test = () => {
               <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                 <div className="flex items-center space-x-3.5">
                   <button className="hover:text-yellow-500">
-                    <MdEdit className={`text-2xl duration-300`} />
+                    <MdEdit className={`text-2xl duration-300`} onClick={() => {
+                      openModal();
+                      getOneTest(setCrudTest, item.id);
+                      setEditOrDeleteStatus('put');
+                      serEditOrDeleteID(item.id)
+                    }} />
                   </button>
                   <button className="hover:text-red-600">
-                    <MdDelete className={`text-2xl duration-300`} />
+                    <MdDelete
+                      className={`text-2xl duration-300`}
+                      onClick={() => {
+                        serEditOrDeleteID(item.id)
+                        setEditOrDeleteStatus('delete');
+                      }}
+                    />
                   </button>
                 </div>
               </td>
@@ -176,12 +193,14 @@ const Test = () => {
           ))
         ) : (
           <tr>
-            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center font-bold"
-                colSpan={6}>Test not found
+            <td
+              className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center font-bold"
+              colSpan={6}
+            >
+              Test not found
             </td>
           </tr>
         )}
-
       </UniversalTable>
 
       {/*ADD EDIT MODAL*/}
@@ -203,6 +222,7 @@ const Test = () => {
           />
           <div className={`flex flex-col gap-4`}>
             <Select
+              val={`${crudTest.categoryId}`}
               onChange={e => handleChange('categoryId', e.target.value)}
               defOption={`Category select`}
               child={categoryData && (
@@ -211,7 +231,7 @@ const Test = () => {
                 )))}
             />
             <Select
-              val={crudTest.type}
+              val={`${crudTest.type}`}
               onChange={e => {
                 setTestType(e.target.value);
                 handleChange('type', e.target.value);
@@ -225,18 +245,23 @@ const Test = () => {
               </>}
             />
           </div>
-          <TestCrudCheck type={testType} />
+          <TestCrudCheck type={crudTest.type ? crudTest.type : testType} />
           <div className={`flex justify-end items-center mt-5 mb-3 gap-5`}>
             <AddButtons children={`Close`} onClick={closeModal} />
             <AddButtons
               children={isLoading ? 'loading...' : `Save`}
               disabled={!(crudTest.type && crudTest.score && crudTest.name && crudTest.categoryId && crudTest.optionDtos)}
-              onClick={() => adminTestCrud({
-                urlType: 'post',
-                crudData: crudTest,
-                setLoading: setIsLoading,
-                setResData
-              })}
+              onClick={() => {
+                editOrDeleteStatus ? (
+                  adminTestCrud({
+                    urlType: editOrDeleteStatus,
+                    crudData: crudTest,
+                    setLoading: setIsLoading,
+                    setResData,
+                    editOrDeleteID: editOrDeleteStatus !== 'post' ? editOrDeleteID : ''
+                  })
+                ) : toast.error('An error occurred, please try again');
+              }}
             />
           </div>
         </div>

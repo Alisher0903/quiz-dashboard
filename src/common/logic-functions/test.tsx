@@ -69,6 +69,20 @@ export const getAllTest = async (setData: (val: any[] | null) => void) => {
   }
 };
 
+// get one test
+export const getOneTest = async (setData: (val: TestList | null | any) => void, id: number | string) => {
+  try {
+    if (id) {
+      const { data } = await axios.get(`${question_crud}/${id}`, config);
+      if (data.success) setData(data.body);
+      else setData(null);
+    }
+  } catch (err) {
+    setData(null);
+    console.error(err);
+  }
+};
+
 // type filter
 export const getTypeFilter = async (setData: (val: any[] | null) => void, type: string) => {
   try {

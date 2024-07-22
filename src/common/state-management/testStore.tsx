@@ -24,7 +24,9 @@ const useTestStore = create<Test>((set) => ({
   testList: null,
   setTestList: (val: TestList[] | null) => set({ testList: val }),
   optionDto: null,
-  setOptionDto: (val: null | OptionsDto[]) => set({ optionDto: val })
+  setOptionDto: (val: null | OptionsDto[]) => set({ optionDto: val }),
+  testOne: null,
+  setTestOne: (val: TestList | null) => set({ testOne: val }),
 }));
 
 export default useTestStore;

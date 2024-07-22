@@ -11,6 +11,8 @@ export interface Test {
   setTestList: (val: TestList[] | null) => void
   optionDto: OptionsDto[] | null
   setOptionDto: (val: OptionsDto[] | null) => void
+  testOne: TestList | null
+  setTestOne: (val: TestList | null) => void
 }
 
 export interface TestMainData {
