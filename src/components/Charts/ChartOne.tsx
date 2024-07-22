@@ -21,8 +21,6 @@ const ChartOne: React.FC = () => {
     ],
   });
 
-  console.log(chart);
-
   useEffect(() => {
     getStatistics();
   }, []);
