@@ -18,6 +18,7 @@ import TestCrudCheck from '../components/test-crud-check.tsx';
 import GlobalModal from '../components/modal/modal.tsx';
 import globalStore from '../common/state-management/globalStore.tsx';
 import toast from 'react-hot-toast';
+import ImageUpload from '../components/img-upload.tsx';
 
 const thead: IThead[] = [
   { id: 1, name: 'T/r' },
@@ -31,7 +32,7 @@ const thead: IThead[] = [
 const Test = () => {
   const { categoryData, setCategoryData } = categoryStore();
   const { testList, setTestList, optionDto } = testStore();
-  const { isLoading, setIsLoading, resData, setResData } = globalStore();
+  const { isLoading, setIsLoading, resData, setResData, imgUpload, setImgUpload } = globalStore();
   const [testType, setTestType] = useState('');
   const [editOrDeleteStatus, setEditOrDeleteStatus] = useState('');
   const [editOrDeleteID, serEditOrDeleteID] = useState<any>('');
@@ -40,7 +41,7 @@ const Test = () => {
     categoryId: null,
     type: '',
     score: '',
-    attachmentName: [],
+    attachmentIds: [],
     optionDtos: optionDto,
     isMain: false
   });
@@ -50,7 +51,7 @@ const Test = () => {
     categoryId: null,
     type: '',
     score: '',
-    attachmentName: [],
+    attachmentIds: [],
     optionDtos: null,
     isMain: false
   };
@@ -66,15 +67,17 @@ const Test = () => {
   }, [optionDto]);
 
   useEffect(() => {
+    imgUpload ? crudTest.attachmentIds = [`${imgUpload}`] : crudTest.attachmentIds = []
+  }, [imgUpload]);
+
+  useEffect(() => {
     if (resData) {
       setResData(false);
       closeModal();
     }
   }, [resData]);
 
-  const openModal = () => {
-    setIsModal(true);
-  };
+  const openModal = () => setIsModal(true);
 
   const closeModal = () => {
     setIsModal(false);
@@ -82,6 +85,7 @@ const Test = () => {
     setTestType('');
     setEditOrDeleteStatus('');
     serEditOrDeleteID('');
+    setImgUpload(null)
   };
 
   const handleChange = (name: string, value: string | any) => {
@@ -231,7 +235,7 @@ const Test = () => {
                   onChange={e => handleChange('categoryId', e.target.value)}
                   defOption={`Category select`}
                   child={categoryData && (
-                    categoryData.map((item, idx) => (
+                    categoryData.map(item => (
                       <option value={item.id} key={item.id}>{item.name}</option>
                     )))}
                 />
@@ -251,6 +255,10 @@ const Test = () => {
                 />
               </div>
               <TestCrudCheck type={crudTest.type ? crudTest.type : testType} />
+              <div className={`flex justify-center items-center mt-10`}>
+                <ImageUpload />
+              </div>
+              <p className={`text-center mt-2`}>Image upload is optional</p>
             </>
           )}
           <div className={`flex justify-end items-center mt-5 mb-3 gap-5`}>

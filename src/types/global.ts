@@ -9,4 +9,6 @@ export interface Global {
   setSelectVal: (val: string) => void;
   getMeData: null | any;
   setGetMeData: (data: any | null) => void;
+  imgUpload: any
+  setImgUpload: (val: any) => void;
 }
