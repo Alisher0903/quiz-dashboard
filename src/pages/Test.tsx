@@ -55,7 +55,6 @@ const Test = () => {
     optionDtos: null,
     isMain: false
   };
-  console.log('success: ', imgUpload);
 
   useEffect(() => {
     getAdminCategory(setCategoryData);
@@ -78,9 +77,7 @@ const Test = () => {
     }
   }, [resData]);
 
-  const openModal = () => {
-    setIsModal(true);
-  };
+  const openModal = () => setIsModal(true);
 
   const closeModal = () => {
     setIsModal(false);
