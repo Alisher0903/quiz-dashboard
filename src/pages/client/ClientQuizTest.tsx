@@ -64,9 +64,6 @@ const ClientQuizTest = () => {
 
   const time = quizData.remainingTime -Math.round(remainingTime / 60);
 
-  console.log(time);
-  
-
   useEffect(() => {
     setIsNextDisabled(true);
   }, [currentIndex]);
@@ -117,7 +114,11 @@ const ClientQuizTest = () => {
               <p className="text-xl">{name}</p>
             </div>
             {attachmentIds && attachmentIds.length > 0 && <div className='flex justify-center items-center py-5'>
-              <img src={api_videos_files + attachmentIds[0]} alt="" />
+              <img
+                style={{ maxWidth: '40rem', maxHeight: '300px', objectFit: 'contain' }}
+                src={api_videos_files + attachmentIds[0]}
+                alt="img"
+              />
             </div>}
 
             <div className="flex flex-col">
@@ -142,7 +143,11 @@ const ClientQuizTest = () => {
               <p className="text-xl">{name}</p>
             </div>
             {attachmentIds && attachmentIds.length > 0 && <div className='flex justify-center items-center py-5'>
-              <img src={api_videos_files + attachmentIds[0]} alt="" />
+              <img
+                style={{ maxWidth: '40rem', maxHeight: '300px', objectFit: 'contain' }}
+                src={api_videos_files + attachmentIds[0]}
+                alt="img"
+              />
             </div>}
             <ul className="text-sm flex flex-col gap-2 font-medium dark:border-gray-600 dark:text-white">
               {optionList.map((item, index) => (
@@ -174,7 +179,11 @@ const ClientQuizTest = () => {
               <p className="text-xl">{name}</p>
             </div>
             {attachmentIds && attachmentIds.length > 0 && <div className='flex justify-center items-center py-5'>
-              <img src={api_videos_files + attachmentIds[0]} alt="" />
+              <img
+                style={{ maxWidth: '40rem', maxHeight: '300px', objectFit: 'contain' }}
+                src={api_videos_files + attachmentIds[0]}
+                alt="img"
+              />
             </div>}
             <ul className="text-sm flex flex-col gap-2 font-medium dark:border-gray-600 dark:text-white">
               {optionList.map((item, index) => (
