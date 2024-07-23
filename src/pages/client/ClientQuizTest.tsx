@@ -49,11 +49,18 @@ const ClientQuizTest = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setRemainingTime((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
+      setRemainingTime((prevTime) => {
+        if (prevTime <= 1) {
+          clearInterval(timer);
+          sendResults(id, time, quizData.quiz.countAnswers, payload, navigate, setResult, setIsBtnLoading, setIsLoading);
+          return 0;
+        }
+        return prevTime - 1;
+      });
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [id, navigate, payload, quizData.quiz.countAnswers, setIsBtnLoading, setIsLoading, setResult]);
 
   const time = Math.round(remainingTime / 60);
 
@@ -112,7 +119,7 @@ const ClientQuizTest = () => {
             {attachmentIds && attachmentIds.length > 0 && <div className='flex justify-center items-center py-5'>
               <img src={api_videos_files + attachmentIds[0]} alt="" />
             </div>}
-            
+
             <div className="flex flex-col">
               <label htmlFor={`input[${currentIndex}]`} className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-white">
                 Enter your Answer
