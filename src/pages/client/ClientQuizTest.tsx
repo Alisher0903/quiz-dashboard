@@ -52,7 +52,7 @@ const ClientQuizTest = () => {
       setRemainingTime((prevTime) => {
         if (!quizData ? prevTime <= 1 : false) {
           clearInterval(timer);
-          sendResults(id, time, quizData.quiz.countAnswers, payload, navigate, setResult, setIsBtnLoading, setIsLoading);
+          sendResults(id, time, quizData.quiz.countAnswers, payload, navigate, setResult, setIsBtnLoading, setIsLoading, setCurrentIndex);
           return 0;
         }
         return prevTime - 1;
@@ -62,7 +62,10 @@ const ClientQuizTest = () => {
     return () => clearInterval(timer);
   }, [id, navigate, payload, quizData.quiz.countAnswers, setIsBtnLoading, setIsLoading, setResult]);
 
-  const time = Math.round(remainingTime / 60);
+  const time = quizData.remainingTime -Math.round(remainingTime / 60);
+
+  console.log(time);
+  
 
   useEffect(() => {
     setIsNextDisabled(true);
@@ -89,9 +92,6 @@ const ClientQuizTest = () => {
     }
     setIsNextDisabled(!hasSelected);
   }, [answers, currentIndex, quizData.quizList]);
-
-  console.log(payload);
-
 
   const handleAnswerChange = (questionId: number, value: any) => {
     setAnswers(prevAnswers => ({
@@ -128,7 +128,7 @@ const ClientQuizTest = () => {
                 id={`input[${currentIndex}]`}
                 placeholder="Answer"
                 onChange={(e) => handleAnswerChange(optionList[0]?.questionId, e.target.value)}
-                className="rounded-xl px-2 py-1 border"
+                className="rounded-lg px-2 py-1 border text-[#000]"
                 type="text"
               />
             </div>
@@ -225,6 +225,7 @@ const ClientQuizTest = () => {
         <div>
           <div className="">
             <p className="text-2xl">{currentIndex + 1} / {quizData && quizData.quizList.length}</p>
+            <p className='text-center text-red-600 dark:text-blue-600 text-3xl font-bold'>{quizData.quizList[currentIndex]?.categoryName}</p>
           </div>
           <div>
             {sortQuiz(
@@ -238,7 +239,7 @@ const ClientQuizTest = () => {
             <p>Remaining Time: {formatTime(remainingTime ? remainingTime : 0)}</p>
             <div className="flex gap-5">
               <AddButtons onClick={currentIndex + 1 === quizData.quizList.length ? () => {
-                sendResults(id, time, quizData.quiz.countAnswers, payload, navigate, setResult, setIsBtnLoading, setIsLoading);
+                sendResults(id, time === 0 ? 1 : time, quizData.quiz.countAnswers, payload, navigate, setResult, setIsBtnLoading, setIsLoading, setCurrentIndex);
               } : handleNextQuestion} disabled={isBtnLoading ? isBtnLoading : isNextDisabled}>{currentIndex + 1 === quizData.quizList.length ? `${isBtnLoading ? 'Loading...' : 'Submit'}` : 'Next'}</AddButtons>
             </div>
           </div>
