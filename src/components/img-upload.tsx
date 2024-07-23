@@ -17,10 +17,10 @@ const ImageUpload = () => {
     axios.post(api_videos_upload, formData, config)
       .then(res => {
         if (res.data.success) setImgUpload(res.data.body);
-        else setImgUpload([]);
+        else setImgUpload(null);
       }).catch(err => {
       console.error(err);
-      setImgUpload([]);
+      setImgUpload(null);
     });
 
     if (file) {
