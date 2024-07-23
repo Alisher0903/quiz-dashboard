@@ -55,7 +55,7 @@ export interface TestList {
   categoryId: number
   type: string
   score: number
-  attachmentName: string[],
+  attachmentIds: any,
   optionDtos: OptionDtoList[]
   isMain: null | string
 }

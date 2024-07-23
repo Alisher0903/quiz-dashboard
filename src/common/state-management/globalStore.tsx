@@ -12,6 +12,8 @@ const globalStore = create<Global>((set) => ({
   setSelectVal: (val: string) => set({ selectVal: val }),
   getMeData: null,
   setGetMeData: (val: any | null) => set({ getMeData: val }),
+  imgUpload: null,
+  setImgUpload: (val: any) => set({ imgUpload: val }),
 }));
 
 export default globalStore;
