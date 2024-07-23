@@ -129,6 +129,7 @@ export const adminTestCrud = async (
         } catch (err) {
             toast.error('Error test saved');
             console.error(err);
+            setLoading(false);
         }
     } else if (urlType === 'put') {
         try {
@@ -149,6 +150,7 @@ export const adminTestCrud = async (
         } catch (err) {
             toast.error('An error occurred');
             console.error(err);
+            setLoading(false);
         }
     } else if (urlType === 'delete') {
         try {
@@ -169,6 +171,7 @@ export const adminTestCrud = async (
         } catch (err) {
             toast.error('An error occurred');
             console.error(err);
+            setLoading(false);
         }
     }
 };
