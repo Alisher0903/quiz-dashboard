@@ -23,6 +23,7 @@ function App() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const tokens = localStorage.getItem('token');
+  const role = localStorage.getItem('ROLE');
 
   useEffect(() => {
     setConfig();
@@ -38,6 +39,16 @@ function App() {
   useEffect(() => {
     setConfig();
     window.scrollTo(0, 0);
+
+    if (pathname === '/') {
+      if (role === 'ROLE_ADMIN') {
+        if (!tokens) navigate('/auth/signin');
+        else navigate('/dashboard');
+      } else if (role === 'ROLE_CLIENT') {
+        if (!tokens) navigate('/auth/signin');
+        else navigate('/client/dashboard');
+      }
+    }
 
     if (!tokens && !pathname.startsWith('/auth')) navigate('/auth/signin');
     if (!tokens && pathname.startsWith('/auth')) sessionStorage.removeItem('refreshes');

@@ -39,7 +39,7 @@ const ImageUpload = () => {
         className="flex flex-col items-center justify-center cursor-pointer"
       >
         {selectedImage ? (
-          <img src={selectedImage} alt="Selected" className="w-full h-full object-cover" />
+          <img src={selectedImage} alt="Selected" className="w-40 h-28 object-contain" />
         ) : (
           <div className="text-orange-600 text-center">
             <div className={`flex justify-center items-center`}>

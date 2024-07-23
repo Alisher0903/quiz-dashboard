@@ -8,7 +8,6 @@ const DropdownUser = () => {
   const navigate = useNavigate();
   const { getMeData } = globalStore();
   const role = localStorage.getItem('ROLE');
-  console.log(getMeData);
 
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
