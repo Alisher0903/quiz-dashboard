@@ -5,7 +5,11 @@ import UniversalTable, { IThead } from '../components/Tables/UniversalTable.tsx'
 import Select from '../components/select/Select.tsx';
 import { getAdminCategory } from '../common/logic-functions/category.tsx';
 import categoryStore from '../common/state-management/categoryStore.tsx';
-import { getAdminDashboardStatistic, getAdminDashboardStatisticCard } from '../common/logic-functions/dashboard.tsx';
+import {
+  getAdminDashboardStatistic,
+  getAdminDashboardStatisticAll,
+  getAdminDashboardStatisticCard
+} from '../common/logic-functions/dashboard.tsx';
 import dashboardStore from '../common/state-management/dashboardStore.tsx';
 import { BiCategory } from 'react-icons/bi';
 import { FaCircleQuestion } from 'react-icons/fa6';
@@ -25,16 +29,19 @@ const Dashboard: React.FC = () => {
   const { setCategoryData, categoryData } = categoryStore();
   const { statisticTable, setStatisticTable, statisticsCard, setStatisticsCard, page, setPage } = dashboardStore();
   const [totalPage, setTotalPage] = useState(0);
-  const [catwgoryID, setCategoryID] = useState(null);
+  const [categoryID, setCategoryID] = useState(null);
 
   useEffect(() => {
     getAdminCategory(setCategoryData);
     getAdminDashboardStatisticCard(setStatisticsCard);
+    getAdminDashboardStatisticAll(setStatisticTable, page, setTotalPage);
   }, []);
 
   useEffect(() => {
-    catwgoryID && getAdminDashboardStatistic(setStatisticTable, catwgoryID, page, setTotalPage);
-  }, [page, catwgoryID]);
+    categoryID
+      ? getAdminDashboardStatistic(setStatisticTable, categoryID, page, setTotalPage)
+      : getAdminDashboardStatisticAll(setStatisticTable, page, setTotalPage);
+  }, [page, categoryID]);
 
   const onChange = (page: number): void => setPage(page - 1);
   return (
@@ -79,10 +86,7 @@ const Dashboard: React.FC = () => {
             />
           )}
         </div>
-        <UniversalTable
-          key={`category${1}`}
-          thead={thead}
-        >
+        <UniversalTable thead={thead}>
           {statisticTable ? (
             statisticTable.map((item, idx) => (
               <tr key={idx}>
