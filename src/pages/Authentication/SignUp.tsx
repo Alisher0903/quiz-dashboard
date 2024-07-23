@@ -332,6 +332,7 @@ const SignUp = () => {
                       </svg>
                     </span>
                   </div>
+                  <p>Password must contain at least 5 letters or numbers</p>
                 </div>
 
                 {/*pre password*/}
