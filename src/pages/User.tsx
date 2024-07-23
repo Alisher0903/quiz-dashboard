@@ -29,10 +29,8 @@ const User = () => {
   const [users, setUsers] = useState<IUser[]>([]);
   const [userDetails, setUserDetails] = useState<IUserDetails | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(0);
-  const [totalPages, setTotalPages] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
-
-  const pageSize = 10; // Items per page
 
   const thead: IThead[] = [
     { id: 1, name: 'T/r' },
@@ -59,12 +57,12 @@ const User = () => {
     setUserDetails(null);
   };
 
-  const fetchUsers = async (page: number) => {
+  const fetchUsers = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get(`${result_get_all}?page=${page}&size=10`, config);
+      const { data } = await axios.get(`${result_get_all}?page=${currentPage}&size=10`, config);
       setUsers(data.body.body);
-      setTotalPages(data.body.totalPages || 0);
+      setTotalPages(data.body.totalElements);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching users:', error);
@@ -73,12 +71,14 @@ const User = () => {
   };
 
   useEffect(() => {
-    fetchUsers(currentPage);
+    fetchUsers();
   }, []);
 
   useEffect(() => {
-    fetchUsers(currentPage);
+    fetchUsers();
   }, [currentPage]);
+
+  const onChange = (page: number): void => setCurrentPage(page - 1);
 
   return (
     <>
@@ -116,13 +116,16 @@ const User = () => {
           ))
         )}
       </UniversalTable>
-      <Pagination
-        className="mt-3"
-        current={currentPage}
-        total={totalPages + pageSize} // Calculate total number of items
-        onChange={(page) => setCurrentPage(page)}
-        pageSize={pageSize} // Set items per page
-      />
+      {totalPages > 0 && (
+        <Pagination
+          showSizeChanger={false}
+          responsive={true}
+          defaultCurrent={1}
+          total={totalPages}
+          onChange={onChange}
+          rootClassName={`mt-10 mb-5`}
+        />
+      )}
       {userDetails ? (
         <GlobalModal onClose={closeModal} isOpen={isModalOpen}>
           {selectedUser && userDetails && (
