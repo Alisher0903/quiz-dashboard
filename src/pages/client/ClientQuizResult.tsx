@@ -25,7 +25,7 @@ const ClientQuizResult = () => {
             <img src="https://media.tenor.com/hDY7src9Lw4AAAAi/dear-harsh-beta.gif" alt="" />
           </div>
           <div>
-            <p>{result}</p>
+            <p className='text-center'>{result}</p>
             <p className={`text-center my-3`}>
               <Link className="text-blue-600 hover:underline" to={'/client/dashboard'}>Back to home</Link>
             </p>

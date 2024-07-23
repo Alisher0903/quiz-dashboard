@@ -71,7 +71,7 @@ const ClientQuizTest = () => {
           hasSelected = answers[currentQuestion.id] !== undefined;
           break;
         case 'MANY_CHOICE':
-          hasSelected = answers[currentQuestion.id]?.length > 0;
+          hasSelected = answers && answers[currentQuestion.id]?.length > 0;
           break;
         case 'SUM':
           hasSelected = answers[currentQuestion.id] !== undefined;
@@ -82,6 +82,9 @@ const ClientQuizTest = () => {
     }
     setIsNextDisabled(!hasSelected);
   }, [answers, currentIndex, quizData.quizList]);
+
+  console.log(payload);
+
 
   const handleAnswerChange = (questionId: number, value: any) => {
     setAnswers(prevAnswers => ({
@@ -96,7 +99,7 @@ const ClientQuizTest = () => {
     }
   };
 
-  const sortQuiz = (type: string, optionList: TestOptionDtos[] | undefined, name: string, attachmentId: string[]) => {
+  const sortQuiz = (type: string, optionList: TestOptionDtos[] | undefined, name: string, attachmentIds: string[]) => {
     if (!optionList) return <div></div>;
 
     switch (type) {
@@ -106,14 +109,16 @@ const ClientQuizTest = () => {
             <div className="flex py-5 justify-center">
               <p className="text-xl">{name}</p>
             </div>
-            {attachmentId.length > 0 && <div>
-              <img src={api_videos_files + attachmentId[0]} alt="" />
+            {attachmentIds && attachmentIds.length > 0 && <div className='flex justify-center items-center py-5'>
+              <img src={api_videos_files + attachmentIds[0]} alt="" />
             </div>}
+            
             <div className="flex flex-col">
-              <label className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-white">
+              <label htmlFor={`input[${currentIndex}]`} className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-white">
                 Enter your Answer
               </label>
               <input
+                id={`input[${currentIndex}]`}
                 placeholder="Answer"
                 onChange={(e) => handleAnswerChange(optionList[0]?.questionId, e.target.value)}
                 className="rounded-xl px-2 py-1 border"
@@ -129,8 +134,8 @@ const ClientQuizTest = () => {
             <div className="flex py-5 justify-center">
               <p className="text-xl">{name}</p>
             </div>
-            {attachmentId.length > 0 && <div>
-              <img src={api_videos_files + attachmentId[0]} alt="" />
+            {attachmentIds && attachmentIds.length > 0 && <div className='flex justify-center items-center py-5'>
+              <img src={api_videos_files + attachmentIds[0]} alt="" />
             </div>}
             <ul className="text-sm flex flex-col gap-2 font-medium dark:border-gray-600 dark:text-white">
               {optionList.map((item, index) => (
@@ -161,8 +166,8 @@ const ClientQuizTest = () => {
             <div className="flex py-5 justify-center">
               <p className="text-xl">{name}</p>
             </div>
-            {attachmentId.length > 0 && <div>
-              <img src={api_videos_files + attachmentId[0]} alt="" />
+            {attachmentIds && attachmentIds.length > 0 && <div className='flex justify-center items-center py-5'>
+              <img src={api_videos_files + attachmentIds[0]} alt="" />
             </div>}
             <ul className="text-sm flex flex-col gap-2 font-medium dark:border-gray-600 dark:text-white">
               {optionList.map((item, index) => (
@@ -212,14 +217,14 @@ const ClientQuizTest = () => {
       </div> : quizData.quizList[currentIndex] ?
         <div>
           <div className="">
-            <p className="text-2xl">{currentIndex + 1} / {quizData.quizList.length}</p>
+            <p className="text-2xl">{currentIndex + 1} / {quizData && quizData.quizList.length}</p>
           </div>
           <div>
             {sortQuiz(
               quizData.quizList[currentIndex]?.type,
               quizData.quizList[currentIndex]?.optionDtos,
               quizData.quizList[currentIndex]?.name,
-              quizData.quizList[currentIndex]?.attachmentName
+              quizData.quizList[currentIndex]?.attachmentIds
             )}
           </div>
           <div className="flex justify-between mt-5">
@@ -227,9 +232,7 @@ const ClientQuizTest = () => {
             <div className="flex gap-5">
               <AddButtons onClick={currentIndex + 1 === quizData.quizList.length ? () => {
                 sendResults(id, time, quizData.quiz.countAnswers, payload, navigate, setResult, setIsBtnLoading, setIsLoading);
-
-              } : handleNextQuestion}
-                          disabled={isBtnLoading ? isBtnLoading : isNextDisabled}>{currentIndex + 1 === quizData.quizList.length ? `${isBtnLoading ? 'Loading...' : 'Submit'}` : 'Next'}</AddButtons>
+              } : handleNextQuestion} disabled={isBtnLoading ? isBtnLoading : isNextDisabled}>{currentIndex + 1 === quizData.quizList.length ? `${isBtnLoading ? 'Loading...' : 'Submit'}` : 'Next'}</AddButtons>
             </div>
           </div>
         </div>
