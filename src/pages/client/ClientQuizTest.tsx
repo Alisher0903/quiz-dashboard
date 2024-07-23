@@ -50,7 +50,7 @@ const ClientQuizTest = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setRemainingTime((prevTime) => {
-        if (prevTime <= 1) {
+        if (!quizData ? prevTime <= 1 : false) {
           clearInterval(timer);
           sendResults(id, time, quizData.quiz.countAnswers, payload, navigate, setResult, setIsBtnLoading, setIsLoading);
           return 0;
