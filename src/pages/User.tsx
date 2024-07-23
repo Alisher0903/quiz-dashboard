@@ -39,7 +39,7 @@ const User = () => {
     { id: 2, name: 'Full Name' },
     { id: 3, name: 'Category' },
     { id: 4, name: 'Phone' },
-    { id: 5, name: 'Action' },
+    { id: 5, name: 'Action' }
   ];
 
   const openModal = async (user: IUser) => {
@@ -64,7 +64,7 @@ const User = () => {
     try {
       const { data } = await axios.get(`${result_get_all}?page=${page}&size=10`, config);
       setUsers(data.body.body);
-      setTotalPages(data.body.totalPages || 0); // Default to 1 if totalPages is undefined
+      setTotalPages(data.body.totalPages || 0);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching users:', error);
@@ -117,41 +117,63 @@ const User = () => {
         )}
       </UniversalTable>
       <Pagination
-        className='mt-3'
+        className="mt-3"
         current={currentPage}
         total={totalPages + pageSize} // Calculate total number of items
         onChange={(page) => setCurrentPage(page)}
         pageSize={pageSize} // Set items per page
       />
-      <GlobalModal onClose={closeModal} isOpen={isModalOpen}>
-        {selectedUser && userDetails && (
-          <div className="gap-3 ml-1">
-            <h2 className="lg:text-4xl lg:px-56 md:text-2xl px-28 py-5 font-semibold">User Results</h2>
-            <div className="flex flex-col gap-3 md:text-xl lg:text-xl">
-              <p className="flex justify-between">
-                <strong>Full Name:</strong>
-                <div className="text-blue-400">{userDetails.firstName}</div>
-              </p>
-              <p className="flex justify-between">
-                <strong>Category:</strong>
-                <div className="text-blue-400">{userDetails.categoryName}</div>
-              </p>
-              <p className="flex justify-between">
-                <strong>Correct Answers:</strong>
-                <div className="text-blue-400">{userDetails.correctAnswers}</div>
-              </p>
-              <p className="flex justify-between">
-                <strong>Count:</strong>
-                <div className="text-blue-400">{userDetails.countAnswers}</div>
-              </p>
-              <p className="flex justify-between">
-                <strong>Duration:</strong>
-                <div className="text-blue-400">{userDetails.durationTime}</div>
-              </p>
+      {userDetails ? (
+        <GlobalModal onClose={closeModal} isOpen={isModalOpen}>
+          {selectedUser && userDetails && (
+            <div className="gap-3 ml-1 min-w-60 sm:min-w-96 lg:min-w-[35rem]">
+              <h2 className="lg:text-4xl  text-center md:text-2xl py-5 font-semibold">User Results</h2>
+              <div className="flex flex-col gap-3 md:text-xl lg:text-xl">
+                <p className="flex justify-between">
+                  <strong>Full Name:</strong>
+                  <div className="text-blue-400">{userDetails.firstName}</div>
+                </p>
+                <p className="flex justify-between">
+                  <strong>Category:</strong>
+                  <div className="text-blue-400">{userDetails.categoryName}</div>
+                </p>
+                <p className="flex justify-between">
+                  <strong>Correct Answers:</strong>
+                  <div className="text-blue-400">{userDetails.correctAnswers}</div>
+                </p>
+                <p className="flex justify-between">
+                  <strong>Count:</strong>
+                  <div className="text-blue-400">{userDetails.countAnswers}</div>
+                </p>
+                <p className="flex justify-between">
+                  <strong>Duration:</strong>
+                  <div className="text-blue-400">{userDetails.durationTime}</div>
+                </p>
+              </div>
+              {userDetails && userDetails.extraResDtoList.length > 0 && (
+                <div className={`border-t my-5`}>
+                  <h2 className="lg:text-4xl md:text-2xl font-semibold mt-3 mb-2">
+                    Additional categories are processed questions
+                  </h2>
+                  {userDetails && userDetails.extraResDtoList.map((item: any, index: number) => (
+                    <div className={`flex justify-between items-center gap-5 mb-2`} key={index}>
+                      <p className={`text-base`}>{item.categoryName}</p>
+                      <p className={`font-bold`}><span
+                        className={`text-green-400`}>{item.correctAnswer}</span> / {item.countAnswer}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
+          )}
+        </GlobalModal>
+      ) : (
+        isModalOpen && (
+          <div className="flex h-screen items-center justify-center">
+            <div
+              className="h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent"></div>
           </div>
-        )}
-      </GlobalModal>
+        ))}
     </>
   );
 };

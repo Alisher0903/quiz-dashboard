@@ -32,7 +32,7 @@ const GlobalModal: React.FC<ModalProps> = ({ isOpen, onClose, children, mt }) =>
 
   return (
     <div
-      className="fixed inset-0 z-[10000] flex items-center justify-center overflow-auto bg-slate-900 py-10 bg-opacity-50 modal"
+      className="fixed inset-0 z-[10000] flex items-center justify-center overflow-auto bg-slate-900 py-10 bg-opacity-50 modal mx-3 sm:mx-0"
       onClick={onClose}
     >
       <div

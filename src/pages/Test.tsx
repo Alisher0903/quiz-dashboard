@@ -211,7 +211,7 @@ const Test = () => {
 
       {/*ADD EDIT MODAL*/}
       <GlobalModal onClose={closeModal} isOpen={isModal}>
-        <div className={`w-54 sm:w-64 md:w-96 lg:w-[40rem]`}>
+        <div className={`min-w-54 sm:w-64 md:w-96 lg:w-[40rem]`}>
           {editOrDeleteStatus === 'delete' ? (
             <p className={`my-7 text-center font-semibold`}>Do you want to delete Category?</p>
           ) : (
