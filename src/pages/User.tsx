@@ -28,7 +28,7 @@ const User = () => {
   const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
   const [users, setUsers] = useState<IUser[]>([]);
   const [userDetails, setUserDetails] = useState<IUserDetails | null>(null);
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -62,15 +62,19 @@ const User = () => {
   const fetchUsers = async (page: number) => {
     setLoading(true);
     try {
-      const { data } = await axios.get(`${result_get_all}?page=${page}`, config);
+      const { data } = await axios.get(`${result_get_all}?page=${page}&size=10`, config);
       setUsers(data.body.body);
-      setTotalPages(data.body.totalPages || 1); // Default to 1 if totalPages is undefined
+      setTotalPages(data.body.totalPages || 0); // Default to 1 if totalPages is undefined
       setLoading(false);
     } catch (error) {
       console.error('Error fetching users:', error);
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchUsers(currentPage);
+  }, []);
 
   useEffect(() => {
     fetchUsers(currentPage);
@@ -90,7 +94,7 @@ const User = () => {
           users.map((user, index) => (
             <tr key={user.id}>
               <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                <h5 className="font-medium text-black dark:text-white">{(currentPage - 1) * pageSize + index + 1}</h5>
+                <h5 className="font-medium text-black dark:text-white">{(currentPage * 10) + index + 1}</h5>
               </td>
               <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                 <p className="text-black dark:text-white">{user.fullName}</p>

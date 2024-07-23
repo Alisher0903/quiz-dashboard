@@ -74,6 +74,7 @@ const Test = () => {
     if (resData) {
       setResData(false);
       closeModal();
+      getAllTest(setTestList);
     }
   }, [resData]);
 
