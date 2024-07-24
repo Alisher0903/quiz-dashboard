@@ -2,23 +2,19 @@ import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import UniversalTable, { IThead } from '../components/Tables/UniversalTable.tsx';
 import AddButtons from '../components/buttons/buttons.tsx';
 import { MdDelete, MdEdit, MdOutlineAddCircle } from 'react-icons/md';
-import Select from '../components/select/Select.tsx';
 import categoryStore from '../common/state-management/categoryStore.tsx';
 import { useEffect, useState } from 'react';
 import { getAdminCategory } from '../common/logic-functions/category.tsx';
 import testStore from '../common/state-management/testStore.tsx';
-import {
-  adminTestCrud,
-  getAllTest, getOneTest,
-  getTypeFilter,
-  testFilterCategory,
-  testFilterName
-} from '../common/logic-functions/test.tsx';
+import { adminTestCrud, allFilterOrGet } from '../common/logic-functions/test.tsx';
 import TestCrudCheck from '../components/test-crud-check.tsx';
 import GlobalModal from '../components/modal/modal.tsx';
 import globalStore from '../common/state-management/globalStore.tsx';
 import toast from 'react-hot-toast';
 import ImageUpload from '../components/img-upload.tsx';
+import { Select } from 'antd';
+import SelectForm from '../components/select/Select.tsx';
+import { TestList } from '../types/test.ts';
 
 const thead: IThead[] = [
   { id: 1, name: 'T/r' },
@@ -28,6 +24,7 @@ const thead: IThead[] = [
   { id: 3, name: 'Ball' },
   { id: 4, name: 'Action' }
 ];
+const { Option } = Select;
 
 const Test = () => {
   const { categoryData, setCategoryData } = categoryStore();
@@ -36,9 +33,12 @@ const Test = () => {
   const [testType, setTestType] = useState('');
   const [editOrDeleteStatus, setEditOrDeleteStatus] = useState('');
   const [editOrDeleteID, serEditOrDeleteID] = useState<any>('');
-  const [crudTest, setCrudTest] = useState({
+  const [nameFilter, setNameFilter] = useState<any>('');
+  const [categoryFilter, setCategoryFilter] = useState<any>('');
+  const [typeFilter, setTypeFilter] = useState<any>('');
+  const [crudTest, setCrudTest] = useState<TestList | any>({
     name: '',
-    categoryId: null,
+    categoryId: '',
     type: '',
     score: '',
     attachmentIds: [],
@@ -48,7 +48,7 @@ const Test = () => {
   const [isModal, setIsModal] = useState(false);
   const defData = {
     name: '',
-    categoryId: null,
+    categoryId: '',
     type: '',
     score: '',
     attachmentIds: [],
@@ -58,8 +58,12 @@ const Test = () => {
 
   useEffect(() => {
     getAdminCategory(setCategoryData);
-    getAllTest(setTestList);
+    allFilterOrGet(setTestList);
   }, []);
+
+  useEffect(() => {
+    allFilterOrGet(setTestList, nameFilter && nameFilter, categoryFilter && categoryFilter, typeFilter && typeFilter);
+  }, [nameFilter, categoryFilter, typeFilter]);
 
   useEffect(() => {
     crudTest.isMain = testType === 'ANY_CORRECT' ? true : false;
@@ -67,14 +71,14 @@ const Test = () => {
   }, [optionDto]);
 
   useEffect(() => {
-    imgUpload ? crudTest.attachmentIds = [`${imgUpload}`] : crudTest.attachmentIds = []
+    imgUpload ? crudTest.attachmentIds = [`${imgUpload}`] : crudTest.attachmentIds = [];
   }, [imgUpload]);
 
   useEffect(() => {
     if (resData) {
       setResData(false);
       closeModal();
-      getAllTest(setTestList);
+      allFilterOrGet(setTestList);
     }
   }, [resData]);
 
@@ -86,7 +90,7 @@ const Test = () => {
     setTestType('');
     setEditOrDeleteStatus('');
     serEditOrDeleteID('');
-    setImgUpload(null)
+    setImgUpload(null);
   };
 
   const handleChange = (name: string, value: string | any) => {
@@ -113,34 +117,33 @@ const Test = () => {
         <div
           className={`w-full lg:max-w-[70%] flex justify-start xl:justify-between items-center flex-wrap md:flex-nowrap gap-5`}>
           <input
-            onChange={e => {
-              if (e.target.value) testFilterName(e.target.value, setTestList);
-              else getAllTest(setTestList);
-            }}
+            onChange={e => setNameFilter(e.target.value)}
             placeholder="🔎  Search..."
-            className="w-full rounded-lg border border-stroke bg-transparent py-3 pl-5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+            type={`search`}
+            className="w-full rounded-lg border border-stroke bg-transparent py-3 px-5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark bg-white dark:text-form-input dark:focus:border-primary"
           />
           <Select
-            onChange={e => testFilterCategory(e.target.value, setTestList)}
-            defOption={`Category select`}
-            child={categoryData && (
-              categoryData.map(item => (
-                <option value={item.id} key={item.id}>{item.name}</option>
-              )))}
-          />
+            placeholder={`Category select`}
+            className={`w-full bg-transparent rounded-[10px] h-12`}
+            allowClear
+            onChange={(value) => setCategoryFilter(value)}
+          >
+            {categoryData && categoryData.map(item => (
+              <Option value={item.id} key={item.id}>{item.name}</Option>
+            ))}
+          </Select>
+
           <Select
-            onChange={e => {
-              if (e.target.value) getTypeFilter(setTestList, e.target.value);
-              else getAllTest(setTestList);
-            }}
-            defOption={`Type select`}
-            child={<>
-              <option value="SUM">Sum</option>
-              <option value="ONE_CHOICE">One choice</option>
-              <option value="MANY_CHOICE">Many choice</option>
-              <option value="ANY_CORRECT">Any correct</option>
-            </>}
-          />
+            placeholder={`Type select`}
+            className={`w-full bg-transparent rounded-[10px] h-12`}
+            allowClear
+            onChange={(value) => setTypeFilter(value)}
+          >
+            <option value="SUM">Sum</option>
+            <option value="ONE_CHOICE">One choice</option>
+            <option value="MANY_CHOICE">Many choice</option>
+            <option value="ANY_CORRECT">Any correct</option>
+          </Select>
         </div>
       </div>
 
@@ -155,7 +158,7 @@ const Test = () => {
               </td>
               <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                 <p className="text-black dark:text-white">
-                  {item.name || item.question}
+                  {item.name}
                 </p>
               </td>
               <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
@@ -178,7 +181,7 @@ const Test = () => {
                   <button className="hover:text-yellow-500">
                     <MdEdit className={`text-2xl duration-300`} onClick={() => {
                       openModal();
-                      getOneTest(setCrudTest, item.id);
+                      setCrudTest(item);
                       setEditOrDeleteStatus('put');
                       serEditOrDeleteID(item.id);
                     }} />
@@ -213,7 +216,7 @@ const Test = () => {
       <GlobalModal onClose={closeModal} isOpen={isModal}>
         <div className={`min-w-54 sm:w-64 md:w-96 lg:w-[40rem]`}>
           {editOrDeleteStatus === 'delete' ? (
-            <p className={`my-7 text-center font-semibold`}>Do you want to delete Category?</p>
+            <p className={`my-7 text-center font-semibold`}>Do you want to delete Test?</p>
           ) : (
             <>
               <input
@@ -231,7 +234,7 @@ const Test = () => {
                 className="w-full rounded-lg border border-stroke bg-transparent py-2 px-5 mb-4 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
               />
               <div className={`flex flex-col gap-4`}>
-                <Select
+                <SelectForm
                   val={`${crudTest.categoryId}`}
                   onChange={e => handleChange('categoryId', e.target.value)}
                   defOption={`Category select`}
@@ -240,7 +243,7 @@ const Test = () => {
                       <option value={item.id} key={item.id}>{item.name}</option>
                     )))}
                 />
-                <Select
+                <SelectForm
                   val={`${crudTest.type}`}
                   onChange={e => {
                     setTestType(e.target.value);
@@ -265,7 +268,7 @@ const Test = () => {
           <div className={`flex justify-end items-center mt-5 mb-3 gap-5`}>
             <AddButtons children={`Close`} onClick={closeModal} />
             <AddButtons
-              children={isLoading ? 'loading...' : `Save`}
+              children={isLoading ? 'loading...' : `${editOrDeleteStatus === 'delete' ? 'Yes' : 'Save'}`}
               disabled={editOrDeleteStatus === 'delete' ? false : !(crudTest.type && crudTest.score && crudTest.name && crudTest.categoryId && crudTest.optionDtos)}
               onClick={() => {
                 editOrDeleteStatus ? (

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-const Select = ({ label, child, defOption, val, onChange }: {
+const SelectForm = ({ label, child, defOption, val, onChange }: {
   label?: string,
   child: ReactNode,
   defOption: string,
@@ -51,4 +51,4 @@ const Select = ({ label, child, defOption, val, onChange }: {
   );
 };
 
-export default Select;
+export default SelectForm;

@@ -2,11 +2,8 @@ import axios from 'axios';
 import { config } from '../api/token';
 import { TestList, TestMainData } from '../../types/test';
 import {
-  certificate,
-  question_category_all,
+  certificate, question_all_filter,
   question_crud,
-  question_get_all,
-  question_search, question_type_filter,
   quiz_pass,
   quiz_start
 } from '../api/api';
@@ -61,10 +58,16 @@ export const getCertificate = async (id: number, setResult: (val: string) => voi
 };
 
 //===================ADMIN=========================
-// get all test
-export const getAllTest = async (setData: (val: any[] | null) => void) => {
+// all get or filter
+export const allFilterOrGet = async (setData: (val: null | TestList[]) => void, name?: string, categoryId?: string | number, type?: string) => {
+  const queryParams: string = [
+    name ? `questionName=${name}` : '',
+    categoryId ? `categoryId=${categoryId}` : '',
+    type ? `type=${type}` : ''
+  ].filter(Boolean).join('&');
+  const url: string = `${question_all_filter}${queryParams ? `?${queryParams}` : ''}`;
   try {
-    const { data } = await axios.get(question_get_all, config);
+    const { data } = await axios.get(url, config);
     if (data.success) setData(data.body);
     else setData(null);
   } catch (err) {
@@ -78,20 +81,6 @@ export const getOneTest = async (setData: (val: TestList | null | any) => void, 
   try {
     if (id) {
       const { data } = await axios.get(`${question_crud}/${id}`, config);
-      if (data.success) setData(data.body);
-      else setData(null);
-    }
-  } catch (err) {
-    setData(null);
-    console.error(err);
-  }
-};
-
-// type filter
-export const getTypeFilter = async (setData: (val: any[] | null) => void, type: string) => {
-  try {
-    if (type) {
-      const { data } = await axios.get(`${question_type_filter}${type}`, config);
       if (data.success) setData(data.body);
       else setData(null);
     }
@@ -176,33 +165,5 @@ export const adminTestCrud = async (
       console.error(err);
       setLoading(false);
     }
-  }
-};
-
-//test filter name
-export const testFilterName = async (name: string, setData: (val: TestList[] | null) => void) => {
-  try {
-    if (name) {
-      const { data } = await axios.get(`${question_search}${name}`, config);
-      if (data.success) setData(data.body);
-      else setData(null);
-    }
-  } catch (err) {
-    setData(null);
-    console.error(err);
-  }
-};
-
-//test filter categoryID
-export const testFilterCategory = async (ID: string | number, setData: (val: TestList[] | null) => void) => {
-  try {
-    if (ID) {
-      const { data } = await axios.get(`${question_category_all}${ID}`, config);
-      if (data.success) setData(data.body);
-      else setData(null);
-    }
-  } catch (err) {
-    setData(null);
-    console.error(err);
   }
 };

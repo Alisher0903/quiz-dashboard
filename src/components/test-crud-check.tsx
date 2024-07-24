@@ -69,7 +69,7 @@ const TestCrudCheck = ({ type }: { type: string }) => {
             <div key={question.id} className="flex items-center mb-2">
               <input
                 type="checkbox"
-                checked={question.isCorrect}
+                checked
                 onChange={() => handleCheckboxChange(question.id)}
                 className="form-checkbox h-5 w-5 text-blue-600"
               />
@@ -105,7 +105,8 @@ const TestCrudCheck = ({ type }: { type: string }) => {
                 onClick={() => removeQuestion(question.id)}
                 className={`text-red-500 ml-2 ${questions.length === 1 ? 'cursor-not-allowed opacity-50' : ''}`}
                 disabled={questions.length === 1}
-              >-</button>
+              >-
+              </button>
             </div>
           )))}
 
@@ -131,7 +132,8 @@ const TestCrudCheck = ({ type }: { type: string }) => {
                 onClick={() => removeQuestion(question.id)}
                 className={`text-red-500 ml-2 ${questions.length === 1 ? 'cursor-not-allowed opacity-50' : ''}`}
                 disabled={questions.length === 1}
-              >-</button>
+              >-
+              </button>
             </div>
           )))}
 
@@ -157,7 +159,8 @@ const TestCrudCheck = ({ type }: { type: string }) => {
                 onClick={() => removeQuestion(question.id)}
                 className={`text-red-500 ml-2 ${questions.length === 1 ? 'cursor-not-allowed opacity-50' : ''}`}
                 disabled={questions.length === 1}
-              >-</button>
+              >-
+              </button>
             </div>
           )))}
       </div>

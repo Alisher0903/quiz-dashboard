@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import CardDataStats from '../components/CardDataStats.tsx';
 import ChartOne from '../components/Charts/ChartOne.tsx';
 import UniversalTable, { IThead } from '../components/Tables/UniversalTable.tsx';
-import Select from '../components/select/Select.tsx';
+// import Select from '../components/select/Select.tsx';
+import {Select} from 'antd';
 import { getAdminCategory } from '../common/logic-functions/category.tsx';
 import categoryStore from '../common/state-management/categoryStore.tsx';
 import {
@@ -24,6 +25,7 @@ const thead: IThead[] = [
   { id: 4, name: 'Category Name' },
   { id: 5, name: 'Correct Answers' }
 ];
+const { Option } = Select;
 
 const Dashboard: React.FC = () => {
   const { setCategoryData, categoryData } = categoryStore();
@@ -76,14 +78,16 @@ const Dashboard: React.FC = () => {
         <div className={`w-full md:w-1/2 lg:max-w-[30%] mb-6`}>
           {categoryData && (
             <Select
-              onChange={e => setCategoryID(e.target.value)}
-              defOption={`Select your subject`}
-              child={categoryData.map(item => (
-                <option value={item.id} className="text-body dark:text-bodydark" key={item.id}>
-                  {item.name}
-                </option>
+              placeholder={`Select your subject`}
+              value={categoryID}
+              className={`w-full bg-transparent rounded-[10px] h-10`}
+              allowClear
+              onChange={(value) => setCategoryID(value)}
+            >
+              {categoryData.map(item => (
+                <Option value={item.id} key={item.id}>{item.name}</Option>
               ))}
-            />
+            </Select>
           )}
         </div>
         <UniversalTable thead={thead}>
