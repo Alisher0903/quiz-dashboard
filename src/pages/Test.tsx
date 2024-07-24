@@ -258,6 +258,9 @@ const Test = () => {
                   </>}
                 />
               </div>
+              <p className={`text-center mt-4`}>
+                {editOrDeleteStatus === 'put' && 'Enter the options'}
+              </p>
               <TestCrudCheck type={crudTest.type ? crudTest.type : testType} />
               <div className={`flex justify-center items-center mt-10`}>
                 <ImageUpload />
@@ -269,7 +272,7 @@ const Test = () => {
             <AddButtons children={`Close`} onClick={closeModal} />
             <AddButtons
               children={isLoading ? 'loading...' : `${editOrDeleteStatus === 'delete' ? 'Yes' : 'Save'}`}
-              disabled={editOrDeleteStatus === 'delete' ? false : !(crudTest.type && crudTest.score && crudTest.name && crudTest.categoryId && crudTest.optionDtos)}
+              disabled={editOrDeleteStatus === 'post' ? !(crudTest.type && crudTest.score && crudTest.name && crudTest.categoryId && crudTest.optionDtos) : false}
               onClick={() => {
                 editOrDeleteStatus ? (
                   adminTestCrud({
