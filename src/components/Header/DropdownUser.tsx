@@ -18,7 +18,7 @@ const DropdownUser = () => {
       >
           <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            {getMeData ? getMeData.fullName : 'Admin'}
+            {getMeData ? getMeData.fullName : role === 'ROLE_ADMIN' ? 'Admin' : 'Client'}
           </span>
             <span className="block text-xs">
               {role === 'ROLE_ADMIN' ? 'admin' : 'client'}
