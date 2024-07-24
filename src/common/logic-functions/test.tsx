@@ -23,6 +23,8 @@ export const fetchQuiz = async (id: string | undefined, setQuizData: (val: TestM
         currentQuestionIndex: 0,
         remainingTime: data.body.duration
       });
+      localStorage.removeItem('remainingTime')
+      localStorage.removeItem('currentIndex')
       setIsLoading(false);
     } else setIsLoading(false);
   } catch (err: any) {
