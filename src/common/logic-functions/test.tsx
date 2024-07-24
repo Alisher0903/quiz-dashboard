@@ -22,9 +22,7 @@ export const fetchQuiz = async (id: string | undefined, setQuizData: (val: TestM
         quiz: data.body,
         currentQuestionIndex: 0,
         remainingTime: data.body.duration
-      });
-      localStorage.removeItem('remainingTime')
-      localStorage.removeItem('currentIndex')
+      })
       setIsLoading(false);
     } else setIsLoading(false);
   } catch (err: any) {
@@ -42,6 +40,8 @@ export const sendResults = async (id: string | undefined, duration: number, coun
       getCertificate(data.body, setResult, setLoading);
       setIsLoading(false);
       setCurrentIndex(0);
+      localStorage.removeItem('remainingTime')
+      localStorage.removeItem('currentIndex')
     } else setIsLoading(false);
   } catch (err) {
     setIsLoading(false);
