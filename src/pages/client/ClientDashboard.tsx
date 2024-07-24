@@ -53,8 +53,8 @@ const ClientDashboard = () => {
                 </p>
               </td>
               <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                <p className="text-black  dark:text-white">
-                  <button className="hover:text-yellow-500 select-none  flex gap-2" onClick={() => {
+                <p className="text-black dark:text-white">
+                  <button className="hover:text-yellow-500 select-none flex gap-2" onClick={() => {
                     setCategoryId(item.id);
                     toggleModal();
                   }}>
