@@ -33,11 +33,11 @@ const User = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const thead: IThead[] = [
-    { id: 1, name: 'T/r' },
-    { id: 2, name: 'Full Name' },
-    { id: 3, name: 'Category' },
-    { id: 4, name: 'Phone' },
-    { id: 5, name: 'Action' }
+    { id: 1, name: 'Т/р' },
+    { id: 2, name: 'Тўлиқ исм' },
+    { id: 3, name: 'Категория' },
+    { id: 4, name: 'Телефон' },
+    { id: 5, name: 'Ҳаракат' }
   ];
 
   const openModal = async (user: IUser) => {
@@ -82,38 +82,46 @@ const User = () => {
 
   return (
     <>
-      <Breadcrumb pageName="User" />
+      <Breadcrumb pageName="Фойдаланувчи" />
       <UniversalTable thead={thead}>
         {loading ? (
           <tr>
             <td colSpan={thead.length} className="text-center py-5">
-              Loading...
+              Юкланмоқда...
             </td>
           </tr>
         ) : (
-          users.map((user, index) => (
-            <tr key={user.id}>
-              <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                <h5 className="font-medium text-black dark:text-white">{(currentPage * 10) + index + 1}</h5>
-              </td>
-              <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                <p className="text-black dark:text-white">{user.fullName}</p>
-              </td>
-              <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                <p className="text-black dark:text-white">{user.categoryName}</p>
-              </td>
-              <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                <p className="text-black dark:text-white">{user.email}</p>
-              </td>
-              <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                <div className="flex items-center space-x-3.5">
-                  <button onClick={() => openModal(user)}>
-                    <BiShow className="text-2xl duration-300" />
-                  </button>
-                </div>
-              </td>
-            </tr>
-          ))
+          users.length > 0 ? (
+            users.map((user, index) => (
+              <tr key={user.id}>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <h5 className="font-medium text-black dark:text-white">{(currentPage * 10) + index + 1}</h5>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">{user.fullName}</p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">{user.categoryName}</p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">{user.email}</p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <div className="flex items-center space-x-3.5">
+                    <button onClick={() => openModal(user)}>
+                      <BiShow className="text-2xl duration-300" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))
+          ) : (<>
+              <tr>
+                <td colSpan={5} className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center">
+                  Фойдаланувчи мавжуд эмас
+                </td>
+              </tr>
+          </>)
         )}
       </UniversalTable>
       {totalPages > 0 && (
@@ -130,33 +138,33 @@ const User = () => {
         <GlobalModal onClose={closeModal} isOpen={isModalOpen}>
           {selectedUser && userDetails && (
             <div className="gap-3 ml-1 min-w-60 sm:min-w-96 lg:min-w-[35rem]">
-              <h2 className="lg:text-4xl  text-center md:text-2xl py-5 font-semibold">User Results</h2>
+              <h2 className="lg:text-4xl  text-center md:text-2xl py-5 font-semibold">Фойдаланувчи натижалари</h2>
               <div className="flex flex-col gap-3 md:text-xl lg:text-xl">
                 <p className="flex justify-between">
-                  <strong>Full Name:</strong>
+                  <strong>Тўлиқ исм:</strong>
                   <div className="text-blue-400">{userDetails.firstName}</div>
                 </p>
                 <p className="flex justify-between">
-                  <strong>Category:</strong>
+                  <strong>Категория:</strong>
                   <div className="text-blue-400">{userDetails.categoryName}</div>
                 </p>
                 <p className="flex justify-between">
-                  <strong>Correct Answers:</strong>
+                  <strong>Тўғри Жавоблар:</strong>
                   <div className="text-blue-400">{userDetails.correctAnswers}</div>
                 </p>
                 <p className="flex justify-between">
-                  <strong>Count:</strong>
+                  <strong>Ҳисоблаш:</strong>
                   <div className="text-blue-400">{userDetails.countAnswers}</div>
                 </p>
                 <p className="flex justify-between">
-                  <strong>Duration:</strong>
+                  <strong>Давомийлиги:</strong>
                   <div className="text-blue-400">{userDetails.durationTime}</div>
                 </p>
               </div>
               {userDetails && userDetails.extraResDtoList.length > 0 && (
                 <div className={`border-t my-5`}>
                   <h2 className="lg:text-4xl md:text-2xl font-semibold mt-3 mb-2">
-                    Additional categories are processed questions
+                    Қўшимча тоифалар қайта ишланган саволлардир
                   </h2>
                   {userDetails && userDetails.extraResDtoList.map((item: any, index: number) => (
                     <div className={`flex justify-between items-center gap-5 mb-2`} key={index}>

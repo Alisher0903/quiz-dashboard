@@ -45,7 +45,7 @@ const ImageUpload = () => {
             <div className={`flex justify-center items-center`}>
               <BiSolidImageAdd className={`text-7xl`} />
             </div>
-            <span className="text-black font-semibold text-base">Upload Image</span>
+            <span className="text-black font-semibold text-base">Расм юклаш</span>
           </div>
         )}
       </label>

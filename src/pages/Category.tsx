@@ -9,14 +9,14 @@ import categoryStore from '../common/state-management/categoryStore.tsx';
 import globalStore from '../common/state-management/globalStore.tsx';
 
 const thead: IThead[] = [
-  { id: 1, name: 'T/r' },
-  { id: 2, name: 'Category name' },
-  { id: 3, name: 'Description' },
-  { id: 4, name: 'Question Count' },
-  { id: 5, name: 'Extra Question Count' },
-  { id: 6, name: 'Duration Time' },
-  { id: 7, name: 'Retake Date' },
-  { id: 8, name: 'Action' }
+  { id: 1, name: 'Т/р' },
+  { id: 2, name: 'Категория номи' },
+  { id: 3, name: 'Тавсиф' },
+  { id: 4, name: 'Саволлар сони' },
+  { id: 5, name: 'Қўшимча саволлар сони' },
+  { id: 6, name: 'Давомийлик вақти' },
+  { id: 7, name: 'Қайта қабул қилиш санаси' },
+  { id: 8, name: 'Ҳаракат' }
 ];
 
 const Category = () => {
@@ -80,14 +80,14 @@ const Category = () => {
 
   return (
     <>
-      <Breadcrumb pageName="Category" />
+      <Breadcrumb pageName="Категория" />
 
       <div className={`mb-5`}>
         <AddButtons
           onClick={openModal}
           children={<div className={`flex justify-center items-center`}>
             <MdOutlineAddCircle className={`text-4xl mr-3`} />
-            <p className={`text-lg font-bold`}>Add</p>
+            <p className={`text-lg font-bold`}>Қўшиш</p>
           </div>}
         />
       </div>
@@ -158,7 +158,7 @@ const Category = () => {
         ) : (
           <tr>
             <td colSpan={8} className="border-b border-[#eee] p-5 dark:border-strokedark text-center">
-              Category not found
+              Туркум топилмади
             </td>
           </tr>
         )}
@@ -172,29 +172,29 @@ const Category = () => {
               : addCategory(e, addValue, setResData, setIsLoading);
           }}>
             <div className="mb-4">
-              <label className="block text-gray-700 mb-2" htmlFor="categoryName">Category name</label>
+              <label className="block text-gray-700 mb-2" htmlFor="categoryName">Категория номи</label>
               <input
                 required
                 value={addValue?.name}
                 onChange={e => handleInputChange('name', e.target.value)}
                 className="w-full px-3 py-2 border rounded dark:text-slate-700"
                 id="categoryName"
-                placeholder="Enter category name"
+                placeholder="Категория номини киритинг"
               />
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 mb-2" htmlFor="description">Description</label>
+              <label className="block text-gray-700 mb-2" htmlFor="description">Тавсиф</label>
               <input
                 required
                 value={addValue?.description}
                 onChange={e => handleInputChange('description', e.target.value)}
                 className="w-full px-3 py-2 border rounded dark:text-slate-700"
                 id="description"
-                placeholder="Enter description"
+                placeholder="Тавсифни киритинг"
               />
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 mb-2" htmlFor="questionAmount">Question count</label>
+              <label className="block text-gray-700 mb-2" htmlFor="questionAmount">Саволлар сони</label>
               <input
                 required
                 value={addValue?.questionCount}
@@ -202,11 +202,11 @@ const Category = () => {
                 className="w-full px-3 py-2 border rounded dark:text-slate-700"
                 type={`number`}
                 id="questionAmount"
-                placeholder="Enter question count"
+                placeholder="Саволлар сонини киритинг"
               />
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 mb-2" htmlFor="extraQuestionCount">Extra question count</label>
+              <label className="block text-gray-700 mb-2" htmlFor="extraQuestionCount">Қўшимча саволлар сони</label>
               <input
                 required
                 value={addValue?.extraQuestionCount}
@@ -214,11 +214,11 @@ const Category = () => {
                 className="w-full px-3 py-2 border rounded dark:text-slate-700"
                 type="number"
                 id="extraQuestionCount"
-                placeholder="Enter extra question count"
+                placeholder="Қўшимча саволлар сонини киритинг"
               />
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 mb-2" htmlFor="durationTime">Duration time</label>
+              <label className="block text-gray-700 mb-2" htmlFor="durationTime">Давомийлик вақти</label>
               <input
                 required
                 value={addValue?.durationTime}
@@ -226,11 +226,11 @@ const Category = () => {
                 className="w-full px-3 py-2 border rounded dark:text-slate-700"
                 type="number"
                 id="durationTime"
-                placeholder="Enter duration time"
+                placeholder="Давомийлик вақтини киритинг"
               />
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 mb-2" htmlFor="retakeDate">Retake date</label>
+              <label className="block text-gray-700 mb-2" htmlFor="retakeDate">Қайта қабул қилиш санаси</label>
               <input
                 required
                 value={addValue?.retakeDate}
@@ -238,13 +238,13 @@ const Category = () => {
                 className="w-full px-3 py-2 border rounded dark:text-slate-700"
                 type="number"
                 id="retakeDate"
-                placeholder="Enter retake date"
+                placeholder="Қайта қабул қилиш санасини киритинг"
               />
             </div>
             <div className={`flex justify-end items-center gap-5`}>
-              <AddButtons children={`Close`} onClick={closeModal} />
+              <AddButtons children={`Ёпиш`} onClick={closeModal} />
               <AddButtons
-                children={isLoading ? 'loading...' : `Save`}
+                children={isLoading ? 'юкланмоқда...' : `Сақлаш`}
                 disabled={isLoading}
                 type={`submit`}
               />
@@ -256,11 +256,11 @@ const Category = () => {
       {/*delete modal*/}
       <GlobalModal onClose={closeModalDelete} isOpen={isModalDelete}>
         <div className={`w-54 sm:w-64 md:w-96 lg:w-[40rem]`}>
-          <p className={`my-7 text-center font-semibold`}>Do you want to delete Category?</p>
+          <p className={`my-7 text-center font-semibold`}>Категорияни оʻчириб ташламоқчимисиз?</p>
           <div className={`flex justify-end items-center gap-5 mt-5`}>
-            <AddButtons children={`Close`} onClick={closeModalDelete} />
+            <AddButtons children={`Ёпиш`} onClick={closeModalDelete} />
             <AddButtons
-              children={isLoading ? 'loading...' : `Delete`}
+              children={isLoading ? 'юкланмоқда...' : `Учириш`}
               disabled={isLoading}
               onClick={() => deleteCategory(editStatus, setIsLoading, setResData)}
             />

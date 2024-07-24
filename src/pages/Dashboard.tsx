@@ -19,11 +19,11 @@ import { FaUsers } from 'react-icons/fa';
 import { Pagination } from 'antd';
 
 const thead: IThead[] = [
-  { id: 1, name: 'T/r' },
-  { id: 2, name: 'First Name' },
-  { id: 3, name: 'Last Name' },
-  { id: 4, name: 'Category Name' },
-  { id: 5, name: 'Correct Answers' }
+  { id: 1, name: 'Т/р' },
+  { id: 2, name: 'Исм' },
+  { id: 3, name: 'Фамилия' },
+  { id: 4, name: 'Категория номи' },
+  { id: 5, name: 'Тўғри Жавоблар' }
 ];
 const { Option } = Select;
 
@@ -49,22 +49,22 @@ const Dashboard: React.FC = () => {
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-        <CardDataStats title="Total category" total={`${statisticsCard ? statisticsCard.categoryCount : 0}`} rate="">
+        <CardDataStats title="Умумий тоифа" total={`${statisticsCard ? statisticsCard.categoryCount : 0}`} rate="">
           <div className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
             <BiCategory className={`text-2xl`} />
           </div>
         </CardDataStats>
-        <CardDataStats title="Total question" total={`${statisticsCard ? statisticsCard.questionCount : 0}`} rate="">
+        <CardDataStats title="Умумий савол" total={`${statisticsCard ? statisticsCard.questionCount : 0}`} rate="">
           <div className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
             <FaCircleQuestion className={`text-2xl`} />
           </div>
         </CardDataStats>
-        <CardDataStats title="Total result" total={`${statisticsCard ? statisticsCard.resultCount : 0}`} rate="">
+        <CardDataStats title="Умумий натижа" total={`${statisticsCard ? statisticsCard.resultCount : 0}`} rate="">
           <div className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
             <PiArrowsOutCardinal className={`text-2xl`} />
           </div>
         </CardDataStats>
-        <CardDataStats title="Total Users" total={`${statisticsCard ? statisticsCard.userCount : 0}`} rate="">
+        <CardDataStats title="Жами фойдаланувчилар" total={`${statisticsCard ? statisticsCard.userCount : 0}`} rate="">
           <div className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
             <FaUsers className={`text-2xl`} />
           </div>
@@ -78,7 +78,7 @@ const Dashboard: React.FC = () => {
         <div className={`w-full md:w-1/2 lg:max-w-[30%] mb-6`}>
           {categoryData && (
             <Select
-              placeholder={`Select your subject`}
+              placeholder={`Категория танланг`}
               value={categoryID}
               className={`w-full bg-transparent rounded-[10px] h-10`}
               allowClear
@@ -124,7 +124,7 @@ const Dashboard: React.FC = () => {
           ) : (
             <tr>
               <td colSpan={5} className="border-b border-[#eee] p-5 dark:border-strokedark text-center">
-                Statistics not found
+                Статистика топилмади
               </td>
             </tr>
           )}

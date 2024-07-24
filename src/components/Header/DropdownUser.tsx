@@ -18,10 +18,10 @@ const DropdownUser = () => {
       >
           <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            {getMeData ? getMeData.fullName : role === 'ROLE_ADMIN' ? 'Admin' : 'Client'}
+            {getMeData ? getMeData.fullName : role === 'ROLE_ADMIN' ? 'Админ' : 'Мижоз'}
           </span>
             <span className="block text-xs">
-              {role === 'ROLE_ADMIN' ? 'admin' : 'client'}
+              {role === 'ROLE_ADMIN' ? 'админ' : 'мижоз'}
             </span>
         </span>
 
@@ -77,7 +77,7 @@ const DropdownUser = () => {
                         fill=""
                       />
                     </svg>
-                    Users
+                    Фойдаланувчилар
                   </Link>
                 </li>
                 <li>
@@ -102,7 +102,7 @@ const DropdownUser = () => {
                         fill=""
                       />
                     </svg>
-                    Category settings
+                    Категория созламалари
                   </Link>
                 </li>
               </ul>
@@ -153,7 +153,7 @@ const DropdownUser = () => {
                 fill=""
               />
             </svg>
-            Log Out
+            Чиқиш
           </button>
         </div>
       )}

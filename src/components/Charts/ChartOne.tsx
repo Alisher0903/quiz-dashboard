@@ -15,7 +15,7 @@ const ChartOne: React.FC = () => {
   const [state, setState] = useState<any>({
     series: [
       {
-        name: 'Number of employed',
+        name: 'Ечилганлар сони',
         data: chart.map((item) => item.value),
       },
     ],
@@ -29,7 +29,7 @@ const ChartOne: React.FC = () => {
     setState({
       series: [
         {
-          name: 'Number of employed',
+          name: 'Ечилганлар сони',
           data: chart.map((item: any) => item.count),
         },
       ],
@@ -151,8 +151,8 @@ const ChartOne: React.FC = () => {
               <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-primary"></span>
             </span>
             <div className="w-full">
-              <p className="font-semibold text-primary">Weekly information</p>
-              <p className="text-sm font-medium">12.04.2022 - 12.05.2022</p>
+              <p className="font-semibold text-primary">Ҳафталик маълумот</p>
+              {/*<p className="text-sm font-medium">12.04.2022 - 12.05.2022</p>*/}
             </div>
           </div>
         </div>
@@ -160,7 +160,7 @@ const ChartOne: React.FC = () => {
           <div className="inline-flex items-center rounded-md bg-whiter p-1.5 dark:bg-meta-4">
 
             <button className="rounded py-1 px-3 text-xs font-medium text-black  dark:text-white dark:hover:bg-boxdark">
-              Week
+              Ҳафта
             </button>
 
           </div>

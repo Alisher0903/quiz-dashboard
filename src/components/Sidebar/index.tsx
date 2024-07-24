@@ -53,7 +53,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
         <NavLink to="/dashboard">
-          <p>logo</p>
+          <p>Геодезия</p>
         </NavLink>
 
         <button
@@ -93,7 +93,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   to="/dashboard"
                   className={`${styles.sidebar} ${pathname.includes('dashboard') && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
                 >
-                  Dashboard
+                  Бошқарув панели
                 </NavLink>
               </li>
 
@@ -103,7 +103,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   to="/category"
                   className={`${styles.sidebar} ${pathname.includes('category') && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
                 >
-                  Category
+                  Категория
                 </NavLink>
               </li>
 
@@ -113,7 +113,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   to="/test"
                   className={`${styles.sidebar} ${pathname.includes('test') && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
                 >
-                  Test
+                  Тест
                 </NavLink>
               </li>
 
@@ -123,7 +123,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   to="/user"
                   className={`${styles.sidebar} ${pathname.includes('user') && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
                 >
-                  User
+                  Фойдаланувчилар
                 </NavLink>
               </li>
 
