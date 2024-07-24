@@ -73,18 +73,18 @@ const ClientQuizTest = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setRemainingTime((prevTime) => {
-        if (prevTime <= 1) {
+        if (quizData.remainingTime ? prevTime <= 1 : false) {
           clearInterval(timer);
           if (!hasSubmitted) {
             setHasSubmitted(true);
             alert('Time is up!');
             navigate('/');
-            sendResults(id, time, quizData.quiz.countAnswers, payload, navigate, setResult, setIsBtnLoading, setIsLoading, setCurrentIndex);
+            sendResults(id, time, quizData.quiz.countAnswers, payload, navigate, setResult, setIsBtnLoading, setIsLoading, setCurrentIndex, setQuizData);
           }
           return 0;
         }
         const newTime = prevTime - 1;
-        localStorage.setItem('remainingTime', newTime.toString());
+        quizData.remainingTime === 0 ? null : localStorage.setItem('remainingTime', newTime.toString());
         return newTime;
       });
     }, 1000);
@@ -154,7 +154,7 @@ const ClientQuizTest = () => {
 
             <div className="flex flex-col">
               <label htmlFor={`input[${currentIndex}]`}
-                     className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-white">
+                className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-white">
                 Enter your Answer
               </label>
               <input
@@ -282,7 +282,7 @@ const ClientQuizTest = () => {
             <div className="flex gap-5">
               <AddButtons
                 onClick={currentIndex + 1 === quizData.quizList.length ? () => {
-                  sendResults(id, time === 0 ? 1 : time, quizData.quiz.countAnswers, payload, navigate, setResult, setIsBtnLoading, setIsLoading, setCurrentIndex);
+                  sendResults(id, time === 0 ? 1 : time, quizData.quiz.countAnswers, payload, navigate, setResult, setIsBtnLoading, setIsLoading, setCurrentIndex, setQuizData);
                 } : handleNextQuestion}
                 disabled={isBtnLoading ? isBtnLoading : isNextDisabled}>{currentIndex + 1 === quizData.quizList.length ? `${isBtnLoading ? 'Loading...' : 'Submit'}` : 'Next'}
               </AddButtons>

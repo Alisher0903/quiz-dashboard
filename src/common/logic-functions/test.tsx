@@ -28,7 +28,7 @@ export const fetchQuiz = async (id: string | undefined, setQuizData: (val: TestM
   }
 };
 
-export const sendResults = async (id: string | undefined, duration: number, countAnswers: number, payload: any[], navigate: (path: string) => void, setResult: (val: string) => void, setIsLoading: (val: boolean) => void, setLoading: (val: boolean) => void, setCurrentIndex: (val: number) => void) => {
+export const sendResults = async (id: string | undefined, duration: number, countAnswers: number, payload: any[], navigate: (path: string) => void, setResult: (val: string) => void, setIsLoading: (val: boolean) => void, setLoading: (val: boolean) => void, setCurrentIndex: (val: number) => void, setQuizData: (val: TestMainData) => void) => {
   setIsLoading(true);
   try {
     const { data } = await axios.post(`${quiz_pass}/${id}?duration=${duration}&countAnswers=${countAnswers}`, payload, config);
@@ -37,6 +37,16 @@ export const sendResults = async (id: string | undefined, duration: number, coun
       getCertificate(data.body, setResult, setLoading);
       setIsLoading(false);
       setCurrentIndex(0);
+      setQuizData({
+        quizList: [],
+        quiz: {
+          questionDtoList: [],
+          countAnswers: 0,
+          duration: 0
+        },
+        currentQuestionIndex: 0,
+        remainingTime: 0
+      })
       localStorage.removeItem('remainingTime')
       localStorage.removeItem('currentIndex')
     } else setIsLoading(false);
