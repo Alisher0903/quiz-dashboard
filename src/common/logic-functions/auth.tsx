@@ -68,41 +68,42 @@ export const registerClientActive = async (
       toast.error('Кодда хатолик бор, қайта киритинг');
       setLoading(false);
     }
-  } catch (err) {
+  } catch {
     setLoading(false);
-    console.log(err);
     toast.error('Нимадир хато кетди, қайта уриниб кўринг!!!');
   }
 };
 
 // auth login
-export const handleSubmit = (
+export const handleSubmit = async (
   event: React.FormEvent<HTMLFormElement>,
   email: string,
   password: string,
   setLoading: (loading: boolean) => void,
   setResData: (val: boolean) => void
-): void => {
+) => {
   event.preventDefault();
-  const data = { email, password };
+  const authData = { email, password };
+  setLoading(true);
 
   if (email && password) {
-    setLoading(true);
-    axios.post(auth_login, data)
-      .then(res => {
+    try {
+      const { data } = await axios.post(auth_login, authData);
+      if (data.success) {
         setLoading(false);
-        if (res.data.success) {
-          const expiryTime = new Date().getTime() + 24 * 60 * 60 * 1000;
-          localStorage.setItem('tokenExpiry', expiryTime.toString());
-          localStorage.setItem('ROLE', res.data.role);
-          localStorage.setItem('token', `Bearer ${res.data.token}`);
-          setResData(true);
-        } else toast.error('Логин ёки паролни хато киритдингиз');
-      })
-      .catch(() => {
+        const expiryTime = new Date().getTime() + 24 * 60 * 60 * 1000;
+        localStorage.setItem('tokenExpiry', expiryTime.toString());
+        localStorage.setItem('ROLE', data.role);
+        localStorage.setItem('token', `Bearer ${data.token}`);
+        setResData(true);
+      } else {
         setLoading(false);
-        toast.error('Логин ёки паролни хато киритдингиз');
-      });
+        toast.error('Сиз хали руйхатдан утмагансиз');
+      }
+    } catch {
+      setLoading(false);
+      toast.error('Логин ёки паролни хато киритдингиз');
+    }
   } else {
     setLoading(false);
     toast.error('Малумотлар тулиқлигини текшириб куринг!!!');
@@ -131,9 +132,9 @@ export const forgotPasswordEmail = async (
         toast.error('Нимадур хатолик юз берди, кейинроқ қайта уриниб куринг!!!');
       }
     }
-  } catch (err) {
+  } catch {
     setLoading(false);
-    console.log(err);
+    // console.log(err);
     toast.error('Нимадур хатолик юз берди, кейинроқ қайта уриниб куринг!!!');
   }
 };
@@ -163,15 +164,15 @@ export const resetPassword = async (
         }
       } else {
         setLoading(false);
-        toast.error('Малумотлар тулиқ эмас қайтадан уриниб куринг!!!')
+        toast.error('Малумотлар тулиқ эмас қайтадан уриниб куринг!!!');
       }
     } else {
       setLoading(false);
-      toast.error('Пароллар мослиги туғри келмади, текшириб қайтадан уриниб куринг!!!')
+      toast.error('Пароллар мослиги туғри келмади, текшириб қайтадан уриниб куринг!!!');
     }
-  } catch (err) {
+  } catch {
     setLoading(false);
-    console.error(err);
+    // console.error(err);
     toast.error('Нимадур хатолик юз берди, кейинроқ қайта уриниб куринг!!!');
   }
 };

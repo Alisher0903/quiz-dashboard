@@ -7,8 +7,7 @@ export const getMe = async (setData: (val: any) => void) => {
     const { data } = await axios.get(getMeUrl, config);
     if (data.success) setData(data.body);
     else setData(null);
-  } catch (err) {
+  } catch {
     setData(null);
-    console.log(err);
   }
 };
