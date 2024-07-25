@@ -52,7 +52,7 @@ export const sendResults = async (id: string | undefined, duration: number, coun
     } else setIsLoading(false);
   } catch (err) {
     setIsLoading(false);
-    toast.error('Iltimos keyinroq urinib ko\'ring');
+    toast.error('Илтимос кейинроқ уриниб кўринг');
   }
 };
 
@@ -86,20 +86,6 @@ export const allFilterOrGet = async (setData: (val: null | TestList[]) => void, 
   }
 };
 
-// get one test
-export const getOneTest = async (setData: (val: TestList | null | any) => void, id: number | string) => {
-  try {
-    if (id) {
-      const { data } = await axios.get(`${question_crud}/${id}`, config);
-      if (data.success) setData(data.body);
-      else setData(null);
-    }
-  } catch (err) {
-    setData(null);
-    console.error(err);
-  }
-};
-
 // test crud function
 export const adminTestCrud = async (
   {
@@ -123,13 +109,13 @@ export const adminTestCrud = async (
       if (data.success) {
         setResData(true);
         setLoading(false);
-        toast.success('Successfully test saved');
+        toast.success('Тест муваффақиятли сақланди');
       } else {
-        toast.error('Error test saved');
+        toast.error('Тест сақлашда хатолик юз берди');
         setLoading(false);
       }
     } catch (err) {
-      toast.error('Error test saved');
+      toast.error('Тест сақлашда хатолик юз берди');
       console.error(err);
       setLoading(false);
     }
@@ -140,17 +126,17 @@ export const adminTestCrud = async (
         if (data.success) {
           setResData(true);
           setLoading(false);
-          toast.success('Successfully test editing');
+          toast.success('Тест муваффақиятли таҳрирланди');
         } else {
-          toast.error('An error occurred');
+          toast.error('Хатолик юз берди');
           setLoading(false);
         }
       } else {
-        toast.error('An error occurred');
+        toast.error('Хатолик юз берди');
         setLoading(false);
       }
     } catch (err) {
-      toast.error('An error occurred');
+      toast.error('Хатолик юз берди');
       console.error(err);
       setLoading(false);
     }
@@ -161,17 +147,17 @@ export const adminTestCrud = async (
         if (data.success) {
           setResData(true);
           setLoading(false);
-          toast.success('Successfully test deleting');
+          toast.success('Тест муваффақиятли учирилди');
         } else {
-          toast.error('An error occurred');
+          toast.error('Хатолик юз берди');
           setLoading(false);
         }
       } else {
-        toast.error('An error occurred');
+        toast.error('Хатолик юз берди');
         setLoading(false);
       }
     } catch (err) {
-      toast.error('An error occurred');
+      toast.error('Хатолик юз берди');
       console.error(err);
       setLoading(false);
     }

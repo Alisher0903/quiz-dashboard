@@ -14,14 +14,14 @@ const ConfirmEmailCode = () => {
   useEffect(() => {
     if (resData && !forgot) {
       setResData(false);
-      toast.success('You have successfully registered');
+      toast.success('Сиз рўйхатдан оʻтдингиз');
       setConfirmEmailCode('');
       navigate('/auth/signin');
     }
 
     if (resData && forgot) {
       sessionStorage.removeItem('forgot');
-      toast.success('Check your email and set a new password');
+      toast.success('Электрон почтангизни текширинг ва янги парол ўрнатинг');
       setEmail('')
       setResData(false)
       navigate('/auth/reset-password')
@@ -35,17 +35,7 @@ const ConfirmEmailCode = () => {
           {/*one qism*/}
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="py-17.5 px-26 text-center">
-              <Link className="mb-5.5 inline-block" to="/auth/signin">
-                <img className="hidden dark:block" src={``} alt="Logo" />
-                <img className="dark:hidden" src={``} alt="Logo" />
-              </Link>
-
-              <p className="2xl:px-20">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                suspendisse.
-              </p>
-
-              <span className="mt-15 inline-block">
+              <span className="inline-block">
                 <svg
                   width="350"
                   height="350"
@@ -174,7 +164,7 @@ const ConfirmEmailCode = () => {
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                {forgot === 'forgotPassword' ? 'Enter your email to change your password' : 'We send code to your email'}
+                {forgot === 'forgotPassword' ? 'Паролингизни ўзгартириш учун электрон почтангизни киритинг' : 'Кодни электрон почтангизга юборамиз'}
               </h2>
 
               <form onSubmit={e => {
@@ -185,7 +175,7 @@ const ConfirmEmailCode = () => {
                 {/*confirm code*/}
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    {forgot === 'forgotPassword' ? 'Enter your email' : 'Confirm email code'}
+                    {forgot === 'forgotPassword' ? 'Электрон почтангизни киритинг' : 'Электрон почта кодини тасдиқланг'}
                   </label>
                   <div className="relative">
                     <input
@@ -195,7 +185,7 @@ const ConfirmEmailCode = () => {
                         if (forgot === 'forgotPassword') setEmail(e.target.value);
                         else setConfirmEmailCode(e.target.value);
                       }}
-                      placeholder={forgot === 'forgotPassword' ? 'Enter your email' : ''}
+                      placeholder={forgot === 'forgotPassword' ? 'Электрон почтангизни киритинг' : ''}
                       type={forgot === 'forgotPassword' ? 'email' : 'number'}
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 px-6 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
@@ -206,20 +196,21 @@ const ConfirmEmailCode = () => {
                 <div className="mb-5">
                   <input
                     type="submit"
-                    value={isLoading ? 'loading...' : `Confirm`}
+                    disabled={isLoading}
+                    value={isLoading ? 'Юкланмоқда...' : `Тасдиқлаш`}
                     className={`w-full ${isLoading ? 'cursor-not-allowed bg-slate-500' : 'cursor-pointer bg-primary'} rounded-lg border border-primary p-4 text-white transition hover:bg-opacity-90`}
                   />
                 </div>
 
                 <div className="mt-6 text-center">
                   <p>
-                    Return to the Register page{' '}
+                    Руйхатдан утиш саҳифасига қайтиш{' '}
                     <Link
                       to="/auth/signup"
                       className="text-primary"
                       onClick={() => sessionStorage.removeItem('forgot')}
                     >
-                      Sign Up
+                      Рўйхатдан ўтиш
                     </Link>
                   </p>
                 </div>

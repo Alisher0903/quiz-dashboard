@@ -9,9 +9,9 @@ import AddButtons from '../../components/buttons/buttons';
 import { useNavigate } from 'react-router-dom';
 
 const thead: IThead[] = [
-  { id: 1, name: 'T/r' },
-  { id: 2, name: 'Category name' },
-  { id: 4, name: 'Action' }
+  { id: 1, name: 'Т/р' },
+  { id: 2, name: 'Категория номи' },
+  { id: 4, name: 'Ҳаракат' }
 ];
 
 const ClientDashboard = () => {
@@ -58,7 +58,7 @@ const ClientDashboard = () => {
                     setCategoryId(item.id);
                     toggleModal();
                   }}>
-                    START
+                    Бошлаш
                     <MdStart className={`text-2xl duration-300`} />
                   </button>
                 </p>
@@ -67,20 +67,20 @@ const ClientDashboard = () => {
           )) : (
             <tr>
               <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark font-bold text-center" colSpan={3}>
-                Category not found
+                Категория топилмади
               </td>
             </tr>
           )}
       </UniversalTable>
       <GlobalModal isOpen={isOpen} onClose={toggleModal}>
         <div className="w-[300px] py-2">
-          <p className="text-[#000] dark:text-white text-lg text-center">Are you sure you want to start this test?</p>
+          <p className="text-[#000] dark:text-white text-lg text-center">Ҳақиқатан ҳам бу тестни бошламоқчимисиз?</p>
           <div className="flex mt-5 gap-5 justify-end">
             <AddButtons onClick={toggleModal}>
-              Cancel
+              Бекор қилиш
             </AddButtons>
             <AddButtons onClick={() => navigation(`/client/quiz/${categoryId}`)}>
-              Start
+              Бошлаш
             </AddButtons>
           </div>
         </div>

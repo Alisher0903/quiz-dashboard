@@ -29,7 +29,7 @@ const SignUp = () => {
       setPrePassword('')
       setFirstName('')
       setLastName('')
-      toast.success('Enter the verification code you received');
+      toast.success('Руйхатдан утдингиз, тасдиқлаш кодини киритинг');
       navigate('/auth/confirm')
     }
   }, [resData]);
@@ -42,16 +42,16 @@ const SignUp = () => {
           {/*one qism*/}
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="py-17.5 px-26 text-center">
-              <Link className="mb-5.5 inline-block" to="/auth/signup">
-                <img className="hidden dark:block" src={`Logo`} alt="Logo" />
-                <img className="dark:hidden" src={`LogoDark`} alt="Logo" />
-              </Link>
-              <p className="2xl:px-20">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                suspendisse.
-              </p>
+              {/*<Link className="mb-5.5 inline-block" to="/auth/signup">*/}
+              {/*  <img className="hidden dark:block" src={`Logo`} alt="Logo" />*/}
+              {/*  <img className="dark:hidden" src={`LogoDark`} alt="Logo" />*/}
+              {/*</Link>*/}
+              {/*<p className="2xl:px-20">*/}
+              {/*  Lorem ipsum dolor sit amet, consectetur adipiscing elit*/}
+              {/*  suspendisse.*/}
+              {/*</p>*/}
 
-              <span className="mt-15 inline-block">
+              <span className="inline-block">
                 <svg
                   width="350"
                   height="350"
@@ -180,21 +180,21 @@ const SignUp = () => {
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                Registeration form
+                Рўйхатдан ўтиш шакли
               </h2>
 
               <form onSubmit={e => authRegister(e, firstName, lastName, email, password, prePassword, setIsLoading, setResData)}>
                 {/*first name*/}
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    First name
+                    Исм
                   </label>
                   <div className="relative">
                     <input
                       required
                       value={firstName}
                       onChange={e => setFirstName(e.target.value)}
-                      placeholder="Enter Your First name"
+                      placeholder="Исмингизни киритинг"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
@@ -225,14 +225,14 @@ const SignUp = () => {
                 {/*last name*/}
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Last name
+                    Фамилия
                   </label>
                   <div className="relative">
                     <input
                       required
                       value={lastName}
                       onChange={e => setLastName(e.target.value)}
-                      placeholder="Enter Your Last name"
+                      placeholder="Фамилиянгизни киритинг"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
@@ -263,7 +263,7 @@ const SignUp = () => {
                 {/*email*/}
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Email
+                    Электрон почта
                   </label>
                   <div className="relative">
                     <input
@@ -271,7 +271,7 @@ const SignUp = () => {
                       value={email}
                       onChange={e => setEmail(e.target.value)}
                       type="email"
-                      placeholder="Enter your email"
+                      placeholder="Электрон почтангизни киритинг"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
@@ -298,7 +298,7 @@ const SignUp = () => {
                 {/*password*/}
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Password
+                    Парол
                   </label>
                   <div className="relative">
                     <input
@@ -306,7 +306,7 @@ const SignUp = () => {
                       value={password}
                       onChange={e => setPassword(e.target.value)}
                       type="password"
-                      placeholder="Enter your password"
+                      placeholder="Паролингизни киритинг"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
@@ -332,13 +332,13 @@ const SignUp = () => {
                       </svg>
                     </span>
                   </div>
-                  <p>Password must contain at least 5 letters or numbers</p>
+                  <p>Парол камида 5 та ҳарф ёки рақамдан иборат бўлиши керак</p>
                 </div>
 
                 {/*pre password*/}
                 <div className="mb-6">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Confirm Password
+                    Паролни тасдиқланг
                   </label>
                   <div className="relative">
                     <input
@@ -346,7 +346,7 @@ const SignUp = () => {
                       value={prePassword}
                       onChange={e => setPrePassword(e.target.value)}
                       type="password"
-                      placeholder="Enter the password "
+                      placeholder="Паролни киритинг"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
@@ -378,16 +378,17 @@ const SignUp = () => {
                 <div className="mb-5">
                   <input
                     type="submit"
-                    value={isLoading ? 'loading...' : 'Create account'}
+                    disabled={isLoading}
+                    value={isLoading ? 'Юкланмоқда...' : 'Ҳисоб яратиш'}
                     className={`w-full ${isLoading ? 'cursor-not-allowed bg-slate-500' : 'cursor-pointer bg-primary'} rounded-lg border border-primary p-4 text-white transition hover:bg-opacity-90`}
                   />
                 </div>
 
                 <div className="mt-6 text-center">
                   <p>
-                    Already have an account?{' '}
+                    Ҳисобингиз борми?{' '}
                     <Link to="/auth/signin" className="text-primary">
-                      Sign in
+                      Тизимга кириш
                     </Link>
                   </p>
                 </div>

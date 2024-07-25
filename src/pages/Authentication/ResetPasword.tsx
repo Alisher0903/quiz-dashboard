@@ -23,7 +23,7 @@ const ResetPassword = () => {
       setPassword('');
       setPrePassword('')
       setConfirmEmailCode('')
-      toast.success('Password changed successfully');
+      toast.success('Парол муваффақиятли алмаштирилди');
       navigate('/auth/signin')
     }
   }, [resData]);
@@ -36,16 +36,7 @@ const ResetPassword = () => {
           {/*one qism*/}
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="py-17.5 px-26 text-center">
-              <Link className="mb-5.5 inline-block" to="/auth/signup">
-                <img className="hidden dark:block" src={`Logo`} alt="Logo" />
-                <img className="dark:hidden" src={`LogoDark`} alt="Logo" />
-              </Link>
-              <p className="2xl:px-20">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                suspendisse.
-              </p>
-
-              <span className="mt-15 inline-block">
+              <span className="inline-block">
                 <svg
                   width="350"
                   height="350"
@@ -174,21 +165,21 @@ const ResetPassword = () => {
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                Registeration form
+                Паролни алмаштириш учун
               </h2>
 
               <form onSubmit={e => resetPassword(e, confirmEmailCode, password, prePassword, setIsLoading, setResData)}>
                 {/*password token*/}
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Password token
+                    Тасдиқлаш коди
                   </label>
                   <div className="relative">
                     <input
                       required
                       value={confirmEmailCode}
                       onChange={e => setConfirmEmailCode(e.target.value)}
-                      placeholder="Password token"
+                      placeholder="Тасдиқлаш кодини киритинг"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
@@ -219,7 +210,7 @@ const ResetPassword = () => {
                 {/*password*/}
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Password
+                    Парол
                   </label>
                   <div className="relative">
                     <input
@@ -227,7 +218,7 @@ const ResetPassword = () => {
                       value={password}
                       onChange={e => setPassword(e.target.value)}
                       type="password"
-                      placeholder="Enter your password"
+                      placeholder="Паролингизни киритинг"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
@@ -258,7 +249,7 @@ const ResetPassword = () => {
                 {/*pre password*/}
                 <div className="mb-6">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Confirm Password
+                    Паролни тасдиқланг
                   </label>
                   <div className="relative">
                     <input
@@ -266,7 +257,7 @@ const ResetPassword = () => {
                       value={prePassword}
                       onChange={e => setPrePassword(e.target.value)}
                       type="password"
-                      placeholder="Enter the password "
+                      placeholder="Паролни киритинг"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
@@ -298,16 +289,17 @@ const ResetPassword = () => {
                 <div className="mb-5">
                   <input
                     type="submit"
-                    value={isLoading ? 'loading...' : 'Confirm password'}
+                    disabled={isLoading}
+                    value={isLoading ? 'Юкланмоқда...' : 'Паролни тасдиқланг'}
                     className={`w-full ${isLoading ? 'cursor-not-allowed bg-slate-500' : 'cursor-pointer bg-primary'} rounded-lg border border-primary p-4 text-white transition hover:bg-opacity-90`}
                   />
                 </div>
 
                 <div className="mt-6 text-center">
                   <p>
-                    Is your account charged?{' '}
+                    Ҳисобингиз борми?{' '}
                     <Link to="/auth/signup" className="text-primary">
-                      Sign up
+                      Рўйхатдан ўтиш
                     </Link>
                   </p>
                 </div>

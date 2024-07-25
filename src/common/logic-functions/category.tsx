@@ -33,15 +33,15 @@ export const addCategory = async (
       if (data.success) {
         setLoading(false);
         resultData(true);
-        toast.success(edit ? 'Successfully category editing' : 'Successfully category saved');
+        toast.success(edit ? 'Категорияни таҳрирлаш муваффақиятли амалга оширилди' : 'Категория муваффақиятли сақланди');
       } else {
         setLoading(false);
-        toast.error(edit ? 'Error editing category' : 'Error adding category');
+        toast.error(edit ? 'Категорияни таҳрирлашда хатолик юз берди' : 'Категория қўшишда хатолик юз берди');
       }
     }
   } catch (err) {
     setLoading(false);
-    toast.error(edit ? 'Error editing category' : 'Error adding category');
+    toast.error(edit ? 'Категорияни таҳрирлашда хатолик юз берди' : 'Категория қўшишда хатолик юз берди');
     console.error(err);
   }
 };
@@ -55,15 +55,15 @@ export const deleteCategory = async (idIn: string | number, seLoading: (val: boo
       if (data.success) {
         seLoading(false);
         setResData(true);
-        toast.success('Successfully deleted category');
+        toast.success('Категория муваффақиятли оʻчирилди');
       } else {
         seLoading(false);
-        toast.error('Error deleting category');
+        toast.error('Категорияни ўчиришда хатолик юз берди');
       }
     }
   } catch (err) {
     seLoading(false);
-    toast.error('Error deleting category');
+    toast.error('Категорияни ўчиришда хатолик юз берди');
     console.error(err);
   }
 };

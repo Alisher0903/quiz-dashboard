@@ -15,7 +15,7 @@ const SignIn = () => {
       setResData(false);
       setEmail('');
       setPassword('');
-      toast.success('Login successfully');
+      toast.success('Тиз имга муваффақиятли кирдингиз');
       const role = localStorage.getItem('ROLE');
       if (role === 'ROLE_ADMIN') navigate('/dashboard');
       else if (role === 'ROLE_CLIENT') navigate('/client/dashboard');
@@ -29,17 +29,17 @@ const SignIn = () => {
           {/*one qism*/}
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="py-17.5 px-26 text-center">
-              <Link className="mb-5.5 inline-block" to="/auth/signin">
-                <img className="hidden dark:block" src={``} alt="Logo" />
-                <img className="dark:hidden" src={``} alt="Logo" />
-              </Link>
+              {/*<Link className="mb-5.5 inline-block" to="/auth/signin">*/}
+              {/*  <img className="hidden dark:block" src={``} alt="Logo" />*/}
+              {/*  <img className="dark:hidden" src={``} alt="Logo" />*/}
+              {/*</Link>*/}
 
-              <p className="2xl:px-20">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                suspendisse.
-              </p>
+              {/*<p className="2xl:px-20">*/}
+              {/*  Lorem ipsum dolor sit amet, consectetur adipiscing elit*/}
+              {/*  suspendisse.*/}
+              {/*</p>*/}
 
-              <span className="mt-15 inline-block">
+              <span className="inline-block">
                 <svg
                   width="350"
                   height="350"
@@ -168,14 +168,14 @@ const SignIn = () => {
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                Sign in
+                Тизимга кириш
               </h2>
 
               <form onSubmit={e => handleSubmit(e, email, password, setIsLoading, setResData)}>
                 {/*email*/}
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Email
+                    Электрон почта
                   </label>
                   <div className="relative">
                     <input
@@ -183,7 +183,7 @@ const SignIn = () => {
                       value={email}
                       onChange={e => setEmail(e.target.value)}
                       type="email"
-                      placeholder="Enter your email"
+                      placeholder="Электрон почтангизни киритинг"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
@@ -210,7 +210,7 @@ const SignIn = () => {
                 {/*password*/}
                 <div className="mb-6">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Password
+                    Парол
                   </label>
                   <div className="relative">
                     <input
@@ -218,7 +218,7 @@ const SignIn = () => {
                       value={password}
                       onChange={e => setPassword(e.target.value)}
                       type="password"
-                      placeholder="Enter Password"
+                      placeholder="Паролни киритинг"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
@@ -244,23 +244,24 @@ const SignIn = () => {
                       </svg>
                     </span>
                   </div>
-                  <p>Password must contain at least 5 letters or numbers</p>
+                  <p>Парол камида 5 та ҳарф ёки рақамдан иборат бўлиши керак</p>
                 </div>
 
                 {/*confirm button*/}
                 <div className="mb-5">
                   <input
                     type="submit"
-                    value={isLoading ? 'loading...' : 'Sign In'}
+                    disabled={isLoading}
+                    value={isLoading ? 'Юкланмоқда...' : 'Тизимга кириш'}
                     className={`w-full ${isLoading ? 'cursor-not-allowed bg-slate-500' : 'cursor-pointer bg-primary'} rounded-lg border border-primary p-4 text-white transition hover:bg-opacity-90`}
                   />
                 </div>
 
                 <div className="mt-6 text-center flex justify-between items-center">
                   <p>
-                    Don’t have any account?{' '}
+                    Ҳисобингиз ёъқми?{' '}
                     <Link to="/auth/signup" className="text-primary">
-                      Sign Up
+                      Рўйхатдан ўтиш
                     </Link>
                   </p>
                   <Link
@@ -268,7 +269,7 @@ const SignIn = () => {
                     className="text-primary hover:underline"
                     onClick={() => sessionStorage.setItem('forgot', 'forgotPassword')}
                   >
-                    Forgot password?
+                    Паролни унутдингизми?
                   </Link>
                 </div>
               </form>

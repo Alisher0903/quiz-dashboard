@@ -77,7 +77,7 @@ const ClientQuizTest = () => {
           clearInterval(timer);
           if (!hasSubmitted) {
             setHasSubmitted(true);
-            alert('Time is up!');
+            alert('Вақт бўлди!');
             navigate('/');
             sendResults(id, time, quizData.quiz.countAnswers, payload, navigate, setResult, setIsBtnLoading, setIsLoading, setCurrentIndex, setQuizData);
           }
@@ -155,11 +155,11 @@ const ClientQuizTest = () => {
             <div className="flex flex-col">
               <label htmlFor={`input[${currentIndex}]`}
                 className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-white">
-                Enter your Answer
+                Жавобингизни киритинг
               </label>
               <input
                 id={`input[${currentIndex}]`}
-                placeholder="Answer"
+                placeholder="Жавоб"
                 onChange={(e) => handleAnswerChange(optionList[0]?.questionId, e.target.value)}
                 className="rounded-lg px-2 py-1 border text-[#000]"
                 type="text"
@@ -278,22 +278,22 @@ const ClientQuizTest = () => {
             )}
           </div>
           <div className="flex justify-between mt-5">
-            <p>Remaining Time: {formatTime(remainingTime ? remainingTime : 0)}</p>
+            <p>Қолган вақт: {formatTime(remainingTime ? remainingTime : 0)}</p>
             <div className="flex gap-5">
               <AddButtons
                 onClick={currentIndex + 1 === quizData.quizList.length ? () => {
                   sendResults(id, time === 0 ? 1 : time, quizData.quiz.countAnswers, payload, navigate, setResult, setIsBtnLoading, setIsLoading, setCurrentIndex, setQuizData);
                 } : handleNextQuestion}
-                disabled={isBtnLoading ? isBtnLoading : isNextDisabled}>{currentIndex + 1 === quizData.quizList.length ? `${isBtnLoading ? 'Loading...' : 'Submit'}` : 'Next'}
+                disabled={isBtnLoading ? isBtnLoading : isNextDisabled}>{currentIndex + 1 === quizData.quizList.length ? `${isBtnLoading ? 'Юкланмоқда...' : 'Юбориш'}` : 'Кейингиси'}
               </AddButtons>
             </div>
           </div>
         </div>
         :
         <div className="flex justify-center flex-col h-100 items-center">
-          <p>This category not have tests</p>
+          <p>Бу туркумда тестлар мавжуд эмас</p>
           <div>
-            <Link className="text-blue-600" to={'/client/dashboard'}>Go back</Link>
+            <Link className="text-blue-600" to={'/client/dashboard'}>Ортга қайтиш</Link>
           </div>
         </div>
       }

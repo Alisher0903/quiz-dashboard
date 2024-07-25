@@ -30,15 +30,15 @@ export const authRegister = (
       .then(res => {
         setLoading(false);
         if (res.data.success) setResData(true);
-        else toast.error('Something went wrong, please try again');
+        else toast.error('Нимадир хато кетди, қайта уриниб кўринг');
       })
       .catch(() => {
         setLoading(false);
-        toast.error('An error occurred on the server!!!');
+        toast.error('Серверда хатолик юз берди!!!');
       });
   } else {
     setLoading(false);
-    toast.error('No phone number or password entered!!!');
+    toast.error('Ҳеч қандай телефон рақами ёки парол киритилмаган!!!');
   }
 };
 
@@ -57,15 +57,15 @@ export const registerClientActive = async (
       if (data.success) {
         setResData(true);
         setLoading(false);
-      } else toast.error('An error occurred on the server!!!');
+      } else toast.error('Серверда хатолик юз берди!!!');
     } else {
-      toast.error('There is an error in the code, please re-enter');
+      toast.error('Кодда хатолик бор, қайта киритинг');
       setLoading(false);
     }
   } catch (err) {
     setLoading(false);
     console.log(err);
-    toast.error('An error occurred on the server!!!');
+    toast.error('Серверда хатолик юз берди!!!');
   }
 };
 
@@ -89,15 +89,15 @@ export const handleSubmit = (
           localStorage.setItem('ROLE', res.data.role);
           localStorage.setItem('token', `Bearer ${res.data.token}`);
           setResData(true);
-        } else toast.error('Something went wrong, please try again');
+        } else toast.error('Нимадир хато кетди, қайта уриниб кўринг');
       })
       .catch(() => {
         setLoading(false);
-        toast.error('Something went wrong, please try again');
+        toast.error('Нимадир хато кетди, қайта уриниб кўринг');
       });
   } else {
     setLoading(false);
-    toast.error('No phone number or password entered!!!');
+    toast.error('Ҳеч қандай телефон рақами ёки парол киритилмаган!!!');
   }
 };
 
@@ -118,12 +118,12 @@ export const forgotPasswordEmail = async (
       if (data.success) {
         setResData(true);
         setLoading(false);
-      } else toast.error('An error occurred on the server!!!');
+      } else toast.error('Серверда хатолик юз берди!!!');
     }
   } catch (err) {
     setLoading(false);
     console.log(err);
-    toast.error('An error occurred on the server!!!');
+    toast.error('Серверда хатолик юз берди!!!');
   }
 };
 
@@ -146,11 +146,11 @@ export const resetPassword = async (
       if (data.success) {
         setResData(true);
         setLoading(false);
-      } else toast.error('An error occurred on the server!!!');
+      } else toast.error('Серверда хатолик юз берди!!!');
     }
   } catch (err) {
     setLoading(false);
     console.log(err);
-    toast.error('An error occurred on the server!!!');
+    toast.error('Серверда хатолик юз берди!!!');
   }
 };
