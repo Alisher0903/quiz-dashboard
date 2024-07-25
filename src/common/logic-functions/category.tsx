@@ -55,7 +55,7 @@ export const deleteCategory = async (idIn: string | number, seLoading: (val: boo
       if (data.success) {
         seLoading(false);
         setResData(true);
-        toast.success('Категория муваффақиятли оʻчирилди');
+        toast.success('Категория муваффақиятли ўчирилди');
       } else {
         seLoading(false);
         toast.error('Категорияни ўчиришда хатолик юз берди');

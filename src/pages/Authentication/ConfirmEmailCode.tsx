@@ -14,7 +14,7 @@ const ConfirmEmailCode = () => {
   useEffect(() => {
     if (resData && !forgot) {
       setResData(false);
-      toast.success('Сиз рўйхатдан оʻтдингиз');
+      toast.success('Сиз рўйхатдан ўтдингиз');
       setConfirmEmailCode('');
       navigate('/auth/signin');
     }

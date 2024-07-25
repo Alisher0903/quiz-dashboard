@@ -282,7 +282,7 @@ const Test = () => {
                     setResData,
                     editOrDeleteID: editOrDeleteStatus !== 'post' ? editOrDeleteID : ''
                   })
-                ) : toast.error('Хатолик юз берди, қайта уриниб коʻринг');
+                ) : toast.error('Хатолик юз берди, қайта уриниб кўринг');
               }}
             />
           </div>
