@@ -62,7 +62,6 @@ function App() {
       localStorage.removeItem('token');
       localStorage.removeItem('tokenExpiry');
       localStorage.removeItem('ROLE');
-      navigate('/auth/signin');
     }
 
     if (!tokens && !pathname.startsWith('/auth')) navigate('/auth/signin');

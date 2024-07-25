@@ -26,19 +26,24 @@ export const authRegister = (
 
   if (firstname && lastname && email && password && confirmPassword) {
     setLoading(true);
-    axios.post(auth_register, data)
-      .then(res => {
-        setLoading(false);
-        if (res.data.success) setResData(true);
-        else toast.error('Нимадир хато кетди, қайта уриниб кўринг');
-      })
-      .catch(() => {
-        setLoading(false);
-        toast.error('Серверда хатолик юз берди!!!');
-      });
+    if (password === confirmPassword) {
+      axios.post(auth_register, data)
+        .then(res => {
+          setLoading(false);
+          if (res.data.success) setResData(true);
+          else toast.error('Нимадир хато кетди, қайта уриниб кўринг');
+        })
+        .catch(() => {
+          setLoading(false);
+          toast.error('Нимадир хато кетди, қайта уриниб кўринг!!!');
+        });
+    } else {
+      setLoading(false);
+      toast.error('Парол ва такрорий парол мослигини текшириб қайтадан уриниб куринг');
+    }
   } else {
     setLoading(false);
-    toast.error('Ҳеч қандай телефон рақами ёки парол киритилмаган!!!');
+    toast.error('Малумотлар тулиқлигини текшириб куринг!!!');
   }
 };
 
@@ -57,7 +62,7 @@ export const registerClientActive = async (
       if (data.success) {
         setResData(true);
         setLoading(false);
-      } else toast.error('Серверда хатолик юз берди!!!');
+      } else toast.error('Нимадир хато кетди, қайта уриниб кўринг!!!');
     } else {
       toast.error('Кодда хатолик бор, қайта киритинг');
       setLoading(false);
@@ -65,7 +70,7 @@ export const registerClientActive = async (
   } catch (err) {
     setLoading(false);
     console.log(err);
-    toast.error('Серверда хатолик юз берди!!!');
+    toast.error('Нимадир хато кетди, қайта уриниб кўринг!!!');
   }
 };
 
@@ -91,15 +96,15 @@ export const handleSubmit = (
           localStorage.setItem('ROLE', res.data.role);
           localStorage.setItem('token', `Bearer ${res.data.token}`);
           setResData(true);
-        } else toast.error('Нимадир хато кетди, қайта уриниб кўринг');
+        } else toast.error('Логин ёки паролни хато киритдингиз');
       })
       .catch(() => {
         setLoading(false);
-        toast.error('Нимадир хато кетди, қайта уриниб кўринг');
+        toast.error('Логин ёки паролни хато киритдингиз');
       });
   } else {
     setLoading(false);
-    toast.error('Ҳеч қандай телефон рақами ёки парол киритилмаган!!!');
+    toast.error('Малумотлар тулиқлигини текшириб куринг!!!');
   }
 };
 
@@ -120,12 +125,15 @@ export const forgotPasswordEmail = async (
       if (data.success) {
         setResData(true);
         setLoading(false);
-      } else toast.error('Серверда хатолик юз берди!!!');
+      } else {
+        setLoading(false)
+        toast.error('Нимадур хатолик юз берди, кейинроқ қайта уриниб куринг!!!');
+      }
     }
   } catch (err) {
     setLoading(false);
     console.log(err);
-    toast.error('Серверда хатолик юз берди!!!');
+    toast.error('Нимадур хатолик юз берди, кейинроқ қайта уриниб куринг!!!');
   }
 };
 
@@ -148,11 +156,14 @@ export const resetPassword = async (
       if (data.success) {
         setResData(true);
         setLoading(false);
-      } else toast.error('Серверда хатолик юз берди!!!');
+      } else {
+        setLoading(false)
+        toast.error('Серверда хатолик юз берди!!!');
+      }
     }
   } catch (err) {
     setLoading(false);
-    console.log(err);
+    console.error(err);
     toast.error('Серверда хатолик юз берди!!!');
   }
 };
