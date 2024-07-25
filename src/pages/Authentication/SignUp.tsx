@@ -19,20 +19,22 @@ const SignUp = () => {
     setPassword,
     setPrePassword
   } = authStore();
-  const {isLoading, setIsLoading, resData, setResData} = globalStore()
+  const { isLoading, setIsLoading, resData, setResData, passwordShow, setPasswordShow } = globalStore();
 
   useEffect(() => {
     if (resData) {
       setResData(false);
       setEmail('');
       setPassword('');
-      setPrePassword('')
-      setFirstName('')
-      setLastName('')
+      setPrePassword('');
+      setFirstName('');
+      setLastName('');
       toast.success('Руйхатдан утдингиз, тасдиқлаш кодини киритинг');
-      navigate('/auth/confirm')
+      navigate('/auth/confirm');
     }
   }, [resData]);
+
+  const passwordToggle = () => setPasswordShow(!passwordShow);
 
   return (
     <>
@@ -183,7 +185,8 @@ const SignUp = () => {
                 Рўйхатдан ўтиш шакли
               </h2>
 
-              <form onSubmit={e => authRegister(e, firstName, lastName, email, password, prePassword, setIsLoading, setResData)}>
+              <form
+                onSubmit={e => authRegister(e, firstName, lastName, email, password, prePassword, setIsLoading, setResData)}>
                 {/*first name*/}
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
@@ -305,12 +308,15 @@ const SignUp = () => {
                       required
                       value={password}
                       onChange={e => setPassword(e.target.value)}
-                      type="password"
+                      type={passwordShow ? 'text' : 'password'}
                       placeholder="Паролингизни киритинг"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
-                    <span className="absolute right-4 top-4">
+                    <span
+                      className={`absolute right-4 top-4 hover:cursor-pointer hover:text-primary duration-300`}
+                      onClick={passwordToggle}
+                    >
                       <svg
                         className="fill-current"
                         width="22"
@@ -345,12 +351,15 @@ const SignUp = () => {
                       required
                       value={prePassword}
                       onChange={e => setPrePassword(e.target.value)}
-                      type="password"
+                      type={passwordShow ? 'text' : 'password'}
                       placeholder="Паролни киритинг"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
-                    <span className="absolute right-4 top-4">
+                    <span
+                      className={`absolute right-4 top-4 hover:cursor-pointer hover:text-primary duration-300`}
+                      onClick={passwordToggle}
+                    >
                       <svg
                         className="fill-current"
                         width="22"

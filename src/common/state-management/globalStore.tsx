@@ -14,6 +14,8 @@ const globalStore = create<Global>((set) => ({
   setGetMeData: (val: any | null) => set({ getMeData: val }),
   imgUpload: null,
   setImgUpload: (val: any) => set({ imgUpload: val }),
+  passwordShow: false,
+  setPasswordShow: (val: boolean) => set({ passwordShow: val }),
 }));
 
 export default globalStore;

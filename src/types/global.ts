@@ -11,4 +11,6 @@ export interface Global {
   setGetMeData: (data: any | null) => void;
   imgUpload: any
   setImgUpload: (val: any) => void;
+  passwordShow: boolean
+  setPasswordShow: (val: boolean) => void;
 }

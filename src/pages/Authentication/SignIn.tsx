@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 
 const SignIn = () => {
   const { email, setEmail, password, setPassword } = authStore();
-  const { isLoading, setIsLoading, resData, setResData } = globalStore();
+  const { isLoading, setIsLoading, resData, setResData, passwordShow, setPasswordShow } = globalStore();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,6 +21,8 @@ const SignIn = () => {
       else if (role === 'ROLE_CLIENT') navigate('/client/dashboard');
     }
   }, [resData]);
+
+  const passwordToggle = () => setPasswordShow(!passwordShow);
 
   return (
     <>
@@ -217,12 +219,15 @@ const SignIn = () => {
                       required
                       value={password}
                       onChange={e => setPassword(e.target.value)}
-                      type="password"
+                      type={passwordShow ? 'text' : 'password'}
                       placeholder="Паролни киритинг"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
-                    <span className="absolute right-4 top-4">
+                    <span
+                      className={`absolute right-4 top-4 hover:cursor-pointer hover:text-primary duration-300`}
+                      onClick={passwordToggle}
+                    >
                       <svg
                         className="fill-current"
                         width="22"

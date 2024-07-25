@@ -33,9 +33,10 @@ export const authRegister = (
           if (res.data.success) setResData(true);
           else toast.error('Нимадир хато кетди, қайта уриниб кўринг');
         })
-        .catch(() => {
+        .catch((err) => {
           setLoading(false);
-          toast.error('Нимадир хато кетди, қайта уриниб кўринг!!!');
+          if (err.response.data.message === 'This email exist') toast.error('Бу эмаил билан руйхатдан утилган!!!');
+          else toast.error('Нимадир хато кетди, қайта уриниб кўринг!!!');
         });
     } else {
       setLoading(false);
@@ -126,7 +127,7 @@ export const forgotPasswordEmail = async (
         setResData(true);
         setLoading(false);
       } else {
-        setLoading(false)
+        setLoading(false);
         toast.error('Нимадур хатолик юз берди, кейинроқ қайта уриниб куринг!!!');
       }
     }
@@ -149,21 +150,28 @@ export const resetPassword = async (
   event.preventDefault();
   setLoading(true);
   const resetData = { passwordToken, newPassword, confirmPassword };
-
   try {
-    if (passwordToken && newPassword && confirmPassword) {
-      const { data } = await axios.put(auth_reset_password, resetData);
-      if (data.success) {
-        setResData(true);
-        setLoading(false);
+    if (newPassword === confirmPassword) {
+      if (passwordToken && newPassword && confirmPassword) {
+        const { data } = await axios.put(auth_reset_password, resetData);
+        if (data.success) {
+          setResData(true);
+          setLoading(false);
+        } else {
+          setLoading(false);
+          toast.error('Нимадур хатолик юз берди, кейинроқ қайта уриниб куринг!!!');
+        }
       } else {
-        setLoading(false)
-        toast.error('Серверда хатолик юз берди!!!');
+        setLoading(false);
+        toast.error('Малумотлар тулиқ эмас қайтадан уриниб куринг!!!')
       }
+    } else {
+      setLoading(false);
+      toast.error('Пароллар мослиги туғри келмади, текшириб қайтадан уриниб куринг!!!')
     }
   } catch (err) {
     setLoading(false);
     console.error(err);
-    toast.error('Серверда хатолик юз берди!!!');
+    toast.error('Нимадур хатолик юз берди, кейинроқ қайта уриниб куринг!!!');
   }
 };
