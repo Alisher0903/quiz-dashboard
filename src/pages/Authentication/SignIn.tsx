@@ -15,7 +15,7 @@ const SignIn = () => {
       setResData(false);
       setEmail('');
       setPassword('');
-      toast.success('Тиз имга муваффақиятли кирдингиз');
+      toast.success('Тизимга муваффақиятли кирдингиз');
       const role = localStorage.getItem('ROLE');
       if (role === 'ROLE_ADMIN') navigate('/dashboard');
       else if (role === 'ROLE_CLIENT') navigate('/client/dashboard');
