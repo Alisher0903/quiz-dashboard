@@ -132,7 +132,9 @@ const DropdownUser = () => {
             className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             onClick={() => {
               navigate('/auth/signin');
-              localStorage.clear();
+              localStorage.removeItem('token');
+              localStorage.removeItem('tokenExpiry');
+              localStorage.removeItem('ROLE');
               sessionStorage.clear();
             }}
           >

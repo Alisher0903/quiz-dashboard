@@ -24,6 +24,7 @@ function App() {
   const navigate = useNavigate();
   const tokens = localStorage.getItem('token');
   const role = localStorage.getItem('ROLE');
+  const tokenExpiry = localStorage.getItem('tokenExpiry');
 
   useEffect(() => {
     setConfig();
@@ -48,6 +49,20 @@ function App() {
         if (!tokens) navigate('/auth/signin');
         else navigate('/client/dashboard');
       }
+    }
+
+    if (tokens && tokenExpiry) {
+      const now = new Date().getTime();
+      if (now > parseInt(tokenExpiry)) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('tokenExpiry');
+        localStorage.removeItem('ROLE');
+      }
+    } else {
+      localStorage.removeItem('token');
+      localStorage.removeItem('tokenExpiry');
+      localStorage.removeItem('ROLE');
+      navigate('/auth/signin');
     }
 
     if (!tokens && !pathname.startsWith('/auth')) navigate('/auth/signin');

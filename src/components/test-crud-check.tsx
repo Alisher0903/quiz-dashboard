@@ -77,7 +77,7 @@ const TestCrudCheck = ({ type }: { type: string }) => {
                 type="text"
                 value={question.answer}
                 onChange={(e) => handleTextChange(question.id, e.target.value)}
-                placeholder="Enter question value"
+                placeholder="Саволни жавобини киритинг"
                 className="w-full rounded-lg border border-stroke bg-transparent py-2 px-5 ml-3 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
               />
             </div>
@@ -97,7 +97,7 @@ const TestCrudCheck = ({ type }: { type: string }) => {
                 type="text"
                 value={question.answer}
                 onChange={(e) => handleTextChange(question.id, e.target.value)}
-                placeholder="Enter question value"
+                placeholder="Саволни жавобини киритинг"
                 className="w-full rounded-lg border border-stroke bg-transparent py-2 px-5 ml-3 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
               />
               <button onClick={addQuestion} className="text-green-500 ml-2">+</button>
@@ -124,7 +124,7 @@ const TestCrudCheck = ({ type }: { type: string }) => {
                 type="text"
                 value={question.answer}
                 onChange={(e) => handleTextChange(question.id, e.target.value)}
-                placeholder="Enter question value"
+                placeholder="Саволни жавобини киритинг"
                 className="w-full rounded-lg border border-stroke bg-transparent py-2 px-5 ml-3 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
               />
               <button onClick={addQuestion} className="text-green-500 ml-2">+</button>
@@ -151,7 +151,7 @@ const TestCrudCheck = ({ type }: { type: string }) => {
                 type="text"
                 value={question.answer}
                 onChange={(e) => handleTextChange(question.id, e.target.value)}
-                placeholder="Enter question value"
+                placeholder="Саволни жавобини киритинг"
                 className="w-full rounded-lg border border-stroke bg-transparent py-2 px-5 ml-3 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
               />
               <button onClick={addQuestion} className="text-green-500 ml-2">+</button>

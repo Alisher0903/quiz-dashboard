@@ -86,6 +86,8 @@ export const handleSubmit = (
       .then(res => {
         setLoading(false);
         if (res.data.success) {
+          const expiryTime = new Date().getTime() + 24 * 60 * 60 * 1000;
+          localStorage.setItem('tokenExpiry', expiryTime.toString());
           localStorage.setItem('ROLE', res.data.role);
           localStorage.setItem('token', `Bearer ${res.data.token}`);
           setResData(true);
