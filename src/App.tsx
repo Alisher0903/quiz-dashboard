@@ -27,6 +27,18 @@ function App() {
   const tokenExpiry = localStorage.getItem('tokenExpiry');
 
   useEffect(() => {
+    const handleKeyDown = (event: any) => {
+      if (event.key === 'PrintScreen' || (event.shiftKey && (event.metaKey || event.key === 'Meta'))) {
+        alert('Скрееншот олиш тақиқланган❗❌');
+        event.preventDefault();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  useEffect(() => {
     setConfig();
     const refresh = sessionStorage.getItem('refreshes');
     setTimeout(() => setLoading(false), 1000);
