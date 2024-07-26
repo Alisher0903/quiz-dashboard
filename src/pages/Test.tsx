@@ -59,6 +59,7 @@ const Test = () => {
   useEffect(() => {
     getAdminCategory(setCategoryData);
     allFilterOrGet(setTestList);
+    console.clear();
   }, []);
 
   useEffect(() => {
@@ -201,7 +202,7 @@ const Test = () => {
             </tr>
           ))
         ) : (
-          <tr>
+          <tr key={10005}>
             <td
               className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center font-bold"
               colSpan={6}

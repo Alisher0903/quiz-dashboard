@@ -39,10 +39,17 @@ const ChartOne: React.FC = () => {
   const getStatistics = async () => {
     try {
       const { data } = await axios.get(statistics_day, config);
-      if (data.success) setChart(data.body);
-      else setChart([])
+      if (data.success) {
+        setChart(data.body);
+        console.clear();
+      }
+      else {
+        setChart([])
+        console.clear();
+      }
     } catch {
       setChart([])
+      console.clear();
     }
   };
 

@@ -9,10 +9,16 @@ import React from 'react';
 export const getAdminCategory = async (setData: (val: null | CategoryList[]) => void) => {
   try {
     const { data } = await axios.get(category_admin, config);
-    if (data.success) setData(data.body);
-    else setData(null);
-  } catch (err) {
-    console.error(err);
+    if (data.success) {
+      console.clear();
+      setData(data.body);
+    }
+    else {
+      console.clear();
+      setData(null);
+    }
+  } catch {
+    console.clear();
     setData(null);
   }
 };
@@ -31,18 +37,20 @@ export const addCategory = async (
     if (addData) {
       const { data } = edit ? await axios.put(category_all, addData, config) : await axios.post(category_all, addData, config);
       if (data.success) {
+        console.clear();
         setLoading(false);
         resultData(true);
         toast.success(edit ? 'Категорияни таҳрирлаш муваффақиятли амалга оширилди' : 'Категория муваффақиятли сақланди');
       } else {
+        console.clear();
         setLoading(false);
         toast.error(edit ? 'Категорияни таҳрирлашда хатолик юз берди' : 'Категория қўшишда хатолик юз берди');
       }
     }
-  } catch (err) {
+  } catch {
     setLoading(false);
     toast.error(edit ? 'Категорияни таҳрирлашда хатолик юз берди' : 'Категория қўшишда хатолик юз берди');
-    console.error(err);
+    console.clear();
   }
 };
 
@@ -53,17 +61,19 @@ export const deleteCategory = async (idIn: string | number, seLoading: (val: boo
     if (idIn) {
       const { data } = await axios.delete(`${category_all}/${idIn}`, config);
       if (data.success) {
+        console.clear();
         seLoading(false);
         setResData(true);
         toast.success('Категория муваффақиятли ўчирилди');
       } else {
+        console.clear();
         seLoading(false);
         toast.error('Категорияни ўчиришда хатолик юз берди');
       }
     }
-  } catch (err) {
+  } catch {
     seLoading(false);
     toast.error('Категорияни ўчиришда хатолик юз берди');
-    console.error(err);
+    console.clear();
   }
 };

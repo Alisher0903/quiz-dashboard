@@ -47,8 +47,9 @@ const User = () => {
     try {
       const { data } = await axios.get(`${result_get_by_id}${user.id}`, config);
       setUserDetails(data.body);
+      console.clear();
     } catch (error) {
-      console.error('Error fetching user details:', error);
+      console.clear();
     }
   };
 
@@ -64,9 +65,10 @@ const User = () => {
       setUsers(data.body.body);
       setTotalPages(data.body.totalElements);
       setLoading(false);
+      console.clear();
     } catch (error) {
-      console.error('Error fetching users:', error);
       setLoading(false);
+      console.clear();
     }
   };
 

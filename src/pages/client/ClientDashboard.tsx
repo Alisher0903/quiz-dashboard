@@ -28,11 +28,17 @@ const ClientDashboard = () => {
   const getCategory = async () => {
     try {
       const res = await axios.get(`${category_all}`, config);
-      if (res.data.success) setCategory(res.data.body);
-      else setCategory([]);
-    } catch (error) {
-      console.error(error);
+      if (res.data.success) {
+        setCategory(res.data.body);
+        console.clear();
+      }
+      else {
+        setCategory([]);
+        console.clear();
+      }
+    } catch {
       setCategory([]);
+      console.clear();
     }
   };
 

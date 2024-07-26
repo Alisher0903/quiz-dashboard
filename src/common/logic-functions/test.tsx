@@ -14,6 +14,7 @@ export const fetchQuiz = async (id: string | undefined, setQuizData: (val: TestM
   try {
     const { data } = await axios.get(`${quiz_start}${id}`, config);
     if (data.success) {
+      console.clear();
       setQuizData({
         quizList: data.body.questionDtoList,
         quiz: data.body,
@@ -21,8 +22,12 @@ export const fetchQuiz = async (id: string | undefined, setQuizData: (val: TestM
         remainingTime: data.body.duration
       })
       setIsLoading(false);
-    } else setIsLoading(false);
+    } else {
+      console.clear();
+      setIsLoading(false);
+    }
   } catch (err: any) {
+    console.clear();
     toast.error(err.response.data.message);
     setIsLoading(false);
   }
@@ -33,6 +38,7 @@ export const sendResults = async (id: string | undefined, duration: number, coun
   try {
     const { data } = await axios.post(`${quiz_pass}/${id}?duration=${duration}&countAnswers=${countAnswers}`, payload, config);
     if (data.success) {
+      console.clear();
       navigate('/client/quiz/result');
       getCertificate(data.body, setResult, setLoading);
       setIsLoading(false);
@@ -49,8 +55,12 @@ export const sendResults = async (id: string | undefined, duration: number, coun
       })
       localStorage.removeItem('remainingTime')
       localStorage.removeItem('currentIndex')
-    } else setIsLoading(false);
-  } catch (err) {
+    } else {
+      console.clear();
+      setIsLoading(false);
+    }
+  } catch {
+    console.clear();
     setIsLoading(false);
     toast.error('Илтимос кейинроқ уриниб кўринг');
   }
@@ -62,7 +72,9 @@ export const getCertificate = async (id: number, setResult: (val: string) => voi
     const { data } = await axios.post(`${certificate}${id}`, {}, config);
     setIsLoading(false);
     setResult(data);
-  } catch (error) {
+    console.clear();
+  } catch {
+    console.clear();
     setIsLoading(false);
   }
 };
@@ -78,11 +90,17 @@ export const allFilterOrGet = async (setData: (val: null | TestList[]) => void, 
   const url: string = `${question_all_filter}${queryParams ? `?${queryParams}` : ''}`;
   try {
     const { data } = await axios.get(url, config);
-    if (data.success) setData(data.body);
-    else setData(null);
-  } catch (err) {
+    if (data.success) {
+      setData(data.body);
+      console.clear();
+    }
+    else {
+      setData(null);
+      console.clear();
+    }
+  } catch {
     setData(null);
-    console.error(err);
+    console.clear();
   }
 };
 
@@ -107,16 +125,18 @@ export const adminTestCrud = async (
     try {
       const { data } = await axios.post(question_crud, crudData, config);
       if (data.success) {
+        console.clear();
         setResData(true);
         setLoading(false);
         toast.success('Тест муваффақиятли сақланди');
       } else {
+        console.clear();
         toast.error('Тест сақлашда хатолик юз берди');
         setLoading(false);
       }
-    } catch (err) {
+    } catch {
+      console.clear();
       toast.error('Тест сақлашда хатолик юз берди');
-      console.error(err);
       setLoading(false);
     }
   } else if (urlType === 'put') {
@@ -124,20 +144,23 @@ export const adminTestCrud = async (
       if (editOrDeleteID) {
         const { data } = await axios.put(`${question_crud}/${editOrDeleteID}`, crudData, config);
         if (data.success) {
+          console.clear();
           setResData(true);
           setLoading(false);
           toast.success('Тест муваффақиятли таҳрирланди');
         } else {
+          console.clear();
           toast.error('Хатолик юз берди');
           setLoading(false);
         }
       } else {
+        console.clear();
         toast.error('Хатолик юз берди');
         setLoading(false);
       }
-    } catch (err) {
+    } catch {
+      console.clear();
       toast.error('Хатолик юз берди');
-      console.error(err);
       setLoading(false);
     }
   } else if (urlType === 'delete') {
@@ -145,20 +168,23 @@ export const adminTestCrud = async (
       if (editOrDeleteID) {
         const { data } = await axios.delete(`${question_crud}/${editOrDeleteID}`, config);
         if (data.success) {
+          console.clear();
           setResData(true);
           setLoading(false);
           toast.success('Тест муваффақиятли учирилди');
         } else {
+          console.clear();
           toast.error('Хатолик юз берди');
           setLoading(false);
         }
       } else {
+        console.clear();
         toast.error('Хатолик юз берди');
         setLoading(false);
       }
-    } catch (err) {
+    } catch {
+      console.clear();
       toast.error('Хатолик юз берди');
-      console.error(err);
       setLoading(false);
     }
   }

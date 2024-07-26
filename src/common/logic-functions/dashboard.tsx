@@ -8,13 +8,16 @@ export const getAdminDashboardStatistic = async (setData: (val: null) => void, i
     if (idIn) {
       const { data } = await axios.get(`${statistics_categoryBy}${idIn}?page=${page}&size=10`, config);
       if (data.success) {
+        console.clear();
         setData(data.body.body);
         setTotalPage(data.body.totalElements)
+      } else {
+        console.clear();
+        setData(null);
       }
-      else setData(null);
     }
-  } catch (err) {
-    console.error(err);
+  } catch {
+    console.clear();
     setData(null);
   }
 };
@@ -22,10 +25,13 @@ export const getAdminDashboardStatistic = async (setData: (val: null) => void, i
 export const getAdminDashboardStatisticCard = async (setData: (val: null | DashboardListStatisticCards) => void) => {
   try {
     const { data } = await axios.get(statistics_card, config);
-    if (data.success) setData(data.body);
+    if (data.success) {
+      console.clear();
+      setData(data.body);
+    }
     else setData(null);
-  } catch (err) {
-    console.error(err);
+  } catch {
+    console.clear();
     setData(null);
   }
 };
@@ -34,11 +40,15 @@ export const getAdminDashboardStatisticAll = async (setData: (val: null | Dashbo
   try {
     const { data } = await axios.get(`${statistics_card_all}?page=${page}&size=10`, config);
     if (data.success) {
+      console.clear();
       setData(data.body.body);
       setTotalPage(data.body.totalElements)
-    } else setData(null);
-  } catch (err) {
-    console.error(err);
+    } else {
+      console.clear();
+      setData(null);
+    }
+  } catch {
+    console.clear();
     setData(null);
   }
 };
