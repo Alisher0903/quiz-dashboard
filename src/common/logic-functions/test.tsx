@@ -40,7 +40,7 @@ export const sendResults = async (id: string | undefined, duration: number, coun
     if (data.success) {
       console.clear();
       navigate('/client/quiz/result');
-      getCertificate(data.body, setResult, setLoading);
+      await getCertificate(data.body, setResult, setLoading);
       setIsLoading(false);
       setCurrentIndex(0);
       setQuizData({
