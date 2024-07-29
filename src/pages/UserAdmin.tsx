@@ -1,85 +1,193 @@
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import UniversalTable, { IThead } from '../components/Tables/UniversalTable.tsx';
-import { BiShow } from 'react-icons/bi';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import GlobalModal from '../components/modal/modal.tsx';
-import { Pagination } from 'antd';
+import AddButtons from '../components/buttons/buttons.tsx';
+import { MdOutlineAddCircle } from 'react-icons/md';
+import globalStore from '../common/state-management/globalStore.tsx';
+import adminStore from '../common/state-management/adminStore.tsx';
+import { getAdminLists, postAdmin } from '../common/logic-functions/admin.tsx';
+
+const thead: IThead[] = [
+  { id: 1, name: 'Т/р' },
+  { id: 2, name: 'Исм' },
+  { id: 3, name: 'Фамилия' },
+  { id: 4, name: 'Электрон почта' }
+];
+
+const defData = {
+  firstname: '',
+  lastname: '',
+  email: '',
+  phoneNumber: '',
+  password: '',
+  confirmPassword: ''
+};
 
 const UserAdmin = () => {
+  const { isLoading, setIsLoading, resData, setResData } = globalStore();
+  const { addData, setAddData, getAdminList, setGetAdminList } = adminStore();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [currentPage, setCurrentPage] = useState<number>(0);
-  const [totalPages, setTotalPages] = useState<number>(0);
 
-  const thead: IThead[] = [
-    { id: 1, name: 'Т/р' },
-    { id: 2, name: 'Тўлиқ исм' },
-    { id: 3, name: 'Категория' },
-    { id: 4, name: 'Телефон' },
-    { id: 5, name: 'Ҳаракат' }
-  ];
+  useEffect(() => {
+    getAdminLists(setGetAdminList, setIsLoading);
+  }, []);
+
+  useEffect(() => {
+    if (resData) {
+      getAdminLists(setGetAdminList, setIsLoading);
+      setResData(false);
+      closeModal();
+    }
+  }, [resData]);
+
+  const handleInputChange = (name: string, value: string | boolean) => {
+    setAddData({
+      ...addData,
+      [name]: value
+    });
+  };
 
   const openModal = async () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const closeModal = () => {
+    setAddData(defData);
+    setIsModalOpen(false);
+  };
 
-  const onChange = (page: number): void => setCurrentPage(page - 1);
+  const styles = {
+    input: 'w-full rounded-lg border border-stroke bg-transparent py-2 px-5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+  };
 
   return (
     <>
-      <Breadcrumb pageName="" />
-      <UniversalTable thead={thead}>
-        {/*{loading ? (*/}
-        <tr>
-          <td colSpan={thead.length} className="text-center py-5">
-            Юкланмоқда...
-          </td>
-        </tr>
-        {/*) : (*/}
-        {/*  users.length > 0 ? (*/}
-        {/*    users.map((_, index) => (*/}
-        <tr>
-          <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-            <h5 className="font-medium text-black dark:text-white">{(currentPage * 10) + 1}</h5>
-          </td>
-          <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-            <p className="text-black dark:text-white">user.fullName</p>
-          </td>
-          <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-            <p className="text-black dark:text-white">user.categoryName</p>
-          </td>
-          <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-            <p className="text-black dark:text-white">user.email</p>
-          </td>
-          <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-            <div className="flex items-center space-x-3.5">
-              <button onClick={() => openModal()}>
-                <BiShow className="text-2xl duration-300" />
-              </button>
-            </div>
-          </td>
-        </tr>
-        {/*    ))*/}
-        {/*  ) : (<>*/}
-        {/*    <tr>*/}
-        {/*      <td colSpan={5} className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center">*/}
-        {/*        Фойдаланувчи мавжуд эмас*/}
-        {/*      </td>*/}
-        {/*    </tr>*/}
-        {/*  </>)*/}
-        {/*)}*/}
-      </UniversalTable>
-      {totalPages > 0 && (
-        <Pagination
-          showSizeChanger={false}
-          responsive={true}
-          defaultCurrent={1}
-          total={totalPages}
-          onChange={onChange}
-          rootClassName={`mt-10 mb-5`}
+      <Breadcrumb pageName="Ходимлар" />
+
+      <div className={`mb-5`}>
+        <AddButtons
+          onClick={openModal}
+          children={<div className={`flex justify-center items-center`}>
+            <MdOutlineAddCircle className={`text-4xl mr-3`} />
+            <p className={`text-lg font-bold`}>Қўшиш</p>
+          </div>}
         />
-      )}
+      </div>
+
+      <UniversalTable thead={thead}>
+        {isLoading ? (
+          <tr>
+            <td colSpan={thead.length} className="text-center py-5">
+              Юкланмоқда...
+            </td>
+          </tr>
+        ) : (
+          getAdminList ? (
+            getAdminList.map((item, index) => (
+              <tr>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <h5 className="font-medium text-black dark:text-white">{index + 1}</h5>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">{item.firstName}</p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">{item.lastName}</p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">{item.email}</p>
+                </td>
+              </tr>
+            ))
+          ) : (<>
+            <tr>
+              <td colSpan={5} className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center">
+                Ходимлар мавжуд эмас
+              </td>
+            </tr>
+          </>)
+        )}
+      </UniversalTable>
+
+      {/*modal*/}
       <GlobalModal onClose={closeModal} isOpen={isModalOpen}>
         <div className="gap-3 ml-1 min-w-60 sm:min-w-96 lg:min-w-[35rem]">
-          <h2 className="lg:text-4xl  text-center md:text-2xl py-5 font-semibold">Фойдаланувчи натижалари</h2>
+          <form className={`mt-5`} onSubmit={(e) => postAdmin(e, addData, setIsLoading, setResData)}>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2" htmlFor="firstName">Исм</label>
+              <input
+                required
+                value={addData.firstname}
+                onChange={e => handleInputChange('firstname', e.target.value)}
+                className={styles.input}
+                id="firstName"
+                placeholder="Исмни киритинг"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2" htmlFor="lastname">Фамилия</label>
+              <input
+                required
+                value={addData.lastname}
+                onChange={e => handleInputChange('lastname', e.target.value)}
+                className={styles.input}
+                id="lastname"
+                placeholder="Фамилияни киритинг"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2" htmlFor="phoneNumber">Телефон рақам</label>
+              <input
+                required
+                value={addData.phoneNumber}
+                onChange={e => handleInputChange('phoneNumber', e.target.value)}
+                className={styles.input}
+                id="phoneNumber"
+                placeholder="Телефон рақамни киритинг"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2" htmlFor="email">Электрон почта</label>
+              <input
+                required
+                value={addData.email}
+                onChange={e => handleInputChange('email', e.target.value)}
+                className={styles.input}
+                type={`email`}
+                id="email"
+                placeholder="Электрон почтани киритинг"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2" htmlFor="password">Парол</label>
+              <input
+                required
+                value={addData.password}
+                onChange={e => handleInputChange('password', e.target.value)}
+                className={styles.input}
+                id="password"
+                placeholder="Паролни киритинг"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2" htmlFor="confirmPassword">Паролни такрорланг</label>
+              <input
+                required
+                value={addData.confirmPassword}
+                onChange={e => handleInputChange('confirmPassword', e.target.value)}
+                className={styles.input}
+                id="confirmPassword"
+                placeholder="Такрорий паролни киритинг"
+              />
+            </div>
+
+            <div className={`flex justify-end items-center gap-5`}>
+              <AddButtons children={`Ёпиш`} onClick={closeModal} />
+              <AddButtons
+                children={isLoading ? 'юкланмоқда...' : `Сақлаш`}
+                disabled={isLoading}
+                type={`submit`}
+              />
+            </div>
+          </form>
         </div>
       </GlobalModal>
     </>

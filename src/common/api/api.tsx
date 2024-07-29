@@ -6,6 +6,10 @@ const base_url: string = 'http://161.35.214.247:8080/';
 // ==================================GET ME==================================
 export const getMeUrl: string = `${base_url}user/get/me`;
 
+// admin add or get
+export const getAdminList: string = `${base_url}user/get/admin/list`;
+export const addAdmin: string = `${base_url}auth/save/admin`;
+
 //================= USER ISHLATILMAYDI RESULT CONTROLLER====================
 export const result_get_all: string = `${base_url}result/users/`; //PAGINATION buladi bu api va yana bittasi detailni kurish uchun  xam ishlatiladi
 export const result_get_by_id: string = `${base_url}result/result/`; //PAGINATION buladi bu api va yana bittasi detailni kurish uchun  xam ishlatiladi
