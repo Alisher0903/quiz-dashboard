@@ -8,7 +8,6 @@ import Dashboard from './pages/Dashboard.tsx';
 import Category from './pages/Category.tsx';
 import Test from './pages/Test.tsx';
 import User from './pages/User.tsx';
-// import Settings from './pages/Settings';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import ConfirmEmailCode from './pages/Authentication/ConfirmEmailCode.tsx';
@@ -18,6 +17,7 @@ import ResetPassword from './pages/Authentication/ResetPasword.tsx';
 import ClientQuizResult from './pages/client/ClientQuizResult.tsx';
 import { setConfig } from './common/api/token.tsx';
 import { consoleClear } from './common/console-clear/console-clear.tsx';
+import UserAdmin from './pages/UserAdmin.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -126,15 +126,15 @@ function App() {
             </>
           }
         />
-        {/*<Route*/}
-        {/*  path="/settings"*/}
-        {/*  element={*/}
-        {/*    <>*/}
-        {/*      <PageTitle title="Admin | Settings" />*/}
-        {/*      <Settings />*/}
-        {/*    </>*/}
-        {/*  }*/}
-        {/*/>*/}
+        <Route
+          path="/employees"
+          element={
+            <>
+              <PageTitle title="Admin | Employees" />
+              <UserAdmin />
+            </>
+          }
+        />
         <Route
           path="/auth/signin"
           element={

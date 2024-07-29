@@ -9,6 +9,7 @@ interface SidebarProps {
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const location = useLocation();
   const { pathname } = location;
+  const role = localStorage.getItem('ROLE');
 
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);
@@ -88,14 +89,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           <div>
             <ul className="mb-6 flex flex-col gap-1.5">
               {/* <!-- Menu Item Dashboard --> */}
-              <li>
-                <NavLink
-                  to="/dashboard"
-                  className={`${styles.sidebar} ${pathname.includes('dashboard') && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
-                >
-                  Бошқарув панели
-                </NavLink>
-              </li>
+              {role === 'ROLE_SUPER_ADMIN' && (
+                <li>
+                  <NavLink
+                    to="/dashboard"
+                    className={`${styles.sidebar} ${pathname.includes('dashboard') && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
+                  >
+                    Бошқарув панели
+                  </NavLink>
+                </li>
+              )}
 
               {/* <!-- Menu Item Category --> */}
               <li>
@@ -117,25 +120,26 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </NavLink>
               </li>
 
-              {/* <!-- Menu Item Tables --> */}
-              <li>
-                <NavLink
-                  to="/user"
-                  className={`${styles.sidebar} ${pathname.includes('user') && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
-                >
-                  Фойдаланувчилар
-                </NavLink>
-              </li>
-
-              {/* <!-- Menu Item Settings --> */}
-              {/*<li>*/}
-              {/*  <NavLink*/}
-              {/*    to="/settings"*/}
-              {/*    className={`${styles.sidebar} ${pathname.includes('settings') && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}*/}
-              {/*  >*/}
-              {/*    Settings*/}
-              {/*  </NavLink>*/}
-              {/*</li>*/}
+              {role === 'ROLE_SUPER_ADMIN' && (
+                <>
+                  <li>
+                    <NavLink
+                      to="/user"
+                      className={`${styles.sidebar} ${pathname.includes('user') && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
+                    >
+                      Фойдаланувчилар
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/employees"
+                      className={`${styles.sidebar} ${pathname.includes('employees') && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
+                    >
+                      Ходимлар
+                    </NavLink>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </nav>
