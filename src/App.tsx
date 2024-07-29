@@ -57,10 +57,13 @@ function App() {
     if (pathname === '/') {
       if (role === 'ROLE_ADMIN') {
         if (!tokens) navigate('/auth/signin');
-        else navigate('/dashboard');
+        else navigate('/category');
       } else if (role === 'ROLE_CLIENT') {
         if (!tokens) navigate('/auth/signin');
         else navigate('/client/dashboard');
+      } else if (role ==='ROLE_SUPER_ADMIN') {
+        if (!tokens) navigate('/auth/signin');
+        else navigate('/dashboard');
       }
     }
 

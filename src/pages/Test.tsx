@@ -3,7 +3,7 @@ import UniversalTable, { IThead } from '../components/Tables/UniversalTable.tsx'
 import AddButtons from '../components/buttons/buttons.tsx';
 import { MdDelete, MdEdit, MdOutlineAddCircle } from 'react-icons/md';
 import categoryStore from '../common/state-management/categoryStore.tsx';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getAdminCategory } from '../common/logic-functions/category.tsx';
 import testStore from '../common/state-management/testStore.tsx';
 import { adminTestCrud, allFilterOrGet } from '../common/logic-functions/test.tsx';
@@ -12,7 +12,7 @@ import GlobalModal from '../components/modal/modal.tsx';
 import globalStore from '../common/state-management/globalStore.tsx';
 import toast from 'react-hot-toast';
 import ImageUpload from '../components/img-upload.tsx';
-import { Select } from 'antd';
+import { Pagination, Select } from 'antd';
 import SelectForm from '../components/select/Select.tsx';
 import { TestList } from '../types/test.ts';
 import { consoleClear } from '../common/console-clear/console-clear.tsx';
@@ -38,6 +38,8 @@ const Test = () => {
   const [categoryFilter, setCategoryFilter] = useState<any>('');
   const [typeFilter, setTypeFilter] = useState<any>('');
   const [defQuiz, setDefQuiz] = useState<any>('');
+  const [page, setPage] = useState<number | string>(0);
+  const [totalPage, setTotalPage] = useState(0);
   const [crudTest, setCrudTest] = useState<TestList | any>({
     name: '',
     categoryId: '',
@@ -60,17 +62,23 @@ const Test = () => {
 
   useEffect(() => {
     getAdminCategory(setCategoryData);
-    allFilterOrGet(setTestList);
+    allFilterOrGet(setTestList, page, setTotalPage);
     consoleClear();
   }, []);
 
   useEffect(() => {
-    allFilterOrGet(setTestList, nameFilter && nameFilter, categoryFilter && categoryFilter, typeFilter && typeFilter);
-  }, [nameFilter, categoryFilter, typeFilter]);
+    allFilterOrGet(setTestList, page, setTotalPage);
+    consoleClear()
+  }, [page]);
+
+  useEffect(() => {
+    allFilterOrGet(setTestList, page, setTotalPage, nameFilter && nameFilter, categoryFilter && categoryFilter, typeFilter && typeFilter);
+  }, [nameFilter, categoryFilter, typeFilter, page]);
 
   useEffect(() => {
     crudTest.isMain = testType === 'ANY_CORRECT' ? true : false;
     handleChange('optionDtos', optionDto);
+    consoleClear();
   }, [optionDto]);
 
   useEffect(() => {
@@ -81,7 +89,7 @@ const Test = () => {
     if (resData) {
       setResData(false);
       closeModal();
-      allFilterOrGet(setTestList);
+      allFilterOrGet(setTestList, page, setTotalPage);
     }
   }, [resData]);
 
@@ -93,7 +101,7 @@ const Test = () => {
     setTestType('');
     setEditOrDeleteStatus('');
     serEditOrDeleteID('');
-    setDefQuiz('')
+    setDefQuiz('');
     setImgUpload(null);
   };
 
@@ -102,6 +110,8 @@ const Test = () => {
       ...crudTest, [name]: value
     });
   };
+
+  const onChange = (page: number): void => setPage(page - 1);
 
   return (
     <>
@@ -157,7 +167,7 @@ const Test = () => {
             <tr key={item.id}>
               <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                 <h5 className="font-medium text-black dark:text-white">
-                  {idx + 1}
+                  {(+page * 10) + idx + 1}
                 </h5>
               </td>
               <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
@@ -216,6 +226,16 @@ const Test = () => {
           </tr>
         )}
       </UniversalTable>
+      {totalPage > 0 && (
+        <Pagination
+          showSizeChanger={false}
+          responsive={true}
+          defaultCurrent={1}
+          total={totalPage}
+          onChange={onChange}
+          rootClassName={`mt-10 mb-5`}
+        />
+      )}
 
       {/*ADD EDIT MODAL*/}
       <GlobalModal onClose={closeModal} isOpen={isModal}>

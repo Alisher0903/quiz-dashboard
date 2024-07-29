@@ -12,6 +12,7 @@ const categoryStore = create<Category>((set) => ({
     extraQuestionCount: '',
     durationTime: '',
     retakeDate: '',
+    main: false
   },
   setAddValue: (val: null | CategoryList) => set({addValue: val}),
 }));

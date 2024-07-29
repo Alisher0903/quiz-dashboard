@@ -21,7 +21,7 @@ export const fetchQuiz = async (id: string | undefined, setQuizData: (val: TestM
         quiz: data.body,
         currentQuestionIndex: 0,
         remainingTime: data.body.duration
-      })
+      });
       setIsLoading(false);
     } else {
       consoleClear();
@@ -53,9 +53,9 @@ export const sendResults = async (id: string | undefined, duration: number, coun
         },
         currentQuestionIndex: 0,
         remainingTime: 0
-      })
-      localStorage.removeItem('remainingTime')
-      localStorage.removeItem('currentIndex')
+      });
+      localStorage.removeItem('remainingTime');
+      localStorage.removeItem('currentIndex');
     } else {
       consoleClear();
       setIsLoading(false);
@@ -82,20 +82,20 @@ export const getCertificate = async (id: number, setResult: (val: string) => voi
 
 //===================ADMIN=========================
 // all get or filter
-export const allFilterOrGet = async (setData: (val: null | TestList[]) => void, name?: string, categoryId?: string | number, type?: string) => {
+export const allFilterOrGet = async (setData: (val: null | TestList[]) => void, page: number | string, setTotalPage: (val:number) => void, name?: string, categoryId?: string | number, type?: string) => {
   const queryParams: string = [
     name ? `questionName=${name}` : '',
     categoryId ? `categoryId=${categoryId}` : '',
     type ? `type=${type}` : ''
   ].filter(Boolean).join('&');
-  const url: string = `${question_all_filter}${queryParams ? `?${queryParams}` : ''}`;
+  const url: string = `${question_all_filter}?${queryParams ? `${queryParams}&` : ''}page=${page}&size=10`;
   try {
     const { data } = await axios.get(url, config);
     if (data.success) {
-      setData(data.body);
+      setData(data.body.body);
+      setTotalPage(data.body.totalElements)
       consoleClear();
-    }
-    else {
+    } else {
       setData(null);
       consoleClear();
     }

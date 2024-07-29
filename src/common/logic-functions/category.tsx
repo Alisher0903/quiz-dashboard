@@ -11,16 +11,16 @@ export const getAdminCategory = async (setData: (val: null | CategoryList[]) => 
   try {
     const { data } = await axios.get(category_admin, config);
     if (data.success) {
-      consoleClear();
       setData(data.body);
+      consoleClear();
     }
     else {
-      consoleClear();
       setData(null);
+      consoleClear();
     }
   } catch {
-    consoleClear();
     setData(null);
+    consoleClear();
   }
 };
 

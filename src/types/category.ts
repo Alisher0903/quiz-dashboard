@@ -13,4 +13,5 @@ export interface CategoryList  {
   extraQuestionCount: number | string
   durationTime: number | string
   retakeDate: number | string
+  main: boolean|string
 }

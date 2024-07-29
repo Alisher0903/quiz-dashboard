@@ -17,7 +17,8 @@ const SignIn = () => {
       setPassword('');
       toast.success('Тизимга муваффақиятли кирдингиз');
       const role = localStorage.getItem('ROLE');
-      if (role === 'ROLE_ADMIN') navigate('/dashboard');
+      if (role === 'ROLE_SUPER_ADMIN') navigate('/dashboard')
+      if (role === 'ROLE_ADMIN') navigate('/category');
       else if (role === 'ROLE_CLIENT') navigate('/client/dashboard');
     }
   }, [resData]);

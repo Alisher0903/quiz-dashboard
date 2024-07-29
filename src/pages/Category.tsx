@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { addCategory, deleteCategory, getAdminCategory } from '../common/logic-functions/category.tsx';
 import categoryStore from '../common/state-management/categoryStore.tsx';
 import globalStore from '../common/state-management/globalStore.tsx';
+import SelectForm from '../components/select/Select.tsx';
 
 const thead: IThead[] = [
   { id: 1, name: 'Т/р' },
@@ -18,6 +19,17 @@ const thead: IThead[] = [
   { id: 7, name: 'Қайта қабул қилиш санаси' },
   { id: 8, name: 'Ҳаракат' }
 ];
+
+const defVal = {
+  id: 0,
+  name: '',
+  description: '',
+  questionCount: '',
+  extraQuestionCount: '',
+  durationTime: '',
+  retakeDate: '',
+  main: ''
+};
 
 const Category = () => {
   const { categoryData, setCategoryData, setAddValue, addValue } = categoryStore();
@@ -34,17 +46,9 @@ const Category = () => {
     if (resData) {
       setResData(false);
       getAdminCategory(setCategoryData);
-      setAddValue({
-        id: 0,
-        name: '',
-        description: '',
-        questionCount: '',
-        extraQuestionCount: '',
-        durationTime: '',
-        retakeDate: ''
-      });
+      setAddValue(defVal);
       closeModal();
-      closeModalDelete()
+      closeModalDelete();
       setEditStatus('');
     }
   }, [resData]);
@@ -55,15 +59,7 @@ const Category = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setEditStatus('');
-    setAddValue({
-      id: 0,
-      name: '',
-      description: '',
-      questionCount: '',
-      extraQuestionCount: '',
-      durationTime: '',
-      retakeDate: ''
-    });
+    setAddValue(defVal);
   };
 
   const closeModalDelete = () => {
@@ -71,11 +67,15 @@ const Category = () => {
     setEditStatus('');
   };
 
-  const handleInputChange = (name: string, value: string) => {
+  const handleInputChange = (name: string, value: string|boolean) => {
     setAddValue({
       ...addValue,
       [name]: value
     });
+  };
+
+  const styles = {
+    input: 'w-full rounded-lg border border-stroke bg-transparent py-2 px-5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
   };
 
   return (
@@ -171,13 +171,24 @@ const Category = () => {
             editStatus ? addCategory(e, addValue, setResData, setIsLoading, editStatus)
               : addCategory(e, addValue, setResData, setIsLoading);
           }}>
+            <div className={`mb-4 mt-10`}>
+              <SelectForm
+                val={addValue?.main}
+                onChange={e => handleInputChange('main', e.target.value)}
+                defOption={`Категория турини танланг`}
+                child={<>
+                  <option value="true">Асосий категория</option>
+                  <option value="false">Асосий булмаган категория</option>
+                </>}
+              />
+            </div>
             <div className="mb-4">
               <label className="block text-gray-700 mb-2" htmlFor="categoryName">Категория номи</label>
               <input
                 required
                 value={addValue?.name}
                 onChange={e => handleInputChange('name', e.target.value)}
-                className="w-full px-3 py-2 border rounded dark:text-slate-700"
+                className={styles.input}
                 id="categoryName"
                 placeholder="Категория номини киритинг"
               />
@@ -188,59 +199,64 @@ const Category = () => {
                 required
                 value={addValue?.description}
                 onChange={e => handleInputChange('description', e.target.value)}
-                className="w-full px-3 py-2 border rounded dark:text-slate-700"
+                className={styles.input}
                 id="description"
                 placeholder="Тавсифни киритинг"
               />
             </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2" htmlFor="questionAmount">Саволлар сони</label>
-              <input
-                required
-                value={addValue?.questionCount}
-                onChange={e => handleInputChange('questionCount', e.target.value)}
-                className="w-full px-3 py-2 border rounded dark:text-slate-700"
-                type={`number`}
-                id="questionAmount"
-                placeholder="Саволлар сонини киритинг"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2" htmlFor="extraQuestionCount">Қўшимча саволлар сони</label>
-              <input
-                required
-                value={addValue?.extraQuestionCount}
-                onChange={e => handleInputChange('extraQuestionCount', e.target.value)}
-                className="w-full px-3 py-2 border rounded dark:text-slate-700"
-                type="number"
-                id="extraQuestionCount"
-                placeholder="Қўшимча саволлар сонини киритинг"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2" htmlFor="durationTime">Давомийлик вақти</label>
-              <input
-                required
-                value={addValue?.durationTime}
-                onChange={e => handleInputChange('durationTime', e.target.value)}
-                className="w-full px-3 py-2 border rounded dark:text-slate-700"
-                type="number"
-                id="durationTime"
-                placeholder="Давомийлик вақтини киритинг"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2" htmlFor="retakeDate">Қайта қабул қилиш санаси</label>
-              <input
-                required
-                value={addValue?.retakeDate}
-                onChange={e => handleInputChange('retakeDate', e.target.value)}
-                className="w-full px-3 py-2 border rounded dark:text-slate-700"
-                type="number"
-                id="retakeDate"
-                placeholder="Қайта қабул қилиш санасини киритинг"
-              />
-            </div>
+            {addValue?.main !== 'true' && (
+              <>
+                <div className="mb-4">
+                  <label className="block text-gray-700 mb-2" htmlFor="questionAmount">Саволлар сони</label>
+                  <input
+                    required
+                    value={addValue?.questionCount}
+                    onChange={e => handleInputChange('questionCount', e.target.value)}
+                    className={styles.input}
+                    type={`number`}
+                    id="questionAmount"
+                    placeholder="Саволлар сонини киритинг"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 mb-2" htmlFor="extraQuestionCount">Қўшимча саволлар сони</label>
+                  <input
+                    required
+                    value={addValue?.extraQuestionCount}
+                    onChange={e => handleInputChange('extraQuestionCount', e.target.value)}
+                    className={styles.input}
+                    type="number"
+                    id="extraQuestionCount"
+                    placeholder="Қўшимча саволлар сонини киритинг"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 mb-2" htmlFor="durationTime">Давомийлик вақти</label>
+                  <input
+                    required
+                    value={addValue?.durationTime}
+                    onChange={e => handleInputChange('durationTime', e.target.value)}
+                    className={styles.input}
+                    type="number"
+                    id="durationTime"
+                    placeholder="Давомийлик вақтини киритинг"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 mb-2" htmlFor="retakeDate">Қайта қабул қилиш санаси</label>
+                  <input
+                    required
+                    value={addValue?.retakeDate}
+                    onChange={e => handleInputChange('retakeDate', e.target.value)}
+                    className={styles.input}
+                    type="number"
+                    id="retakeDate"
+                    placeholder="Қайта қабул қилиш санасини киритинг"
+                  />
+                </div>
+              </>
+            )}
+
             <div className={`flex justify-end items-center gap-5`}>
               <AddButtons children={`Ёпиш`} onClick={closeModal} />
               <AddButtons
