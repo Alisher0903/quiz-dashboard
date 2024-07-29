@@ -15,6 +15,7 @@ import ImageUpload from '../components/img-upload.tsx';
 import { Select } from 'antd';
 import SelectForm from '../components/select/Select.tsx';
 import { TestList } from '../types/test.ts';
+import { consoleClear } from '../common/console-clear/console-clear.tsx';
 
 const thead: IThead[] = [
   { id: 1, name: 'Т/р' },
@@ -36,6 +37,7 @@ const Test = () => {
   const [nameFilter, setNameFilter] = useState<any>('');
   const [categoryFilter, setCategoryFilter] = useState<any>('');
   const [typeFilter, setTypeFilter] = useState<any>('');
+  const [defQuiz, setDefQuiz] = useState<any>('');
   const [crudTest, setCrudTest] = useState<TestList | any>({
     name: '',
     categoryId: '',
@@ -59,7 +61,7 @@ const Test = () => {
   useEffect(() => {
     getAdminCategory(setCategoryData);
     allFilterOrGet(setTestList);
-    console.clear();
+    consoleClear();
   }, []);
 
   useEffect(() => {
@@ -91,6 +93,7 @@ const Test = () => {
     setTestType('');
     setEditOrDeleteStatus('');
     serEditOrDeleteID('');
+    setDefQuiz('')
     setImgUpload(null);
   };
 
@@ -140,10 +143,10 @@ const Test = () => {
             allowClear
             onChange={(value) => setTypeFilter(value)}
           >
-            <option value="SUM">Сaм</option>
-            <option value="ONE_CHOICE">Битта танлов</option>
-            <option value="MANY_CHOICE">Кўп танлов</option>
-            <option value="ANY_CORRECT">Ҳар қандай тўғри</option>
+            <Option value="SUM">Ҳисобланган натижа</Option>
+            <Option value="ONE_CHOICE">Бир тўғри жавобли тест</Option>
+            <Option value="MANY_CHOICE">Кўп тўғри жавобли тест</Option>
+            <Option value="ANY_CORRECT">Ҳар қандай тўғри</Option>
           </Select>
         </div>
       </div>
@@ -185,6 +188,7 @@ const Test = () => {
                       setCrudTest(item);
                       setEditOrDeleteStatus('put');
                       serEditOrDeleteID(item.id);
+                      setDefQuiz(item.optionDtos);
                     }} />
                   </button>
                   <button className="hover:text-red-600">
@@ -252,17 +256,21 @@ const Test = () => {
                   }}
                   defOption={`Турни танланг`}
                   child={<>
-                    <option value="SUM">Сaм</option>
-                    <option value="ONE_CHOICE">Битта танлов</option>
-                    <option value="MANY_CHOICE">Кўп танлов</option>
+                    <option value="SUM">Ҳисобланган натижа</option>
+                    <option value="ONE_CHOICE">Бир тўғри жавобли тест</option>
+                    <option value="MANY_CHOICE">Кўп тўғри жавобли тест</option>
                     <option value="ANY_CORRECT">Ҳар қандай тўғри</option>
                   </>}
                 />
               </div>
               <p className={`text-center mt-4`}>
-                {editOrDeleteStatus === 'put' && 'Вариантларни киритинг'}
+                {editOrDeleteStatus === 'put' && 'Вариантларни узгартирсангиз булади'}
               </p>
-              <TestCrudCheck type={crudTest.type ? crudTest.type : testType} />
+              {editOrDeleteStatus === 'put' ? (
+                <TestCrudCheck type={crudTest.type ? crudTest.type : testType} defQues={defQuiz} />
+              ) : (
+                <TestCrudCheck type={crudTest.type ? crudTest.type : testType} />
+              )}
               <div className={`flex justify-center items-center mt-10`}>
                 <ImageUpload />
               </div>

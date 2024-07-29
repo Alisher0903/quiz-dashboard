@@ -17,6 +17,7 @@ import ClientDashboard from './pages/client/ClientDashboard.tsx';
 import ResetPassword from './pages/Authentication/ResetPasword.tsx';
 import ClientQuizResult from './pages/client/ClientQuizResult.tsx';
 import { setConfig } from './common/api/token.tsx';
+import { consoleClear } from './common/console-clear/console-clear.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -78,6 +79,9 @@ function App() {
 
     if (!tokens && !pathname.startsWith('/auth')) navigate('/auth/signin');
     if (!tokens && pathname.startsWith('/auth')) sessionStorage.removeItem('refreshes');
+
+    // console clear u/n
+    consoleClear()
   }, [pathname, tokens, navigate]);
 
   return loading ? (

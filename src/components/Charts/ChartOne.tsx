@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { config } from '../../common/api/token';
 import { statistics_day } from '../../common/api/api';
+import { consoleClear } from '../../common/console-clear/console-clear.tsx';
 
 interface ChartData {
   dayOfWeek: string;
@@ -41,15 +42,15 @@ const ChartOne: React.FC = () => {
       const { data } = await axios.get(statistics_day, config);
       if (data.success) {
         setChart(data.body);
-        console.clear();
+        consoleClear();
       }
       else {
         setChart([])
-        console.clear();
+        consoleClear();
       }
     } catch {
       setChart([])
-      console.clear();
+      consoleClear();
     }
   };
 

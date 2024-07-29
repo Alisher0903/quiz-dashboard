@@ -7,6 +7,7 @@ import { result_get_all, result_get_by_id } from '../common/api/api';
 import { config } from '../common/api/token';
 import GlobalModal from '../components/modal/modal.tsx';
 import { Pagination } from 'antd';
+import { consoleClear } from '../common/console-clear/console-clear.tsx';
 
 interface IUser {
   id: number;
@@ -47,9 +48,9 @@ const User = () => {
     try {
       const { data } = await axios.get(`${result_get_by_id}${user.id}`, config);
       setUserDetails(data.body);
-      console.clear();
+      consoleClear();
     } catch (error) {
-      console.clear();
+      consoleClear();
     }
   };
 
@@ -65,10 +66,10 @@ const User = () => {
       setUsers(data.body.body);
       setTotalPages(data.body.totalElements);
       setLoading(false);
-      console.clear();
+      consoleClear();
     } catch (error) {
       setLoading(false);
-      console.clear();
+      consoleClear();
     }
   };
 

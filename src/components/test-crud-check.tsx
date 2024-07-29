@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import testStore from '../common/state-management/testStore.tsx';
 
-const TestCrudCheck = ({ type }: { type: string }) => {
+const TestCrudCheck = ({ type, defQues }: { type: string, defQues?: any }) => {
   const { setOptionDto } = testStore();
   const [questions, setQuestions] = useState([{ id: 1, answer: '', isCorrect: false }]);
   const [checkedId, setCheckedId] = useState<number | null>(null);
@@ -13,6 +13,10 @@ const TestCrudCheck = ({ type }: { type: string }) => {
   useEffect(() => {
     setQuestions([{ id: 1, answer: '', isCorrect: false }]);
   }, [type]);
+
+  useEffect(() => {
+    defQues && setQuestions(defQues);
+  }, [defQues]);
 
   const addQuestion = () => {
     const newQuestion = {

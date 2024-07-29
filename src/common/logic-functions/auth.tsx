@@ -3,6 +3,7 @@ import axios from 'axios';
 import { auth_activate, auth_forgot_password, auth_login, auth_register, auth_reset_password } from '../api/api.tsx';
 import toast from 'react-hot-toast';
 import React from 'react';
+import { consoleClear } from '../console-clear/console-clear.tsx';
 
 // register
 export const authRegister = (
@@ -29,13 +30,13 @@ export const authRegister = (
     if (password === confirmPassword) {
       axios.post(auth_register, data)
         .then(res => {
-          console.clear();
+          consoleClear();
           setLoading(false);
           if (res.data.success) setResData(true);
           else toast.error('Нимадир хато кетди, қайта уриниб кўринг');
         })
         .catch((err) => {
-          console.clear();
+          consoleClear();
           setLoading(false);
           if (err.response.data.message === 'This email exist') toast.error('Бу эмаил билан руйхатдан утилган!!!');
           else toast.error('Нимадир хато кетди, қайта уриниб кўринг!!!');
@@ -63,7 +64,7 @@ export const registerClientActive = async (
     if (code) {
       const { data } = await axios.put(`${auth_activate}?code=${code}`, '');
       if (data.success) {
-        console.clear();
+        consoleClear();
         setResData(true);
         setLoading(false);
       } else toast.error('Нимадир хато кетди, қайта уриниб кўринг!!!');
@@ -72,7 +73,7 @@ export const registerClientActive = async (
       setLoading(false);
     }
   } catch {
-    console.clear();
+    consoleClear();
     setLoading(false);
     toast.error('Нимадир хато кетди, қайта уриниб кўринг!!!');
   }
@@ -94,7 +95,7 @@ export const handleSubmit = async (
     try {
       const { data } = await axios.post(auth_login, authData);
       if (data.success) {
-        console.clear();
+        consoleClear();
         setLoading(false);
         const expiryTime = new Date().getTime() + 24 * 60 * 60 * 1000;
         localStorage.setItem('tokenExpiry', expiryTime.toString());
@@ -102,12 +103,12 @@ export const handleSubmit = async (
         localStorage.setItem('token', `Bearer ${data.token}`);
         setResData(true);
       } else {
-        console.clear();
+        consoleClear();
         setLoading(false);
         toast.error('Сиз хали руйхатдан утмагансиз');
       }
     } catch {
-      console.clear();
+      consoleClear();
       setLoading(false);
       toast.error('Логин ёки паролни хато киритдингиз');
     }
@@ -132,20 +133,20 @@ export const forgotPasswordEmail = async (
     if (email) {
       const { data } = await axios.put(auth_forgot_password, forgotData);
       if (data.success) {
-        console.clear();
+        consoleClear();
         setResData(true);
         setLoading(false);
       } else {
-        console.clear();
+        consoleClear();
         setLoading(false);
         toast.error('Нимадур хатолик юз берди, кейинроқ қайта уриниб куринг!!!');
       }
     } else {
-      console.clear();
+      consoleClear();
       setLoading(false);
     }
   } catch {
-    console.clear();
+    consoleClear();
     setLoading(false);
     toast.error('Нимадур хатолик юз берди, кейинроқ қайта уриниб куринг!!!');
   }
@@ -168,26 +169,26 @@ export const resetPassword = async (
       if (passwordToken && newPassword && confirmPassword) {
         const { data } = await axios.put(auth_reset_password, resetData);
         if (data.success) {
-          console.clear();
+          consoleClear();
           setResData(true);
           setLoading(false);
         } else {
-          console.clear();
+          consoleClear();
           setLoading(false);
           toast.error('Нимадур хатолик юз берди, кейинроқ қайта уриниб куринг!!!');
         }
       } else {
-        console.clear();
+        consoleClear();
         setLoading(false);
         toast.error('Малумотлар тулиқ эмас қайтадан уриниб куринг!!!');
       }
     } else {
-      console.clear();
+      consoleClear();
       setLoading(false);
       toast.error('Пароллар мослиги туғри келмади, текшириб қайтадан уриниб куринг!!!');
     }
   } catch {
-    console.clear();
+    consoleClear();
     setLoading(false);
     toast.error('Нимадур хатолик юз берди, кейинроқ қайта уриниб куринг!!!');
   }

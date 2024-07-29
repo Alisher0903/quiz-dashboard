@@ -5,20 +5,21 @@ import { category_admin, category_all } from '../api/api.tsx';
 import { config } from '../api/token.tsx';
 import toast from 'react-hot-toast';
 import React from 'react';
+import { consoleClear } from '../console-clear/console-clear.tsx';
 
 export const getAdminCategory = async (setData: (val: null | CategoryList[]) => void) => {
   try {
     const { data } = await axios.get(category_admin, config);
     if (data.success) {
-      console.clear();
+      consoleClear();
       setData(data.body);
     }
     else {
-      console.clear();
+      consoleClear();
       setData(null);
     }
   } catch {
-    console.clear();
+    consoleClear();
     setData(null);
   }
 };
@@ -37,12 +38,12 @@ export const addCategory = async (
     if (addData) {
       const { data } = edit ? await axios.put(category_all, addData, config) : await axios.post(category_all, addData, config);
       if (data.success) {
-        console.clear();
+        consoleClear();
         setLoading(false);
         resultData(true);
         toast.success(edit ? 'Категорияни таҳрирлаш муваффақиятли амалга оширилди' : 'Категория муваффақиятли сақланди');
       } else {
-        console.clear();
+        consoleClear();
         setLoading(false);
         toast.error(edit ? 'Категорияни таҳрирлашда хатолик юз берди' : 'Категория қўшишда хатолик юз берди');
       }
@@ -50,7 +51,7 @@ export const addCategory = async (
   } catch {
     setLoading(false);
     toast.error(edit ? 'Категорияни таҳрирлашда хатолик юз берди' : 'Категория қўшишда хатолик юз берди');
-    console.clear();
+    consoleClear();
   }
 };
 
@@ -61,12 +62,12 @@ export const deleteCategory = async (idIn: string | number, seLoading: (val: boo
     if (idIn) {
       const { data } = await axios.delete(`${category_all}/${idIn}`, config);
       if (data.success) {
-        console.clear();
+        consoleClear();
         seLoading(false);
         setResData(true);
         toast.success('Категория муваффақиятли ўчирилди');
       } else {
-        console.clear();
+        consoleClear();
         seLoading(false);
         toast.error('Категорияни ўчиришда хатолик юз берди');
       }
@@ -74,6 +75,6 @@ export const deleteCategory = async (idIn: string | number, seLoading: (val: boo
   } catch {
     seLoading(false);
     toast.error('Категорияни ўчиришда хатолик юз берди');
-    console.clear();
+    consoleClear();
   }
 };

@@ -7,6 +7,7 @@ import { MdStart } from 'react-icons/md';
 import GlobalModal from '../../components/modal/modal';
 import AddButtons from '../../components/buttons/buttons';
 import { useNavigate } from 'react-router-dom';
+import { consoleClear } from '../../common/console-clear/console-clear.tsx';
 
 const thead: IThead[] = [
   { id: 1, name: 'Т/р' },
@@ -30,15 +31,15 @@ const ClientDashboard = () => {
       const res = await axios.get(`${category_all}`, config);
       if (res.data.success) {
         setCategory(res.data.body);
-        console.clear();
+        consoleClear();
       }
       else {
         setCategory([]);
-        console.clear();
+        consoleClear();
       }
     } catch {
       setCategory([]);
-      console.clear();
+      consoleClear();
     }
   };
 

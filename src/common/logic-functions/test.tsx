@@ -8,13 +8,14 @@ import {
   quiz_start
 } from '../api/api';
 import toast from 'react-hot-toast';
+import { consoleClear } from '../console-clear/console-clear.tsx';
 
 export const fetchQuiz = async (id: string | undefined, setQuizData: (val: TestMainData) => void, setIsLoading: (val: boolean) => void) => {
   setIsLoading(true);
   try {
     const { data } = await axios.get(`${quiz_start}${id}`, config);
     if (data.success) {
-      console.clear();
+      consoleClear();
       setQuizData({
         quizList: data.body.questionDtoList,
         quiz: data.body,
@@ -23,11 +24,11 @@ export const fetchQuiz = async (id: string | undefined, setQuizData: (val: TestM
       })
       setIsLoading(false);
     } else {
-      console.clear();
+      consoleClear();
       setIsLoading(false);
     }
   } catch (err: any) {
-    console.clear();
+    consoleClear();
     toast.error(err.response.data.message);
     setIsLoading(false);
   }
@@ -38,7 +39,7 @@ export const sendResults = async (id: string | undefined, duration: number, coun
   try {
     const { data } = await axios.post(`${quiz_pass}/${id}?duration=${duration}&countAnswers=${countAnswers}`, payload, config);
     if (data.success) {
-      console.clear();
+      consoleClear();
       navigate('/client/quiz/result');
       await getCertificate(data.body, setResult, setLoading);
       setIsLoading(false);
@@ -56,11 +57,11 @@ export const sendResults = async (id: string | undefined, duration: number, coun
       localStorage.removeItem('remainingTime')
       localStorage.removeItem('currentIndex')
     } else {
-      console.clear();
+      consoleClear();
       setIsLoading(false);
     }
   } catch {
-    console.clear();
+    consoleClear();
     setIsLoading(false);
     toast.error('Илтимос кейинроқ уриниб кўринг');
   }
@@ -72,9 +73,9 @@ export const getCertificate = async (id: number, setResult: (val: string) => voi
     const { data } = await axios.post(`${certificate}${id}`, {}, config);
     setIsLoading(false);
     setResult(data);
-    console.clear();
+    consoleClear();
   } catch {
-    console.clear();
+    consoleClear();
     setIsLoading(false);
   }
 };
@@ -92,15 +93,15 @@ export const allFilterOrGet = async (setData: (val: null | TestList[]) => void, 
     const { data } = await axios.get(url, config);
     if (data.success) {
       setData(data.body);
-      console.clear();
+      consoleClear();
     }
     else {
       setData(null);
-      console.clear();
+      consoleClear();
     }
   } catch {
     setData(null);
-    console.clear();
+    consoleClear();
   }
 };
 
@@ -125,17 +126,17 @@ export const adminTestCrud = async (
     try {
       const { data } = await axios.post(question_crud, crudData, config);
       if (data.success) {
-        console.clear();
+        consoleClear();
         setResData(true);
         setLoading(false);
         toast.success('Тест муваффақиятли сақланди');
       } else {
-        console.clear();
+        consoleClear();
         toast.error('Тест сақлашда хатолик юз берди');
         setLoading(false);
       }
     } catch {
-      console.clear();
+      consoleClear();
       toast.error('Тест сақлашда хатолик юз берди');
       setLoading(false);
     }
@@ -144,22 +145,22 @@ export const adminTestCrud = async (
       if (editOrDeleteID) {
         const { data } = await axios.put(`${question_crud}/${editOrDeleteID}`, crudData, config);
         if (data.success) {
-          console.clear();
+          consoleClear();
           setResData(true);
           setLoading(false);
           toast.success('Тест муваффақиятли таҳрирланди');
         } else {
-          console.clear();
+          consoleClear();
           toast.error('Хатолик юз берди');
           setLoading(false);
         }
       } else {
-        console.clear();
+        consoleClear();
         toast.error('Хатолик юз берди');
         setLoading(false);
       }
     } catch {
-      console.clear();
+      consoleClear();
       toast.error('Хатолик юз берди');
       setLoading(false);
     }
@@ -168,22 +169,22 @@ export const adminTestCrud = async (
       if (editOrDeleteID) {
         const { data } = await axios.delete(`${question_crud}/${editOrDeleteID}`, config);
         if (data.success) {
-          console.clear();
+          consoleClear();
           setResData(true);
           setLoading(false);
           toast.success('Тест муваффақиятли учирилди');
         } else {
-          console.clear();
+          consoleClear();
           toast.error('Хатолик юз берди');
           setLoading(false);
         }
       } else {
-        console.clear();
+        consoleClear();
         toast.error('Хатолик юз берди');
         setLoading(false);
       }
     } catch {
-      console.clear();
+      consoleClear();
       toast.error('Хатолик юз берди');
       setLoading(false);
     }
