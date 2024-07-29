@@ -6,7 +6,6 @@ export interface Category {
 }
 
 export interface CategoryList  {
-  id: number
   name: string
   description: string
   questionCount: number | string

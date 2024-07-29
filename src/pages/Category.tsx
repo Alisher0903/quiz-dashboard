@@ -21,7 +21,6 @@ const thead: IThead[] = [
 ];
 
 const defVal = {
-  id: 0,
   name: '',
   description: '',
   questionCount: '',
