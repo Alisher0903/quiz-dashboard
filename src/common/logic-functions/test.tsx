@@ -82,25 +82,29 @@ export const getCertificate = async (id: number, setResult: (val: string) => voi
 
 //===================ADMIN=========================
 // all get or filter
-export const allFilterOrGet = async (setData: (val: null | TestList[]) => void, page: number | string, setTotalPage: (val:number) => void, name?: string, categoryId?: string | number, type?: string) => {
+export const allFilterOrGet = async (setData: (val: null | TestList[]) => void, page: number | string, setTotalPage: (val:number) => void, setLoading: (val: boolean) => void, name?: string, categoryId?: string | number, type?: string) => {
   const queryParams: string = [
     name ? `questionName=${name}` : '',
     categoryId ? `categoryId=${categoryId}` : '',
     type ? `type=${type}` : ''
   ].filter(Boolean).join('&');
   const url: string = `${question_all_filter}?${queryParams ? `${queryParams}&` : ''}page=${page}&size=10`;
+  setLoading(true)
   try {
     const { data } = await axios.get(url, config);
     if (data.success) {
+      setLoading(false)
       setData(data.body.body);
       setTotalPage(data.body.totalElements)
       consoleClear();
     } else {
       setData(null);
+      setLoading(false)
       consoleClear();
     }
   } catch {
     setData(null);
+    setLoading(false)
     consoleClear();
   }
 };

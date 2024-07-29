@@ -3,7 +3,7 @@ import UniversalTable, { IThead } from '../components/Tables/UniversalTable.tsx'
 import AddButtons from '../components/buttons/buttons.tsx';
 import { MdDelete, MdEdit, MdOutlineAddCircle } from 'react-icons/md';
 import categoryStore from '../common/state-management/categoryStore.tsx';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getAdminCategory } from '../common/logic-functions/category.tsx';
 import testStore from '../common/state-management/testStore.tsx';
 import { adminTestCrud, allFilterOrGet } from '../common/logic-functions/test.tsx';
@@ -62,17 +62,17 @@ const Test = () => {
 
   useEffect(() => {
     getAdminCategory(setCategoryData);
-    allFilterOrGet(setTestList, page, setTotalPage);
+    allFilterOrGet(setTestList, page, setTotalPage, setIsLoading);
     consoleClear();
   }, []);
 
   useEffect(() => {
-    allFilterOrGet(setTestList, page, setTotalPage);
-    consoleClear()
+    allFilterOrGet(setTestList, page, setTotalPage, setIsLoading);
+    consoleClear();
   }, [page]);
 
   useEffect(() => {
-    allFilterOrGet(setTestList, page, setTotalPage, nameFilter && nameFilter, categoryFilter && categoryFilter, typeFilter && typeFilter);
+    allFilterOrGet(setTestList, page, setTotalPage, setIsLoading, nameFilter && nameFilter, categoryFilter && categoryFilter, typeFilter && typeFilter);
   }, [nameFilter, categoryFilter, typeFilter, page]);
 
   useEffect(() => {
@@ -89,7 +89,7 @@ const Test = () => {
     if (resData) {
       setResData(false);
       closeModal();
-      allFilterOrGet(setTestList, page, setTotalPage);
+      allFilterOrGet(setTestList, page, setTotalPage, setIsLoading);
     }
   }, [resData]);
 
@@ -162,69 +162,76 @@ const Test = () => {
       </div>
 
       <UniversalTable thead={thead}>
-        {testList ? (
-          testList.map((item, idx) => (
-            <tr key={item.id}>
-              <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                <h5 className="font-medium text-black dark:text-white">
-                  {(+page * 10) + idx + 1}
-                </h5>
-              </td>
-              <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                <p className="text-black dark:text-white">
-                  {item.name}
-                </p>
-              </td>
-              <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                <p className="text-black dark:text-white">
-                  {item.categoryName}
-                </p>
-              </td>
-              <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                <p className="text-black dark:text-white">
-                  {item.type}
-                </p>
-              </td>
-              <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                <p className="text-black dark:text-white">
-                  {item.score}
-                </p>
-              </td>
-              <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                <div className="flex items-center space-x-3.5">
-                  <button className="hover:text-yellow-500">
-                    <MdEdit className={`text-2xl duration-300`} onClick={() => {
-                      openModal();
-                      setCrudTest(item);
-                      setEditOrDeleteStatus('put');
-                      serEditOrDeleteID(item.id);
-                      setDefQuiz(item.optionDtos);
-                    }} />
-                  </button>
-                  <button className="hover:text-red-600">
-                    <MdDelete
-                      className={`text-2xl duration-300`}
-                      onClick={() => {
-                        serEditOrDeleteID(item.id);
-                        setEditOrDeleteStatus('delete');
+        {isLoading ? <tr key={10105}>
+          <td
+            className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center font-bold"
+            colSpan={6}
+          >
+            юкланмоқда...
+          </td>
+        </tr> : (
+          testList ? (testList.map((item, idx) => (
+              <tr key={item.id}>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <h5 className="font-medium text-black dark:text-white">
+                    {(+page * 10) + idx + 1}
+                  </h5>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.name}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.categoryName}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.type}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.score}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <div className="flex items-center space-x-3.5">
+                    <button className="hover:text-yellow-500">
+                      <MdEdit className={`text-2xl duration-300`} onClick={() => {
                         openModal();
-                      }}
-                    />
-                  </button>
-                </div>
+                        setCrudTest(item);
+                        setEditOrDeleteStatus('put');
+                        serEditOrDeleteID(item.id);
+                        setDefQuiz(item.optionDtos);
+                      }} />
+                    </button>
+                    <button className="hover:text-red-600">
+                      <MdDelete
+                        className={`text-2xl duration-300`}
+                        onClick={() => {
+                          serEditOrDeleteID(item.id);
+                          setEditOrDeleteStatus('delete');
+                          openModal();
+                        }}
+                      />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr key={10005}>
+              <td
+                className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center font-bold"
+                colSpan={6}
+              >
+                Синов топилмади
               </td>
             </tr>
-          ))
-        ) : (
-          <tr key={10005}>
-            <td
-              className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center font-bold"
-              colSpan={6}
-            >
-              Синов топилмади
-            </td>
-          </tr>
-        )}
+          ))}
       </UniversalTable>
       {totalPage > 0 && (
         <Pagination
