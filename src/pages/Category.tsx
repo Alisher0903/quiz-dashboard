@@ -67,6 +67,12 @@ const Category = () => {
   };
 
   const handleInputChange = (name: string, value: string|boolean) => {
+    if (addValue?.main === 'true') {
+      addValue.retakeDate = 0
+      addValue.durationTime = 0
+      addValue.extraQuestionCount = 0
+      addValue.questionCount = 0
+    }
     setAddValue({
       ...addValue,
       [name]: value
