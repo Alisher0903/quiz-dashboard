@@ -168,7 +168,7 @@ const Category = () => {
           ))
         ) : (
           <tr>
-            <td colSpan={8} className="border-b border-[#eee] p-5 dark:border-strokedark text-center">
+            <td colSpan={9} className="border-b border-[#eee] p-5 dark:border-strokedark text-center">
               Туркум топилмади
             </td>
           </tr>

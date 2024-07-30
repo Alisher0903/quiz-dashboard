@@ -39,6 +39,7 @@ const Test = () => {
   const [categoryFilter, setCategoryFilter] = useState<any>('');
   const [typeFilter, setTypeFilter] = useState<any>('');
   const [defQuiz, setDefQuiz] = useState<any>('');
+  const [categoryMain, setCategoryMain] = useState<any>('');
   const [page, setPage] = useState<number | string>(0);
   const [totalPage, setTotalPage] = useState(0);
   const [crudTest, setCrudTest] = useState<TestList | any>({
@@ -85,6 +86,11 @@ const Test = () => {
   useEffect(() => {
     imgUpload ? crudTest.attachmentIds = [`${imgUpload}`] : crudTest.attachmentIds = [];
   }, [imgUpload]);
+
+  useEffect(() => {
+    if (crudTest.categoryId && categoryData) setCategoryMain(categoryData.find(item => item.id === +crudTest.categoryId));
+    else setCategoryMain('');
+  }, [categoryData, crudTest.categoryId]);
 
   useEffect(() => {
     if (resData) {
@@ -166,7 +172,7 @@ const Test = () => {
         {isLoading ? <tr key={10105}>
           <td
             className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center font-bold"
-            colSpan={6}
+            colSpan={7}
           >
             юкланмоқда...
           </td>
@@ -232,7 +238,7 @@ const Test = () => {
             <tr key={10005}>
               <td
                 className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center font-bold"
-                colSpan={6}
+                colSpan={7}
               >
                 Синов топилмади
               </td>
@@ -282,7 +288,8 @@ const Test = () => {
                     )))}
                 />
                 <SelectForm
-                  val={`${crudTest.type}`}
+                  isDisabled={categoryMain.main}
+                  val={categoryMain.main ? 'ANY_CORRECT' : `${crudTest.type}`}
                   onChange={e => {
                     setTestType(e.target.value);
                     handleChange('type', e.target.value);
@@ -302,7 +309,7 @@ const Test = () => {
               {editOrDeleteStatus === 'put' ? (
                 <TestCrudCheck type={crudTest.type ? crudTest.type : testType} defQues={defQuiz} />
               ) : (
-                <TestCrudCheck type={crudTest.type ? crudTest.type : testType} />
+                <TestCrudCheck type={categoryMain.main ? 'ANY_CORRECT' : crudTest.type ? crudTest.type : testType} />
               )}
               <div className={`flex justify-center items-center mt-10`}>
                 <ImageUpload />

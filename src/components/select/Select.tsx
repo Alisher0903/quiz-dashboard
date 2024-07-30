@@ -1,11 +1,12 @@
 import { ReactNode } from 'react';
 
-const SelectForm = ({ label, child, defOption, val, onChange }: {
+const SelectForm = ({ label, child, defOption, val, onChange, isDisabled }: {
   label?: string,
   child: ReactNode,
   defOption: string,
   val?: string,
-  onChange: (val: any) => void
+  onChange: (val: any) => void,
+  isDisabled?: boolean
 }) => {
   return (
     <div className={`w-full`}>
@@ -17,6 +18,7 @@ const SelectForm = ({ label, child, defOption, val, onChange }: {
 
       <div className="relative z-20 bg-transparent dark:bg-form-input">
         <select
+          disabled={isDisabled}
           value={val}
           onChange={onChange}
           className={`relative z-20 w-full text-black dark:text-white appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary`}
