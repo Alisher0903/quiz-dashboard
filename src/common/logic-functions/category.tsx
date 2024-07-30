@@ -48,9 +48,9 @@ export const addCategory = async (
         toast.error(edit ? 'Категорияни таҳрирлашда хатолик юз берди' : 'Категория қўшишда хатолик юз берди');
       }
     }
-  } catch {
+  } catch (err: any) {
     setLoading(false);
-    toast.error(edit ? 'Категорияни таҳрирлашда хатолик юз берди' : 'Категория қўшишда хатолик юз берди');
+    toast.error(edit ? 'Категорияни таҳрирлашда хатолик юз берди' : `${!err.response.data.success ? 'Асосий категория аллақачон мавжуд' : 'Категория қўшишда хатолик юз берди'}`);
     consoleClear();
   }
 };
