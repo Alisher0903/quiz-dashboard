@@ -1,20 +1,26 @@
 import { useState } from 'react';
+import { adminIsActive } from '../../common/logic-functions/admin.tsx';
+import adminStore from '../../common/state-management/adminStore.tsx';
+import globalStore from '../../common/state-management/globalStore.tsx';
 
-const SwitcherThree = () => {
-  const [enabled, setEnabled] = useState(false);
+const SwitcherIsActive = ({ id, active }: { id: any, active: boolean }) => {
+  const { setGetAdminList } = adminStore();
+  const { setIsLoading } = globalStore();
+  const [enabled, setEnabled] = useState(active);
 
   return (
     <div>
       <label
-        htmlFor="toggle3"
+        htmlFor={id}
         className="flex cursor-pointer select-none items-center"
       >
         <div className="relative">
           <input
             type="checkbox"
-            id="toggle3"
+            id={id}
             className="sr-only"
             onChange={() => {
+              adminIsActive(id, setGetAdminList, setIsLoading);
               setEnabled(!enabled);
             }}
           />
@@ -63,4 +69,4 @@ const SwitcherThree = () => {
   );
 };
 
-export default SwitcherThree;
+export default SwitcherIsActive;

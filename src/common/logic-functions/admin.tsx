@@ -3,8 +3,24 @@ import { AdminData, AdminDataList } from '../../types/admin.ts';
 import { consoleClear } from '../console-clear/console-clear.tsx';
 import toast from 'react-hot-toast';
 import axios from 'axios';
-import { addAdmin, getAdminList } from '../api/api.tsx';
+import { addAdmin, adminIsActives, getAdminList } from '../api/api.tsx';
 import { config } from '../api/token.tsx';
+
+export const adminIsActive = async (id: number | string, setData: (val: AdminDataList[] | null) => void, setLoading: (val: boolean) => void) => {
+  try {
+    const { data } = await axios.put(`${adminIsActives}${id}`, '', config);
+    if (data.success) {
+      await getAdminLists(setData, setLoading);
+      toast.success('Узгариш муваффақиятли бажарилди');
+    } else {
+      toast.error('Нимадур хатолик юз берди');
+      consoleClear();
+    }
+  } catch (err) {
+    toast.error('Нимадур хатолик юз берди');
+    consoleClear();
+  }
+};
 
 export const postAdmin = async (
   event: React.FormEvent<HTMLFormElement>,
@@ -48,7 +64,7 @@ export const getAdminLists = async (setData: (val: AdminDataList[] | null) => vo
     } else {
       setLoading(false);
       setData(null);
-      consoleClear()
+      consoleClear();
     }
   } catch {
     setData(null);

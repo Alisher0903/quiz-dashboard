@@ -120,6 +120,13 @@ const Test = () => {
 
   const onChange = (page: number): void => setPage(page - 1);
 
+  const typeTranslate = (type: string) => {
+    if (type === 'SUM') return 'Ҳисобланган натижа'
+    else if (type === 'ONE_CHOICE') return 'Бир тўғри жавобли тест'
+    else if (type === 'MANY_CHOICE') return 'Кўп тўғри жавобли тест'
+    else if (type === 'ANY_CORRECT') return 'Ҳар қандай тўғри'
+  }
+
   return (
     <>
       <Breadcrumb pageName="Тест" />
@@ -196,7 +203,7 @@ const Test = () => {
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                    {item.type}
+                    {typeTranslate(item.type)}
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
@@ -299,7 +306,7 @@ const Test = () => {
                     <option value="SUM">Ҳисобланган натижа</option>
                     <option value="ONE_CHOICE">Бир тўғри жавобли тест</option>
                     <option value="MANY_CHOICE">Кўп тўғри жавобли тест</option>
-                    <option value="ANY_CORRECT">Ҳар қандай тўғри</option>
+                    {categoryMain.main && <option value="ANY_CORRECT">Ҳар қандай тўғри</option>}
                   </>}
                 />
               </div>

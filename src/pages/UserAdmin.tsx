@@ -7,12 +7,14 @@ import { MdOutlineAddCircle } from 'react-icons/md';
 import globalStore from '../common/state-management/globalStore.tsx';
 import adminStore from '../common/state-management/adminStore.tsx';
 import { getAdminLists, postAdmin } from '../common/logic-functions/admin.tsx';
+import SwitcherIsActive from '../components/Switchers/SwitcherIsActive.tsx';
 
 const thead: IThead[] = [
   { id: 1, name: 'Т/р' },
   { id: 2, name: 'Исм' },
   { id: 3, name: 'Фамилия' },
-  { id: 4, name: 'Электрон почта' }
+  { id: 4, name: 'Электрон почта' },
+  { id: 4, name: 'Active' }
 ];
 
 const defData = {
@@ -94,6 +96,11 @@ const UserAdmin = () => {
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">{item.email}</p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    <SwitcherIsActive id={item.id} active={item.enabled} />
+                  </p>
                 </td>
               </tr>
             ))

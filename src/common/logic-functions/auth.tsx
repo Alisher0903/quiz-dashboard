@@ -103,14 +103,15 @@ export const handleSubmit = async (
         localStorage.setItem('token', `Bearer ${data.token}`);
         setResData(true);
       } else {
-        consoleClear();
         setLoading(false);
         toast.error('Сиз хали руйхатдан утмагансиз');
+        consoleClear();
       }
-    } catch {
-      consoleClear();
+    } catch (err: any) {
+      if (err.response.data.message === 'Inactive account') toast.error('Сизни киришингиз тақиқлаб қуйилган');
+      else toast.error('Логин ёки паролни хато киритдингиз');
       setLoading(false);
-      toast.error('Логин ёки паролни хато киритдингиз');
+      consoleClear();
     }
   } else {
     setLoading(false);
