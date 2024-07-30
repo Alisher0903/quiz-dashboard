@@ -17,7 +17,8 @@ const thead: IThead[] = [
   { id: 5, name: 'Қўшимча саволлар сони' },
   { id: 6, name: 'Давомийлик вақти' },
   { id: 7, name: 'Қайта қабул қилиш санаси' },
-  { id: 8, name: 'Ҳаракат' }
+  { id: 8, name: 'Яратган одам' },
+  { id: 9, name: 'Ҳаракат' }
 ];
 
 const defVal = {
@@ -110,7 +111,7 @@ const Category = () => {
                   {item.name}
                 </p>
               </td>
-              <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
+              <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark min-w-[400px]">
                 <p className="text-black dark:text-white">
                   {item.description}
                 </p>
@@ -133,6 +134,11 @@ const Category = () => {
               <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
                 <p className="text-black dark:text-white">
                   {item.retakeDate}
+                </p>
+              </td>
+              <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
+                <p className="text-black dark:text-white">
+                  {item.createdBy}
                 </p>
               </td>
               <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">

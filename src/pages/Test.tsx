@@ -21,9 +21,10 @@ const thead: IThead[] = [
   { id: 1, name: 'Т/р' },
   { id: 2, name: 'Савол' },
   { id: 3, name: 'Категория номи' },
-  { id: 3, name: 'Тури' },
-  { id: 3, name: 'Балл' },
-  { id: 4, name: 'Ҳаракат' }
+  { id: 4, name: 'Тури' },
+  { id: 5, name: 'Балл' },
+  { id: 6, name: 'Яратган одам' },
+  { id: 7, name: 'Ҳаракат' }
 ];
 const { Option } = Select;
 
@@ -177,7 +178,7 @@ const Test = () => {
                     {(+page * 10) + idx + 1}
                   </h5>
                 </td>
-                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark min-w-[500px]">
                   <p className="text-black dark:text-white">
                     {item.name}
                   </p>
@@ -195,6 +196,11 @@ const Test = () => {
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
                     {item.score}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.createdByName}
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
