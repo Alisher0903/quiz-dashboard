@@ -41,13 +41,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   });
 
   const styles = {
-    sidebar: 'group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-graydark dark:text-bodydark1 duration-300 ease-in-out hover:bg-slate-300 dark:hover:bg-graydark dark:hover:bg-meta-4'
+    sidebar: 'group relative shadow-default flex items-center gap-2.5 rounded-sm py-3 px-4 my-1 font-medium text-graydark dark:text-bodydark1 duration-300 ease-in-out hover:bg-slate-300 dark:hover:bg-graydark dark:hover:bg-meta-4'
   };
 
   return (
     <aside
       ref={sidebar}
-      className={`absolute left-0 top-0 z-9999 flex  h-screen w-72.5 flex-col overflow-y-hidden bg-white duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
+      className={`absolute left-0 top-0 z-999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-white duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
       }`}
     >

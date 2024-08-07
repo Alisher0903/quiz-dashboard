@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 
 // =================screenshot olishni ogohlantirish uchun======================
-export const ScreenshotBlocked = () => {
+export const screenshotBlocked = () => {
   const handleKeyDown = (event: any) => {
     if (event.key === 'PrintScreen' || (event.shiftKey && (event.metaKey || event.key === 'Meta'))) {
       toast.error('Скрееншот олиш тақиқланган❗❌');
