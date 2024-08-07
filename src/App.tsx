@@ -18,6 +18,7 @@ import ClientQuizResult from './pages/client/ClientQuizResult.tsx';
 import { setConfig } from './common/api/token.tsx';
 import { consoleClear } from './common/console-clear/console-clear.tsx';
 import UserAdmin from './pages/UserAdmin.tsx';
+import { ScreenshotBlocked, siteSecurity, unReload } from './common/privacy-features/privacy-features.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -28,15 +29,9 @@ function App() {
   const tokenExpiry = localStorage.getItem('tokenExpiry');
 
   useEffect(() => {
-    const handleKeyDown = (event: any) => {
-      if (event.key === 'PrintScreen' || (event.shiftKey && (event.metaKey || event.key === 'Meta'))) {
-        alert('Скрееншот олиш тақиқланган❗❌');
-        event.preventDefault();
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    ScreenshotBlocked();
+    unReload();
+    siteSecurity();
   }, []);
 
   useEffect(() => {
@@ -61,7 +56,7 @@ function App() {
       } else if (role === 'ROLE_CLIENT') {
         if (!tokens) navigate('/auth/signin');
         else navigate('/client/dashboard');
-      } else if (role ==='ROLE_SUPER_ADMIN') {
+      } else if (role === 'ROLE_SUPER_ADMIN') {
         if (!tokens) navigate('/auth/signin');
         else navigate('/dashboard');
       }
@@ -84,7 +79,7 @@ function App() {
     if (!tokens && pathname.startsWith('/auth')) sessionStorage.removeItem('refreshes');
 
     // console clear u/n
-    consoleClear()
+    consoleClear();
   }, [pathname, tokens, navigate]);
 
   return loading ? (
