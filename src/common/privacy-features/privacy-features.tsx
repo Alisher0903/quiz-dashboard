@@ -4,9 +4,8 @@ import toast from 'react-hot-toast';
 export const ScreenshotBlocked = () => {
   const handleKeyDown = (event: any) => {
     if (event.key === 'PrintScreen' || (event.shiftKey && (event.metaKey || event.key === 'Meta'))) {
-      alert('Скрееншот олиш тақиқланган❗❌');
-      // event.preventDefault();
-      // document.body.style.display = 'none';
+      toast.error('Скрееншот олиш тақиқланган❗❌');
+      event.preventDefault();
     }
   };
 

@@ -18,7 +18,11 @@ import ClientQuizResult from './pages/client/ClientQuizResult.tsx';
 import { setConfig } from './common/api/token.tsx';
 import { consoleClear } from './common/console-clear/console-clear.tsx';
 import UserAdmin from './pages/UserAdmin.tsx';
-import { ScreenshotBlocked, siteSecurity, unReload } from './common/privacy-features/privacy-features.tsx';
+import {
+  ScreenshotBlocked,
+  siteSecurity,
+  unReload
+} from './common/privacy-features/privacy-features.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
