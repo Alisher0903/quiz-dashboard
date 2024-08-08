@@ -23,6 +23,7 @@ import {
   siteSecurity,
   unReload
 } from './common/privacy-features/privacy-features.tsx';
+import ClientQuizStart from './pages/client/ClientQuizStart.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -197,6 +198,15 @@ function App() {
             <>
               <PageTitle title="Client | Dashboard" />
               <ClientDashboard />
+            </>
+          }
+        />
+        <Route
+          path="/client/quiz/start"
+          element={
+            <>
+              <PageTitle title="Client | Quiz" />
+              <ClientQuizStart />
             </>
           }
         />
