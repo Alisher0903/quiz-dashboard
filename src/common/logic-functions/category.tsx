@@ -1,11 +1,32 @@
 //category all
-import { CategoryList } from '../../types/category.ts';
+import { CategoryClientList, CategoryList } from '../../types/category.ts';
 import axios from 'axios';
 import { category_admin, category_all } from '../api/api.tsx';
 import { config } from '../api/token.tsx';
 import toast from 'react-hot-toast';
 import React from 'react';
 import { consoleClear } from '../console-clear/console-clear.tsx';
+
+export const getClientCategory = async (setClientCategory: (val: null | CategoryClientList[]) => void, setIsLoading: (val: boolean) => void) => {
+  setIsLoading(true)
+  try {
+    const { data } = await axios.get(category_all, config);
+    if (data.success) {
+      setClientCategory(data.body);
+      setIsLoading(false)
+      consoleClear();
+    }
+    else {
+      setClientCategory(null);
+      setIsLoading(false)
+      consoleClear();
+    }
+  } catch {
+    setClientCategory(null);
+    setIsLoading(false)
+    consoleClear();
+  }
+};
 
 export const getAdminCategory = async (setData: (val: null | CategoryList[]) => void) => {
   try {

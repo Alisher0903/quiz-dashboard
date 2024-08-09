@@ -1,9 +1,11 @@
 import { create } from 'zustand';
-import { Category, CategoryList } from '../../types/category.ts';
+import { Category, CategoryClientList, CategoryList } from '../../types/category.ts';
 
 const categoryStore = create<Category>((set) => ({
   categoryData: null,
-  setCategoryData: (val: null | CategoryList[]) => set({categoryData: val}),
+  clientCategoryData: null,
+  setCategoryData: (val: null | CategoryList[]) => set({ categoryData: val }),
+  setClientCategoryData: (val: null | CategoryClientList[]) => set({ clientCategoryData: val }),
   addValue: {
     name: '',
     description: '',
@@ -16,7 +18,7 @@ const categoryStore = create<Category>((set) => ({
     hardQuestionCount: '',
     main: false
   },
-  setAddValue: (val: null | CategoryList) => set({addValue: val}),
+  setAddValue: (val: null | CategoryList) => set({ addValue: val }),
 }));
 
 export default categoryStore;

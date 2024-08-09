@@ -1,4 +1,6 @@
 export interface Category {
+  clientCategoryData: null | CategoryClientList[];
+  setClientCategoryData: (val: null | CategoryClientList[]) => void;
   categoryData: null | CategoryList[];
   setCategoryData: (val: null | CategoryList[]) => void;
   addValue: null | CategoryList;
@@ -20,4 +22,12 @@ export interface CategoryList {
   createdBy?: string;
   updatedBy?: string | null;
   deletedBy?: string | null;
+}
+
+export interface CategoryClientList {
+  id: string;
+  retakeDate: number;
+  duration: number;
+  name: string;
+  questionCount: number
 }
