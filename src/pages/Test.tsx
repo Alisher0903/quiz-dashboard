@@ -247,7 +247,7 @@ const Test = () => {
                 className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center font-bold"
                 colSpan={7}
               >
-                Синов топилмади
+                Тест топилмади
               </td>
             </tr>
           ))}

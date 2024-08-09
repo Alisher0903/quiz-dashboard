@@ -1,9 +1,9 @@
 import { create } from 'zustand';
-import { Global } from '../../types/global.ts';
+import { Global, Regions } from '../../types/global.ts';
 
 const globalStore = create<Global>((set) => ({
   region: null,
-  setRegion: (val: any[] | null) => set({ region: val }),
+  setRegion: (val: Regions[] | null) => set({ region: val }),
   isLoading: false,
   setIsLoading: (val: boolean) => set({ isLoading: val }),
   resData: false,

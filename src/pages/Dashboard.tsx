@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import CardDataStats from '../components/CardDataStats.tsx';
 import ChartOne from '../components/Charts/ChartOne.tsx';
 import UniversalTable, { IThead } from '../components/Tables/UniversalTable.tsx';
-// import Select from '../components/select/Select.tsx';
-import {Select} from 'antd';
+import { Select } from 'antd';
 import { getAdminCategory } from '../common/logic-functions/category.tsx';
 import categoryStore from '../common/state-management/categoryStore.tsx';
 import {
-  getAdminDashboardStatistic,
   getAdminDashboardStatisticAll,
   getAdminDashboardStatisticCard
 } from '../common/logic-functions/dashboard.tsx';
@@ -17,6 +15,8 @@ import { FaCircleQuestion } from 'react-icons/fa6';
 import { PiArrowsOutCardinal } from 'react-icons/pi';
 import { FaUsers } from 'react-icons/fa';
 import { Pagination } from 'antd';
+import { getRegions } from '../common/global-functions';
+import globalStore from '../common/state-management/globalStore.tsx';
 
 const thead: IThead[] = [
   { id: 1, name: 'Т/р' },
@@ -30,20 +30,21 @@ const { Option } = Select;
 const Dashboard: React.FC = () => {
   const { setCategoryData, categoryData } = categoryStore();
   const { statisticTable, setStatisticTable, statisticsCard, setStatisticsCard, page, setPage } = dashboardStore();
+  const { region, setRegion } = globalStore();
   const [totalPage, setTotalPage] = useState(0);
   const [categoryID, setCategoryID] = useState(null);
+  const [regionID, setRegionID] = useState(null);
 
   useEffect(() => {
     getAdminCategory(setCategoryData);
+    getRegions(setRegion);
     getAdminDashboardStatisticCard(setStatisticsCard);
     getAdminDashboardStatisticAll(setStatisticTable, page, setTotalPage);
   }, []);
 
   useEffect(() => {
-    categoryID
-      ? getAdminDashboardStatistic(setStatisticTable, categoryID, page, setTotalPage)
-      : getAdminDashboardStatisticAll(setStatisticTable, page, setTotalPage);
-  }, [page, categoryID]);
+    getAdminDashboardStatisticAll(setStatisticTable, page, setTotalPage, regionID ? regionID : '', categoryID ? categoryID : '');
+  }, [page, categoryID, regionID]);
 
   const onChange = (page: number): void => setPage(page - 1);
   return (
@@ -74,8 +75,8 @@ const Dashboard: React.FC = () => {
       <div className="mt-4 md:mt-6 2xl:mt-7.5">
         <ChartOne />
       </div>
-      <div className={`mt-4 md:mt-6 2xl:mt-7.5`}>
-        <div className={`w-full md:w-1/2 lg:max-w-[30%] mb-6`}>
+      <div className={`mt-10`}>
+        <div className={`w-full flex justify-between items-center flex-wrap md:flex-nowrap gap-5 mb-4`}>
           {categoryData && (
             <Select
               placeholder={`Категория танланг`}
@@ -85,6 +86,19 @@ const Dashboard: React.FC = () => {
               onChange={(value) => setCategoryID(value)}
             >
               {categoryData.map(item => (
+                <Option value={item.id} key={item.id}>{item.name}</Option>
+              ))}
+            </Select>
+          )}
+          {region && (
+            <Select
+              placeholder={`Вилоятни танланг`}
+              value={regionID}
+              className={`w-full bg-transparent rounded-[10px] h-10`}
+              allowClear
+              onChange={(value) => setRegionID(value)}
+            >
+              {region.map(item => (
                 <Option value={item.id} key={item.id}>{item.name}</Option>
               ))}
             </Select>

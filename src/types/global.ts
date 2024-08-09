@@ -1,6 +1,6 @@
 export interface Global {
-  region: any[] | null;
-  setRegion: (region: any[] | null) => void;
+  region: Regions[] | null;
+  setRegion: (region: Regions[] | null) => void;
   isLoading: boolean;
   setIsLoading: (isLoading: boolean) => void;
   resData: boolean;
@@ -13,4 +13,9 @@ export interface Global {
   setImgUpload: (val: any) => void;
   passwordShow: boolean
   setPasswordShow: (val: boolean) => void;
+}
+
+export interface Regions {
+  id: number
+  name: string
 }

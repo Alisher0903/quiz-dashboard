@@ -16,19 +16,11 @@ export const result_get_all: string = `${base_url}result/users/`; //PAGINATION b
 export const result_get_by_id: string = `${base_url}result/result/`; //PAGINATION buladi bu api va yana bittasi detailni kurish uchun  xam ishlatiladi
 
 //=================REGION CONTROLLER==================== ishlatilmagan
-// export const region_get_one: string = `${base_url}region/`; // bita region get qilish id keladi
-// export const region_update: string = `${base_url}region/`; // admin region update qiladi id keladi
-// export const region_delete: string = `${base_url}region/`; // admin region delete qiladi
-// export const region_all: string = `${base_url}region`; // admin or client all region get qiladi
-// export const region_add: string = `${base_url}region`; // admin region qushadi
+export const region_all: string = `${base_url}region`; // regin crud url
 
 //==============DISTRICT CONTROLLER========================== ishlatilmagan
-// export const district_get_all: string = `${base_url}district`; // all district get
-// export const district_update: string = `${base_url}district`; // admin district update
-// export const district_add: string = `${base_url}district`; // admin district add
-// export const district_get_one: string = `${base_url}district/`; // bitta district get qilish
-// export const district_delete: string = `${base_url}district/`; // district delete qilish
-// export const district_region_filter: string = `${base_url}district/districts/`; // districtni region lar id buyicha get qilish
+export const district_all: string = `${base_url}district`; // all district crud
+export const district_region_filter: string = `${base_url}district/districts/`; // districtni region lar id buyicha get qilish
 
 //=================QUESTION CONTROLLER===================
 export const question_crud: string = `${base_url}question`; //admin question crud
@@ -65,6 +57,5 @@ export const certificate: string = `${base_url}certificate/`; // Client result o
 
 //================STATISTICS CONTROLLER======================
 export const statistics_day: string = `${base_url}statistic/dayOfWeek/`; // Client result olishi uchun
-export const statistics_categoryBy: string = `${base_url}statistic/categoryBy/`; // Client result olishi uchun
 export const statistics_card: string = `${base_url}statistic/counts/`; // Client result olishi uchun
 export const statistics_card_all: string = `${base_url}statistic/filter/`; // Client result olishi uchun all
