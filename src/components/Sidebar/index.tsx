@@ -88,7 +88,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           {/* <!-- Menu Group --> */}
           <div>
             <ul className="mb-6 flex flex-col gap-1.5">
-              {/* <!-- Menu Item Dashboard --> */}
+              {/* <!-- Menu Item Dashboard ADMIN or SUPER_ADMIN --> */}
               {role === 'ROLE_SUPER_ADMIN' && (
                 <li>
                   <NavLink
@@ -100,25 +100,29 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </li>
               )}
 
-              {/* <!-- Menu Item Category --> */}
-              <li>
-                <NavLink
-                  to="/category"
-                  className={`${styles.sidebar} ${pathname.includes('category') && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
-                >
-                  Категория
-                </NavLink>
-              </li>
+              {(role === 'ROLE_ADMIN' || role === 'ROLE_SUPER_ADMIN') && (
+                <>
+                  {/* <!-- Menu Item Category --> */}
+                  <li>
+                    <NavLink
+                      to="/category"
+                      className={`${styles.sidebar} ${pathname.includes('category') && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
+                    >
+                      Категория
+                    </NavLink>
+                  </li>
 
-              {/* <!-- Menu Item Test --> */}
-              <li>
-                <NavLink
-                  to="/test"
-                  className={`${styles.sidebar} ${pathname.includes('test') && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
-                >
-                  Тест
-                </NavLink>
-              </li>
+                  {/* <!-- Menu Item Test --> */}
+                  <li>
+                    <NavLink
+                      to="/test"
+                      className={`${styles.sidebar} ${pathname.includes('test') && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
+                    >
+                      Тест
+                    </NavLink>
+                  </li>
+                </>
+              )}
 
               {role === 'ROLE_SUPER_ADMIN' && (
                 <>
@@ -136,6 +140,28 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       className={`${styles.sidebar} ${pathname.includes('employees') && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
                     >
                       Ходимлар
+                    </NavLink>
+                  </li>
+                </>
+              )}
+
+              {/*CLIENT Menu item*/}
+              {role === 'ROLE_CLIENT' && (
+                <>
+                  <li>
+                    <NavLink
+                      to="/client/dashboard"
+                      className={`${styles.sidebar} ${pathname === '/client/dashboard' && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
+                    >
+                      Бошқарув панели
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/client/quiz/start"
+                      className={`${styles.sidebar} ${pathname === '/client/quiz/start' && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
+                    >
+                      Тест
                     </NavLink>
                   </li>
                 </>

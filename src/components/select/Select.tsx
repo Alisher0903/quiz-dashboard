@@ -4,7 +4,7 @@ const SelectForm = ({ label, child, defOption, val, onChange, isDisabled }: {
   label?: string,
   child: ReactNode,
   defOption: string,
-  val?: string,
+  val?: any,
   onChange: (val: any) => void,
   isDisabled?: boolean
 }) => {

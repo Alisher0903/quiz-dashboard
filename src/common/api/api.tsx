@@ -67,4 +67,4 @@ export const certificate: string = `${base_url}certificate/`; // Client result o
 export const statistics_day: string = `${base_url}statistic/dayOfWeek/`; // Client result olishi uchun
 export const statistics_categoryBy: string = `${base_url}statistic/categoryBy/`; // Client result olishi uchun
 export const statistics_card: string = `${base_url}statistic/counts/`; // Client result olishi uchun
-export const statistics_card_all: string = `${base_url}statistic/allResult/`; // Client result olishi uchun all
+export const statistics_card_all: string = `${base_url}statistic/filter/`; // Client result olishi uchun all

@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 export const screenshotBlocked = () => {
   const handleKeyDown = (event: any) => {
     if (event.key === 'PrintScreen' || (event.shiftKey && (event.metaKey || event.key === 'Meta'))) {
-      toast.error('Скрееншот олиш тақиқланган❗❌');
+      alert('Скрееншот олиш тақиқланган❗❌');
       event.preventDefault();
     }
   };
@@ -20,7 +20,7 @@ export const siteSecurity = () => {
   });
 
   document.addEventListener('keydown', function(e) {
-    if (e.ctrlKey && (
+    if ((e.ctrlKey && (
       e.key === 'shift' ||
       e.key === 'u' ||
       e.key === 'U' ||
@@ -30,7 +30,7 @@ export const siteSecurity = () => {
       e.key === 'I' ||
       e.key === 'j' ||
       e.key === 'J'
-    )) {
+    )) || e.key === 'F12') {
       toast.error('Бу сайтнинг махфийлик сиёсати қушимча харакатларни тақиқлайди');
       e.preventDefault();
     }
@@ -47,8 +47,5 @@ export const unReload = () => {
   };
 
   window.addEventListener('beforeunload', handleBeforeUnload);
-
-  return () => {
-    window.removeEventListener('beforeunload', handleBeforeUnload);
-  };
+  return () => window.removeEventListener('beforeunload', handleBeforeUnload);
 };

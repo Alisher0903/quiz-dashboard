@@ -14,11 +14,16 @@ const thead: IThead[] = [
   { id: 2, name: 'Категория номи' },
   { id: 3, name: 'Тавсиф' },
   { id: 4, name: 'Саволлар сони' },
-  { id: 5, name: 'Қўшимча саволлар сони' },
-  { id: 6, name: 'Давомийлик вақти' },
-  { id: 7, name: 'Қайта қабул қилиш санаси' },
-  { id: 8, name: 'Яратган одам' },
-  { id: 9, name: 'Ҳаракат' }
+  { id: 5, name: 'Қийин саволлар сони' },
+  { id: 6, name: 'Урта саволлар сони' },
+  { id: 7, name: 'Осон саволлар сони' },
+  { id: 8, name: 'Қўшимча саволлар сони' },
+  { id: 9, name: 'Давомийлик вақти' },
+  { id: 10, name: 'Қайта қабул қилиш санаси' },
+  { id: 11, name: 'Яратган' },
+  { id: 12, name: 'Узгартирган' },
+  { id: 13, name: 'Учирган' },
+  { id: 14, name: 'Ҳаракат' }
 ];
 
 const defVal = {
@@ -28,6 +33,9 @@ const defVal = {
   extraQuestionCount: '',
   durationTime: '',
   retakeDate: '',
+  easyQuestionCount: '',
+  mediumQuestionCount: '',
+  hardQuestionCount: '',
   main: ''
 };
 
@@ -123,6 +131,21 @@ const Category = () => {
               </td>
               <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
                 <p className="text-black dark:text-white">
+                  {item.hardQuestionCount}
+                </p>
+              </td>
+              <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
+                <p className="text-black dark:text-white">
+                  {item.mediumQuestionCount}
+                </p>
+              </td>
+              <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
+                <p className="text-black dark:text-white">
+                  {item.easyQuestionCount}
+                </p>
+              </td>
+              <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
+                <p className="text-black dark:text-white">
                   {item.extraQuestionCount}
                 </p>
               </td>
@@ -142,6 +165,15 @@ const Category = () => {
                 </p>
               </td>
               <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
+                <p className="text-black dark:text-white">
+                  {item.updatedBy}
+                </p>
+              </td><td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
+                <p className="text-black dark:text-white">
+                  {item.deletedBy}
+                </p>
+              </td>
+              <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
                 <div className="flex items-center space-x-3.5">
                   <button className="hover:text-yellow-500">
                     <MdEdit
@@ -158,7 +190,7 @@ const Category = () => {
                       className={`text-2xl duration-300`}
                       onClick={() => {
                         openModalDelete();
-                        setEditStatus(item.id);
+                        item.id && setEditStatus(item.id);
                       }}
                     />
                   </button>

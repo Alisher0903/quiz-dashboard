@@ -1,16 +1,23 @@
 export interface Category {
-  categoryData: null | CategoryList[]
-  setCategoryData: (val: null | CategoryList[]) => void
-  addValue: null | CategoryList
-  setAddValue: (val: null | any) => void
+  categoryData: null | CategoryList[];
+  setCategoryData: (val: null | CategoryList[]) => void;
+  addValue: null | CategoryList;
+  setAddValue: (val: null | any) => void;
 }
 
-export interface CategoryList  {
-  name: string
-  description: string
-  questionCount: number | string
-  extraQuestionCount: number | string
-  durationTime: number | string
-  retakeDate: number | string
-  main: boolean|string
+export interface CategoryList {
+  id?: number | string;
+  name: string;
+  description: string;
+  questionCount: number | string;
+  extraQuestionCount: number | string;
+  durationTime: number | string;
+  easyQuestionCount: number | string;
+  mediumQuestionCount: number | string;
+  hardQuestionCount: number | string;
+  retakeDate: number | string;
+  main: boolean | string;
+  createdBy?: string;
+  updatedBy?: string | null;
+  deletedBy?: string | null;
 }

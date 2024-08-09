@@ -26,11 +26,11 @@ export const getAdminDashboardStatistic = async (setData: (val: null) => void, i
 export const getAdminDashboardStatisticCard = async (setData: (val: null | DashboardListStatisticCards) => void) => {
   try {
     const { data } = await axios.get(statistics_card, config);
-    if (data.success) {
-      consoleClear();
-      setData(data.body);
+    if (data.success) setData(data.body);
+    else {
+      setData(null);
+      consoleClear()
     }
-    else setData(null);
   } catch {
     consoleClear();
     setData(null);
@@ -41,7 +41,6 @@ export const getAdminDashboardStatisticAll = async (setData: (val: null | Dashbo
   try {
     const { data } = await axios.get(`${statistics_card_all}?page=${page}&size=10`, config);
     if (data.success) {
-      consoleClear();
       setData(data.body.body);
       setTotalPage(data.body.totalElements)
     } else {
