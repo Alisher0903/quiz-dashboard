@@ -8,6 +8,7 @@ import { api_videos_files } from '../../common/api/api';
 import globalStore from '../../common/state-management/globalStore';
 import { Image, Skeleton } from 'antd';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { unReload } from '../../common/privacy-features/privacy-features';
 
 const ClientQuizTest = () => {
   const { quizData, setQuizData, setCurrentIndex, currentIndex, setResult } = useTestStore();
@@ -62,13 +63,17 @@ const ClientQuizTest = () => {
   }, [id, setQuizData, setIsLoading]);
 
   useEffect(() => {
+    unReload();
+  }, [])
+
+  useEffect(() => {
     if (quizData && quizData.remainingTime !== undefined) {
       const savedTime = localStorage.getItem('remainingTime');
       const savedIndex = localStorage.getItem('currentIndex');
       setRemainingTime(savedTime ? parseInt(savedTime) : quizData.remainingTime * 60);
       setCurrentIndex(savedIndex ? parseInt(savedIndex) : 0);
     }
-  }, [quizData, setCurrentIndex]);  
+  }, [quizData, setCurrentIndex]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -186,7 +191,7 @@ const ClientQuizTest = () => {
             <ul className="text-sm flex  flex-col gap-2 font-medium dark:border-gray-600 dark:text-white">
               {optionList.map((item, index) => (
                 <li key={index} className="w-full border rounded-lg border-gray-200 dark:border-gray-600">
-                  <div  className="flex items-center ps-3">
+                  <div className="flex items-center ps-3">
                     <input
                       id={`radio-${index}`}
                       type="radio"
