@@ -22,7 +22,7 @@ export interface CategoryList {
   createdBy?: string;
   updatedBy?: string | null;
   deletedBy?: string | null;
-  fileId?: number|string
+  fileId: number | string;
 }
 
 export interface CategoryClientList {
@@ -30,5 +30,5 @@ export interface CategoryClientList {
   retakeDate: number;
   duration: number;
   name: string;
-  questionCount: number
+  questionCount: number;
 }
