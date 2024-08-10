@@ -6,7 +6,8 @@ import { TestOptionDtos } from '../../types/test';
 import AddButtons from '../../components/buttons/buttons';
 import { api_videos_files } from '../../common/api/api';
 import globalStore from '../../common/state-management/globalStore';
-import { Skeleton } from 'antd';
+import { Image, Skeleton } from 'antd';
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const ClientQuizTest = () => {
   const { quizData, setQuizData, setCurrentIndex, currentIndex, setResult } = useTestStore();
@@ -15,6 +16,7 @@ const ClientQuizTest = () => {
   const [answers, setAnswers] = useState<{ [key: number]: any }>({});
   const [isNextDisabled, setIsNextDisabled] = useState(true);
   const [isBtnLoading, setIsBtnLoading] = useState(false);
+  const [isVisibleIndex, setIsVisibleIndex] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false); // New state variable to track if results have been sent
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
@@ -134,6 +136,8 @@ const ClientQuizTest = () => {
     }
   };
 
+  const toggleVisibleIndex = () => setIsVisibleIndex(!isVisibleIndex);
+
   const sortQuiz = (type: string, optionList: TestOptionDtos[] | undefined, name: string, attachmentIds: string[]) => {
     if (!optionList) return <div></div>;
 
@@ -145,7 +149,7 @@ const ClientQuizTest = () => {
               <p className="text-xl">{name}</p>
             </div>
             {attachmentIds && attachmentIds.length > 0 && <div className="flex justify-center items-center py-5">
-              <img
+              <Image
                 style={{ maxWidth: '40rem', maxHeight: '300px', objectFit: 'contain' }}
                 src={api_videos_files + attachmentIds[0]}
                 alt="img"
@@ -175,13 +179,13 @@ const ClientQuizTest = () => {
               <p className="text-xl">{name}</p>
             </div>
             {attachmentIds && attachmentIds.length > 0 && <div className="flex justify-center items-center py-5">
-              <img
+              <Image
                 style={{ maxWidth: '40rem', maxHeight: '300px', objectFit: 'contain' }}
                 src={api_videos_files + attachmentIds[0]}
                 alt="img"
               />
             </div>}
-            <ul className="text-sm flex flex-col gap-2 font-medium dark:border-gray-600 dark:text-white">
+            <ul className="text-sm flex  flex-col gap-2 font-medium dark:border-gray-600 dark:text-white">
               {optionList.map((item, index) => (
                 <li key={index} className="w-full border rounded-lg border-gray-200 dark:border-gray-600">
                   <div className="flex items-center ps-3">
@@ -211,7 +215,7 @@ const ClientQuizTest = () => {
               <p className="text-xl">{name}</p>
             </div>
             {attachmentIds && attachmentIds.length > 0 && <div className="flex justify-center items-center py-5">
-              <img
+              <Image
                 style={{ maxWidth: '40rem', maxHeight: '300px', objectFit: 'contain' }}
                 src={api_videos_files + attachmentIds[0]}
                 alt="img"
@@ -277,9 +281,34 @@ const ClientQuizTest = () => {
               quizData.quizList[currentIndex]?.attachmentIds
             )}
           </div>
-          <div className="flex justify-between mt-5">
+          <div className="flex flex-wrap justify-between mt-5">
             <p>Қолган вақт: {formatTime(remainingTime ? remainingTime : 0)}</p>
+            <div className='relative flex justify-center items-center'>
+              {isVisibleIndex &&
+                <div className='bg-red-600 absolute w-[17rem] p-5 rounded-xl bottom-13 dark:bg-blue-600 flex flex-wrap gap-2'>
+                  {quizData.quizList.map((_, index) => (
+                    <div
+                      onClick={() => {
+                        setCurrentIndex(index);
+                        currentIndex !== index && toggleVisibleIndex()
+                      }}
+                      className={currentIndex === index ? 'w-8 rounded-lg bg-white h-8 border-2 flex justify-center items-center cursor-pointer border-white p-3' : 'w-8 rounded-lg cursor-pointer h-8 border-2 flex justify-center items-center border-white p-3'}
+                    >
+                      <p className={currentIndex === index ? `text-black` : `text-white`}>{index + 1}</p>
+                    </div>
+                  ))}
+                </div>
+              }
+              <div onClick={toggleVisibleIndex} className='bg-red-600 flex items-center justify-center gap-3 py-2 px-4 rounded-xl dark:bg-blue-600'>
+                <p className='text-white'>Саволлар {currentIndex + 1} / {quizData && quizData.quizList.length} </p>
+                {isVisibleIndex ? <IoIosArrowDown className='text-white text-xl' /> : <IoIosArrowUp className='text-white text-xl' />}
+              </div>
+
+            </div>
             <div className="flex gap-5">
+              <AddButtons disabled={currentIndex === 0} onClick={() => setCurrentIndex(currentIndex - 1)}>
+                Орқага
+              </AddButtons>
               <AddButtons
                 onClick={currentIndex + 1 === quizData.quizList.length ? () => {
                   sendResults(id, time === 0 ? 1 : time, quizData.quiz.countAnswers, payload, navigate, setResult, setIsBtnLoading, setIsLoading, setCurrentIndex, setQuizData);
@@ -287,6 +316,7 @@ const ClientQuizTest = () => {
                 disabled={isBtnLoading ? isBtnLoading : isNextDisabled}>{currentIndex + 1 === quizData.quizList.length ? `${isBtnLoading ? 'Юкланмоқда...' : 'Юбориш'}` : 'Кейингиси'}
               </AddButtons>
             </div>
+
           </div>
         </div>
         :

@@ -11,7 +11,7 @@ const CategoryCard: React.FC<{ data: CategoryClientList, onClick: () => void }> 
                 <Image
                     src={defaultIMage}
                     alt="Category image"
-                    className="w-full object-cover h-auto rounded"
+                    className="w-full  object-cover h-auto rounded"
                 />
             </div>
             <div className="w-3/4 pl-4">
