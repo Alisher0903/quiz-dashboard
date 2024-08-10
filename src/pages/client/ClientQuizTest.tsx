@@ -27,8 +27,7 @@ const ClientQuizTest = () => {
       case 'ONE_CHOICE':
         return answer !== undefined ? {
           questionId: question.id,
-          optionId: answer,
-          optionIds: [],
+          optionIds: [answer],
           answer: ''
         } : null;
       case 'SUM':
@@ -41,8 +40,7 @@ const ClientQuizTest = () => {
       case 'ANY_CORRECT':
         return answer !== undefined ? {
           questionId: question.id,
-          optionId: answer,
-          optionIds: [],
+          optionIds: [answer],
           answer: ''
         } : null;
       case 'MANY_CHOICE':
@@ -71,6 +69,9 @@ const ClientQuizTest = () => {
       setCurrentIndex(savedIndex ? parseInt(savedIndex) : 0);
     }
   }, [quizData, setCurrentIndex]);
+
+  console.log(payload);
+  
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -138,7 +139,7 @@ const ClientQuizTest = () => {
 
   const toggleVisibleIndex = () => setIsVisibleIndex(!isVisibleIndex);
 
-  const sortQuiz = (type: string, optionList: TestOptionDtos[] | undefined, name: string, attachmentIds: string[]) => {
+  const sortQuiz = (index: number, type: string, optionList: TestOptionDtos[] | undefined, name: string, attachmentIds: string[]) => {
     if (!optionList) return <div></div>;
 
     switch (type) {
@@ -146,7 +147,7 @@ const ClientQuizTest = () => {
         return (
           <div>
             <div className="flex py-5 justify-center">
-              <p className="text-xl">{name}</p>
+              <p className="text-xl">{`${index}. ${name}`}</p>
             </div>
             {attachmentIds && attachmentIds.length > 0 && <div className="flex justify-center items-center py-5">
               <Image
@@ -176,7 +177,7 @@ const ClientQuizTest = () => {
         return (
           <div>
             <div className="flex py-5 justify-center">
-              <p className="text-xl">{name}</p>
+              <p className="text-xl">{`${index}. ${name}`}</p>
             </div>
             {attachmentIds && attachmentIds.length > 0 && <div className="flex justify-center items-center py-5">
               <Image
@@ -188,7 +189,7 @@ const ClientQuizTest = () => {
             <ul className="text-sm flex  flex-col gap-2 font-medium dark:border-gray-600 dark:text-white">
               {optionList.map((item, index) => (
                 <li key={index} className="w-full border rounded-lg border-gray-200 dark:border-gray-600">
-                  <div className="flex items-center ps-3">
+                  <div  className="flex items-center ps-3">
                     <input
                       id={`radio-${index}`}
                       type="radio"
@@ -196,6 +197,14 @@ const ClientQuizTest = () => {
                       onChange={() => handleAnswerChange(item.questionId, item.id)}
                       className="w-5 h-4 text-blue-600 bg-gray-100  focus:ring-blue-500 dark:focus:ring-blue-600"
                     />
+                    {item.file &&
+                      <Image
+                        width={100}
+                        height={70}
+                        src={api_videos_files + item.file}
+                        className='object-cover'
+                      />
+                    }
                     <label
                       htmlFor={`radio-${index}`}
                       className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -212,7 +221,7 @@ const ClientQuizTest = () => {
         return (
           <div>
             <div className="flex py-5 justify-center">
-              <p className="text-xl">{name}</p>
+              <p className="text-xl">{`${index}. ${name}`}</p>
             </div>
             {attachmentIds && attachmentIds.length > 0 && <div className="flex justify-center items-center py-5">
               <Image
@@ -269,12 +278,12 @@ const ClientQuizTest = () => {
       </div> : quizData.quizList[currentIndex] ?
         <div>
           <div className="">
-            <p className="text-2xl">{currentIndex + 1} / {quizData && quizData.quizList.length}</p>
             <p
               className="text-center text-red-600 dark:text-blue-600 text-3xl font-bold">{quizData.quizList[currentIndex]?.categoryName}</p>
           </div>
           <div>
             {sortQuiz(
+              currentIndex + 1,
               quizData.quizList[currentIndex]?.type,
               quizData.quizList[currentIndex]?.optionDtos,
               quizData.quizList[currentIndex]?.name,
@@ -285,7 +294,7 @@ const ClientQuizTest = () => {
             <p>Қолган вақт: {formatTime(remainingTime ? remainingTime : 0)}</p>
             <div className='relative flex justify-center items-center'>
               {isVisibleIndex &&
-                <div className='bg-red-600 absolute w-[17rem] p-5 rounded-xl bottom-13 dark:bg-blue-600 flex flex-wrap gap-2'>
+                <div className='bg-red-600 absolute w-[17rem] p-5 rounded-xl bottom-11 dark:bg-blue-600 flex flex-wrap gap-2'>
                   {quizData.quizList.map((_, index) => (
                     <div
                       onClick={() => {

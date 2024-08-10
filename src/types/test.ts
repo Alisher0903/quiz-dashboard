@@ -43,6 +43,7 @@ export interface TestQuestionDtoList {
 export interface TestOptionDtos {
   id: number,
   answer: string,
+  file: number,
   questionId: number,
   isCorrect: boolean
 }
