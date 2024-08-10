@@ -22,6 +22,7 @@ export interface CategoryList {
   createdBy?: string;
   updatedBy?: string | null;
   deletedBy?: string | null;
+  fileId?: number|string
 }
 
 export interface CategoryClientList {

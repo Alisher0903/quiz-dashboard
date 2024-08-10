@@ -9,6 +9,7 @@ import GlobalModal from '../components/modal/modal.tsx';
 import { Pagination } from 'antd';
 import { consoleClear } from '../common/console-clear/console-clear.tsx';
 import moment from 'moment';
+import PendingLoader from '../common/Loader/pending-loader.tsx';
 
 interface IUser {
   id: number;
@@ -206,15 +207,7 @@ const User = () => {
           </div>
         </GlobalModal>
       ) : (
-        (isModalOpen && !userDetails) && (
-          <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-opacity-50 bg-black-2">
-            <div className="flex h-screen items-center justify-center">
-              <div
-                className="h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent">
-              </div>
-            </div>
-          </div>
-        ))}
+        (isModalOpen && !userDetails) && <PendingLoader />)}
     </>
   );
 };
