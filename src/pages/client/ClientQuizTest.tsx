@@ -68,10 +68,7 @@ const ClientQuizTest = () => {
       setRemainingTime(savedTime ? parseInt(savedTime) : quizData.remainingTime * 60);
       setCurrentIndex(savedIndex ? parseInt(savedIndex) : 0);
     }
-  }, [quizData, setCurrentIndex]);
-
-  console.log(payload);
-  
+  }, [quizData, setCurrentIndex]);  
 
   useEffect(() => {
     const timer = setInterval(() => {
