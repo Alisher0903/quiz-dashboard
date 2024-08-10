@@ -16,6 +16,7 @@ const categoryStore = create<Category>((set) => ({
     easyQuestionCount: '',
     mediumQuestionCount: '',
     hardQuestionCount: '',
+    fileId: '',
     main: false
   },
   setAddValue: (val: null | CategoryList) => set({ addValue: val }),

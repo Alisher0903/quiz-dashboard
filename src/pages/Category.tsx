@@ -8,22 +8,25 @@ import { addCategory, deleteCategory, getAdminCategory } from '../common/logic-f
 import categoryStore from '../common/state-management/categoryStore.tsx';
 import globalStore from '../common/state-management/globalStore.tsx';
 import SelectForm from '../components/select/Select.tsx';
+import { api_videos_files } from '../common/api/api.tsx';
+import image from '../images/default.png'
 
 const thead: IThead[] = [
   { id: 1, name: 'Т/р' },
-  { id: 2, name: 'Категория номи' },
-  { id: 3, name: 'Тавсиф' },
-  { id: 4, name: 'Саволлар сони' },
-  { id: 5, name: 'Қийин саволлар сони' },
-  { id: 6, name: 'Урта саволлар сони' },
-  { id: 7, name: 'Осон саволлар сони' },
-  { id: 8, name: 'Қўшимча саволлар сони' },
-  { id: 9, name: 'Давомийлик вақти' },
-  { id: 10, name: 'Қайта қабул қилиш санаси' },
-  { id: 11, name: 'Яратган' },
-  { id: 12, name: 'Узгартирган' },
-  { id: 13, name: 'Учирган' },
-  { id: 14, name: 'Ҳаракат' }
+  { id: 2, name: 'Категория rasmi' },
+  { id: 3, name: 'Категория номи' },
+  { id: 4, name: 'Тавсиф' },
+  { id: 5, name: 'Саволлар сони' },
+  { id: 6, name: 'Қийин саволлар сони' },
+  { id: 7, name: 'Урта саволлар сони' },
+  { id: 8, name: 'Осон саволлар сони' },
+  { id: 9, name: 'Қўшимча саволлар сони' },
+  { id: 10, name: 'Давомийлик вақти' },
+  { id: 11, name: 'Қайта қабул қилиш санаси' },
+  { id: 12, name: 'Яратган' },
+  { id: 13, name: 'Узгартирган' },
+  { id: 14, name: 'Учирган' },
+  { id: 15, name: 'Ҳаракат' }
 ];
 
 const defVal = {
@@ -36,7 +39,8 @@ const defVal = {
   easyQuestionCount: '',
   mediumQuestionCount: '',
   hardQuestionCount: '',
-  main: ''
+  main: '',
+  fileId: ''
 };
 
 const Category = () => {
@@ -75,12 +79,12 @@ const Category = () => {
     setEditStatus('');
   };
 
-  const handleInputChange = (name: string, value: string|boolean) => {
+  const handleInputChange = (name: string, value: string | boolean) => {
     if (addValue?.main === 'true') {
-      addValue.retakeDate = 0
-      addValue.durationTime = 0
-      addValue.extraQuestionCount = 0
-      addValue.questionCount = 0
+      addValue.retakeDate = 0;
+      addValue.durationTime = 0;
+      addValue.extraQuestionCount = 0;
+      addValue.questionCount = 0;
     }
     setAddValue({
       ...addValue,
@@ -113,6 +117,13 @@ const Category = () => {
                 <h5 className="font-medium text-black dark:text-white">
                   {i + 1}
                 </h5>
+              </td>
+              <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
+                <img
+                  src={item.fileId ? `${api_videos_files}${item.fileId}` : image} 
+                  alt={item.name}
+                  className={`w-14 h-14 rounded-full object-cover`}
+                />
               </td>
               <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
                 <p className="text-black dark:text-white">
@@ -168,7 +179,8 @@ const Category = () => {
                 <p className="text-black dark:text-white">
                   {item.updatedBy}
                 </p>
-              </td><td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
+              </td>
+              <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
                 <p className="text-black dark:text-white">
                   {item.deletedBy}
                 </p>
@@ -200,8 +212,8 @@ const Category = () => {
           ))
         ) : (
           <tr>
-            <td colSpan={9} className="border-b border-[#eee] p-5 dark:border-strokedark text-center">
-              Туркум топилмади
+            <td colSpan={thead.length} className="border-b border-[#eee] p-5 dark:border-strokedark text-center">
+              Категория топилмади
             </td>
           </tr>
         )}
