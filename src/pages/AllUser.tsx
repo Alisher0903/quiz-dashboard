@@ -48,7 +48,7 @@ const thead: IThead[] = [
   { id: 6, name: 'Ҳаракат' }
 ];
 
-const User = () => {
+const AllUser = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [users, setUsers] = useState<IUser[]>([]);
   const [userDetails, setUserDetails] = useState<IUserDetails | null>(null);
@@ -110,7 +110,7 @@ const User = () => {
 
   return (
     <>
-      <Breadcrumb pageName="Фойдаланувчилар натижаси" />
+      <Breadcrumb pageName="Фойдаланувчилар" />
       <UniversalTable thead={thead}>
         {loading ? (
           <tr>
@@ -220,4 +220,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default AllUser;
