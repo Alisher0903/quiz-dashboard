@@ -8,13 +8,14 @@ import globalStore from '../common/state-management/globalStore.tsx';
 import adminStore from '../common/state-management/adminStore.tsx';
 import { getAdminLists, postAdmin } from '../common/logic-functions/admin.tsx';
 import SwitcherIsActive from '../components/Switchers/SwitcherIsActive.tsx';
+import SelectForm from '../components/select/Select.tsx';
 
 const thead: IThead[] = [
   { id: 1, name: 'Т/р' },
   { id: 2, name: 'Исм' },
   { id: 3, name: 'Фамилия' },
   { id: 4, name: 'Электрон почта' },
-  { id: 4, name: 'Active' }
+  { id: 4, name: 'Активлиги' }
 ];
 
 const defData = {
@@ -23,7 +24,8 @@ const defData = {
   email: '',
   phoneNumber: '',
   password: '',
-  confirmPassword: ''
+  confirmPassword: '',
+  role: ''
 };
 
 const UserAdmin = () => {
@@ -106,7 +108,7 @@ const UserAdmin = () => {
             ))
           ) : (<>
             <tr>
-              <td colSpan={5} className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center">
+              <td colSpan={thead.length} className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center">
                 Ходимлар мавжуд эмас
               </td>
             </tr>
@@ -118,7 +120,16 @@ const UserAdmin = () => {
       <GlobalModal onClose={closeModal} isOpen={isModalOpen}>
         <div className="gap-3 ml-1 min-w-60 sm:min-w-96 lg:min-w-[35rem]">
           <form className={`mt-5`} onSubmit={(e) => postAdmin(e, addData, setIsLoading, setResData)}>
-            <div className="mb-4">
+            <SelectForm
+              val={addData.role}
+              onChange={e => handleInputChange('role', e.target.value)}
+              defOption={`Админ тоифасини танланг`}
+              child={<>
+                <option value="ROLE_TESTER">Тестер админ</option>
+                <option value="ROLE_ADMIN">Текширувчи админ</option>
+              </>}
+            />
+            <div className="my-4">
               <label className="block text-gray-700 mb-2" htmlFor="firstName">Исм</label>
               <input
                 required

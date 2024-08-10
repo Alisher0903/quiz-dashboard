@@ -80,7 +80,6 @@ const User = () => {
 
   const openModal = async (user: IUser) => {
     setIsModalOpen(true);
-
     try {
       const { data } = await axios.get(`${result_one_get}${user.id}`, config);
       setUserDetails(data.body);
@@ -96,6 +95,18 @@ const User = () => {
   };
 
   const onChange = (page: number): void => setCurrentPage(page - 1);
+
+  const statusN = (status: any) => {
+    if (status === 'WAITING') return 'Кутилмоқда'
+    else if (status === 'CANCELLED') return 'Бекор қилинди'
+    else if (status === 'APPROVED') return 'Тасдиқланди'
+  }
+
+  const statusColor = (status: any) => {
+    if (status === 'WAITING') return 'bg-yellow-300'
+    else if (status === 'CANCELLED') return 'bg-red-500'
+    else if (status === 'APPROVED') return 'bg-green-500'
+  }
 
   return (
     <>
@@ -124,8 +135,9 @@ const User = () => {
                   <p className="text-black dark:text-white">{user.phoneNumber}</p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <p className={`text-black dark:text-white`}>{user.status}</p>
-                  {/*px-3 py-1.5 border-2 rounded-xl*/}
+                  <p className={`text-black dark:text-white py-1 rounded-xl text-center ${statusColor(user.status)}`}>
+                    {statusN(user.status)}
+                  </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <div className="flex items-center space-x-3.5">
@@ -184,10 +196,6 @@ const User = () => {
               <p className="flex justify-between">
                 <strong>Ишланган вақти:</strong>
                 <div className="text-blue-400">{moment(userDetails.createdAt.slice(0, 10)).format('DD/MM/YYYY')}</div>
-              </p>
-              <p className="flex justify-between">
-                <strong>Статус:</strong>
-                <div className="text-blue-400">{userDetails.status}</div>
               </p>
             </div>
             {userDetails && userDetails.extraResDtoList.length > 0 && (

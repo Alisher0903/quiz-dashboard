@@ -8,7 +8,8 @@ const adminStore = create<Admin>((set) => ({
     email: '',
     phoneNumber: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    role: ''
   },
   setAddData: (val: AdminData) => set({ addData: val }),
   getAdminList: null,
