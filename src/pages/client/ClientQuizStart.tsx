@@ -57,7 +57,7 @@ const ClientQuizStart: React.FC = () => {
             </div>
         }
         <GlobalModal isOpen={isModal} onClose={toggleModal}>
-          <div className='w-auto'>
+          <div className='w-54 sm:w-64 md:w-96 lg:w-[40rem]'>
             <div className='flex flex-col justify-center items-center'>
               <MdOutlineNotStarted className='text-red-600 dark:text-blue-600' size={100} />
               <p className='text-center sm:text-[17px]'>Сиз аниқ буу тестни бошламоқчимисиз ?</p>
