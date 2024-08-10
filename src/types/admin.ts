@@ -12,6 +12,7 @@ export interface AdminData {
   phoneNumber: string;
   password: string;
   confirmPassword: string;
+  role: string
 }
 
 export interface AdminDataList {
@@ -19,4 +20,5 @@ export interface AdminDataList {
   firstName: string;
   lastName: string;
   email: string;
+  enabled?: boolean
 }

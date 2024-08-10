@@ -128,10 +128,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <>
                   <li>
                     <NavLink
-                      to="/user"
-                      className={`${styles.sidebar} ${pathname.includes('user') && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
+                      to="/all-user"
+                      className={`${styles.sidebar} ${pathname === '/all-user' && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
                     >
                       Фойдаланувчилар
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/user"
+                      className={`${styles.sidebar} ${pathname === '/user' && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
+                    >
+                      Фойдаланувчилар натижаси
                     </NavLink>
                   </li>
                   <li>

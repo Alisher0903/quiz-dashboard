@@ -24,6 +24,7 @@ import {
 } from './common/privacy-features/privacy-features.tsx';
 import ClientQuizStart from './pages/client/ClientQuizStart.tsx';
 import InspectorAdmin from './pages/InspectorAdmin.tsx';
+import AllUser from './pages/AllUser.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -120,6 +121,14 @@ function App() {
           }
         />
         <Route
+          path="/all-user"
+          element={
+            <>
+              <PageTitle title="Admin | All User" />
+              <AllUser />
+            </>
+          }
+        /><Route
           path="/user"
           element={
             <>
