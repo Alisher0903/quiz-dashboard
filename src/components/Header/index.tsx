@@ -9,7 +9,6 @@ const Header = (props: {
   setSidebarOpen: (arg0: boolean) => void;
 }) => {
   const { setGetMeData } = globalStore();
-  const role = localStorage.getItem('ROLE')
 
   useEffect(() => {
     getMe(setGetMeData);
@@ -20,15 +19,14 @@ const Header = (props: {
       <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
         <div className="flex items-center gap-2 sm:gap-4 lg:hidden">
           {/* <!-- Hamburger Toggle BTN --> */}
-          {(role === 'ROLE_ADMIN' || role === 'ROLE_SUPER_ADMIN') && (
-            <button
-              aria-controls="sidebar"
-              onClick={(e) => {
-                e.stopPropagation();
-                props.setSidebarOpen(!props.sidebarOpen);
-              }}
-              className="z-99999 block rounded-sm border border-stroke bg-white p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark lg:hidden"
-            >
+          <button
+            aria-controls="sidebar"
+            onClick={(e) => {
+              e.stopPropagation();
+              props.setSidebarOpen(!props.sidebarOpen);
+            }}
+            className="z-99999 block rounded-sm border border-stroke bg-white p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark lg:hidden"
+          >
             <span className="relative block h-5.5 w-5.5 cursor-pointer">
               <span className="du-block absolute right-0 h-full w-full">
                 <span
@@ -60,8 +58,7 @@ const Header = (props: {
                 ></span>
               </span>
             </span>
-            </button>
-          )}
+          </button>
 
           {/* <!-- Hamburger Toggle BTN --> */}
         </div>

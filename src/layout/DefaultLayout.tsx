@@ -6,11 +6,12 @@ import { useLocation } from 'react-router-dom';
 const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { pathname } = useLocation();
+  const role = localStorage.getItem('ROLE');
 
   return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark">
       <div className="flex h-screen overflow-hidden">
-        {!(pathname.startsWith('/auth')) && (
+        {!(pathname.startsWith('/auth') || role === 'ROLE_ADMIN') && (
           <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         )}
 

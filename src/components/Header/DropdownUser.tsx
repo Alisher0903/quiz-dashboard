@@ -12,7 +12,7 @@ const DropdownUser = () => {
 
   function roles(param: string | null) {
     if (param === 'ROLE_SUPER_ADMIN') return 'Супер админ';
-    else if (param === 'ROLE_ADMIN') return 'Ходим';
+    else if (param === 'ROLE_ADMIN' || param === 'ROLE_TESTER') return 'Ходим';
     else if (param === 'ROLE_CLIENT') return 'Мижоз';
   }
 
@@ -49,7 +49,7 @@ const DropdownUser = () => {
         <div
           className={`absolute right-0 mt-4 flex w-62.5 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark`}
         >
-          {(role === 'ROLE_ADMIN' || role === 'ROLE_SUPER_ADMIN') && (
+          {(role === 'ROLE_ADMIN' || role === 'ROLE_SUPER_ADMIN' || role === 'ROLE_TESTER') && (
             <>
               <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-4 dark:border-strokedark">
                 <li>
