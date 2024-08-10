@@ -9,7 +9,8 @@ import categoryStore from '../common/state-management/categoryStore.tsx';
 import globalStore from '../common/state-management/globalStore.tsx';
 import SelectForm from '../components/select/Select.tsx';
 import { api_videos_files } from '../common/api/api.tsx';
-import image from '../images/default.png'
+import image from '../images/default.png';
+import ImageUpload from '../components/img-upload.tsx';
 
 const thead: IThead[] = [
   { id: 1, name: 'Т/р' },
@@ -45,7 +46,7 @@ const defVal = {
 
 const Category = () => {
   const { categoryData, setCategoryData, setAddValue, addValue } = categoryStore();
-  const { isLoading, setIsLoading, resData, setResData } = globalStore();
+  const { isLoading, setIsLoading, resData, setResData, imgUpload } = globalStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalDelete, setIsModalDelete] = useState(false);
   const [editStatus, setEditStatus] = useState<string | number>('');
@@ -85,7 +86,12 @@ const Category = () => {
       addValue.durationTime = 0;
       addValue.extraQuestionCount = 0;
       addValue.questionCount = 0;
+      addValue.easyQuestionCount = 0;
+      addValue.mediumQuestionCount = 0;
+      addValue.hardQuestionCount = 0;
     }
+    if (addValue && imgUpload) addValue.fileId = imgUpload;
+
     setAddValue({
       ...addValue,
       [name]: value
@@ -120,9 +126,9 @@ const Category = () => {
               </td>
               <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
                 <img
-                  src={item.fileId ? `${api_videos_files}${item.fileId}` : image} 
+                  src={item.fileId ? `${api_videos_files}${item.fileId}` : image}
                   alt={item.name}
-                  className={`w-14 h-14 rounded-full object-cover`}
+                  className={`w-14 h-14 rounded-full object-cover hover:cursor-pointer`}
                 />
               </td>
               <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
@@ -227,6 +233,9 @@ const Category = () => {
               : addCategory(e, addValue, setResData, setIsLoading);
           }}>
             <div className={`mb-4 mt-10`}>
+              <div className={`flex items-center justify-center mb-5`}>
+                <ImageUpload />
+              </div>
               <SelectForm
                 val={addValue?.main}
                 onChange={e => handleInputChange('main', e.target.value)}
@@ -262,15 +271,47 @@ const Category = () => {
             {addValue?.main !== 'true' && (
               <>
                 <div className="mb-4">
-                  <label className="block text-gray-700 mb-2" htmlFor="questionAmount">Саволлар сони</label>
+                  <label className="block text-gray-700 mb-2">Умумий саволлар сони</label>
                   <input
                     required
                     value={addValue?.questionCount}
                     onChange={e => handleInputChange('questionCount', e.target.value)}
                     className={styles.input}
                     type={`number`}
-                    id="questionAmount"
-                    placeholder="Саволлар сонини киритинг"
+                    placeholder="Умумий саволлар сонини киритинг"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 mb-2">Осон саволлар сони</label>
+                  <input
+                    required
+                    value={addValue?.easyQuestionCount}
+                    onChange={e => handleInputChange('easyQuestionCount', e.target.value)}
+                    className={styles.input}
+                    type={`number`}
+                    placeholder="Осон саволлар сонини киритинг"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 mb-2">Урта саволлар сони</label>
+                  <input
+                    required
+                    value={addValue?.mediumQuestionCount}
+                    onChange={e => handleInputChange('mediumQuestionCount', e.target.value)}
+                    className={styles.input}
+                    type={`number`}
+                    placeholder="Урта саволлар сонини киритинг"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 mb-2">Қийин саволлар сони</label>
+                  <input
+                    required
+                    value={addValue?.hardQuestionCount}
+                    onChange={e => handleInputChange('hardQuestionCount', e.target.value)}
+                    className={styles.input}
+                    type={`number`}
+                    placeholder="Қийин саволлар сонини киритинг"
                   />
                 </div>
                 <div className="mb-4">
@@ -316,7 +357,7 @@ const Category = () => {
               <AddButtons children={`Ёпиш`} onClick={closeModal} />
               <AddButtons
                 children={isLoading ? 'юкланмоқда...' : `Сақлаш`}
-                disabled={isLoading}
+                disabled={isLoading || !addValue?.fileId}
                 type={`submit`}
               />
             </div>
