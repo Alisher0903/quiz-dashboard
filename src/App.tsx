@@ -20,7 +20,6 @@ import { consoleClear } from './common/console-clear/console-clear.tsx';
 import UserAdmin from './pages/UserAdmin.tsx';
 import { screenshotBlocked, siteSecurity } from './common/privacy-features/privacy-features.tsx';
 import ClientQuizStart from './pages/client/ClientQuizStart.tsx';
-import InspectorAdmin from './pages/InspectorAdmin.tsx';
 import AllUser from './pages/AllUser.tsx';
 import ResultArchive from './pages/ResultArchive.tsx';
 import ClientProfileEdit from './pages/client/ClientProfileEdit.tsx';
@@ -54,13 +53,16 @@ function App() {
     window.scrollTo(0, 0);
 
     if (pathname === '/') {
-      if (role === 'ROLE_ADMIN') {
+      if (role === 'ROLE_TESTER') {
         if (!tokens) navigate('/auth/signin');
         else navigate('/category');
       } else if (role === 'ROLE_CLIENT') {
         if (!tokens) navigate('/auth/signin');
         else navigate('/client/dashboard');
       } else if (role === 'ROLE_SUPER_ADMIN') {
+        if (!tokens) navigate('/auth/signin');
+        else navigate('/dashboard');
+      } else if (role === 'ROLE_ADMIN') {
         if (!tokens) navigate('/auth/signin');
         else navigate('/dashboard');
       }
@@ -160,7 +162,7 @@ function App() {
           element={
             <>
               <PageTitle title="Admin | Inspector" />
-              <InspectorAdmin />
+              <User />
             </>
           }
         />
