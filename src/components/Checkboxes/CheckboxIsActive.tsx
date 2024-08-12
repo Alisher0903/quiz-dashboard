@@ -1,8 +1,4 @@
-import { useState } from 'react';
-
-const CheckboxTwo = () => {
-  const [isChecked, setIsChecked] = useState<boolean>(false);
-
+const CheckboxIsActive = ({ id, isChecked }: { id: string, isChecked: boolean }) => {
   return (
     <div>
       <label
@@ -12,11 +8,9 @@ const CheckboxTwo = () => {
         <div className="relative">
           <input
             type="checkbox"
-            id="checkboxLabelTwo"
+            id={id}
             className="sr-only"
-            onChange={() => {
-              setIsChecked(!isChecked);
-            }}
+            onChange={() => {}}
           />
           <div
             className={`mr-4 flex h-5 w-5 items-center justify-center rounded border ${
@@ -41,10 +35,9 @@ const CheckboxTwo = () => {
             </span>
           </div>
         </div>
-        Checkbox Text
       </label>
     </div>
   );
 };
 
-export default CheckboxTwo;
+export default CheckboxIsActive;

@@ -4,7 +4,7 @@ import adminStore from '../../common/state-management/adminStore.tsx';
 import globalStore from '../../common/state-management/globalStore.tsx';
 
 const SwitcherIsActive = ({ id, active }: { id: any, active: boolean }) => {
-  const { setGetAdminList } = adminStore();
+  const { setGetAdminList, page, setTotalPage } = adminStore();
   const { setIsLoading } = globalStore();
   const [enabled, setEnabled] = useState(active);
 
@@ -20,7 +20,7 @@ const SwitcherIsActive = ({ id, active }: { id: any, active: boolean }) => {
             id={id}
             className="sr-only"
             onChange={() => {
-              adminIsActive(id, setGetAdminList, setIsLoading);
+              adminIsActive(id, setGetAdminList, setIsLoading, page, setTotalPage);
               setEnabled(!enabled);
             }}
           />

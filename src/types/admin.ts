@@ -3,6 +3,10 @@ export interface Admin {
   setAddData: (val: AdminData) => void;
   getAdminList: null | AdminDataList[];
   setGetAdminList: (val: AdminDataList[] | null) => void;
+  page: any,
+  setPage: (val: any) => void;
+  totalPage: any,
+  setTotalPage: (val: any) => void;
 }
 
 export interface AdminData {

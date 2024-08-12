@@ -18,13 +18,11 @@ import ClientQuizResult from './pages/client/ClientQuizResult.tsx';
 import { setConfig } from './common/api/token.tsx';
 import { consoleClear } from './common/console-clear/console-clear.tsx';
 import UserAdmin from './pages/UserAdmin.tsx';
-import {
-  screenshotBlocked,
-  siteSecurity,
-} from './common/privacy-features/privacy-features.tsx';
+import { screenshotBlocked, siteSecurity } from './common/privacy-features/privacy-features.tsx';
 import ClientQuizStart from './pages/client/ClientQuizStart.tsx';
 import InspectorAdmin from './pages/InspectorAdmin.tsx';
 import AllUser from './pages/AllUser.tsx';
+import ResultArchive from './pages/ResultArchive.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -36,7 +34,7 @@ function App() {
 
   useEffect(() => {
     screenshotBlocked();
-    // siteSecurity();
+    // siteSecurity()
   }, []);
 
   useEffect(() => {
@@ -128,12 +126,22 @@ function App() {
               <AllUser />
             </>
           }
-        /><Route
+        />
+        <Route
           path="/user"
           element={
             <>
               <PageTitle title="Admin | User" />
               <User />
+            </>
+          }
+        />
+        <Route
+          path="/archive/:id"
+          element={
+            <>
+              <PageTitle title="Result Archive" />
+              <ResultArchive />
             </>
           }
         />

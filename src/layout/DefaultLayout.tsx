@@ -11,12 +11,12 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark">
       <div className="flex h-screen overflow-hidden">
-        {!(pathname.startsWith('/auth') || role === 'ROLE_ADMIN') && (
+        {!(pathname.startsWith('/auth') || role === 'ROLE_ADMIN' || pathname.startsWith('/archive')) && (
           <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         )}
 
         <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
-          {!(pathname.startsWith('/auth')) && (
+          {!(pathname.startsWith('/auth') || pathname.startsWith('/archive')) && (
             <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           )}
 

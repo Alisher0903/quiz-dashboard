@@ -1,6 +1,8 @@
 export interface Global {
   region: Regions[] | null;
   setRegion: (region: Regions[] | null) => void;
+  district: Regions[] | null;
+  setDistrict: (district: Regions[] | null) => void;
   isLoading: boolean;
   setIsLoading: (isLoading: boolean) => void;
   resData: boolean;
