@@ -5,7 +5,7 @@ import axios from 'axios';
 import { result_get_all, result_one_get } from '../common/api/api';
 import { config } from '../common/api/token';
 import GlobalModal from '../components/modal/modal.tsx';
-import { Dropdown, Menu, Pagination, Space } from 'antd';
+import { Dropdown, Menu, Pagination, Select, Space } from 'antd';
 import type { MenuProps } from 'antd';
 import { consoleClear } from '../common/console-clear/console-clear.tsx';
 import moment from 'moment';
@@ -14,6 +14,10 @@ import { useNavigate } from 'react-router-dom';
 import { CiMenuKebab } from 'react-icons/ci';
 import AddButtons from '../components/buttons/buttons.tsx';
 import { statusUpdate } from '../common/logic-functions/user.tsx';
+import { getAdminCategory } from '../common/logic-functions/category.tsx';
+import categoryStore from '../common/state-management/categoryStore.tsx';
+
+const { Option } = Select;
 
 interface IUser {
   id: number;
@@ -54,6 +58,7 @@ const thead: IThead[] = [
 
 const User = () => {
   const navigate = useNavigate();
+  const { categoryData, setCategoryData } = categoryStore();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [statusEdit, setStatusEdit] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -64,25 +69,39 @@ const User = () => {
   const [status, setStatus] = useState<any>('');
   const [statusVal, setStatusVal] = useState<any>('');
   const [resID, setResID] = useState<number | string>('');
+  const [isName, setIsName] = useState('');
+  const [statusName, setStatusName] = useState('');
+  const [categoryID, setCategoryID] = useState('');
 
   useEffect(() => {
     fetchUsers();
+    getAdminCategory(setCategoryData);
   }, []);
 
   useEffect(() => {
     fetchUsers();
-  }, [currentPage]);
+  }, [currentPage, isName, statusName, categoryID]);
 
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get(`${result_get_all}?page=${currentPage}&size=10`, config);
-      setUsers(data.body.body);
-      setTotalPages(data.body.totalElements);
-      setLoading(false);
+      const queryParams: string = [
+        isName ? `keyword=${isName}` : '',
+        categoryID ? `categoryId=${categoryID}` : '',
+        statusName ? `status=${statusName}` : ''
+      ].filter(Boolean).join('&');
+
+      const url: string = `${result_get_all}?page=${currentPage}&size=10${queryParams ? `&${queryParams}` : ''}`;
+      const { data } = await axios.get(url, config);
+      if (data.success) {
+        setUsers(data.body.body);
+        setTotalPages(data.body.totalElements);
+        setLoading(false);
+      } else setUsers([])
       consoleClear();
     } catch (error) {
       setLoading(false);
+      setUsers([])
       consoleClear();
     }
   };
@@ -108,7 +127,7 @@ const User = () => {
     setStatusEdit(false);
     setStatus('');
     setResID('');
-    setStatusVal('')
+    setStatusVal('');
   };
 
   const onChange = (page: number): void => setCurrentPage(page - 1);
@@ -159,6 +178,36 @@ const User = () => {
   return (
     <>
       <Breadcrumb pageName="Фойдаланувчилар натижаси" />
+
+      <div className={`w-full flex justify-between items-center flex-wrap md:flex-nowrap gap-5 mb-5`}>
+        <input
+          onChange={e => setIsName(e.target.value)}
+          placeholder="🔎  Ф.И.О қидириш..."
+          type={`search`}
+          className="w-full rounded-lg border border-stroke bg-transparent py-3 px-5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark bg-white dark:text-form-input dark:focus:border-primary"
+        />
+        <Select
+          placeholder={`Категорияни танланг`}
+          className={`w-full bg-transparent rounded-[10px] h-12`}
+          allowClear
+          onChange={(value) => setCategoryID(value)}
+        >
+          {categoryData && categoryData.map(item => (
+            <Option value={item.id} key={item.id}>{item.name}</Option>
+          ))}
+        </Select>
+        <Select
+          placeholder={`Статусни танланг`}
+          className={`w-full bg-transparent rounded-[10px] h-12`}
+          allowClear
+          onChange={(value) => setStatusName(value)}
+        >
+          <Option value={`APPROVED`}>Tasdiqlangan</Option>
+          <Option value={`WAITING`}>Kutilmoqda</Option>
+          <Option value={`CANCELLED`}>Bekor qilingan</Option>
+        </Select>
+      </div>
+
       <UniversalTable thead={thead}>
         {loading ? <PendingLoader /> : (
           users.length > 0 ? (

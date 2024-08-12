@@ -103,8 +103,6 @@ const AllUser = () => {
     setUserDetails(null);
   };
 
-  console.log(userDetails);
-
   return (
     <>
       <Breadcrumb pageName="Фойдаланувчилар" />
