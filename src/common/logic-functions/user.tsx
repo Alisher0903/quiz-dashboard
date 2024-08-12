@@ -1,8 +1,52 @@
 import { consoleClear } from '../console-clear/console-clear.tsx';
 import axios from 'axios';
 import { config } from '../api/token.tsx';
-import { result_archive, result_status_edit } from '../api/api.tsx';
+import { result_archive, result_status_edit, user_list } from '../api/api.tsx';
 import toast from 'react-hot-toast';
+
+export const userAllList = async (
+  {
+    page,
+    setTotalPage,
+    name,
+    regionId,
+    districtId,
+    setData,
+    setLoading
+  }: {
+    page: number,
+    setTotalPage: (val: number) => void,
+    name?: string,
+    regionId?: string | number,
+    districtId?: string | number,
+    setData: (val: any) => void,
+    setLoading: (val: boolean) => void
+  }) => {
+
+  setLoading(true);
+  try {
+    const queryParams: string = [
+      name ? `keyword=${name}` : '',
+      districtId ? `districtId=${districtId}` : '',
+      regionId ? `regionId=${regionId}` : ''
+    ].filter(Boolean).join('&');
+
+    const url: string = `${user_list}?page=${page}&size=10${queryParams ? `&${queryParams}` : ''}`;
+    const { data } = await axios.get(url, config);
+    if (data.success) {
+      setData(data.body.body);
+      setTotalPage(data.body.totalElements);
+      setLoading(false);
+    } else {
+      setData(null);
+      setLoading(false);
+    }
+  } catch (e) {
+    setData(null);
+    setLoading(false);
+    consoleClear();
+  }
+};
 
 // result archive
 export const UserResultArchive = async ({ setData, setLoading, resultID }: {

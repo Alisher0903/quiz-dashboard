@@ -160,13 +160,7 @@ const User = () => {
     <>
       <Breadcrumb pageName="Фойдаланувчилар натижаси" />
       <UniversalTable thead={thead}>
-        {loading ? (
-          <tr>
-            <td colSpan={thead.length} className="text-center py-5">
-              Юкланмоқда...
-            </td>
-          </tr>
-        ) : (
+        {loading ? <PendingLoader /> : (
           users.length > 0 ? (
             users.map((user, index) => (
               <tr key={user.id}>

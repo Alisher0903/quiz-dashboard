@@ -10,6 +10,7 @@ import { getAdminLists, postAdmin } from '../common/logic-functions/admin.tsx';
 import SwitcherIsActive from '../components/Switchers/SwitcherIsActive.tsx';
 import SelectForm from '../components/select/Select.tsx';
 import { Pagination } from 'antd';
+import PendingLoader from '../common/Loader/pending-loader.tsx';
 
 const thead: IThead[] = [
   { id: 1, name: 'Т/р' },
@@ -84,13 +85,7 @@ const UserAdmin = () => {
       </div>
 
       <UniversalTable thead={thead}>
-        {isLoading ? (
-          <tr>
-            <td colSpan={thead.length} className="text-center py-5">
-              Юкланмоқда...
-            </td>
-          </tr>
-        ) : (
+        {isLoading ? <PendingLoader /> : (
           getAdminList ? (
             getAdminList.map((item, index) => (
               <tr>

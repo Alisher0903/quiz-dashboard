@@ -4,6 +4,8 @@ import { Global, Regions } from '../../types/global.ts';
 const globalStore = create<Global>((set) => ({
   region: null,
   setRegion: (val: Regions[] | null) => set({ region: val }),
+  district: null,
+  setDistrict: (val: Regions[] | null) => set({ district: val }),
   isLoading: false,
   setIsLoading: (val: boolean) => set({ isLoading: val }),
   resData: false,
