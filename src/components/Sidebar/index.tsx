@@ -100,7 +100,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </li>
               )}
 
-              {(role === 'ROLE_ADMIN' || role === 'ROLE_SUPER_ADMIN') && (
+              {(role === 'ROLE_TESTER' || role === 'ROLE_SUPER_ADMIN') && (
                 <>
                   {/* <!-- Menu Item Category --> */}
                   <li>

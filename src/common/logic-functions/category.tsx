@@ -1,29 +1,59 @@
 //category all
 import { CategoryClientList, CategoryList } from '../../types/category.ts';
 import axios from 'axios';
-import { category_admin, category_all } from '../api/api.tsx';
+import { category_admin, category_admin_page, category_all } from '../api/api.tsx';
 import { config } from '../api/token.tsx';
 import toast from 'react-hot-toast';
 import React from 'react';
 import { consoleClear } from '../console-clear/console-clear.tsx';
 
 export const getClientCategory = async (setClientCategory: (val: null | CategoryClientList[]) => void, setIsLoading: (val: boolean) => void) => {
-  setIsLoading(true)
+  setIsLoading(true);
   try {
     const { data } = await axios.get(`${category_all}?page=0&size=10`, config);
     if (data.success) {
       setClientCategory(data.body.body);
-      setIsLoading(false)
+      setIsLoading(false);
       consoleClear();
-    }
-    else {
+    } else {
       setClientCategory(null);
-      setIsLoading(false)
+      setIsLoading(false);
       consoleClear();
     }
   } catch {
     setClientCategory(null);
-    setIsLoading(false)
+    setIsLoading(false);
+    consoleClear();
+  }
+};
+
+export const getAdminCategoryPage = async (
+  {
+    setData,
+    page,
+    setTotalPage,
+    setIsLoading
+  }: {
+    setData: (val: null | CategoryList[]) => void,
+    page: number,
+    setTotalPage: (val: number) => void,
+    setIsLoading: (val: boolean) => void
+  }) => {
+  setIsLoading(true);
+  try {
+    const { data } = await axios.get(`${category_admin_page}?page=${page}&size=10`, config);
+    if (data.success) {
+      setData(data.body.body);
+      setTotalPage(data.body.totalElements);
+      setIsLoading(false);
+    } else {
+      setData(null);
+      setIsLoading(false);
+      consoleClear();
+    }
+  } catch {
+    setIsLoading(false);
+    setData(null);
     consoleClear();
   }
 };
@@ -34,8 +64,7 @@ export const getAdminCategory = async (setData: (val: null | CategoryList[]) => 
     if (data.success) {
       setData(data.body);
       consoleClear();
-    }
-    else {
+    } else {
       setData(null);
       consoleClear();
     }

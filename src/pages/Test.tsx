@@ -296,6 +296,17 @@ const Test = () => {
                 />
                 <SelectForm
                   isDisabled={categoryMain.main}
+                  val={`${crudTest.type}`}
+                  onChange={e => handleChange('type', e.target.value)}
+                  defOption={`Қийинлик даражасини танланг`}
+                  child={<>
+                    <option value="HARD">Қийин</option>
+                    <option value="MEDIUM">Урта</option>
+                    <option value="EASY">Осон</option>
+                  </>}
+                />
+                <SelectForm
+                  isDisabled={categoryMain.main}
                   val={categoryMain.main ? 'ANY_CORRECT' : `${crudTest.type}`}
                   onChange={e => {
                     setTestType(e.target.value);

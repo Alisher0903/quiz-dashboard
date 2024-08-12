@@ -38,6 +38,7 @@ export const question_all_filter: string = `${base_url}question/filter`; //admin
 //================CATEGORY CONTROLLER======================
 export const category_all: string = `${base_url}category`; // all catygory client and admin get save update qilish uchun
 export const category_admin: string = `${base_url}category/list`; // all catygory client and admin get save update qilish uchun
+export const category_admin_page: string = `${base_url}category/page`; // all catygory client and admin get save update qilish uchun
 export const category_MAIN: string = `${base_url}category/main`; // Admin catycoryning asosiy savolarini get qilishi uchun
 
 //================AUTH CONTROLLER======================

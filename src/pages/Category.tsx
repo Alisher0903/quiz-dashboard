@@ -4,13 +4,19 @@ import { MdDelete, MdEdit, MdOutlineAddCircle } from 'react-icons/md';
 import AddButtons from '../components/buttons/buttons.tsx';
 import GlobalModal from '../components/modal/modal.tsx';
 import { useEffect, useState } from 'react';
-import { addCategory, deleteCategory, getAdminCategory } from '../common/logic-functions/category.tsx';
+import {
+  addCategory,
+  deleteCategory,
+  getAdminCategoryPage
+} from '../common/logic-functions/category.tsx';
 import categoryStore from '../common/state-management/categoryStore.tsx';
 import globalStore from '../common/state-management/globalStore.tsx';
 import SelectForm from '../components/select/Select.tsx';
 import { api_videos_files } from '../common/api/api.tsx';
 import image from '../images/default.png';
 import ImageUpload from '../components/img-upload.tsx';
+import { Pagination } from 'antd';
+import PendingLoader from '../common/Loader/pending-loader.tsx';
 
 const thead: IThead[] = [
   { id: 1, name: 'Т/р' },
@@ -25,8 +31,8 @@ const thead: IThead[] = [
   { id: 10, name: 'Давомийлик вақти' },
   { id: 11, name: 'Қайта қабул қилиш санаси' },
   { id: 12, name: 'Яратган' },
-  { id: 13, name: 'Узгартирган' },
-  { id: 14, name: 'Учирган' },
+  // { id: 13, name: 'Узгартирган' },
+  // { id: 14, name: 'Учирган' },
   { id: 15, name: 'Ҳаракат' }
 ];
 
@@ -50,15 +56,21 @@ const Category = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalDelete, setIsModalDelete] = useState(false);
   const [editStatus, setEditStatus] = useState<string | number>('');
+  const [page, setPage] = useState<number>(0);
+  const [totalPage, setTotalPage] = useState<number>(0);
 
   useEffect(() => {
-    getAdminCategory(setCategoryData);
+    getAdminCategoryPage({ setData: setCategoryData, page, setTotalPage, setIsLoading });
   }, []);
+
+  useEffect(() => {
+    getAdminCategoryPage({ setData: setCategoryData, page, setTotalPage, setIsLoading });
+  }, [page]);
 
   useEffect(() => {
     if (resData) {
       setResData(false);
-      getAdminCategory(setCategoryData);
+      getAdminCategoryPage({ setData: setCategoryData, page, setTotalPage, setIsLoading });
       setAddValue(defVal);
       closeModal();
       closeModalDelete();
@@ -116,114 +128,125 @@ const Category = () => {
         />
       </div>
       <UniversalTable thead={thead}>
-        {categoryData ? (
-          categoryData.map((item, i) => (
-            <tr key={i}>
-              <td className="border-b border-[#eee] p-5 dark:border-strokedark">
-                <h5 className="font-medium text-black dark:text-white">
-                  {i + 1}
-                </h5>
-              </td>
-              <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
-                <img
-                  src={item.fileId ? `${api_videos_files}${item.fileId}` : image}
-                  alt={item.name}
-                  className={`w-14 h-14 rounded-full object-cover hover:cursor-pointer`}
-                />
-              </td>
-              <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
-                <p className="text-black dark:text-white">
-                  {item.name}
-                </p>
-              </td>
-              <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark min-w-[400px]">
-                <p className="text-black dark:text-white">
-                  {item.description}
-                </p>
-              </td>
-              <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
-                <p className="text-black dark:text-white">
-                  {item.questionCount}
-                </p>
-              </td>
-              <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
-                <p className="text-black dark:text-white">
-                  {item.hardQuestionCount}
-                </p>
-              </td>
-              <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
-                <p className="text-black dark:text-white">
-                  {item.mediumQuestionCount}
-                </p>
-              </td>
-              <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
-                <p className="text-black dark:text-white">
-                  {item.easyQuestionCount}
-                </p>
-              </td>
-              <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
-                <p className="text-black dark:text-white">
-                  {item.extraQuestionCount}
-                </p>
-              </td>
-              <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
-                <p className="text-black dark:text-white">
-                  {item.durationTime}
-                </p>
-              </td>
-              <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
-                <p className="text-black dark:text-white">
-                  {item.retakeDate}
-                </p>
-              </td>
-              <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
-                <p className="text-black dark:text-white">
-                  {item.createdBy}
-                </p>
-              </td>
-              <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
-                <p className="text-black dark:text-white">
-                  {item.updatedBy}
-                </p>
-              </td>
-              <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
-                <p className="text-black dark:text-white">
-                  {item.deletedBy}
-                </p>
-              </td>
-              <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
-                <div className="flex items-center space-x-3.5">
-                  <button className="hover:text-yellow-500">
-                    <MdEdit
-                      className={`text-2xl duration-300`}
-                      onClick={() => {
-                        openModal();
-                        setAddValue(item);
-                        setEditStatus('edit');
-                      }}
-                    />
-                  </button>
-                  <button className="hover:text-red-600">
-                    <MdDelete
-                      className={`text-2xl duration-300`}
-                      onClick={() => {
-                        openModalDelete();
-                        item.id && setEditStatus(item.id);
-                      }}
-                    />
-                  </button>
-                </div>
+        {isLoading ? <PendingLoader /> : (
+          categoryData ? (
+            categoryData.map((item, i) => (
+              <tr key={i}>
+                <td className="border-b border-[#eee] p-5 dark:border-strokedark">
+                  <h5 className="font-medium text-black dark:text-white">
+                    {(page * 10) + i + 1}
+                  </h5>
+                </td>
+                <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
+                  <img
+                    src={item.fileId ? `${api_videos_files}${item.fileId}` : image}
+                    alt={item.name}
+                    className={`w-14 h-14 rounded-full object-cover hover:cursor-pointer`}
+                  />
+                </td>
+                <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.name}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark min-w-[400px]">
+                  <p className="text-black dark:text-white">
+                    {item.description}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.questionCount}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.hardQuestionCount}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.mediumQuestionCount}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.easyQuestionCount}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.extraQuestionCount}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.durationTime}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.retakeDate}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.createdBy}
+                  </p>
+                </td>
+                {/*<td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">*/}
+                {/*  <p className="text-black dark:text-white">*/}
+                {/*    /!*{item.updatedBy}*!/*/}
+                {/*  </p>*/}
+                {/*</td>*/}
+                {/*<td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">*/}
+                {/*  <p className="text-black dark:text-white">*/}
+                {/*    /!*{item.deletedBy}*!/*/}
+                {/*  </p>*/}
+                {/*</td>*/}
+                <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
+                  <div className="flex items-center space-x-3.5">
+                    <button className="hover:text-yellow-500">
+                      <MdEdit
+                        className={`text-2xl duration-300`}
+                        onClick={() => {
+                          openModal();
+                          setAddValue(item);
+                          setEditStatus('edit');
+                        }}
+                      />
+                    </button>
+                    <button className="hover:text-red-600">
+                      <MdDelete
+                        className={`text-2xl duration-300`}
+                        onClick={() => {
+                          openModalDelete();
+                          item.id && setEditStatus(item.id);
+                        }}
+                      />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={thead.length} className="border-b border-[#eee] p-5 dark:border-strokedark text-center">
+                Категория топилмади
               </td>
             </tr>
-          ))
-        ) : (
-          <tr>
-            <td colSpan={thead.length} className="border-b border-[#eee] p-5 dark:border-strokedark text-center">
-              Категория топилмади
-            </td>
-          </tr>
-        )}
+          ))}
       </UniversalTable>
+      {totalPage > 0 && (
+        <Pagination
+          showSizeChanger={false}
+          responsive={true}
+          defaultCurrent={1}
+          total={totalPage}
+          onChange={(p) => setPage(p - 1)}
+          rootClassName={`mt-10 mb-5`}
+        />
+      )}
 
       {/* modal*/}
       <GlobalModal onClose={closeModal} isOpen={isModalOpen}>

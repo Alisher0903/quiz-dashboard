@@ -12,7 +12,7 @@ const Breadcrumb = ({ pageName }: BreadcrumbProps) => {
         {pageName}
       </h2>
 
-      {role !== 'ROLE_ADMIN' && (
+      {(role === 'ROLE_SUPER_ADMIN') && (
         <nav>
           <ol className="flex items-center gap-2">
             <li>

@@ -20,8 +20,8 @@ export interface CategoryList {
   retakeDate: number | string;
   main: boolean | string;
   createdBy?: string;
-  updatedBy?: string | null;
-  deletedBy?: string | null;
+  // updatedBy?: string | null;
+  // deletedBy?: string | null;
   fileId: number | string;
 }
 
