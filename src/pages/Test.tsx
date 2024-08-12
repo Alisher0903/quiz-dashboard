@@ -16,6 +16,7 @@ import { Pagination, Select } from 'antd';
 import SelectForm from '../components/select/Select.tsx';
 import { TestList } from '../types/test.ts';
 import { consoleClear } from '../common/console-clear/console-clear.tsx';
+import { CategoryList } from '../types/category.ts';
 
 const thead: IThead[] = [
   { id: 1, name: 'Т/р' },
@@ -121,11 +122,11 @@ const Test = () => {
   const onChange = (page: number): void => setPage(page - 1);
 
   const typeTranslate = (type: string) => {
-    if (type === 'SUM') return 'Ҳисобланган натижа'
-    else if (type === 'ONE_CHOICE') return 'Бир тўғри жавобли тест'
-    else if (type === 'MANY_CHOICE') return 'Кўп тўғри жавобли тест'
-    else if (type === 'ANY_CORRECT') return 'Ҳар қандай тўғри'
-  }
+    if (type === 'SUM') return 'Ҳисобланган натижа';
+    else if (type === 'ONE_CHOICE') return 'Бир тўғри жавобли тест';
+    else if (type === 'MANY_CHOICE') return 'Кўп тўғри жавобли тест';
+    else if (type === 'ANY_CORRECT') return 'Ҳар қандай тўғри';
+  };
 
   return (
     <>
@@ -156,8 +157,8 @@ const Test = () => {
             allowClear
             onChange={(value) => setCategoryFilter(value)}
           >
-            {categoryData && categoryData.map(item => (
-              <Option value={item.id} key={item.id}>{item.name}</Option>
+            {categoryData && categoryData.map((item: any) => (
+              <Option value={item.categoryId} key={item.categoryId}>{item.categoryName}</Option>
             ))}
           </Select>
 
@@ -179,12 +180,13 @@ const Test = () => {
         {isLoading ? <tr key={10105}>
           <td
             className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center font-bold"
-            colSpan={7}
+            colSpan={thead.length}
           >
             юкланмоқда...
           </td>
         </tr> : (
-          testList ? (testList.map((item, idx) => (
+          testList ? (
+            testList.map((item: TestList | any, idx: number) => (
               <tr key={item.id}>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <h5 className="font-medium text-black dark:text-white">
@@ -245,7 +247,7 @@ const Test = () => {
             <tr key={10005}>
               <td
                 className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center font-bold"
-                colSpan={7}
+                colSpan={thead.length}
               >
                 Тест топилмади
               </td>
@@ -290,8 +292,8 @@ const Test = () => {
                   onChange={e => handleChange('categoryId', e.target.value)}
                   defOption={`Категория танлаш`}
                   child={categoryData && (
-                    categoryData.map(item => (
-                      <option value={item.id} key={item.id}>{item.name}</option>
+                    categoryData.map((item: CategoryList | any) => (
+                      <option value={item.categoryId} key={item.categoryId}>{item.categoryName}</option>
                     )))}
                 />
                 <SelectForm

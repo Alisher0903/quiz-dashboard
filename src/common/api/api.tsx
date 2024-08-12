@@ -13,6 +13,7 @@ export const adminIsActives: string = `${base_url}user/active/`;
 
 // =====================USER ========================
 export const user_list: string = `${base_url}user`;
+export const user_test_active: string = `${base_url}user/access-to/`;
 
 //=================RESULT CONTROLLER====================
 export const result_get_all: string = `${base_url}result/results/`; //PAGINATION buladi bu api va yana bittasi detailni kurish uchun  xam ishlatiladi

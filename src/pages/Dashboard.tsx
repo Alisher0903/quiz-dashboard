@@ -17,6 +17,7 @@ import { FaUsers } from 'react-icons/fa';
 import { Pagination } from 'antd';
 import { getRegions } from '../common/global-functions';
 import globalStore from '../common/state-management/globalStore.tsx';
+import { CategoryList } from '../types/category.ts';
 
 const thead: IThead[] = [
   { id: 1, name: 'Т/р' },
@@ -85,8 +86,8 @@ const Dashboard: React.FC = () => {
               allowClear
               onChange={(value) => setCategoryID(value)}
             >
-              {categoryData.map(item => (
-                <Option value={item.id} key={item.id}>{item.name}</Option>
+              {categoryData.map((item: CategoryList | any) => (
+                <Option value={item.categoryId} key={item.categoryId}>{item.categoryName}</Option>
               ))}
             </Select>
           )}

@@ -1,16 +1,42 @@
-const CheckboxIsActive = ({ id, isChecked }: { id: string, isChecked: boolean }) => {
+import { consoleClear } from '../../common/console-clear/console-clear.tsx';
+import axios from 'axios';
+import { config } from '../../common/api/token.tsx';
+import { user_test_active } from '../../common/api/api.tsx';
+import toast from 'react-hot-toast';
+
+const CheckboxIsActive = ({ id, isChecked, setResData }: {
+  id: string,
+  isChecked: boolean,
+  setResData: (val: boolean) => void
+}) => {
+
+  const isCheck = async () => {
+    try {
+      const { data } = await axios.put(`${user_test_active}${id}`, '', config);
+      if (data.success) {
+        setResData(true);
+        if (data.body) toast.success('Сиз бу фойдаланувчига тест ишлашга рухсат бердингиз');
+        else toast.success('Фойдаланувчини тест ечиш ҳуқуқини олиб қуйдингиз');
+      } else setResData(false);
+    } catch (err) {
+      consoleClear();
+      setResData(false);
+    }
+  };
+
   return (
     <div>
       <label
-        htmlFor="checkboxLabelTwo"
+        htmlFor={id} // 'checkboxLabelTwo' ni id bilan almashtirdim
         className="flex cursor-pointer select-none items-center"
       >
         <div className="relative">
           <input
             type="checkbox"
             id={id}
+            checked={isChecked} // checked holatini isChecked orqali boshqarish
+            onChange={isCheck} // onClick o'rniga onChange ishlatildi
             className="sr-only"
-            onChange={() => {}}
           />
           <div
             className={`mr-4 flex h-5 w-5 items-center justify-center rounded border ${

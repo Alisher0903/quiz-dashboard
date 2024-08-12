@@ -22,6 +22,7 @@ export interface IUser {
   lastName: string;
   email: string;
   enabled: boolean;
+  access: boolean;
 }
 
 export interface IUserDetails {
@@ -38,15 +39,15 @@ export interface IUserDetails {
 
 const thead: IThead[] = [
   { id: 1, name: 'Т/р' },
-  { id: 2, name: 'Ims' },
-  { id: 3, name: 'Fameliya' },
-  { id: 4, name: 'Elektron pochta' },
-  { id: 5, name: 'Activligi' },
+  { id: 2, name: 'Исм' },
+  { id: 3, name: 'Фамелия' },
+  { id: 4, name: 'Электрон почта' },
+  { id: 5, name: 'Рухсат бериш' },
   { id: 6, name: 'Ҳаракат' }
 ];
 
 const AllUser = () => {
-  const { region, setRegion, district, setDistrict } = globalStore();
+  const { region, setRegion, district, setDistrict, resData, setResData } = globalStore();
   const [users, setUsers] = useState<IUser[] | null>(null);
   const [userDetails, setUserDetails] = useState<IUserDetails | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(0);
@@ -79,6 +80,21 @@ const AllUser = () => {
       districtId: isDistrict ? isDistrict : ''
     });
   }, [currentPage, isName, isRegion, isDistrict]);
+
+  useEffect(() => {
+    if (resData) {
+      setResData(false)
+      userAllList({
+        page: currentPage,
+        setTotalPage: setTotalPages,
+        setData: setUsers,
+        setLoading,
+        name: isName ? isName : '',
+        regionId: isRegion ? isRegion : '',
+        districtId: isDistrict ? isDistrict : ''
+      });
+    }
+  }, [resData]);
 
   const onChange = (page: number): void => setCurrentPage(page - 1);
 
@@ -155,7 +171,7 @@ const AllUser = () => {
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className={`text-black dark:text-white`}>
-                    <CheckboxIsActive id={user.id} isChecked={user.enabled} />
+                    <CheckboxIsActive id={user.id} isChecked={user.access} setResData={setResData} />
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">

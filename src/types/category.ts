@@ -25,6 +25,11 @@ export interface CategoryList {
   fileId: number | string;
 }
 
+export interface CategorySelectList {
+  categoryId: number
+  categoryName: string
+}
+
 export interface CategoryClientList {
   id: string;
   retakeDate: number;
