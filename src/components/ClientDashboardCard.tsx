@@ -1,7 +1,10 @@
 import React from 'react';
 import defaultIMage from '../images/default.png'
+import { ClientDashboardStatisticsList } from '../types/dashboard';
+import moment from 'moment';
+import { LuUploadCloud } from "react-icons/lu";
 
-const ClientDashboardCard: React.FC = () => {
+const ClientDashboardCard: React.FC<{ data: ClientDashboardStatisticsList, onClick: () => void }> = ({ data, onClick }) => {
     return (
         <div className="w-[32%] border-2 border-black dark:border-white p-4 rounded-md">
             <div className="flex items-center justify-center mb-4">
@@ -13,7 +16,7 @@ const ClientDashboardCard: React.FC = () => {
             </div>
 
             <div className="text-center">
-                <p className="font-bold text-lg text-red-600 dark:text-blue-600 mb-2">Topografiya</p>
+                <p className="font-bold text-lg text-red-600 dark:text-blue-600 mb-2">{data.categoryName}</p>
                 <div className='flex justify-between'>
                     <div className='flex flex-col items-start'>
                         <p>To'g'ri javoblar:</p>
@@ -22,18 +25,24 @@ const ClientDashboardCard: React.FC = () => {
                         <p>Sana:</p>
                     </div>
                     <div className='flex flex-col items-end'>
-                        <strong>28/40</strong>
-                        <strong>15m/28m</strong>
-                        <strong>78/112</strong>
-                        <strong>6 Avg 2024</strong>
+                        <strong>{`${data.correctAnswers}/${data.countAnswers}`}</strong>
+                        <strong>{`${data.durationTime}`}</strong>
+                        <strong>{`${data.durationTime}`}</strong>
+                        <strong>{moment(data.createdAt).format('LL')}</strong>
                     </div>
                 </div>
             </div>
-
-            <div className="mt-4 bg-green-500 text-white py-2 px-4 flex justify-center items-center rounded">
-                Tasdiqlandi
+            <div className={data.status === 'APPROVED' ? 'flex justify-between items-center' : ''}>
+                <div className={data.status === 'APPROVED' ? 'mt-4 bg-green-600 w-[85%] text-white py-2 px-4 flex justify-center items-center rounded' : data.status === 'WAITING' ? 'mt-4 bg-yellow-600 text-white py-2 px-4 flex justify-center items-center rounded' : 'mt-4 bg-red-600 text-white py-2 px-4 flex justify-center items-center rounded'}>
+                    {data.status === 'APPROVED' ? 'Тасдиқланди' : data.status === 'WAITING' ? 'Кутилмоқда' : 'Бекор қилинди'}
+                </div>
+                {data.status === 'APPROVED' &&
+                    <div onClick={onClick} className=' bg-green-600 py-3 cursor-pointer px-3 mt-4 rounded-full'>
+                        <LuUploadCloud color='#fff'/>
+                    </div>
+                }
             </div>
-        </div>
+        </div >
     );
 };
 

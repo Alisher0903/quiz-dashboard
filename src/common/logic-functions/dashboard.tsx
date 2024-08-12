@@ -1,8 +1,48 @@
 import axios from 'axios';
-import { statistics_card, statistics_card_all } from '../api/api.tsx';
+import { get_certificate, get_certificate_id, statistics_card, statistics_card_all, statistics_client } from '../api/api.tsx';
 import { config } from '../api/token.tsx';
-import { DashboardListStatistic, DashboardListStatisticCards } from '../../types/dashboard.ts';
+import { ClientDashboardStatisticsList, DashboardListStatistic, DashboardListStatisticCards } from '../../types/dashboard.ts';
 import { consoleClear } from '../console-clear/console-clear.tsx';
+
+export const getClientDashboardStatistic = async (page: number, size: number, setClientData: (val: null | ClientDashboardStatisticsList[]) => void, setTotalPage: (val: number) => void, setIsLoading: (val: boolean) => void) => {
+  setIsLoading(true)
+  try {
+    const { data } = await axios.get(`${statistics_client}?page=${page}&size=${size}`, config);
+    if (data.success) {
+      setClientData(data.body.body);
+      setTotalPage(data.body.totalElements)
+      setIsLoading(false)
+    } else {
+      setClientData(null);
+      setIsLoading(false)
+      consoleClear();
+    }
+  } catch {
+    consoleClear();
+
+    setClientData(null);
+  }
+};
+
+export const getClientCertificate = async (id: number, setIsLoading: (val: boolean) => void, setCertifcate: (val: any) => void) => {
+  setIsLoading(true)
+  try {
+    const { data } = await axios.get(`${get_certificate_id}/${id}`, config);
+    if (data.success) {
+      const { data: certificateData } = await axios.get(`${get_certificate}/${data.body}`, config);
+      if (certificateData.success) {
+        setCertifcate(certificateData.body)
+        setIsLoading(false)
+      } else setIsLoading(false)
+    } else {
+      setIsLoading(false)
+      consoleClear();
+    }
+  } catch {
+    setIsLoading(false)
+    consoleClear();
+  }
+};
 
 export const getAdminDashboardStatisticCard = async (setData: (val: null | DashboardListStatisticCards) => void) => {
   try {

@@ -10,9 +10,9 @@ import { consoleClear } from '../console-clear/console-clear.tsx';
 export const getClientCategory = async (setClientCategory: (val: null | CategoryClientList[]) => void, setIsLoading: (val: boolean) => void) => {
   setIsLoading(true)
   try {
-    const { data } = await axios.get(category_all, config);
+    const { data } = await axios.get(`${category_all}?page=0&size=10`, config);
     if (data.success) {
-      setClientCategory(data.body);
+      setClientCategory(data.body.body);
       setIsLoading(false)
       consoleClear();
     }

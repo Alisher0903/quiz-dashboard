@@ -53,9 +53,12 @@ export const quiz_pass: string = `${base_url}quiz/pass`; // Client Testni Submit
 export const quiz_start: string = `${base_url}quiz/start/`; // Client Testni Boshlash uchun qilishi uchun
 
 //================CERTIFICATE CONTROLLER====================== 1 ta api
-export const certificate: string = `${base_url}certificate/`; // Client result olishi uchun
+export const get_certificate_id: string = `${base_url}certificate/certificate-get`; // Client result olishi uchun
+export const get_certificate: string = `${base_url}api/videos/files`; // Client result olishi uchun
+export const certificate: string = `${base_url}certificate`; // Client result olishi uchun
 
 //================STATISTICS CONTROLLER======================
 export const statistics_day: string = `${base_url}statistic/dayOfWeek/`; // Client result olishi uchun
 export const statistics_card: string = `${base_url}statistic/counts/`; // Client result olishi uchun
+export const statistics_client: string = `${base_url}statistic/user-dashboard/`; // Client result olishi uchun
 export const statistics_card_all: string = `${base_url}statistic/filter/`; // Client result olishi uchun all

@@ -23,10 +23,7 @@ const ClientQuizStart: React.FC = () => {
 
   useEffect(() => {
     getMe(setGetMee)
-  }, [setGetMee])
-
-  console.log(categoryId);
-
+  }, [setGetMee]);
 
   const toggleModal = () => setIsModal(!isModal)
 
