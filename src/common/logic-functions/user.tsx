@@ -1,15 +1,28 @@
-// import axios from "axios";
-// import { useState } from "react";
-// import { result_get_all } from "../api/api";
-// import { config } from "../api/token";
+import { consoleClear } from '../console-clear/console-clear.tsx';
+import axios from 'axios';
+import { config } from '../api/token.tsx';
+import { result_archive } from '../api/api.tsx';
 
-// export const [user, setUser] = useState([]);
-// const getUser = async () => {
-//   try {
-//     const { data } = await axios.get(`${result_get_all}`, config);
-//     setUser(data.body.body);
-//     console.log(data.body.body);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+// result archive
+export const UserResultArchive = async ({ setData, setLoading, resultID }: {
+  setData: (val: any[] | null) => void,
+  setLoading: (val: boolean) => void,
+  resultID: string
+}) => {
+
+  setLoading(true);
+  try {
+    const { data } = await axios.get(`${result_archive}${resultID}`, config);
+    if (data.success) {
+      setData(data.body);
+      setLoading(false);
+    } else {
+      setData(null);
+      setLoading(false);
+    }
+  } catch (err) {
+    setData(null);
+    setLoading(false);
+    consoleClear();
+  }
+};

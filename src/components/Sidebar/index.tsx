@@ -41,7 +41,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   });
 
   const styles = {
-    sidebar: 'group relative shadow-default flex items-center gap-2.5 rounded-sm py-3 px-4 my-1 font-medium text-graydark dark:text-bodydark1 duration-300 ease-in-out hover:bg-slate-300 dark:hover:bg-graydark dark:hover:bg-meta-4'
+    sidebar: 'group relative shadow-sideBarShadow flex items-center gap-2.5 rounded-sm py-3 px-4 my-1 font-medium text-graydark dark:text-bodydark1 duration-300 ease-in-out hover:bg-slate-300 dark:hover:bg-graydark dark:hover:bg-meta-4'
   };
 
   return (

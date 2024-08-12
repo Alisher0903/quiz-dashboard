@@ -6,10 +6,14 @@ import axios from 'axios';
 import { result_get_all, result_one_get } from '../common/api/api';
 import { config } from '../common/api/token';
 import GlobalModal from '../components/modal/modal.tsx';
-import { Pagination } from 'antd';
+import { Pagination, Select } from 'antd';
 import { consoleClear } from '../common/console-clear/console-clear.tsx';
 import moment from 'moment';
 import PendingLoader from '../common/Loader/pending-loader.tsx';
+import AddButtons from '../components/buttons/buttons.tsx';
+import { MdOutlineAddCircle } from 'react-icons/md';
+
+const { Option } = Select;
 
 interface IUser {
   id: number;
@@ -97,20 +101,51 @@ const AllUser = () => {
   const onChange = (page: number): void => setCurrentPage(page - 1);
 
   const statusN = (status: any) => {
-    if (status === 'WAITING') return 'Кутилмоқда'
-    else if (status === 'CANCELLED') return 'Бекор қилинди'
-    else if (status === 'APPROVED') return 'Тасдиқланди'
-  }
+    if (status === 'WAITING') return 'Кутилмоқда';
+    else if (status === 'CANCELLED') return 'Бекор қилинди';
+    else if (status === 'APPROVED') return 'Тасдиқланди';
+  };
 
   const statusColor = (status: any) => {
-    if (status === 'WAITING') return 'bg-yellow-300'
-    else if (status === 'CANCELLED') return 'bg-red-500'
-    else if (status === 'APPROVED') return 'bg-green-500'
-  }
+    if (status === 'WAITING') return 'bg-yellow-300';
+    else if (status === 'CANCELLED') return 'bg-red-500';
+    else if (status === 'APPROVED') return 'bg-green-500';
+  };
 
   return (
     <>
       <Breadcrumb pageName="Фойдаланувчилар" />
+
+      <div className={`w-full flex justify-between items-center flex-wrap md:flex-nowrap gap-5 mb-5`}>
+        <input
+          // onChange={e => setNameFilter(e.target.value)}
+          placeholder="🔎  Қидирмоқ..."
+          type={`search`}
+          className="w-full rounded-lg border border-stroke bg-transparent py-3 px-5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark bg-white dark:text-form-input dark:focus:border-primary"
+        />
+        <Select
+          placeholder={`Категория танлаш`}
+          className={`w-full bg-transparent rounded-[10px] h-12`}
+          allowClear
+          // onChange={(value) => setCategoryFilter(value)}
+        >
+          {/*{categoryData && categoryData.map(item => (*/}
+          {/*  <Option value={item.id} key={item.id}>{item.name}</Option>*/}
+          {/*))}*/}
+        </Select>
+        <Select
+          placeholder={`Турни танланг`}
+          className={`w-full bg-transparent rounded-[10px] h-12`}
+          allowClear
+          // onChange={(value) => setTypeFilter(value)}
+        >
+          <Option value="SUM">Ҳисобланган натижа</Option>
+          <Option value="ONE_CHOICE">Бир тўғри жавобли тест</Option>
+          <Option value="MANY_CHOICE">Кўп тўғри жавобли тест</Option>
+          <Option value="ANY_CORRECT">Ҳар қандай тўғри</Option>
+        </Select>
+      </div>
+
       <UniversalTable thead={thead}>
         {loading ? (
           <tr>

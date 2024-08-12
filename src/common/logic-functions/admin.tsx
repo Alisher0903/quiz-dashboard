@@ -6,11 +6,11 @@ import axios from 'axios';
 import { addAdmin, adminIsActives, getAdminList } from '../api/api.tsx';
 import { config } from '../api/token.tsx';
 
-export const adminIsActive = async (id: number | string, setData: (val: AdminDataList[] | null) => void, setLoading: (val: boolean) => void) => {
+export const adminIsActive = async (id: number | string, setData: (val: AdminDataList[] | null) => void, setLoading: (val: boolean) => void, page: any, setTotalPage: (val: any) => void) => {
   try {
     const { data } = await axios.put(`${adminIsActives}${id}`, '', config);
     if (data.success) {
-      await getAdminLists(setData, setLoading);
+      await getAdminLists(setData, setLoading, page, setTotalPage);
       toast.success('Узгариш муваффақиятли бажарилди');
     } else {
       toast.error('Нимадур хатолик юз берди');
@@ -54,12 +54,13 @@ export const postAdmin = async (
   }
 };
 
-export const getAdminLists = async (setData: (val: AdminDataList[] | null) => void, setLoading: (val: boolean) => void) => {
+export const getAdminLists = async (setData: (val: AdminDataList[] | null) => void, setLoading: (val: boolean) => void, page: any, setTotalPage: (val: any) => void) => {
   setLoading(true);
   try {
-    const { data } = await axios.get(getAdminList, config);
+    const { data } = await axios.get(`${getAdminList}?page=${page}&size=10`, config);
     if (data.success) {
-      setData(data.body);
+      setData(data.body.body);
+      setTotalPage(data.body.totalElements);
       setLoading(false);
     } else {
       setLoading(false);

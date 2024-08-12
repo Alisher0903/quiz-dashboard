@@ -6,10 +6,13 @@ import axios from 'axios';
 import { result_get_all, result_one_get } from '../common/api/api';
 import { config } from '../common/api/token';
 import GlobalModal from '../components/modal/modal.tsx';
-import { Pagination } from 'antd';
+import { Dropdown, Pagination, Popover, Space } from 'antd';
+import type { MenuProps } from 'antd';
 import { consoleClear } from '../common/console-clear/console-clear.tsx';
 import moment from 'moment';
 import PendingLoader from '../common/Loader/pending-loader.tsx';
+import { useNavigate } from 'react-router-dom';
+import { CiMenuKebab } from 'react-icons/ci';
 
 interface IUser {
   id: number;
@@ -49,6 +52,7 @@ const thead: IThead[] = [
 ];
 
 const User = () => {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [users, setUsers] = useState<IUser[]>([]);
   const [userDetails, setUserDetails] = useState<IUserDetails | null>(null);
@@ -97,16 +101,31 @@ const User = () => {
   const onChange = (page: number): void => setCurrentPage(page - 1);
 
   const statusN = (status: any) => {
-    if (status === 'WAITING') return 'Кутилмоқда'
-    else if (status === 'CANCELLED') return 'Бекор қилинди'
-    else if (status === 'APPROVED') return 'Тасдиқланди'
-  }
+    if (status === 'WAITING') return 'Кутилмоқда';
+    else if (status === 'CANCELLED') return 'Бекор қилинди';
+    else if (status === 'APPROVED') return 'Тасдиқланди';
+  };
 
   const statusColor = (status: any) => {
-    if (status === 'WAITING') return 'bg-yellow-300'
-    else if (status === 'CANCELLED') return 'bg-red-500'
-    else if (status === 'APPROVED') return 'bg-green-500'
-  }
+    if (status === 'WAITING') return 'bg-yellow-300';
+    else if (status === 'CANCELLED') return 'bg-red-500';
+    else if (status === 'APPROVED') return 'bg-green-500';
+  };
+
+  const items: MenuProps['items'] = [
+    {
+      label: 'Тасдиқлаш',
+      key: '0',
+      onClick: () => {
+      }
+    },
+    {
+      label: 'Бекор қилиш',
+      key: '1',
+      onClick: () => {
+      }
+    }
+  ];
 
   return (
     <>
@@ -141,9 +160,27 @@ const User = () => {
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <div className="flex items-center space-x-3.5">
-                    <button onClick={() => openModal(user)}>
-                      <BiShow className="text-2xl duration-300" />
-                    </button>
+                    <Popover title="Натижани кўриш">
+                      <button onClick={() => openModal(user)}>
+                        <BiShow className="text-2xl duration-300" />
+                      </button>
+                    </Popover>
+                    <Popover title="Архивни кўриш">
+                      <button onClick={() => {
+                        navigate(`/archive/${user.id}`);
+                      }}>
+                        <BiShow className="text-2xl duration-300" />
+                      </button>
+                    </Popover>
+                    <Popover title="Статусни узгартириш">
+                      <Dropdown menu={{ items }} trigger={['click']}>
+                        <a onClick={(e) => e.preventDefault()}>
+                          <Space>
+                            <CiMenuKebab className={`text-2xl duration-300`} />
+                          </Space>
+                        </a>
+                      </Dropdown>
+                    </Popover>
                   </div>
                 </td>
               </tr>

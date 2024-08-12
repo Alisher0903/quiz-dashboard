@@ -9,6 +9,7 @@ import adminStore from '../common/state-management/adminStore.tsx';
 import { getAdminLists, postAdmin } from '../common/logic-functions/admin.tsx';
 import SwitcherIsActive from '../components/Switchers/SwitcherIsActive.tsx';
 import SelectForm from '../components/select/Select.tsx';
+import { Pagination } from 'antd';
 
 const thead: IThead[] = [
   { id: 1, name: 'Т/р' },
@@ -30,16 +31,20 @@ const defData = {
 
 const UserAdmin = () => {
   const { isLoading, setIsLoading, resData, setResData } = globalStore();
-  const { addData, setAddData, getAdminList, setGetAdminList } = adminStore();
+  const { addData, setAddData, getAdminList, setGetAdminList, page, totalPage, setPage, setTotalPage } = adminStore();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    getAdminLists(setGetAdminList, setIsLoading);
+    getAdminLists(setGetAdminList, setIsLoading, page, setTotalPage);
   }, []);
 
   useEffect(() => {
+    getAdminLists(setGetAdminList, setIsLoading, page, setTotalPage);
+  }, [page]);
+
+  useEffect(() => {
     if (resData) {
-      getAdminLists(setGetAdminList, setIsLoading);
+      getAdminLists(setGetAdminList, setIsLoading, page, setTotalPage);
       setResData(false);
       closeModal();
     }
@@ -61,6 +66,8 @@ const UserAdmin = () => {
   const styles = {
     input: 'w-full rounded-lg border border-stroke bg-transparent py-2 px-5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
   };
+
+  const onChange = (page: number): void => setPage(page - 1);
 
   return (
     <>
@@ -108,13 +115,24 @@ const UserAdmin = () => {
             ))
           ) : (<>
             <tr>
-              <td colSpan={thead.length} className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center">
+              <td colSpan={thead.length}
+                  className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center">
                 Ходимлар мавжуд эмас
               </td>
             </tr>
           </>)
         )}
       </UniversalTable>
+      {totalPage > 0 && (
+        <Pagination
+          showSizeChanger={false}
+          responsive={true}
+          defaultCurrent={1}
+          total={totalPage}
+          onChange={onChange}
+          rootClassName={`mt-10 mb-5`}
+        />
+      )}
 
       {/*modal*/}
       <GlobalModal onClose={closeModal} isOpen={isModalOpen}>

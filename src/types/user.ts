@@ -1,10 +1,11 @@
 export interface User {
-    categoryData: null | userList[]
-    setCategoryData: (val: null | userList[]) => void
+  resultList: null | ResultArchive[];
+  setResultList: (val: ResultArchive[] | null) => void;
 }
-export interface userList {
-    id: number,
-    fullName: string,
-    categoryName: string,
-    email: string
+
+export interface ResultArchive {
+  question: string;
+  answer: string[];
+  correctAnswer: null | string[];
+  correct: boolean;
 }

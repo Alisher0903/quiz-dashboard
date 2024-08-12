@@ -13,7 +13,11 @@ const adminStore = create<Admin>((set) => ({
   },
   setAddData: (val: AdminData) => set({ addData: val }),
   getAdminList: null,
-  setGetAdminList: (val: AdminDataList[] | null) => set({ getAdminList: val })
+  setGetAdminList: (val: AdminDataList[] | null) => set({ getAdminList: val }),
+  page: 0,
+  setPage: (val: any) => set({ page: val }),
+  totalPage: 0,
+  setTotalPage: (val: any) => set({ totalPage: val }),
 }));
 
 export default adminStore;
