@@ -15,6 +15,7 @@ export const adminIsActives: string = `${base_url}user/active/`;
 export const result_get_all: string = `${base_url}result/results/`; //PAGINATION buladi bu api va yana bittasi detailni kurish uchun  xam ishlatiladi
 export const result_one_get: string = `${base_url}result/get-one/`; //PAGINATION buladi bu api va yana bittasi detailni kurish uchun  xam ishlatiladi
 export const result_archive: string = `${base_url}result/resultByArchive/`; // archive id kirib keladi
+export const result_status_edit: string = `${base_url}result/update-status/`; // status edit id kirib keladi
 
 //=================REGION CONTROLLER==================== ishlatilmagan
 export const region_all: string = `${base_url}region`; // regin crud url

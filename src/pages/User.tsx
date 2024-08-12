@@ -1,18 +1,19 @@
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import UniversalTable, { IThead } from '../components/Tables/UniversalTable.tsx';
-import { BiShow } from 'react-icons/bi';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { result_get_all, result_one_get } from '../common/api/api';
 import { config } from '../common/api/token';
 import GlobalModal from '../components/modal/modal.tsx';
-import { Dropdown, Pagination, Popover, Space } from 'antd';
+import { Dropdown, Menu, Pagination, Space } from 'antd';
 import type { MenuProps } from 'antd';
 import { consoleClear } from '../common/console-clear/console-clear.tsx';
 import moment from 'moment';
 import PendingLoader from '../common/Loader/pending-loader.tsx';
 import { useNavigate } from 'react-router-dom';
 import { CiMenuKebab } from 'react-icons/ci';
+import AddButtons from '../components/buttons/buttons.tsx';
+import { statusUpdate } from '../common/logic-functions/user.tsx';
 
 interface IUser {
   id: number;
@@ -54,11 +55,15 @@ const thead: IThead[] = [
 const User = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [statusEdit, setStatusEdit] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [users, setUsers] = useState<IUser[]>([]);
   const [userDetails, setUserDetails] = useState<IUserDetails | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [status, setStatus] = useState<any>('');
+  const [statusVal, setStatusVal] = useState<any>('');
+  const [resID, setResID] = useState<number | string>('');
 
   useEffect(() => {
     fetchUsers();
@@ -98,6 +103,14 @@ const User = () => {
     setUserDetails(null);
   };
 
+  const openStatusEdit = () => setStatusEdit(true);
+  const closeModalEdit = () => {
+    setStatusEdit(false);
+    setStatus('');
+    setResID('');
+    setStatusVal('')
+  };
+
   const onChange = (page: number): void => setCurrentPage(page - 1);
 
   const statusN = (status: any) => {
@@ -112,17 +125,33 @@ const User = () => {
     else if (status === 'APPROVED') return 'bg-green-500';
   };
 
-  const items: MenuProps['items'] = [
+  const getItems = (user: any): MenuProps['items'] => [
+    {
+      label: 'Архивни кўриш',
+      key: '0',
+      onClick: () => navigate(`/archive/${user.id}`)
+    },
+    {
+      label: 'Натижани кўриш',
+      key: '1',
+      onClick: () => openModal(user)
+    },
     {
       label: 'Тасдиқлаш',
-      key: '0',
+      key: '2',
       onClick: () => {
+        openStatusEdit();
+        setStatus('APPROVED');
+        setResID(user.id);
       }
     },
     {
       label: 'Бекор қилиш',
-      key: '1',
+      key: '3',
       onClick: () => {
+        openStatusEdit();
+        setStatus('CANCELLED');
+        setResID(user.id);
       }
     }
   ];
@@ -159,36 +188,26 @@ const User = () => {
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <div className="flex items-center space-x-3.5">
-                    <Popover title="Натижани кўриш">
-                      <button onClick={() => openModal(user)}>
-                        <BiShow className="text-2xl duration-300" />
-                      </button>
-                    </Popover>
-                    <Popover title="Архивни кўриш">
-                      <button onClick={() => {
-                        navigate(`/archive/${user.id}`);
-                      }}>
-                        <BiShow className="text-2xl duration-300" />
-                      </button>
-                    </Popover>
-                    <Popover title="Статусни узгартириш">
-                      <Dropdown menu={{ items }} trigger={['click']}>
-                        <a onClick={(e) => e.preventDefault()}>
-                          <Space>
-                            <CiMenuKebab className={`text-2xl duration-300`} />
-                          </Space>
-                        </a>
-                      </Dropdown>
-                    </Popover>
+                  <div className="flex items-center space-x-3.5 ms-6">
+                    <Dropdown overlay={
+                      <Menu items={getItems(user)} />
+                    } trigger={['click']} arrow>
+                      <a onClick={(e) => e.preventDefault()}>
+                        <Space>
+                          <CiMenuKebab className={`text-2xl duration-300 hover:cursor-pointer`} />
+                        </Space>
+                      </a>
+                    </Dropdown>
                   </div>
                 </td>
               </tr>
             ))
           ) : (<>
             <tr>
-              <td colSpan={thead.length}
-                  className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center">
+              <td
+                colSpan={thead.length}
+                className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center"
+              >
                 Фойдаланувчи мавжуд эмас
               </td>
             </tr>
@@ -205,6 +224,39 @@ const User = () => {
           rootClassName={`mt-10 mb-5`}
         />
       )}
+
+      {/*status edit modal*/}
+      <GlobalModal onClose={closeModalEdit} isOpen={statusEdit}>
+        <div className="gap-3 ml-1 min-w-60 sm:min-w-96 lg:min-w-[35rem]">
+          <h2 className="text-center md:text-2xl py-5 font-semibold">
+            {status === 'APPROVED' ? 'Натижани тасдиқламоқчимисиз' : 'Натижани бекор қилмоқчимисиз'}
+          </h2>
+          {status === 'APPROVED' && (
+            <input
+              value={statusVal}
+              onChange={e => setStatusVal(e.target.value)}
+              placeholder="Амалий боҳони киритинг"
+              className="w-full rounded-lg border border-stroke bg-transparent py-3 px-5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark bg-white dark:text-form-input dark:focus:border-primary"
+            />
+          )}
+          <div className={`flex justify-end items-center mt-5 mb-3 gap-5`}>
+            <AddButtons children={`Ёпиш`} onClick={closeModalEdit} />
+            <AddButtons
+              children={`Сақлаш`}
+              disabled={status === 'APPROVED' ? !statusVal : false}
+              onClick={() => statusUpdate({
+                status,
+                ball: status === 'APPROVED' ? statusVal : '',
+                resultID: resID,
+                getUser: fetchUsers,
+                close: closeModalEdit
+              })}
+            />
+          </div>
+        </div>
+      </GlobalModal>
+
+      {/*result full modal*/}
       {userDetails ? (
         <GlobalModal onClose={closeModal} isOpen={isModalOpen}>
           <div className="gap-3 ml-1 min-w-60 sm:min-w-96 lg:min-w-[35rem]">
