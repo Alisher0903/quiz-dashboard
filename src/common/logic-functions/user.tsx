@@ -1,7 +1,7 @@
 import { consoleClear } from '../console-clear/console-clear.tsx';
 import axios from 'axios';
 import { config } from '../api/token.tsx';
-import { result_archive, result_status_edit, user_list } from '../api/api.tsx';
+import { result_archive, result_date_edit, result_status_edit, user_list } from '../api/api.tsx';
 import toast from 'react-hot-toast';
 
 export const userAllList = async (
@@ -93,6 +93,32 @@ export const statusUpdate = async ({ status, ball, resultID, getUser, close }: {
     }
   } catch (err) {
     close();
+    consoleClear();
+  }
+};
+
+//qayta test ga ruxsat berish
+export const backTestEditDate = async ({ userId, expiredDate, categoryId, closeModal, fetchData }: {
+  userId: string | number,
+  expiredDate: number | string,
+  categoryId: string,
+  closeModal: () => void,
+  fetchData: () => void
+}) => {
+  try {
+    const { data } = await axios.put(`${result_date_edit}?userId=${userId}&expiredDate=${expiredDate}&categoryId=${categoryId}`, '', config);
+    if (data.success) {
+      closeModal();
+      fetchData();
+      toast.success(`Сиз ${expiredDate} кундан кейин тест ишлашга рухсат бердингиз`);
+    } else {
+      fetchData();
+      closeModal();
+      toast.success(`Нимадур хатолик юз берди`);
+    }
+  } catch (err) {
+    toast.success(`Нимадур хатолик юз берди`);
+    closeModal();
     consoleClear();
   }
 };
