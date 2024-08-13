@@ -42,7 +42,7 @@ const thead: IThead[] = [
   { id: 2, name: 'Исм' },
   { id: 3, name: 'Фамелия' },
   { id: 4, name: 'Электрон почта' },
-  { id: 5, name: 'Тестга рухсат бериш' },
+  // { id: 5, name: 'Тестга рухсат бериш' },
   { id: 6, name: 'Ҳаракат' }
 ];
 
@@ -169,11 +169,11 @@ const AllUser = () => {
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">{user.email}</p>
                 </td>
-                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                {/* <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className={`text-black dark:text-white`}>
                     <CheckboxIsActive id={user.id} isChecked={user.access} setResData={setResData} />
                   </p>
-                </td>
+                </td> */}
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <div className="flex items-center space-x-3.5">
                     <button onClick={() => openModal(user)}>
