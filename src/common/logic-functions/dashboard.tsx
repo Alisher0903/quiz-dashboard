@@ -19,7 +19,7 @@ export const getClientDashboardStatistic = async (page: number, size: number, se
     }
   } catch {
     consoleClear();
-
+    setIsLoading(false)
     setClientData(null);
   }
 };

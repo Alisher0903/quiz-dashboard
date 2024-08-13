@@ -21,10 +21,10 @@ export const result_one_get: string = `${base_url}result/get-one/`; //PAGINATION
 export const result_archive: string = `${base_url}result/resultByArchive/`; // archive id kirib keladi
 export const result_status_edit: string = `${base_url}result/update-status/`; // status edit id kirib keladi
 
-//=================REGION CONTROLLER==================== ishlatilmagan
+//=================REGION CONTROLLER==================== 
 export const region_all: string = `${base_url}region`; // regin crud url
 
-//==============DISTRICT CONTROLLER========================== ishlatilmagan
+//==============DISTRICT CONTROLLER========================== 
 export const district_all: string = `${base_url}district`; // all district crud
 export const district_region_filter: string = `${base_url}district/districts`; // districtni region lar id buyicha get qilish
 
@@ -49,7 +49,7 @@ export const auth_activate: string = `${base_url}auth/activate`; //?????? bilmad
 export const auth_register: string = `${base_url}auth/register`; //user register
 export const auth_login: string = `${base_url}auth/login`; //login
 
-//================VIDEO UPLOAD CONTROLLER====================== 4 ta api
+//================VIDEO UPLOAD CONTROLLER====================== 
 export const api_videos_upload: string = `${base_url}api/videos/upload`; // Video apload qilish admin busa kere
 export const api_videos_files: string = `${base_url}api/videos/files/`; // video get qilish client uchun busa kerak
 export const api_videos_files_update: string = `${base_url}api/videos/update/`; // video update qilish c
@@ -59,12 +59,12 @@ export const api_videos_delete: string = `${base_url}api/videos/delete/`; // vid
 export const quiz_pass: string = `${base_url}quiz/pass`; // Client Testni Submit qilishi uchun
 export const quiz_start: string = `${base_url}quiz/start/`; // Client Testni Boshlash uchun qilishi uchun
 
-//================CERTIFICATE CONTROLLER====================== 1 ta api
+//================CERTIFICATE CONTROLLER======================
 export const get_certificate_id: string = `${base_url}certificate/certificate-get`; // Client result olishi uchun
 export const get_certificate: string = `${base_url}api/videos/files`; // Client result olishi uchun
 export const certificate: string = `${base_url}certificate`; // Client result olishi uchun
 
-//================CERTIFICATE CONTROLLER====================== 1 ta api
+//================USER PROFILE====================== 
 export const user_profile: string = `${base_url}user/profile`; // Client ma'lumotlari
 export const user_profile_update: string = `${base_url}user/update/`; // Client ma'lumotlari
 
