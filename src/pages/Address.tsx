@@ -47,61 +47,62 @@ const Address = () => {
                 <p className={`text-lg font-bold`}>Қўшиш</p>
               </div>}
             />
-            <UniversalTable thead={regionsThead}>
-              {regions && regions.map((item, index) => (
-                <tr key={item.id}>
-                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                    <h5 className="font-medium text-black dark:text-white">{index + 1}</h5>
-                  </td>
-                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                    <p className="text-black dark:text-white">{item.name}</p>
-                  </td>
-                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                    <div className="flex items-center space-x-3.5">
-                      <button className="hover:text-yellow-500">
-                        <MdEdit className={`text-2xl duration-300`} />
-                      </button>
-                      <button className="hover:text-red-600">
-                        <MdDelete className={`text-2xl duration-300`} />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-
-              ))}
-            </UniversalTable>
           </div>
-          <div>
-            <UniversalTable thead={districstsThead}>
-              {districs && districs.map((item, index) => (
-                <tr key={item.id}>
-                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                    <h5 className="font-medium text-black dark:text-white">{index + 1}</h5>
-                  </td>
-                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                    <p className="text-black dark:text-white">{item.name}</p>
-                  </td>
-                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                    <p className="text-black dark:text-white">{item.regionId}</p>
-                  </td>
-                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                    <div className="flex items-center space-x-3.5">
-                      <button className="hover:text-yellow-500">
-                        <MdEdit className={`text-2xl duration-300`} />
-                      </button>
-                      <button className="hover:text-red-600">
-                        <MdDelete className={`text-2xl duration-300`} />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
+          <UniversalTable thead={regionsThead}>
+            {regions && regions.map((item, index) => (
+              <tr key={item.id}>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <h5 className="font-medium text-black dark:text-white">{index + 1}</h5>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">{item.name}</p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <div className="flex items-center space-x-3.5">
+                    <button className="hover:text-yellow-500">
+                      <MdEdit className={`text-2xl duration-300`} />
+                    </button>
+                    <button className="hover:text-red-600">
+                      <MdDelete className={`text-2xl duration-300`} />
+                    </button>
+                  </div>
+                </td>
+              </tr>
 
-              ))}
-            </UniversalTable>
-          </div>
+            ))}
+          </UniversalTable>
         </div>
-      </>
-      )
+        <div>
+          <UniversalTable thead={districstsThead}>
+            {districs && districs.map((item, index) => (
+              <tr key={item.id}>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <h5 className="font-medium text-black dark:text-white">{index + 1}</h5>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">{item.name}</p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">{item.regionId}</p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <div className="flex items-center space-x-3.5">
+                    <button className="hover:text-yellow-500">
+                      <MdEdit className={`text-2xl duration-300`} />
+                    </button>
+                    <button className="hover:text-red-600">
+                      <MdDelete className={`text-2xl duration-300`} />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+            ))}
+          </UniversalTable>
+        </div>
+      </div>
+    </>
+  )
 }
 
-      export default Address
+export default Address
