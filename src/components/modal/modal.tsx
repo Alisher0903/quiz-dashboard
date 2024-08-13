@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import '../../css/style.css'
+import { Toaster } from 'react-hot-toast';
 
 interface ModalProps {
   isOpen: boolean;
@@ -33,7 +34,7 @@ const GlobalModal: React.FC<ModalProps> = ({ isOpen, onClose, children, mt }) =>
   return (
     <div
       className="fixed inset-0 z-[10000] flex items-center justify-center overflow-auto bg-slate-900 py-10 bg-opacity-50 modal mx-3 sm:mx-0"
-      // onClick={onClose}
+    // onClick={onClose}
     >
       <div
         className={`bg-white dark:text-gray-400 dark:bg-[#30303d] z-999 relative rounded-lg shadow-lg ${mt}`}
@@ -45,6 +46,8 @@ const GlobalModal: React.FC<ModalProps> = ({ isOpen, onClose, children, mt }) =>
         </button>
         <div className='p-6'>
           {children}
+          <Toaster />
+
         </div>
       </div>
     </div>

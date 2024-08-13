@@ -3,6 +3,7 @@ import { config } from "../api/token";
 import { consoleClear } from "../console-clear/console-clear";
 import { district_all, region_all } from "../api/api";
 import { DistricsType, RegionsType } from "../../types/address";
+import toast from "react-hot-toast";
 
 export const getRegions = async (setRegions: (val: RegionsType[]) => void, setIsLoading: (val: boolean) => void) => {
     setIsLoading(true);
@@ -45,6 +46,11 @@ export const getDistrics = async (setDistrics: (val: DistricsType[]) => void, se
 };
 
 export const addRegion = async (setRegions: (val: RegionsType[]) => void, setIsLoading: (val: boolean) => void, name: string, toggleDistrictModal: () => void) => {
+    if (!name.trim()) {
+        toast.error("Исм бўш бўлиши мумкин эмас");
+        return;
+    }
+
     setIsLoading(true);
     try {
         const { data } = await axios.post(region_all, { name }, config);
@@ -53,12 +59,10 @@ export const addRegion = async (setRegions: (val: RegionsType[]) => void, setIsL
             consoleClear();
             toggleDistrictModal()
         } else {
-            setRegions([]);
             setIsLoading(false);
             consoleClear();
         }
     } catch {
-        setRegions([]);
         setIsLoading(false);
         consoleClear();
     }
@@ -73,18 +77,21 @@ export const deleteRegion = async (id: number, setRegions: (val: RegionsType[]) 
             consoleClear();
             toggleDeleteRegionModal()
         } else {
-            setRegions([]);
             setIsLoading(false);
             consoleClear();
         }
     } catch {
-        setRegions([]);
         setIsLoading(false);
         consoleClear();
     }
 };
 
 export const updateRegion = async (id: number, name: string, setRegions: (val: RegionsType[]) => void, setIsLoading: (val: boolean) => void, toggleEditRegionModal: () => void) => {
+    if (!name.trim()) {
+        toast.error("Исм бўш бўлиши мумкин эмас");
+        return;
+    }
+
     setIsLoading(true);
     try {
         const { data } = await axios.put(`${region_all}/${id}`, { name }, config);
@@ -93,12 +100,10 @@ export const updateRegion = async (id: number, name: string, setRegions: (val: R
             consoleClear();
             toggleEditRegionModal()
         } else {
-            setRegions([]);
             setIsLoading(false);
             consoleClear();
         }
     } catch {
-        setRegions([]);
         setIsLoading(false);
         consoleClear();
     }

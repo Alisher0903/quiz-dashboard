@@ -55,10 +55,22 @@ const Address = () => {
     getDistrics(setDistrics, setIsLoading)
   }, [setDistrics]);
 
-  const toggleRegionModal = () => setIsRegionModal(!isRegionModal);
-  const toggleDeleteRegionModal = () => setIsDeleteRegionModal(!isDeleteRegionModal);
-  const toggleEditRegionModal = () => setIsEditRegionModal(!isEditRegionModal);
-  const toggleDistrictModal = () => setIsDistrictModal(!isDistrictModal);
+  const toggleRegionModal = () => {
+    setIsRegionModal(!isRegionModal)
+    setRegionName('')
+  };
+  const toggleDeleteRegionModal = () => {
+    setIsDeleteRegionModal(!isDeleteRegionModal)
+    setRegionName('')
+  };
+  const toggleEditRegionModal = () => {
+    setRegionName('')
+    setIsEditRegionModal(!isEditRegionModal)
+  };
+  const toggleDistrictModal = () => {
+    setIsDistrictModal(!isDistrictModal)
+    setRegionName('')
+  };
 
   console.log(regionName);
   return (
