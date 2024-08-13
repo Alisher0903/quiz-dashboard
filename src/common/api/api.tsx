@@ -20,6 +20,7 @@ export const result_get_all: string = `${base_url}result/results/`; //PAGINATION
 export const result_one_get: string = `${base_url}result/get-one/`; //PAGINATION buladi bu api va yana bittasi detailni kurish uchun  xam ishlatiladi
 export const result_archive: string = `${base_url}result/resultByArchive/`; // archive id kirib keladi
 export const result_status_edit: string = `${base_url}result/update-status/`; // status edit id kirib keladi
+export const result_date_edit: string = `${base_url}result/update/expiredDate`; // status edit id kirib keladi
 
 //=================REGION CONTROLLER==================== 
 export const region_all: string = `${base_url}region`; // regin crud url
