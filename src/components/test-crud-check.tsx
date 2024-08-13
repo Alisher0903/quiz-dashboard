@@ -20,7 +20,7 @@ export const checkImgUpload = async (fileData: any) => {
 
 const TestCrudCheck = ({ type, defQues }: { type: string, defQues?: any }) => {
   const { setOptionDto } = testStore();
-  const [questions, setQuestions] = useState([{ id: 1, answer: '', isCorrect: false, file: null }]);
+  const [questions, setQuestions] = useState([{ id: 1, answer: '', isCorrect: false, file: 0 }]);
   const [checkedId, setCheckedId] = useState<number | null>(null);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const TestCrudCheck = ({ type, defQues }: { type: string, defQues?: any }) => {
   }, [questions]);
 
   useEffect(() => {
-    setQuestions([{ id: 1, answer: '', isCorrect: false, file: null }]);
+    setQuestions([{ id: 1, answer: '', isCorrect: false, file: 0 }]);
   }, [type]);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const TestCrudCheck = ({ type, defQues }: { type: string, defQues?: any }) => {
       id: questions.length + 1,
       answer: '',
       isCorrect: false,
-      file: null
+      file: 0
     };
     setQuestions([...questions, newQuestion]);
   };
@@ -95,7 +95,7 @@ const TestCrudCheck = ({ type, defQues }: { type: string, defQues?: any }) => {
     } else {
       setQuestions(questions.map((question: any) =>
         question.id === id
-          ? { ...question, file: null }
+          ? { ...question, file: 0 }
           : question
       ));
     }

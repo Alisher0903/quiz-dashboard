@@ -46,6 +46,7 @@ const Test = () => {
   const [crudTest, setCrudTest] = useState<TestList | any>({
     name: '',
     categoryId: '',
+    difficulty: '',
     type: '',
     score: '',
     attachmentIds: [],
@@ -56,6 +57,7 @@ const Test = () => {
   const defData = {
     name: '',
     categoryId: '',
+    difficulty: '',
     type: '',
     score: '',
     attachmentIds: [],
@@ -79,7 +81,9 @@ const Test = () => {
   }, [nameFilter, categoryFilter, typeFilter, page]);
 
   useEffect(() => {
-    crudTest.isMain = testType === 'ANY_CORRECT' ? true : false;
+    // crudTest.isMain = testType === 'ANY_CORRECT' ? true : false;
+    categoryMain.main ? crudTest.isMain = true : crudTest.isMain = false;
+    if (categoryMain.main) crudTest.type = 'ANY_CORRECT';
     handleChange('optionDtos', optionDto);
     consoleClear();
   }, [optionDto]);
@@ -89,7 +93,7 @@ const Test = () => {
   }, [imgUpload]);
 
   useEffect(() => {
-    if (crudTest.categoryId && categoryData) setCategoryMain(categoryData.find(item => item.id === +crudTest.categoryId));
+    if (crudTest.categoryId && categoryData) setCategoryMain(categoryData.find((item: CategoryList | any) => item.id === +crudTest.categoryId));
     else setCategoryMain('');
   }, [categoryData, crudTest.categoryId]);
 
@@ -158,7 +162,7 @@ const Test = () => {
             onChange={(value) => setCategoryFilter(value)}
           >
             {categoryData && categoryData.map((item: any) => (
-              <Option value={item.categoryId} key={item.categoryId}>{item.categoryName}</Option>
+              <Option value={item.id} key={item.id}>{item.name}</Option>
             ))}
           </Select>
 
@@ -193,7 +197,7 @@ const Test = () => {
                     {(+page * 10) + idx + 1}
                   </h5>
                 </td>
-                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark min-w-[500px]">
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark max-w-[500px]">
                   <p className="text-black dark:text-white">
                     {item.name}
                   </p>
@@ -293,13 +297,12 @@ const Test = () => {
                   defOption={`Категория танлаш`}
                   child={categoryData && (
                     categoryData.map((item: CategoryList | any) => (
-                      <option value={item.categoryId} key={item.categoryId}>{item.categoryName}</option>
+                      <option value={item.id} key={item.id}>{item.name}</option>
                     )))}
                 />
                 <SelectForm
-                  isDisabled={categoryMain.main}
-                  val={`${crudTest.type}`}
-                  onChange={e => handleChange('type', e.target.value)}
+                  val={`${crudTest.difficulty}`}
+                  onChange={e => handleChange('difficulty', e.target.value)}
                   defOption={`Қийинлик даражасини танланг`}
                   child={<>
                     <option value="HARD">Қийин</option>
