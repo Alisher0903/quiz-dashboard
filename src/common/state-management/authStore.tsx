@@ -14,6 +14,8 @@ const authStore = create<Auth>((set) => ({
   setPrePassword: (val: string) => set({prePassword: val}),
   confirmEmailCode: '',
   setConfirmEmailCode: (val: string) => set({confirmEmailCode: val}),
+  phoneNumber: '',
+  setPhoneNumber: (val: string) => set({phoneNumber: val}),
 }));
 
 export default authStore;

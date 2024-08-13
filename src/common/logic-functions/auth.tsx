@@ -14,18 +14,26 @@ export const authRegister = (
   password: string,
   confirmPassword: string,
   setLoading: (loading: boolean) => void,
-  setResData: (val: boolean) => void
+  setResData: (val: boolean) => void,
+  phoneNumber: string
 ): void => {
   event.preventDefault();
+  const sliceNumber = (num: string) => {
+    if (num.startsWith('+')) return num.slice(1, 13);
+    else if (num.length === 9) return `998${num.slice(0, 9)}`;
+    else return '';
+  };
+
   const data = {
     firstname,
     lastname,
     email,
     password,
-    confirmPassword
+    confirmPassword,
+    phoneNumber: sliceNumber(phoneNumber)
   };
 
-  if (firstname && lastname && email && password && confirmPassword) {
+  if (firstname && lastname && email && password && confirmPassword && data.phoneNumber) {
     setLoading(true);
     if (password === confirmPassword) {
       axios.post(auth_register, data)

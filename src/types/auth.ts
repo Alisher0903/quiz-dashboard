@@ -11,4 +11,6 @@ export interface Auth {
   setPrePassword(val: string): void;
   confirmEmailCode: string
   setConfirmEmailCode(val: string): void;
+  phoneNumber: string
+  setPhoneNumber(val: string): void;
 }

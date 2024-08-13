@@ -3,7 +3,6 @@ import toast from 'react-hot-toast';
 // =================screenshot olishni ogohlantirish uchun======================
 export const screenshotBlocked = () => {
   const handleKeyDown = (event: any) => {
-    console.log(event);
     if (event.key === 'PrintScreen' || (event.shiftKey && (event.metaKey || event.key === 'Meta'))) {
       const notification = document.getElementById('screenshot-warning');
       if (notification) notification.classList.remove('hidden');
