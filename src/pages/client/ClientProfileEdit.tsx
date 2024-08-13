@@ -1,196 +1,241 @@
-import React from 'react'
+import { DatePicker, Input, Select } from 'antd'
+import React, { useEffect, useState } from 'react'
+import AddButtons from '../../components/buttons/buttons'
+import { getUserData, updateUserData } from '../../common/logic-functions/profile'
+import useProfileStore from '../../common/state-management/profile'
+import globalStore from '../../common/state-management/globalStore'
+import { getDistrictByRegionId, getRegions } from '../../common/global-functions'
+import { RiPencilFill } from "react-icons/ri";
+import moment from 'moment'
+import PendingLoader from '../../common/Loader/pending-loader'
+import { api_videos_files } from '../../common/api/api'
+import userIMage from '../../images/user.jpg'
+import { checkImgUpload } from '../../components/test-crud-check'
 
-const ClientProfileEdit = () => {
+const ClientProfileEdit: React.FC = () => {
+    const { userData, setUserData } = useProfileStore();
+    const { isLoading, setIsLoading, region, district, setDistrict, setRegion } = globalStore()
+    const [isFormValid, setIsFormValid] = useState(false);
+    const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
+    const [attachmentId, setAttachmentId] = useState(0);
+
+
+    useEffect(() => {
+        getUserData(setUserData, setIsLoading);
+    }, []);
+
+    useEffect(() => {
+        getDistrictByRegionId(userData.regionId, setDistrict);
+    }, [userData.regionId]);
+
+    useEffect(() => {
+        getRegions(setRegion);
+    }, []);
+
+    useEffect(() => {
+        validateForm();
+    }, [userData]);
+
+    const handleUpdate = () => {
+        updateUserData(userData, attachmentId, setUserData, setIsLoading);
+    };
+
+    const validateForm = () => {
+        const isValid =
+            userData.firstName &&
+            userData.lastName &&
+            userData.regionName &&
+            userData.districtName &&
+            userData.email &&
+            userData.street &&
+            userData.phoneNumber &&
+            userData.dateOfBirth;
+        setIsFormValid(isValid);
+    };
+
+    const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files.length > 0) {
+            const file = event.target.files[0];
+            const uploadedIMage = await checkImgUpload(file);
+            setAttachmentId(uploadedIMage)
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreviewUrl(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handleUploadClick = () => {
+        document.getElementById('imageUploadInput')?.click();
+    };
+
+    console.log(userData.districtName);
+    
+
     return (
         <div className="container mx-auto px-4 mt-4">
-            {/* Account page navigation */}
-            <nav className="flex border-b-2 border-gray-300">
-                <a
-                    className="text-blue-600 border-b-2 border-blue-600 py-2 px-4"
-                    href="https://www.bootdey.com/snippets/view/bs5-edit-profile-account-details"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Profile
-                </a>
-                <a
-                    className="text-gray-600 py-2 px-4"
-                    href="https://www.bootdey.com/snippets/view/bs5-profile-billing-page"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Billing
-                </a>
-                <a
-                    className="text-gray-600 py-2 px-4"
-                    href="https://www.bootdey.com/snippets/view/bs5-profile-security-page"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Security
-                </a>
-                <a
-                    className="text-gray-600 py-2 px-4"
-                    href="https://www.bootdey.com/snippets/view/bs5-edit-notifications-page"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Notifications
-                </a>
-            </nav>
-            <hr className="mt-4 mb-4" />
-
-            <div className="flex flex-wrap">
-                {/* Profile picture card */}
-                <div className="w-full xl:w-1/3 mb-4">
-                    <div className="bg-white shadow-md rounded-lg p-4">
-                        <h2 className="text-lg font-medium mb-4">Profile Picture</h2>
-                        <div className="text-center">
+            {isLoading && (<PendingLoader />)}
+            <div className="">
+                <div className="w-full mb-4">
+                    <div className="bg-white dark:bg-[#24303F] shadow-md flex justify-center items-center flex-col rounded-lg p-4">
+                        <h2 className="text-2xl text-center text-red-600 dark:text-blue-600 font-medium mb-4">Профил расми</h2>
+                        <div className="relative">
                             <img
-                                className="rounded-full h-40 w-40 mx-auto mb-4"
-                                src="http://bootdey.com/img/Content/avatar/avatar1.png"
-                                alt=""
+                                className="rounded-full object-cover h-40 w-40 mb-4"
+                                src={userData.fileId ? imagePreviewUrl ? imagePreviewUrl : api_videos_files + userData.fileId : userIMage}
+                                alt="Your profile image"
                             />
-                            <div className="text-gray-500 text-sm mb-4">
-                                JPG or PNG no larger than 5 MB
+                            <div onClick={handleUploadClick} className='absolute dark:bg-blue-600 bg-red-600 cursor-pointer p-2 rounded-full bottom-3 right-3'>
+                                <RiPencilFill className='text-white text-xl' />
+                                <input
+                                    id="imageUploadInput"
+                                    type="file"
+                                    accept="image/*"
+                                    style={{ display: 'none' }}
+                                    onChange={handleImageChange}
+                                />
                             </div>
-                            <button className="bg-blue-600 text-white py-2 px-4 rounded">
-                                Upload new image
-                            </button>
                         </div>
                     </div>
                 </div>
-
-                {/* Account details card */}
-                <div className="w-full xl:w-2/3">
-                    <div className="bg-white shadow-md rounded-lg p-4">
-                        <h2 className="text-lg font-medium mb-4">Account Details</h2>
+                <div className="w-full">
+                    <div className="bg-white dark:bg-[#24303F] shadow-md rounded-lg p-4">
+                        <h2 className="text-2xl text-center text-red-600 dark:text-blue-600 font-medium mb-4">Ҳисоб тафсилотлари</h2>
                         <form>
-                            {/* Form Group (username) */}
-                            <div className="mb-4">
-                                <label className="text-sm mb-1 block" htmlFor="inputUsername">
-                                    Username (how your name will appear to other users on the site)
-                                </label>
-                                <input
-                                    className="w-full p-3 border border-gray-300 rounded"
-                                    id="inputUsername"
-                                    type="text"
-                                    placeholder="Enter your username"
-                                    value="username"
-                                />
-                            </div>
-                            {/* Form Row */}
                             <div className="flex flex-wrap -mx-2">
-                                {/* Form Group (first name) */}
                                 <div className="w-full md:w-1/2 px-2 mb-4">
                                     <label className="text-sm mb-1 block" htmlFor="inputFirstName">
-                                        First name
+                                        Исм
                                     </label>
-                                    <input
+                                    <Input
                                         className="w-full p-3 border border-gray-300 rounded"
                                         id="inputFirstName"
                                         type="text"
-                                        placeholder="Enter your first name"
-                                        value="Valerie"
+                                        placeholder="Исмингизни киритинг"
+                                        value={userData?.firstName}
+                                        onChange={(e) => setUserData({ ...userData, firstName: e.target.value })}
                                     />
                                 </div>
-                                {/* Form Group (last name) */}
                                 <div className="w-full md:w-1/2 px-2 mb-4">
                                     <label className="text-sm mb-1 block" htmlFor="inputLastName">
-                                        Last name
+                                        Фамилия
                                     </label>
-                                    <input
+                                    <Input
                                         className="w-full p-3 border border-gray-300 rounded"
                                         id="inputLastName"
                                         type="text"
-                                        placeholder="Enter your last name"
-                                        value="Luna"
+                                        placeholder="Фамилиянгизни киритинг"
+                                        value={userData?.lastName}
+                                        onChange={(e) => setUserData({ ...userData, lastName: e.target.value })}
                                     />
                                 </div>
                             </div>
-                            {/* Form Row */}
                             <div className="flex flex-wrap -mx-2 mb-4">
-                                {/* Form Group (organization name) */}
                                 <div className="w-full md:w-1/2 px-2 mb-4">
-                                    <label className="text-sm mb-1 block" htmlFor="inputOrgName">
-                                        Organization name
+                                    <label className="text-sm mb-1 block" htmlFor="inputRegionName">
+                                        Вилоят
                                     </label>
-                                    <input
-                                        className="w-full p-3 border border-gray-300 rounded"
-                                        id="inputOrgName"
-                                        type="text"
-                                        placeholder="Enter your organization name"
-                                        value="Start Bootstrap"
-                                    />
+                                    <Select
+                                        id='inputRegionName'
+                                        placeholder={`Вилоятингизни танланг`}
+                                        className='w-full rounded h-12'
+                                        value={userData.regionId}
+                                        onChange={(e) => setUserData({ ...userData, regionId: +e })}
+                                        allowClear
+                                    >
+                                        {region && region.map(item => (
+                                            <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                                        ))}
+                                    </Select>
                                 </div>
-                                {/* Form Group (location) */}
                                 <div className="w-full md:w-1/2 px-2 mb-4">
-                                    <label className="text-sm mb-1 block" htmlFor="inputLocation">
-                                        Location
+                                    <label className="text-sm mb-1 block" htmlFor="inputDistrictName">
+                                        Туман
                                     </label>
-                                    <input
-                                        className="w-full p-3 border border-gray-300 rounded"
-                                        id="inputLocation"
-                                        type="text"
-                                        placeholder="Enter your location"
-                                        value="San Francisco, CA"
-                                    />
+                                    <Select
+                                        id='inputDistrictName'
+                                        placeholder={`Туманингизни танланг`}
+                                        className={`w-full rounded h-12`}
+                                        value={userData.districtId}
+                                        onChange={(e) => {setUserData({ ...userData, districtId: +e })
+                                        console.log(e);
+                                        
+                                    }}
+                                        allowClear
+                                    >
+                                        {district && district.map(item => (
+                                            <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                                        ))}
+                                    </Select>
                                 </div>
                             </div>
-                            {/* Form Group (email address) */}
-                            <div className="mb-4">
-                                <label className="text-sm mb-1 block" htmlFor="inputEmailAddress">
-                                    Email address
-                                </label>
-                                <input
-                                    className="w-full p-3 border border-gray-300 rounded"
-                                    id="inputEmailAddress"
-                                    type="email"
-                                    placeholder="Enter your email address"
-                                    value="name@example.com"
-                                />
-                            </div>
-                            {/* Form Row */}
                             <div className="flex flex-wrap -mx-2 mb-4">
-                                {/* Form Group (phone number) */}
+                                <div className="w-full md:w-1/2 px-2 mb-4">
+                                    <label className="text-sm mb-1 block" htmlFor="inputEmail">
+                                        Э-почта манзили
+                                    </label>
+                                    <Input
+                                        className="w-full p-3 border border-gray-300 rounded"
+                                        id="inputEmail"
+                                        type="email"
+                                        onChange={(e) => setUserData({ ...userData, email: e.target.value })}
+                                        placeholder="Электрон почта манзилингизни киритинг"
+                                        value={userData?.email}
+                                    />
+                                </div>
+                                <div className="w-full md:w-1/2 px-2 mb-4">
+                                    <label className="text-sm mb-1 block" htmlFor="inputStreet">
+                                        Кўча
+                                    </label>
+                                    <Input
+                                        className="w-full p-3 border border-gray-300 rounded"
+                                        id="inputStreet"
+                                        type="text"
+                                        onChange={(e) => setUserData({ ...userData, street: e.target.value })}
+                                        placeholder="Кўчангизга киринг"
+                                        value={userData?.street}
+                                    />
+                                </div>
+                            </div>
+                            <div className="flex flex-wrap -mx-2 mb-4">
                                 <div className="w-full md:w-1/2 px-2 mb-4">
                                     <label className="text-sm mb-1 block" htmlFor="inputPhone">
-                                        Phone number
+                                        Телефон рақами
                                     </label>
-                                    <input
+                                    <Input
                                         className="w-full p-3 border border-gray-300 rounded"
                                         id="inputPhone"
                                         type="tel"
-                                        placeholder="Enter your phone number"
-                                        value="555-123-4567"
+                                        onChange={(e) => setUserData({ ...userData, phoneNumber: e.target.value })}
+                                        placeholder="Телефон рақамингизни киритинг"
+                                        value={userData.phoneNumber ? userData.phoneNumber : '+998'}
                                     />
                                 </div>
-                                {/* Form Group (birthday) */}
                                 <div className="w-full md:w-1/2 px-2 mb-4">
                                     <label className="text-sm mb-1 block" htmlFor="inputBirthday">
-                                        Birthday
+                                        Туғилган кун
                                     </label>
-                                    <input
+                                    <DatePicker
                                         className="w-full p-3 border border-gray-300 rounded"
                                         id="inputBirthday"
-                                        type="text"
-                                        name="birthday"
-                                        placeholder="Enter your birthday"
-                                        value="06/10/1988"
+                                        placeholder='Туғилган кунингизни киринг'
+                                        onChange={(date) => setUserData({ ...userData, dateOfBirth: `${date.year()}-${date.month() + 1 > 0 && date.month() + 1 < 10 ? `0${date.month() + 1}` : date.month() + 1}-${date.date() > 0 && date.date() < 10 ? `0${date.date()}` : date.date()}` })}
+                                        value={moment(userData.dateOfBirth, "YYYY-MM-DD")}
                                     />
                                 </div>
                             </div>
-                            {/* Save changes button */}
-                            <button className="bg-blue-600 text-white py-2 px-4 rounded" type="button">
-                                Save changes
-                            </button>
+                            <div>
+                                <AddButtons onClick={handleUpdate} disabled={!isFormValid}>
+                                    Ўзгаришларни сақланг
+                                </AddButtons>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-
     )
 }
 
-export default ClientProfileEdit
+export default ClientProfileEdit;

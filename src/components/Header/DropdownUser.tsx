@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import ClickOutside from '../ClickOutside';
 import globalStore from '../../common/state-management/globalStore.tsx';
 import { api_videos_files } from '../../common/api/api.tsx';
+import userIMage from '../../images/user.jpg'
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -32,11 +33,11 @@ const DropdownUser = () => {
             </span>
         </span>
 
-        <span className="h-12 w-12 rounded-full overflow-hidden">
+        <span className="h-12 w-12 rounded-full object-cover overflow-hidden">
           <img
             src={(getMeData && getMeData.videoFileName)
               ? `${api_videos_files}${getMeData.videoFileName}`
-              : `https://as1.ftcdn.net/v2/jpg/03/46/83/96/1000_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg`
+              : userIMage
             }
             alt="User"
             className={`w-full h-full`}

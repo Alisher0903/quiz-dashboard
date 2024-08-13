@@ -26,7 +26,7 @@ export const region_all: string = `${base_url}region`; // regin crud url
 
 //==============DISTRICT CONTROLLER========================== ishlatilmagan
 export const district_all: string = `${base_url}district`; // all district crud
-export const district_region_filter: string = `${base_url}district/districts/`; // districtni region lar id buyicha get qilish
+export const district_region_filter: string = `${base_url}district/districts`; // districtni region lar id buyicha get qilish
 
 //=================QUESTION CONTROLLER===================
 export const question_crud: string = `${base_url}question`; //admin question crud
@@ -63,6 +63,10 @@ export const quiz_start: string = `${base_url}quiz/start/`; // Client Testni Bos
 export const get_certificate_id: string = `${base_url}certificate/certificate-get`; // Client result olishi uchun
 export const get_certificate: string = `${base_url}api/videos/files`; // Client result olishi uchun
 export const certificate: string = `${base_url}certificate`; // Client result olishi uchun
+
+//================CERTIFICATE CONTROLLER====================== 1 ta api
+export const user_profile: string = `${base_url}user/profile`; // Client ma'lumotlari
+export const user_profile_update: string = `${base_url}user/update/`; // Client ma'lumotlari
 
 //================STATISTICS CONTROLLER======================
 export const statistics_day: string = `${base_url}statistic/dayOfWeek/`; // Client result olishi uchun
