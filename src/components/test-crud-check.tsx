@@ -1,9 +1,26 @@
 import { useEffect, useState } from 'react';
 import testStore from '../common/state-management/testStore.tsx';
+import axios from 'axios';
+import { api_videos_upload } from '../common/api/api.tsx';
+import { config } from '../common/api/token.tsx';
+
+export const checkImgUpload = async (fileData: any) => {
+  try {
+    const formData = new FormData();
+    formData.append('file', fileData);
+
+    const res = await axios.post(api_videos_upload, formData, config);
+
+    if (res.data.success) return res.data.body;
+    else return null;
+  } catch (error) {
+    return null;
+  }
+};
 
 const TestCrudCheck = ({ type, defQues }: { type: string, defQues?: any }) => {
   const { setOptionDto } = testStore();
-  const [questions, setQuestions] = useState([{ id: 1, answer: '', isCorrect: false }]);
+  const [questions, setQuestions] = useState([{ id: 1, answer: '', isCorrect: false, file: null }]);
   const [checkedId, setCheckedId] = useState<number | null>(null);
 
   useEffect(() => {
@@ -11,7 +28,7 @@ const TestCrudCheck = ({ type, defQues }: { type: string, defQues?: any }) => {
   }, [questions]);
 
   useEffect(() => {
-    setQuestions([{ id: 1, answer: '', isCorrect: false }]);
+    setQuestions([{ id: 1, answer: '', isCorrect: false, file: null }]);
   }, [type]);
 
   useEffect(() => {
@@ -22,7 +39,8 @@ const TestCrudCheck = ({ type, defQues }: { type: string, defQues?: any }) => {
     const newQuestion = {
       id: questions.length + 1,
       answer: '',
-      isCorrect: false
+      isCorrect: false,
+      file: null
     };
     setQuestions([...questions, newQuestion]);
   };
@@ -63,9 +81,30 @@ const TestCrudCheck = ({ type, defQues }: { type: string, defQues?: any }) => {
     ));
   };
 
+  const handleImageChange = async (id: number, event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] || null;
+
+    if (file) {
+      const uploadedFile = await checkImgUpload(file);
+
+      setQuestions(questions.map((question: any) =>
+        question.id === id
+          ? { ...question, file: uploadedFile }
+          : question
+      ));
+    } else {
+      setQuestions(questions.map((question: any) =>
+        question.id === id
+          ? { ...question, file: null }
+          : question
+      ));
+    }
+  };
+
+
   return (
     <>
-      <div className={`mt-4`}>
+      <div className="mt-4">
 
         {/*=====================================SUM===============================*/}
         {type === 'SUM' && (
@@ -75,7 +114,7 @@ const TestCrudCheck = ({ type, defQues }: { type: string, defQues?: any }) => {
                 type="checkbox"
                 checked
                 onChange={() => handleCheckboxChange(question.id)}
-                className="form-checkbox h-5 w-5 text-blue-600"
+                className="form-checkbox h-8 w-8 text-blue-600"
               />
               <input
                 type="text"
@@ -83,6 +122,11 @@ const TestCrudCheck = ({ type, defQues }: { type: string, defQues?: any }) => {
                 onChange={(e) => handleTextChange(question.id, e.target.value)}
                 placeholder="Саволни жавобини киритинг"
                 className="w-full rounded-lg border border-stroke bg-transparent py-2 px-5 ml-3 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+              />
+              <input
+                type="file"
+                onChange={(e) => handleImageChange(question.id, e)}
+                className="ml-3 w-40"
               />
             </div>
           )))}
@@ -95,7 +139,7 @@ const TestCrudCheck = ({ type, defQues }: { type: string, defQues?: any }) => {
                 type="checkbox"
                 checked={question.isCorrect}
                 onChange={() => handleCheckboxChange(question.id)}
-                className="form-checkbox h-5 w-5 text-blue-600"
+                className="form-checkbox h-8 w-8 text-blue-600"
               />
               <input
                 type="text"
@@ -103,6 +147,11 @@ const TestCrudCheck = ({ type, defQues }: { type: string, defQues?: any }) => {
                 onChange={(e) => handleTextChange(question.id, e.target.value)}
                 placeholder="Саволни жавобини киритинг"
                 className="w-full rounded-lg border border-stroke bg-transparent py-2 px-5 ml-3 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+              />
+              <input
+                type="file"
+                onChange={(e) => handleImageChange(question.id, e)}
+                className="ml-3 w-40"
               />
               <button onClick={addQuestion} className="text-green-500 ml-2">+</button>
               <button
@@ -122,7 +171,7 @@ const TestCrudCheck = ({ type, defQues }: { type: string, defQues?: any }) => {
                 type="checkbox"
                 checked={question.isCorrect}
                 onChange={() => handleCheckboxChange(question.id)}
-                className="form-checkbox h-5 w-5 text-blue-600"
+                className="form-checkbox h-8 w-8 text-blue-600"
               />
               <input
                 type="text"
@@ -130,6 +179,11 @@ const TestCrudCheck = ({ type, defQues }: { type: string, defQues?: any }) => {
                 onChange={(e) => handleTextChange(question.id, e.target.value)}
                 placeholder="Саволни жавобини киритинг"
                 className="w-full rounded-lg border border-stroke bg-transparent py-2 px-5 ml-3 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+              />
+              <input
+                type="file"
+                onChange={(e) => handleImageChange(question.id, e)}
+                className="ml-3 w-40"
               />
               <button onClick={addQuestion} className="text-green-500 ml-2">+</button>
               <button
@@ -149,7 +203,7 @@ const TestCrudCheck = ({ type, defQues }: { type: string, defQues?: any }) => {
                 type="checkbox"
                 checked={checkedId === question.id}
                 onChange={() => handleCheckboxChange(question.id)}
-                className="form-checkbox h-5 w-5 text-blue-600"
+                className="form-checkbox h-8 w-8 text-blue-600"
               />
               <input
                 type="text"
@@ -157,6 +211,11 @@ const TestCrudCheck = ({ type, defQues }: { type: string, defQues?: any }) => {
                 onChange={(e) => handleTextChange(question.id, e.target.value)}
                 placeholder="Саволни жавобини киритинг"
                 className="w-full rounded-lg border border-stroke bg-transparent py-2 px-5 ml-3 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+              />
+              <input
+                type="file"
+                onChange={(e) => handleImageChange(question.id, e)}
+                className="ml-3 w-40"
               />
               <button onClick={addQuestion} className="text-green-500 ml-2">+</button>
               <button

@@ -3,15 +3,22 @@ import toast from 'react-hot-toast';
 // =================screenshot olishni ogohlantirish uchun======================
 export const screenshotBlocked = () => {
   const handleKeyDown = (event: any) => {
+    console.log(event);
     if (event.key === 'PrintScreen' || (event.shiftKey && (event.metaKey || event.key === 'Meta'))) {
-      alert('Скрееншот олиш тақиқланган❗❌');
-      event.preventDefault();
+      const notification = document.getElementById('screenshot-warning');
+      if (notification) notification.classList.remove('hidden');
+
+      setTimeout(() => {
+        if (notification) notification.classList.add('hidden');
+      }, 2000);
     }
   };
 
   document.addEventListener('keydown', handleKeyDown);
   return () => document.removeEventListener('keydown', handleKeyDown);
 };
+
+
 
 // =============saytdan maxfiylikka tegishli narsalarni blocklaydi==============
 export const siteSecurity = () => {

@@ -9,6 +9,24 @@ body {
     user-select: none;
 }
 
+#screenshot-warning {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 100vh;
+    transform: translate(-50%, -50%);
+    background-color: rgb(0, 0, 0);
+    color: white;
+    z-index: 1000000;
+    text-align: center;
+    padding-top: 25vh;
+}
+
+.hidden {
+    display: none;
+}
+
 @layer base {
     body {
         @apply font-satoshi font-normal text-base text-body bg-whiten relative z-1;

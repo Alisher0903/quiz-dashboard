@@ -87,7 +87,7 @@ const Dashboard: React.FC = () => {
               onChange={(value) => setCategoryID(value)}
             >
               {categoryData.map((item: CategoryList | any) => (
-                <Option value={item.categoryId} key={item.categoryId}>{item.categoryName}</Option>
+                <Option value={item.id} key={item.id}>{item.name}</Option>
               ))}
             </Select>
           )}

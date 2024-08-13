@@ -92,6 +92,10 @@ function App() {
     <Loader />
   ) : (
     <DefaultLayout>
+      <div id="screenshot-warning" className="hidden">
+        Скрееншот олиш тақиқланган❗❌
+      </div>
+
       <Routes>
         <Route
           index

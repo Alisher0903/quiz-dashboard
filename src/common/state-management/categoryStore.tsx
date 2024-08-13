@@ -13,9 +13,9 @@ const categoryStore = create<Category>((set) => ({
     extraQuestionCount: '',
     durationTime: '',
     retakeDate: '',
-    easyQuestionCount: '',
-    mediumQuestionCount: '',
-    hardQuestionCount: '',
+    // easyQuestionCount: '',
+    // mediumQuestionCount: '',
+    // hardQuestionCount: '',
     fileId: '',
     main: false
   },

@@ -14,9 +14,9 @@ export interface CategoryList {
   questionCount: number | string;
   extraQuestionCount: number | string;
   durationTime: number | string;
-  easyQuestionCount: number | string;
-  mediumQuestionCount: number | string;
-  hardQuestionCount: number | string;
+  // easyQuestionCount: number | string;
+  // mediumQuestionCount: number | string;
+  // hardQuestionCount: number | string;
   retakeDate: number | string;
   main: boolean | string;
   createdBy?: string;

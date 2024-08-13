@@ -24,9 +24,9 @@ const thead: IThead[] = [
   { id: 3, name: 'Категория номи' },
   { id: 4, name: 'Тавсиф' },
   { id: 5, name: 'Саволлар сони' },
-  { id: 6, name: 'Қийин саволлар сони' },
-  { id: 7, name: 'Урта саволлар сони' },
-  { id: 8, name: 'Осон саволлар сони' },
+  // { id: 6, name: 'Қийин саволлар сони' },
+  // { id: 7, name: 'Урта саволлар сони' },
+  // { id: 8, name: 'Осон саволлар сони' },
   { id: 9, name: 'Қўшимча саволлар сони' },
   { id: 10, name: 'Давомийлик вақти' },
   { id: 11, name: 'Қайта қабул қилиш санаси' },
@@ -43,9 +43,9 @@ const defVal = {
   extraQuestionCount: '',
   durationTime: '',
   retakeDate: '',
-  easyQuestionCount: '',
-  mediumQuestionCount: '',
-  hardQuestionCount: '',
+  // easyQuestionCount: '',
+  // mediumQuestionCount: '',
+  // hardQuestionCount: '',
   main: '',
   fileId: ''
 };
@@ -98,9 +98,9 @@ const Category = () => {
       addValue.durationTime = 0;
       addValue.extraQuestionCount = 0;
       addValue.questionCount = 0;
-      addValue.easyQuestionCount = 0;
-      addValue.mediumQuestionCount = 0;
-      addValue.hardQuestionCount = 0;
+      // addValue.easyQuestionCount = 0;
+      // addValue.mediumQuestionCount = 0;
+      // addValue.hardQuestionCount = 0;
     }
     if (addValue && imgUpload) addValue.fileId = imgUpload;
 
@@ -141,7 +141,7 @@ const Category = () => {
                   <img
                     src={item.fileId ? `${api_videos_files}${item.fileId}` : image}
                     alt={item.name}
-                    className={`w-14 h-14 rounded-full object-cover hover:cursor-pointer`}
+                    className={`w-14 h-14 rounded-full object-cover hover:cursor-pointer scale-125`}
                   />
                 </td>
                 <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
@@ -149,7 +149,7 @@ const Category = () => {
                     {item.name}
                   </p>
                 </td>
-                <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark min-w-[400px]">
+                <td className="border-b border-[#eee] p-5 dark:border-strokedark max-w-[400px]">
                   <p className="text-black dark:text-white">
                     {item.description}
                   </p>
@@ -159,21 +159,21 @@ const Category = () => {
                     {item.questionCount}
                   </p>
                 </td>
-                <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
-                  <p className="text-black dark:text-white">
-                    {item.hardQuestionCount}
-                  </p>
-                </td>
-                <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
-                  <p className="text-black dark:text-white">
-                    {item.mediumQuestionCount}
-                  </p>
-                </td>
-                <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
-                  <p className="text-black dark:text-white">
-                    {item.easyQuestionCount}
-                  </p>
-                </td>
+                {/*<td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">*/}
+                {/*  <p className="text-black dark:text-white">*/}
+                {/*    {item.hardQuestionCount}*/}
+                {/*  </p>*/}
+                {/*</td>*/}
+                {/*<td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">*/}
+                {/*  <p className="text-black dark:text-white">*/}
+                {/*    {item.mediumQuestionCount}*/}
+                {/*  </p>*/}
+                {/*</td>*/}
+                {/*<td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">*/}
+                {/*  <p className="text-black dark:text-white">*/}
+                {/*    {item.easyQuestionCount}*/}
+                {/*  </p>*/}
+                {/*</td>*/}
                 <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
                   <p className="text-black dark:text-white">
                     {item.extraQuestionCount}
@@ -304,39 +304,39 @@ const Category = () => {
                     placeholder="Умумий саволлар сонини киритинг"
                   />
                 </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 mb-2">Осон саволлар сони</label>
-                  <input
-                    required
-                    value={addValue?.easyQuestionCount}
-                    onChange={e => handleInputChange('easyQuestionCount', e.target.value)}
-                    className={styles.input}
-                    type={`number`}
-                    placeholder="Осон саволлар сонини киритинг"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 mb-2">Урта саволлар сони</label>
-                  <input
-                    required
-                    value={addValue?.mediumQuestionCount}
-                    onChange={e => handleInputChange('mediumQuestionCount', e.target.value)}
-                    className={styles.input}
-                    type={`number`}
-                    placeholder="Урта саволлар сонини киритинг"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 mb-2">Қийин саволлар сони</label>
-                  <input
-                    required
-                    value={addValue?.hardQuestionCount}
-                    onChange={e => handleInputChange('hardQuestionCount', e.target.value)}
-                    className={styles.input}
-                    type={`number`}
-                    placeholder="Қийин саволлар сонини киритинг"
-                  />
-                </div>
+                {/*<div className="mb-4">*/}
+                {/*  <label className="block text-gray-700 mb-2">Осон саволлар сони</label>*/}
+                {/*  <input*/}
+                {/*    required*/}
+                {/*    value={addValue?.easyQuestionCount}*/}
+                {/*    onChange={e => handleInputChange('easyQuestionCount', e.target.value)}*/}
+                {/*    className={styles.input}*/}
+                {/*    type={`number`}*/}
+                {/*    placeholder="Осон саволлар сонини киритинг"*/}
+                {/*  />*/}
+                {/*</div>*/}
+                {/*<div className="mb-4">*/}
+                {/*  <label className="block text-gray-700 mb-2">Урта саволлар сони</label>*/}
+                {/*  <input*/}
+                {/*    required*/}
+                {/*    value={addValue?.mediumQuestionCount}*/}
+                {/*    onChange={e => handleInputChange('mediumQuestionCount', e.target.value)}*/}
+                {/*    className={styles.input}*/}
+                {/*    type={`number`}*/}
+                {/*    placeholder="Урта саволлар сонини киритинг"*/}
+                {/*  />*/}
+                {/*</div>*/}
+                {/*<div className="mb-4">*/}
+                {/*  <label className="block text-gray-700 mb-2">Қийин саволлар сони</label>*/}
+                {/*  <input*/}
+                {/*    required*/}
+                {/*    value={addValue?.hardQuestionCount}*/}
+                {/*    onChange={e => handleInputChange('hardQuestionCount', e.target.value)}*/}
+                {/*    className={styles.input}*/}
+                {/*    type={`number`}*/}
+                {/*    placeholder="Қийин саволлар сонини киритинг"*/}
+                {/*  />*/}
+                {/*</div>*/}
                 <div className="mb-4">
                   <label className="block text-gray-700 mb-2" htmlFor="extraQuestionCount">Қўшимча саволлар сони</label>
                   <input
