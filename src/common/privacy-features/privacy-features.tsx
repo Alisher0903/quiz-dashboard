@@ -17,8 +17,6 @@ export const screenshotBlocked = () => {
   return () => document.removeEventListener('keydown', handleKeyDown);
 };
 
-
-
 // =============saytdan maxfiylikka tegishli narsalarni blocklaydi==============
 export const siteSecurity = () => {
   document.addEventListener('contextmenu', function(e) {
