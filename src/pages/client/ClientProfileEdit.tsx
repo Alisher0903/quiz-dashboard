@@ -37,7 +37,7 @@ const ClientProfileEdit: React.FC = () => {
     }, [userData]);
 
     const handleUpdate = () => {
-        updateUserData(userData, attachmentId, setUserData, setIsLoading);
+        updateUserData(userData, attachmentId ? attachmentId : userData.fileId, setUserData, setIsLoading);
     };
 
     const validateForm = () => {
@@ -69,9 +69,6 @@ const ClientProfileEdit: React.FC = () => {
     const handleUploadClick = () => {
         document.getElementById('imageUploadInput')?.click();
     };
-
-    console.log(userData.districtName);
-    
 
     return (
         <div className="container mx-auto px-4 mt-4">
@@ -140,7 +137,7 @@ const ClientProfileEdit: React.FC = () => {
                                         id='inputRegionName'
                                         placeholder={`Вилоятингизни танланг`}
                                         className='w-full rounded h-12'
-                                        value={userData.regionId}
+                                        value={userData?.regionId}
                                         onChange={(e) => setUserData({ ...userData, regionId: +e })}
                                         allowClear
                                     >
@@ -157,7 +154,7 @@ const ClientProfileEdit: React.FC = () => {
                                         id='inputDistrictName'
                                         placeholder={`Туманингизни танланг`}
                                         className={`w-full rounded h-12`}
-                                        value={userData.districtId}
+                                        value={userData?.districtId}
                                         onChange={(e) => {setUserData({ ...userData, districtId: +e })
                                         console.log(e);
                                         

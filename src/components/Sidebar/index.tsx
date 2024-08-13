@@ -150,6 +150,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       Ходимлар
                     </NavLink>
                   </li>
+                  <li>
+                    <NavLink
+                      to="/address"
+                      className={`${styles.sidebar} ${pathname === '/address' && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
+                    >
+                      Манзил
+                    </NavLink>
+                  </li>
                 </>
               )}
 

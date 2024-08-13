@@ -23,6 +23,7 @@ import ClientQuizStart from './pages/client/ClientQuizStart.tsx';
 import AllUser from './pages/AllUser.tsx';
 import ResultArchive from './pages/ResultArchive.tsx';
 import ClientProfileEdit from './pages/client/ClientProfileEdit.tsx';
+import Address from './pages/Address.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -131,6 +132,15 @@ function App() {
             <>
               <PageTitle title="Admin | All User" />
               <AllUser />
+            </>
+          }
+        />
+        <Route
+          path="/address"
+          element={
+            <>
+              <PageTitle title="Admin | Address" />
+              <Address />
             </>
           }
         />
