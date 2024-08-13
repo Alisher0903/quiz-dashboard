@@ -77,7 +77,7 @@ const Address = () => {
     <>
       <div>
         <Breadcrumb pageName="Манзилар" />
-        {!districs && !regions && isLoading && <PendingLoader />}
+        {isLoading && <PendingLoader />}
         <div>
           <div className="flex justify-between items-center">
             <div>
