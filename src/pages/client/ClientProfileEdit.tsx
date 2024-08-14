@@ -11,6 +11,7 @@ import PendingLoader from '../../common/Loader/pending-loader'
 import { api_videos_files } from '../../common/api/api'
 import userIMage from '../../images/user.jpg'
 import { checkImgUpload } from '../../components/test-crud-check'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 const ClientProfileEdit: React.FC = () => {
     const { userData, setUserData } = useProfileStore();
@@ -80,7 +81,8 @@ const ClientProfileEdit: React.FC = () => {
                     <div className="bg-white dark:bg-[#24303F] shadow-md flex justify-center items-center flex-col rounded-lg p-4">
                         <h2 className="text-2xl text-center text-red-600 dark:text-blue-600 font-medium mb-4">Профил расми</h2>
                         <div className="relative">
-                            <img
+                            <LazyLoadImage
+                                effect="blur"
                                 className="rounded-full object-cover h-40 w-40 mb-4"
                                 src={userData.fileId ? imagePreviewUrl ? imagePreviewUrl : api_videos_files + userData.fileId : userIMage}
                                 alt="Your profile image"
