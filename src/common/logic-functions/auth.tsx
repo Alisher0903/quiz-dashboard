@@ -154,10 +154,11 @@ export const forgotPasswordEmail = async (
       consoleClear();
       setLoading(false);
     }
-  } catch {
+  } catch (err: any) {
+    if (err.response.data['message: '] === 'User not found') toast.error('Бу фойдаланувчи мавжуд эмас!!!');
+    else toast.error('Нимадур хатолик юз берди, кейинроқ қайта уриниб куринг!!!');
     consoleClear();
     setLoading(false);
-    toast.error('Нимадур хатолик юз берди, кейинроқ қайта уриниб куринг!!!');
   }
 };
 
