@@ -38,7 +38,7 @@ const UserAdmin = () => {
 
   useEffect(() => {
     getAdminLists(setGetAdminList, setIsLoading, page, setTotalPage);
-    unReload()
+    unReload();
   }, []);
 
   useEffect(() => {
@@ -71,7 +71,6 @@ const UserAdmin = () => {
   };
 
   const onChange = (page: number): void => setPage(page - 1);
-
   return (
     <>
       <Breadcrumb pageName="Ходимлар" />
@@ -87,37 +86,35 @@ const UserAdmin = () => {
       </div>
 
       <UniversalTable thead={thead}>
-        {isLoading ? <PendingLoader /> : (
-          getAdminList ? (
-            getAdminList.map((item, index) => (
-              <tr>
-                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <h5 className="font-medium text-black dark:text-white">{index + 1}</h5>
-                </td>
-                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <p className="text-black dark:text-white">{item.firstName}</p>
-                </td>
-                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <p className="text-black dark:text-white">{item.lastName}</p>
-                </td>
-                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <p className="text-black dark:text-white">{item.email}</p>
-                </td>
-                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <p className="text-black dark:text-white">
-                    <SwitcherIsActive id={item.id} active={item.enabled} />
-                  </p>
-                </td>
-              </tr>
-            ))
-          ) : (<>
-            <tr>
-              <td colSpan={thead.length}
-                  className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center">
-                Ходимлар мавжуд эмас
-              </td>
-            </tr>
-          </>)
+        {isLoading ? <PendingLoader /> : (getAdminList && getAdminList.length > 0) ? getAdminList.map((item, index) => (
+          <tr>
+            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+              <h5 className="font-medium text-black dark:text-white">{index + 1}</h5>
+            </td>
+            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+              <p className="text-black dark:text-white">{item.firstName}</p>
+            </td>
+            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+              <p className="text-black dark:text-white">{item.lastName}</p>
+            </td>
+            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+              <p className="text-black dark:text-white">{item.email}</p>
+            </td>
+            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+              <p className="text-black dark:text-white">
+                <SwitcherIsActive id={item.id} active={item.enabled} />
+              </p>
+            </td>
+          </tr>
+        )) : (
+          <tr>
+            <td
+              colSpan={thead.length}
+              className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center"
+            >
+              Ходимлар мавжуд эмас
+            </td>
+          </tr>
         )}
       </UniversalTable>
       {totalPage > 0 && (

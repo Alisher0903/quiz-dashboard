@@ -6,7 +6,6 @@ import GlobalModal from '../components/modal/modal.tsx';
 import { Pagination, Select } from 'antd';
 import PendingLoader from '../common/Loader/pending-loader.tsx';
 import { userAllList } from '../common/logic-functions/user.tsx';
-import CheckboxIsActive from '../components/Checkboxes/CheckboxIsActive.tsx';
 import { getDistrict, getRegions } from '../common/global-functions';
 import globalStore from '../common/state-management/globalStore.tsx';
 import { consoleClear } from '../common/console-clear/console-clear.tsx';
@@ -83,7 +82,7 @@ const AllUser = () => {
 
   useEffect(() => {
     if (resData) {
-      setResData(false)
+      setResData(false);
       userAllList({
         page: currentPage,
         setTotalPage: setTotalPages,
@@ -153,46 +152,42 @@ const AllUser = () => {
       </div>
 
       <UniversalTable thead={thead}>
-        {loading ? <PendingLoader /> : (
-          users ? (
-            users.map((user, index) => (
-              <tr key={user.id}>
-                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <h5 className="font-medium text-black dark:text-white">{(currentPage * 10) + index + 1}</h5>
-                </td>
-                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <p className="text-black dark:text-white">{user.firstName}</p>
-                </td>
-                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <p className="text-black dark:text-white">{user.lastName}</p>
-                </td>
-                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <p className="text-black dark:text-white">{user.email}</p>
-                </td>
-                {/* <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+        {loading ? <PendingLoader /> : (users && users.length > 0) ? users.map((user, index) => (
+          <tr key={user.id}>
+            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+              <h5 className="font-medium text-black dark:text-white">{(currentPage * 10) + index + 1}</h5>
+            </td>
+            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+              <p className="text-black dark:text-white">{user.firstName}</p>
+            </td>
+            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+              <p className="text-black dark:text-white">{user.lastName}</p>
+            </td>
+            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+              <p className="text-black dark:text-white">{user.email}</p>
+            </td>
+            {/* <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className={`text-black dark:text-white`}>
                     <CheckboxIsActive id={user.id} isChecked={user.access} setResData={setResData} />
                   </p>
                 </td> */}
-                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <div className="flex items-center space-x-3.5">
-                    <button onClick={() => openModal(user)}>
-                      <BiShow className="text-2xl duration-300" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))
-          ) : (<>
-            <tr>
-              <td
-                colSpan={thead.length}
-                className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center"
-              >
-                Фойдаланувчи мавжуд эмас
-              </td>
-            </tr>
-          </>)
+            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+              <div className="flex items-center space-x-3.5">
+                <button onClick={() => openModal(user)}>
+                  <BiShow className="text-2xl duration-300" />
+                </button>
+              </div>
+            </td>
+          </tr>
+        )) : (
+          <tr>
+            <td
+              colSpan={thead.length}
+              className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center"
+            >
+              Фойдаланувчи мавжуд эмас
+            </td>
+          </tr>
         )}
       </UniversalTable>
       {totalPages > 0 && (

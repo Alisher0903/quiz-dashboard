@@ -56,7 +56,7 @@ const defVal = {
 
 const Category = () => {
   const { categoryData, setCategoryData, setAddValue, addValue } = categoryStore();
-  const { isLoading, setIsLoading, resData, setResData, imgUpload } = globalStore();
+  const { isLoading, setIsLoading, resData, setResData, imgUpload, setImgUpload } = globalStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalDelete, setIsModalDelete] = useState(false);
   const [editStatus, setEditStatus] = useState<string | number>('');
@@ -70,7 +70,11 @@ const Category = () => {
 
   useEffect(() => {
     getAdminCategoryPage({ setData: setCategoryData, page, setTotalPage, setIsLoading });
-  }, [page]);
+  }, [page])
+
+  useEffect(() => {
+    if (addValue && imgUpload) addValue.fileId = imgUpload;
+  }, [imgUpload]);
 
   useEffect(() => {
     if (resData) {
@@ -80,6 +84,7 @@ const Category = () => {
       closeModal();
       closeModalDelete();
       setEditStatus('');
+      setImgUpload(null)
     }
   }, [resData]);
 
@@ -107,7 +112,7 @@ const Category = () => {
       // addValue.mediumQuestionCount = 0;
       // addValue.hardQuestionCount = 0;
     }
-    if (addValue && imgUpload) addValue.fileId = imgUpload;
+    // if (addValue && imgUpload) addValue.fileId = imgUpload;
 
     setAddValue({
       ...addValue,

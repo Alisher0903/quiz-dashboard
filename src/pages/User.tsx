@@ -64,7 +64,7 @@ const User = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [statusEdit, setStatusEdit] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [users, setUsers] = useState<IUser[]>([]);
+  const [users, setUsers] = useState<IUser[] | null>(null);
   const [userDetails, setUserDetails] = useState<IUserDetails | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
@@ -100,11 +100,11 @@ const User = () => {
         setUsers(data.body.body);
         setTotalPages(data.body.totalElements);
         setLoading(false);
-      } else setUsers([]);
+      } else setUsers(null);
       consoleClear();
     } catch (error) {
       setLoading(false);
-      setUsers([]);
+      setUsers(null);
       consoleClear();
     }
   };
@@ -223,42 +223,40 @@ const User = () => {
 
       <UniversalTable thead={thead}>
         {loading ? <PendingLoader /> : (
-          users.length > 0 ? (
-            users.map((user, index) => (
-              <tr key={user.id}>
-                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <h5 className="font-medium text-black dark:text-white">{(currentPage * 10) + index + 1}</h5>
-                </td>
-                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <p className="text-black dark:text-white">{user.fullName}</p>
-                </td>
-                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <p className="text-black dark:text-white">{user.categoryName}</p>
-                </td>
-                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <p className="text-black dark:text-white">{user.phoneNumber}</p>
-                </td>
-                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <p className={`text-black dark:text-white py-1 rounded-xl text-center ${statusColor(user.status)}`}>
-                    {statusN(user.status)}
-                  </p>
-                </td>
-                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <div className="flex items-center space-x-3.5 ms-6">
-                    <Dropdown overlay={
-                      <Menu items={getItems(user)} />
-                    } trigger={['click']} arrow>
-                      <a onClick={(e) => e.preventDefault()}>
-                        <Space>
-                          <CiMenuKebab className={`text-2xl duration-300 hover:cursor-pointer`} />
-                        </Space>
-                      </a>
-                    </Dropdown>
-                  </div>
-                </td>
-              </tr>
-            ))
-          ) : (<>
+          users ? users.map((user, index) => (
+            <tr key={user.id}>
+              <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                <h5 className="font-medium text-black dark:text-white">{(currentPage * 10) + index + 1}</h5>
+              </td>
+              <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                <p className="text-black dark:text-white">{user.fullName}</p>
+              </td>
+              <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                <p className="text-black dark:text-white">{user.categoryName}</p>
+              </td>
+              <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                <p className="text-black dark:text-white">{user.phoneNumber}</p>
+              </td>
+              <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                <p className={`text-black dark:text-white py-1 rounded-xl text-center ${statusColor(user.status)}`}>
+                  {statusN(user.status)}
+                </p>
+              </td>
+              <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                <div className="flex items-center space-x-3.5 ms-6">
+                  <Dropdown overlay={
+                    <Menu items={getItems(user)} />
+                  } trigger={['click']} arrow>
+                    <a onClick={(e) => e.preventDefault()}>
+                      <Space>
+                        <CiMenuKebab className={`text-2xl duration-300 hover:cursor-pointer`} />
+                      </Space>
+                    </a>
+                  </Dropdown>
+                </div>
+              </td>
+            </tr>
+          )) : (<>
             <tr>
               <td
                 colSpan={thead.length}
