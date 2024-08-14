@@ -13,9 +13,11 @@ import PendingLoader from '../common/Loader/pending-loader.tsx';
 import { useNavigate } from 'react-router-dom';
 import { CiMenuKebab } from 'react-icons/ci';
 import AddButtons from '../components/buttons/buttons.tsx';
-import { statusUpdate } from '../common/logic-functions/user.tsx';
+import { backTestEditDate, statusUpdate } from '../common/logic-functions/user.tsx';
 import { getAdminCategory } from '../common/logic-functions/category.tsx';
 import categoryStore from '../common/state-management/categoryStore.tsx';
+import { CategoryList } from '../types/category.ts';
+import SelectForm from '../components/select/Select.tsx';
 
 const { Option } = Select;
 
@@ -72,6 +74,7 @@ const User = () => {
   const [isName, setIsName] = useState('');
   const [statusName, setStatusName] = useState('');
   const [categoryID, setCategoryID] = useState('');
+  const [categoryDateID, setCategoryDateID] = useState('');
 
   useEffect(() => {
     fetchUsers();
@@ -97,11 +100,11 @@ const User = () => {
         setUsers(data.body.body);
         setTotalPages(data.body.totalElements);
         setLoading(false);
-      } else setUsers([])
+      } else setUsers([]);
       consoleClear();
     } catch (error) {
       setLoading(false);
-      setUsers([])
+      setUsers([]);
       consoleClear();
     }
   };
@@ -128,6 +131,7 @@ const User = () => {
     setStatus('');
     setResID('');
     setStatusVal('');
+    setCategoryDateID('');
   };
 
   const onChange = (page: number): void => setCurrentPage(page - 1);
@@ -172,6 +176,15 @@ const User = () => {
         setStatus('CANCELLED');
         setResID(user.id);
       }
+    },
+    {
+      label: 'Қайта топшириш вақтини белгилаш',
+      key: '4',
+      onClick: () => {
+        openStatusEdit();
+        setStatus('testDateUpdate');
+        setResID(user.userId);
+      }
     }
   ];
 
@@ -202,9 +215,9 @@ const User = () => {
           allowClear
           onChange={(value) => setStatusName(value)}
         >
-          <Option value={`APPROVED`}>Tasdiqlangan</Option>
-          <Option value={`WAITING`}>Kutilmoqda</Option>
-          <Option value={`CANCELLED`}>Bekor qilingan</Option>
+          <Option value={`APPROVED`}>Тасдиқланган</Option>
+          <Option value={`WAITING`}>Кутилмоқда</Option>
+          <Option value={`CANCELLED`}>Бекор қилинган</Option>
         </Select>
       </div>
 
@@ -271,30 +284,63 @@ const User = () => {
       {/*status edit modal*/}
       <GlobalModal onClose={closeModalEdit} isOpen={statusEdit}>
         <div className="gap-3 ml-1 min-w-60 sm:min-w-96 lg:min-w-[35rem]">
-          <h2 className="text-center md:text-2xl py-5 font-semibold">
-            {status === 'APPROVED' ? 'Натижани тасдиқламоқчимисиз' : 'Натижани бекор қилмоқчимисиз'}
-          </h2>
-          {status === 'APPROVED' && (
+          {status === 'testDateUpdate' ? <>
             <input
+              type={`number`}
               value={statusVal}
-              onChange={e => setStatusVal(e.target.value)}
-              placeholder="Амалий боҳони киритинг"
-              className="w-full rounded-lg border border-stroke bg-transparent py-3 px-5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark bg-white dark:text-form-input dark:focus:border-primary"
+              onChange={(e) => setStatusVal(e.target.value)}
+              placeholder="Қайта ишлаш учун вақтни киритинг"
+              className="w-full rounded-lg border border-stroke bg-transparent py-3 px-5 my-4 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
             />
-          )}
+            <SelectForm
+              val={categoryDateID}
+              onChange={e => setCategoryDateID(e.target.value)}
+              defOption={`Категорияни танланг`}
+              child={categoryData && (
+                categoryData.map((item: CategoryList | any) => (
+                  <option value={item.id} key={item.id}>{item.name}</option>
+                )))}
+            />
+          </> : (<>
+            <h2 className="text-center md:text-2xl py-5 font-semibold">
+              {status === 'APPROVED' ? 'Натижани тасдиқламоқчимисиз' : 'Натижани бекор қилмоқчимисиз'}
+            </h2>
+            {status === 'APPROVED' && (
+              <input
+                value={statusVal}
+                onChange={e => setStatusVal(e.target.value)}
+                placeholder="Амалий боҳони киритинг"
+                className="w-full rounded-lg border border-stroke bg-transparent py-3 px-5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark bg-white dark:text-form-input dark:focus:border-primary"
+              />
+            )}
+          </>)}
           <div className={`flex justify-end items-center mt-5 mb-3 gap-5`}>
             <AddButtons children={`Ёпиш`} onClick={closeModalEdit} />
-            <AddButtons
-              children={`Сақлаш`}
-              disabled={status === 'APPROVED' ? !statusVal : false}
-              onClick={() => statusUpdate({
-                status,
-                ball: status === 'APPROVED' ? statusVal : '',
-                resultID: resID,
-                getUser: fetchUsers,
-                close: closeModalEdit
-              })}
-            />
+            {status === 'testDateUpdate' ? (
+              <AddButtons
+                children={`Сақлаш`}
+                disabled={!(statusVal && categoryDateID)}
+                onClick={() => backTestEditDate({
+                  userId: resID,
+                  expiredDate: statusVal,
+                  categoryId: categoryDateID,
+                  closeModal: closeModalEdit,
+                  fetchData: fetchUsers
+                })}
+              />
+            ) : (
+              <AddButtons
+                children={`Сақлаш`}
+                disabled={status === 'APPROVED' ? !statusVal : false}
+                onClick={() => statusUpdate({
+                  status,
+                  ball: status === 'APPROVED' ? statusVal : '',
+                  resultID: resID,
+                  getUser: fetchUsers,
+                  close: closeModalEdit
+                })}
+              />
+            )}
           </div>
         </div>
       </GlobalModal>
