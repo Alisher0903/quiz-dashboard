@@ -9,12 +9,18 @@ export interface AddressStoreTypes {
     setIsDeleteRegionModal: (val: boolean) => void;
     isEditRegionModal: boolean;
     setIsEditRegionModal: (val: boolean) => void;
+    isEditDistrictModal: boolean;
+    setIsEditDistrictModal: (val: boolean) => void;
+    isDeleteDistricModal: boolean;
+    setIsDeleteDistricModal: (val: boolean) => void;
     isDistrictModal: boolean;
     setIsDistrictModal: (val: boolean) => void;
-    regionName: string;
-    setRegionName: (val: string) => void;
+    name: string;
+    setName: (val: string) => void;
     id: number;
     setId: (val: number) => void;
+    regionId: number;
+    setRegionId: (val: number) => void;
 }
 
 export interface DistricsType {

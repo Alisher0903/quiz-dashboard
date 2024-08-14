@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import useAddressStore from "../common/state-management/address"
-import { addRegion, deleteRegion, getDistrics, getRegions, updateRegion } from "../common/logic-functions/address";
+import { addDistrict, addRegion, deleteDistrict, deleteRegion, getDistrics, getRegions, updateDistrict, updateRegion } from "../common/logic-functions/address";
 import globalStore from "../common/state-management/globalStore";
 import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
 import PendingLoader from "../common/Loader/pending-loader";
@@ -8,6 +8,7 @@ import UniversalTable, { IThead } from "../components/Tables/UniversalTable";
 import { MdDelete, MdEdit, MdOutlineAddCircle } from "react-icons/md";
 import AddButtons from "../components/buttons/buttons";
 import GlobalModal from "../components/modal/modal";
+import SelectForm from "../components/select/Select";
 
 const regionsThead: IThead[] = [
   { id: 1, name: 'Т/р' },
@@ -38,12 +39,18 @@ const Address = () => {
     setIsRegionModal,
     isDeleteRegionModal,
     setIsDeleteRegionModal,
-    regionName,
-    setRegionName,
+    name,
+    setName,
     id,
     setId,
     isEditRegionModal,
-    setIsEditRegionModal
+    setIsEditRegionModal,
+    isEditDistrictModal,
+    setIsEditDistrictModal,
+    isDeleteDistricModal,
+    setIsDeleteDistricModal,
+    regionId,
+    setRegionId
   } = useAddressStore();
   const { isLoading, setIsLoading } = globalStore()
 
@@ -57,22 +64,38 @@ const Address = () => {
 
   const toggleRegionModal = () => {
     setIsRegionModal(!isRegionModal)
-    setRegionName('')
+    setName('')
+    setId(0)
   };
   const toggleDeleteRegionModal = () => {
     setIsDeleteRegionModal(!isDeleteRegionModal)
-    setRegionName('')
+    setName('')
+    setId(0)
   };
   const toggleEditRegionModal = () => {
-    setRegionName('')
+    setName('')
+    setId(0)
     setIsEditRegionModal(!isEditRegionModal)
   };
   const toggleDistrictModal = () => {
     setIsDistrictModal(!isDistrictModal)
-    setRegionName('')
+    setName('')
+    setId(0)
+  };
+  const toggleDeleteDistricModal = () => {
+    setIsDeleteDistricModal(!isDeleteDistricModal)
+    setName('')
+    setId(0)
+  };
+  const toggleEditDistricModal = () => {
+    setName('')
+    setId(0)
+    setIsEditDistrictModal(!isEditDistrictModal)
   };
 
-  console.log(regionName);
+  console.log('idddddd', id);
+
+
   return (
     <>
       <div>
@@ -94,7 +117,7 @@ const Address = () => {
             </div>
           </div>
           <UniversalTable thead={regionsThead}>
-            {regions && regions.map((item, index) => (
+            {regions.length !== 0 ? regions.map((item, index) => (
               <tr key={index}>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <h5 className="font-medium text-black dark:text-white">{index + 1}</h5>
@@ -109,7 +132,7 @@ const Address = () => {
                         onClick={() => {
                           toggleEditRegionModal()
                           setId(item.id);
-                          setRegionName(item.name)
+                          setName(item.name)
                         }} />
                     </button>
                     <button className="hover:text-red-600">
@@ -123,8 +146,18 @@ const Address = () => {
                   </div>
                 </td>
               </tr>
-
-            ))}
+            )) : (
+              <>
+                <tr>
+                  <td
+                    colSpan={districstsThead.length}
+                    className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center"
+                  >
+                    Вилоятлар мавжуд эмас
+                  </td>
+                </tr>
+              </>
+            )}
           </UniversalTable>
         </div>
         <div>
@@ -143,7 +176,7 @@ const Address = () => {
             </div>
           </div>
           <UniversalTable thead={districstsThead}>
-            {districs && districs.map((item, index) => (
+            {districs.length !== 0 ? districs.map((item, index) => (
               <tr key={index}>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <h5 className="font-medium text-black dark:text-white">{index + 1}</h5>
@@ -157,19 +190,37 @@ const Address = () => {
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <div className="flex items-center space-x-3.5">
                     <button className="hover:text-yellow-500">
-                      <MdEdit className={`text-2xl duration-300`} />
-                    </button>
+                      <MdEdit className={`text-2xl duration-300`}
+                        onClick={() => {
+                          toggleEditDistricModal()
+                          setId(item.id);
+                          setRegionId(item.regionId)
+                          setName(item.name)
+                        }} />                    </button>
                     <button className="hover:text-red-600">
-                      <MdDelete
-                        className={`text-2xl duration-300`}
-
+                      <MdDelete className={`text-2xl duration-300`}
+                        onClick={() => {
+                          toggleDeleteDistricModal()
+                          setId(item.id)
+                        }}
                       />
                     </button>
                   </div>
                 </td>
               </tr>
 
-            ))}
+            )) : (
+              <>
+                <tr>
+                  <td
+                    colSpan={districstsThead.length}
+                    className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-center"
+                  >
+                    Туманлар мавжуд эмас
+                  </td>
+                </tr>
+              </>
+            )}
           </UniversalTable>
         </div>
         <GlobalModal isOpen={isRegionModal} onClose={toggleRegionModal}>
@@ -178,7 +229,7 @@ const Address = () => {
             <div className="mb-4">
               <input
                 required
-                onChange={(e) => setRegionName(e.target.value)}
+                onChange={(e) => setName(e.target.value)}
                 className={styles.input}
                 id="lastname"
                 placeholder="Вилоят номини киритинг"
@@ -188,7 +239,7 @@ const Address = () => {
               <AddButtons children={`Ёпиш`} onClick={toggleRegionModal} />
               <AddButtons
                 children={isLoading ? 'юкланмоқда...' : `Сақлаш`}
-                onClick={() => addRegion(setRegions, setIsLoading, regionName, toggleRegionModal)}
+                onClick={() => addRegion(setRegions, setIsLoading, name, toggleRegionModal)}
                 disabled={isLoading}
                 type={`submit`}
               />
@@ -201,10 +252,10 @@ const Address = () => {
             <div className="mb-4">
               <input
                 required
-                onChange={(e) => setRegionName(e.target.value)}
+                onChange={(e) => setName(e.target.value)}
                 className={styles.input}
                 id="lastname"
-                value={regionName}
+                value={name}
                 placeholder="Вилоят номини киритинг"
               />
             </div>
@@ -212,7 +263,7 @@ const Address = () => {
               <AddButtons children={`Ёпиш`} onClick={toggleEditRegionModal} />
               <AddButtons
                 children={isLoading ? 'юкланмоқда...' : `Сақлаш`}
-                onClick={() => updateRegion(id, regionName, setRegions, setIsLoading, toggleEditRegionModal)}
+                onClick={() => updateRegion(id, name, setRegions, setDistrics, setIsLoading, toggleEditRegionModal)}
                 disabled={isLoading}
                 type={`submit`}
               />
@@ -227,16 +278,96 @@ const Address = () => {
               <AddButtons
                 children={isLoading ? 'юкланмоқда...' : `Учириш`}
                 disabled={isLoading}
-                onClick={() => deleteRegion(id, setRegions, setIsLoading, toggleDeleteRegionModal)}
+                onClick={() => deleteRegion(id, setRegions, setDistrics, setIsLoading, toggleDeleteRegionModal)}
               />
             </div>
           </div>
         </GlobalModal>
-        {/* <GlobalModal isOpen={isDistrictModal} onClose={toggleDistrictModal}>
+        <GlobalModal isOpen={isDistrictModal} onClose={toggleDistrictModal}>
           <div className="gap-3 ml-1 min-w-60 sm:min-w-96 lg:min-w-[35rem]">
+            <p className="text-black dark:text-white text-2xl text-center my-3">Туман қўшиш</p>
+            <div className="mb-4">
+              <div className="mb-3">
+                <SelectForm
+                  onChange={e => setId(e.target.value)}
+                  defOption={`Вилоятни танланг`}
+                  child={<>
+                    {regions.map((item, index) => (
+                      <option key={index} value={item.id}>{item.name}</option>
+                    ))}
+                  </>}
+                />
+              </div>
+              <input
+                required
+                onChange={(e) => setName(e.target.value)}
+                className={styles.input}
+                id="lastname"
+                placeholder="Туман номини киритинг"
+              />
 
+            </div>
+            <div className={`flex justify-end items-center gap-5`}>
+              <AddButtons children={`Ёпиш`} onClick={toggleRegionModal} />
+              <AddButtons
+                children={isLoading ? 'юкланмоқда...' : `Сақлаш`}
+                onClick={() => addDistrict(name, id, setDistrics, setIsLoading, toggleDistrictModal)}
+                disabled={isLoading}
+                type={`submit`}
+              />
+            </div>
           </div>
-        </GlobalModal> */}
+        </GlobalModal>
+        <GlobalModal onClose={toggleDeleteDistricModal} isOpen={isDeleteDistricModal}>
+          <div className={`w-54 sm:w-64 md:w-96 lg:w-[40rem]`}>
+            <p className="text-black dark:text-white text-xl text-center my-3">Сиз аниқ бу тумани ўчирмоқчимисиз</p>
+            <div className={`flex justify-end items-center gap-5 mt-5`}>
+              <AddButtons children={`Ёпиш`} onClick={toggleDeleteDistricModal} />
+              <AddButtons
+                children={isLoading ? 'юкланмоқда...' : `Учириш`}
+                disabled={isLoading}
+                onClick={() => deleteDistrict(id, setDistrics, setIsLoading, toggleDeleteDistricModal)}
+              />
+            </div>
+          </div>
+        </GlobalModal>
+        <GlobalModal isOpen={isEditDistrictModal} onClose={toggleEditDistricModal}>
+          <div className="gap-3 ml-1 min-w-60 sm:min-w-96 lg:min-w-[35rem]">
+            <p className="text-black dark:text-white text-2xl text-center my-3">Туман номини ўзгартириш</p>
+            <div className="mb-4">
+              <div className="mb-3">
+                <SelectForm
+                  onChange={e => setRegionId(e.target.value)}
+                  defOption={`Вилоятни танланг`}
+                  val={regionId}
+                  child={<>
+                    {regions.map((item, index) => (
+                      <option key={index} value={item.id}>{item.name}</option>
+                    ))}
+                  </>}
+                />
+              </div>
+              <input
+                required
+                onChange={(e) => setName(e.target.value)}
+                className={styles.input}
+                id="lastname"
+                value={name}
+                placeholder="Туман номини киритинг"
+              />
+
+            </div>
+            <div className={`flex justify-end items-center gap-5`}>
+              <AddButtons children={`Ёпиш`} onClick={toggleEditDistricModal} />
+              <AddButtons
+                children={isLoading ? 'юкланмоқда...' : `Сақлаш`}
+                onClick={() => updateDistrict(id, name, regionId, setDistrics, setIsLoading, toggleEditDistricModal)}
+                disabled={isLoading}
+                type={`submit`}
+              />
+            </div>
+          </div>
+        </GlobalModal>
       </div>
     </>
   )

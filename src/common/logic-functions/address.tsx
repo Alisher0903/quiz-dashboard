@@ -57,6 +57,7 @@ export const addRegion = async (setRegions: (val: RegionsType[]) => void, setIsL
         if (data.success) {
             getRegions(setRegions, setIsLoading)
             consoleClear();
+            toast.success("Вилоят муваффақиятли қўшилди");
             toggleDistrictModal()
         } else {
             setIsLoading(false);
@@ -68,13 +69,39 @@ export const addRegion = async (setRegions: (val: RegionsType[]) => void, setIsL
     }
 };
 
-export const deleteRegion = async (id: number, setRegions: (val: RegionsType[]) => void, setIsLoading: (val: boolean) => void, toggleDeleteRegionModal: () => void) => {
+export const addDistrict = async (name: string, regionId: number, setDistrics: (val: DistricsType[]) => void, setIsLoading: (val: boolean) => void, toggleDistrictModal: () => void) => {
+    if (!name.trim() && !regionId) {
+        toast.error("Исм ва вилоятни киритинг");
+        return;
+    }
+
+    setIsLoading(true);
+    try {
+        const { data } = await axios.post(district_all, { name, regionId }, config);
+        if (data.success) {
+            getDistrics(setDistrics, setIsLoading)
+            consoleClear();
+            toast.success("Туман муваффақиятли қўшилди");
+            toggleDistrictModal()
+        } else {
+            setIsLoading(false);
+            consoleClear();
+        }
+    } catch {
+        setIsLoading(false);
+        consoleClear();
+    }
+};
+
+export const deleteRegion = async (id: number, setRegions: (val: RegionsType[]) => void, setDistrics: (val: DistricsType[]) => void, setIsLoading: (val: boolean) => void, toggleDeleteRegionModal: () => void) => {
     setIsLoading(true);
     try {
         const { data } = await axios.delete(`${region_all}/${id}`, config);
         if (data.success) {
             getRegions(setRegions, setIsLoading)
+            getDistrics(setDistrics, setIsLoading)
             consoleClear();
+            toast.success("Вилоят муваффақиятли ўчирилди");
             toggleDeleteRegionModal()
         } else {
             setIsLoading(false);
@@ -86,7 +113,26 @@ export const deleteRegion = async (id: number, setRegions: (val: RegionsType[]) 
     }
 };
 
-export const updateRegion = async (id: number, name: string, setRegions: (val: RegionsType[]) => void, setIsLoading: (val: boolean) => void, toggleEditRegionModal: () => void) => {
+export const deleteDistrict = async (id: number, setDistrics: (val: DistricsType[]) => void, setIsLoading: (val: boolean) => void, toggleDeleteRegionModal: () => void) => {
+    setIsLoading(true);
+    try {
+        const { data } = await axios.delete(`${district_all}/${id}`, config);
+        if (data.success) {
+            getDistrics(setDistrics, setIsLoading)
+            toggleDeleteRegionModal()
+            toast.success("Туман муваффақиятли ўчирилди");
+            consoleClear();
+        } else {
+            setIsLoading(false);
+            consoleClear();
+        }
+    } catch {
+        setIsLoading(false);
+        consoleClear();
+    }
+};
+
+export const updateRegion = async (id: number, name: string, setRegions: (val: RegionsType[]) => void, setDistrics: (val: DistricsType[]) => void, setIsLoading: (val: boolean) => void, toggleEditRegionModal: () => void) => {
     if (!name.trim()) {
         toast.error("Исм бўш бўлиши мумкин эмас");
         return;
@@ -97,8 +143,34 @@ export const updateRegion = async (id: number, name: string, setRegions: (val: R
         const { data } = await axios.put(`${region_all}/${id}`, { name }, config);
         if (data.success) {
             getRegions(setRegions, setIsLoading)
+            getDistrics(setDistrics, setIsLoading)
             consoleClear();
+            toast.success("Вилоят муваффақиятли ўзгартирилди");
             toggleEditRegionModal()
+        } else {
+            setIsLoading(false);
+            consoleClear();
+        }
+    } catch {
+        setIsLoading(false);
+        consoleClear();
+    }
+};
+
+export const updateDistrict = async (id: number, name: string, regionId: number, setDistrics: (val: DistricsType[]) => void, setIsLoading: (val: boolean) => void, toggleEditDistrictModal: () => void) => {
+    if (!name.trim() && !regionId) {
+        toast.error("Исм ва вилоятни киритинг");
+        return;
+    }
+
+    setIsLoading(true);
+    try {
+        const { data } = await axios.put(district_all, { id, name, regionId }, config);
+        if (data.success) {
+            getDistrics(setDistrics, setIsLoading)
+            consoleClear();
+            toast.success("Туман муваффақиятли ўзгартирилди");
+            toggleEditDistrictModal()
         } else {
             setIsLoading(false);
             consoleClear();
