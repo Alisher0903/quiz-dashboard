@@ -2,6 +2,7 @@ import axios from "axios"
 import { user_profile, user_profile_update } from "../api/api"
 import { config } from "../api/token"
 import { ProfileDataTypes } from "../../types/profile"
+import toast from "react-hot-toast"
 
 export const getUserData = async (setUserData: (val: ProfileDataTypes) => void, setIsLoading: (val: boolean) => void) => {
     setIsLoading(true)
@@ -34,6 +35,7 @@ export const updateUserData = async (userData: ProfileDataTypes, attachmentId: n
         const { data } = await axios.put(user_profile_update, payload, config);
         if (data.success) {
             getUserData(setUserData, setIsLoading);
+            toast.success("Сизнинг маълумотларингиз муваффақиятли ўзгартирилди");
         } else setIsLoading(false)
     } catch (error) {
         setIsLoading(false)

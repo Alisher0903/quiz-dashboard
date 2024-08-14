@@ -3,18 +3,21 @@ import { CategoryClientList } from '../types/category';
 import defaultIMage from '../images/default.png'
 import AddButtons from './buttons/buttons';
 import { Image } from 'antd';
+import { api_videos_files } from '../common/api/api';
 
 const CategoryCard: React.FC<{ data: CategoryClientList, onClick: () => void }> = ({ data, onClick }) => {
     return (
-        <div className="flex border mt-3 p-4 rounded-lg shadow-md">
-            <div className="w-1/4">
+        <div className="flex flex-col lg:flex-row border mt-3 p-4 rounded-lg shadow-md">
+            <div className="w-full lg:w-auto flex items-center justify-center my-3">
                 <Image
-                    src={defaultIMage}
+                    src={data.fileId ? api_videos_files + data.fileId : defaultIMage}
                     alt="Category image"
-                    className="w-full  object-cover h-auto rounded"
+                    height={150}
+                    width={270}
+                    className="object-cover rounded"
                 />
             </div>
-            <div className="w-3/4 pl-4">
+            <div className="lg:w-3/4 w-full pl-4">
                 <div className="flex justify-between items-center mb-2">
                     <span className="font-semibold">Ёналиш:</span>
                     <span className="font-semibold text">{data.name}</span>

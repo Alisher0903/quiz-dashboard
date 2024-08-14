@@ -33,6 +33,7 @@ export interface CategorySelectList {
 export interface CategoryClientList {
   id: string;
   retakeDate: number;
+  fileId: number;
   duration: number;
   name: string;
   questionCount: number;

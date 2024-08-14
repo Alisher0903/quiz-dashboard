@@ -7,12 +7,13 @@ import toast from 'react-hot-toast';
 import React from 'react';
 import { consoleClear } from '../console-clear/console-clear.tsx';
 
-export const getClientCategory = async (setClientCategory: (val: null | CategoryClientList[]) => void, setIsLoading: (val: boolean) => void) => {
+export const getClientCategory = async (size: number, page: number, setClientCategory: (val: null | CategoryClientList[]) => void, setTotalPage: (val: number) => void, setIsLoading: (val: boolean) => void) => {
   setIsLoading(true);
   try {
-    const { data } = await axios.get(`${category_all}?page=0&size=10`, config);
+    const { data } = await axios.get(`${category_all}?page=${page}0&size=${size}`, config);
     if (data.success) {
       setClientCategory(data.body.body);
+      setTotalPage(data.body.totalElements)
       setIsLoading(false);
       consoleClear();
     } else {

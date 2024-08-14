@@ -8,8 +8,8 @@ import { Pagination, Skeleton } from 'antd'
 const ClientDashboard: React.FC = () => {
   const { clientstatistic, setClientStatistic } = dashboardStore()
   const [getMee, setGetMee] = useState<any>({})
-  const [totalPage, setTotalPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [totalPage, setTotalPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
   const [certificate, setCertificate] = useState<any>(null); // State to hold the certificate data
@@ -30,11 +30,7 @@ const ClientDashboard: React.FC = () => {
 
   const handleUploadCertificate = (id: number) => {
     getClientCertificate(id, setIsLoading, setCertificate);
-  }
-
-  console.log(certificate);
-  
-
+  }  
 
   return (
     <>
@@ -51,6 +47,13 @@ const ClientDashboard: React.FC = () => {
           clientstatistic ?
             <div className='mt-4'>
               <div className='flex gap-5 flex-wrap'>
+                {clientstatistic.map((item, index) => (
+                  <ClientDashboardCard
+                    data={item}
+                    onClick={() => handleUploadCertificate(item.id)}
+                    key={index}
+                  />
+                ))}
                 {clientstatistic.map((item, index) => (
                   <ClientDashboardCard
                     data={item}

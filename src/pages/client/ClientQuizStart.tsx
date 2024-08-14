@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import CategoryCard from '../../components/CategoryCard'
 import categoryStore from '../../common/state-management/categoryStore'
 import { getClientCategory } from '../../common/logic-functions/category';
-import { Skeleton } from 'antd';
+import { Pagination, Skeleton } from 'antd';
 import { MdOutlineNotStarted } from "react-icons/md";
 import { getMe } from '../../common/global-functions';
 import GlobalModal from '../../components/modal/modal';
@@ -16,16 +16,23 @@ const ClientQuizStart: React.FC = () => {
   const [isModal, setIsModal] = useState<boolean>(false)
   const [categoryId, setCategoryId] = useState('')
   const [getMee, setGetMee] = useState<any>({})
+  const [totalPage, setTotalPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
-    getClientCategory(setClientCategoryData, setIsLoading);
-  }, [setClientCategoryData])
+    getClientCategory(pageSize, currentPage, setClientCategoryData, setTotalPage, setIsLoading);
+  }, [pageSize, currentPage, setClientCategoryData])
 
   useEffect(() => {
     getMe(setGetMee)
   }, [setGetMee]);
 
   const toggleModal = () => setIsModal(!isModal)
+  const onPageChange = (page: number, pageSize: number) => {
+    setCurrentPage(page - 1);
+    setPageSize(pageSize);
+  };
 
   return (
     <>
@@ -38,17 +45,28 @@ const ClientQuizStart: React.FC = () => {
           <div>
             <Skeleton />
           </div> :
-          clientCategoryData ? clientCategoryData.map((item) => (
-            <div>
-              <CategoryCard
-                data={item}
-                onClick={() => {
-                  toggleModal();
-                  setCategoryId(item.id)
-                }}
+          clientCategoryData ? <div>
+            {clientCategoryData.map((item) => (
+              <div>
+                <CategoryCard
+                  data={item}
+                  onClick={() => {
+                    toggleModal();
+                    setCategoryId(item.id)
+                  }}
+                />
+              </div>
+            ))}
+            <div className='mt-3'>
+              <Pagination
+                showSizeChanger
+                current={currentPage}
+                pageSize={pageSize}
+                total={totalPage}
+                onChange={onPageChange}
               />
             </div>
-          )) :
+          </div> :
             <div className='flex h-[69vh] justify-center items-center'>
               <p className='text-xl'>Cатегориялар топилмади</p>
             </div>

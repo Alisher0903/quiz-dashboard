@@ -3,13 +3,14 @@ import defaultIMage from '../images/default.png'
 import { ClientDashboardStatisticsList } from '../types/dashboard';
 import moment from 'moment';
 import { LuUploadCloud } from "react-icons/lu";
+import { api_videos_files } from '../common/api/api';
 
 const ClientDashboardCard: React.FC<{ data: ClientDashboardStatisticsList, onClick: () => void }> = ({ data, onClick }) => {
     return (
-        <div className="w-[32%] border-2 border-black dark:border-white p-4 rounded-md">
+        <div className="w-full lg:w-[32%] sm:w-[48%] border-2 border-black dark:border-white p-4 rounded-md">
             <div className="flex items-center justify-center mb-4">
                 <img
-                    src={defaultIMage}
+                    src={data.fileId ? api_videos_files + data.fileId : defaultIMage}
                     alt="Your Image"
                     className="h-40 w-full  object-cover"
                 />

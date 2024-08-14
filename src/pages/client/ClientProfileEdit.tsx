@@ -138,8 +138,10 @@ const ClientProfileEdit: React.FC = () => {
                                         placeholder={`Вилоятингизни танланг`}
                                         className='w-full rounded h-12'
                                         value={userData?.regionId}
-                                        onChange={(e) => setUserData({ ...userData, regionId: +e })}
-                                        allowClear
+                                        onChange={(e) => {
+                                            setUserData({ ...userData, regionId: e })
+                                        }}
+
                                     >
                                         {region && region.map(item => (
                                             <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
@@ -155,11 +157,7 @@ const ClientProfileEdit: React.FC = () => {
                                         placeholder={`Туманингизни танланг`}
                                         className={`w-full rounded h-12`}
                                         value={userData?.districtId}
-                                        onChange={(e) => {setUserData({ ...userData, districtId: +e })
-                                        console.log(e);
-                                        
-                                    }}
-                                        allowClear
+                                        onChange={(e) => setUserData({ ...userData, districtId: +e })}
                                     >
                                         {district && district.map(item => (
                                             <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>

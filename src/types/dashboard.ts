@@ -25,6 +25,7 @@ export interface DashboardListStatisticCards {
 
 export interface ClientDashboardStatisticsList {
   id: number;
+  fileId: number;
   firstName: string;
   lastName: string;
   categoryName: string;
