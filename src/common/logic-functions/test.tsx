@@ -3,7 +3,7 @@ import { config } from '../api/token';
 import { TestList, TestMainData } from '../../types/test';
 import {
   certificate, question_all_filter,
-  question_crud,
+  question_crud, question_transfer,
   quiz_pass,
   quiz_start
 } from '../api/api';
@@ -82,29 +82,29 @@ export const getCertificate = async (id: number, setResult: (val: string) => voi
 
 //===================ADMIN=========================
 // all get or filter
-export const allFilterOrGet = async (setData: (val: null | TestList[]) => void, page: number | string, setTotalPage: (val:number) => void, setLoading: (val: boolean) => void, name?: string, categoryId?: string | number, type?: string) => {
+export const allFilterOrGet = async (setData: (val: null | TestList[]) => void, page: number | string, setTotalPage: (val: number) => void, setLoading: (val: boolean) => void, name?: string, categoryId?: string | number, type?: string) => {
   const queryParams: string = [
     name ? `questionName=${name}` : '',
     categoryId ? `categoryId=${categoryId}` : '',
     type ? `type=${type}` : ''
   ].filter(Boolean).join('&');
   const url: string = `${question_all_filter}?${queryParams ? `${queryParams}&` : ''}page=${page}&size=10`;
-  setLoading(true)
+  setLoading(true);
   try {
     const { data } = await axios.get(url, config);
     if (data.success) {
-      setLoading(false)
+      setLoading(false);
       setData(data.body.body);
-      setTotalPage(data.body.totalElements)
+      setTotalPage(data.body.totalElements);
       consoleClear();
     } else {
       setData(null);
-      setLoading(false)
+      setLoading(false);
       consoleClear();
     }
   } catch {
     setData(null);
-    setLoading(false)
+    setLoading(false);
     consoleClear();
   }
 };
@@ -192,5 +192,35 @@ export const adminTestCrud = async (
       toast.error('Хатолик юз берди');
       setLoading(false);
     }
+  }
+};
+
+export const questionTransfer = async (
+  testIds: any[],
+  categoryID: any,
+  setData: (val: null | TestList[]) => void,
+  page: number | string,
+  setTotalPage: (val: number) => void,
+  setLoading: (val: boolean) => void,
+  closeModalTest: () => void
+) => {
+  try {
+    const transferData = {
+      questionIds: testIds,
+      categoryId: categoryID
+    };
+    const { data } = await axios.put(question_transfer, transferData, config);
+    if (data.success) {
+      await allFilterOrGet(setData, page, setTotalPage, setLoading);
+      toast.success('Тест муваффақиятли кучирилди');
+      closeModalTest();
+    } else {
+      toast.error('Тест кучиришда қандайдур хатолик юз берди');
+      closeModalTest();
+    }
+  } catch (err) {
+    closeModalTest();
+    toast.error('Тест кучиришда қандайдур хатолик юз берди');
+    consoleClear();
   }
 };
