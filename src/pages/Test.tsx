@@ -148,8 +148,6 @@ const Test = () => {
     else setSelectedIds((prevSelectedIds) => prevSelectedIds.filter(selectedId => selectedId !== id));
   };
 
-  console.log(selectedIds);
-
   return (
     <>
       <Breadcrumb pageName="Тест" />

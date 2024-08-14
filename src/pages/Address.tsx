@@ -93,9 +93,6 @@ const Address = () => {
     setIsEditDistrictModal(!isEditDistrictModal)
   };
 
-  console.log('idddddd', id);
-
-
   return (
     <>
       <div>
