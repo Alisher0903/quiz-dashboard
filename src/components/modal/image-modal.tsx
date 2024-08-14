@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { api_videos_files } from '../../common/api/api.tsx';
 import images from '../../images/default.png';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const ImageModal = ({ imgID, isOpen, onClose }: { imgID: string | number, isOpen: boolean, onClose: () => void, }) => {
   useEffect(() => {
@@ -19,15 +20,18 @@ const ImageModal = ({ imgID, isOpen, onClose }: { imgID: string | number, isOpen
 
   return (
     <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-opacity-50 bg-black-2">
-      <button onClick={onClose} className="float-right pt-3 pr-3">
-        <IoMdCloseCircleOutline size={30} className="dark:text-white text-black" />
-      </button>
       <div className="flex h-screen items-center justify-center">
-        <img
+        <LazyLoadImage
+          alt={`category img`}
           src={imgID ? `${api_videos_files}${imgID}` : images}
-          alt={`modal img`}
           className={`w-[80%] h-[80%] object-contain`}
+          width="80%"
+          height="80%"
+          effect="blur"
         />
+        <button onClick={onClose} className="absolute top-10 right-16 pt-3 pr-3">
+          <IoMdCloseCircleOutline size={30} className="dark:text-white text-black" />
+        </button>
       </div>
     </div>
   );
