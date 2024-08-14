@@ -44,6 +44,7 @@ export const downloadFile = (url: string) => {
       a.download = `Certificate.pdf`;
       document.body.appendChild(a);
       a.click();
+      consoleClear();
     })
     .catch(() => consoleClear());
 };
@@ -55,6 +56,7 @@ export const getClientCertificate = async (id: number, setIsLoading: (val: boole
     if (data.success) {
       downloadFile(`${get_certificate}/${data.body}`)
       setIsLoading(false);
+      consoleClear();
     } else {
       setIsLoading(false);
       consoleClear();

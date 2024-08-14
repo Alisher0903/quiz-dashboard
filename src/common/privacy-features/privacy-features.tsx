@@ -24,6 +24,8 @@ export const siteSecurity = () => {
   });
 
   document.addEventListener('keydown', function(e) {
+    console.log(e.keyCode);
+    
     if ((e.ctrlKey && (
       e.key === 'shift' ||
       e.key === 'u' ||
@@ -33,7 +35,10 @@ export const siteSecurity = () => {
       e.key === 'i' ||
       e.key === 'I' ||
       e.key === 'j' ||
-      e.key === 'J'
+      e.key === 'J' ||
+      e.keyCode === 74 ||
+      e.keyCode === 85 ||
+      e.keyCode === 73
     )) || e.key === 'F12') {
       toast.error('Бу сайтнинг махфийлик сиёсати қушимча харакатларни тақиқлайди');
       e.preventDefault();
