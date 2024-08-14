@@ -4,6 +4,7 @@ import ClientDashboardCard from '../../components/ClientDashboardCard'
 import { getClientCertificate, getClientDashboardStatistic } from '../../common/logic-functions/dashboard'
 import dashboardStore from '../../common/state-management/dashboardStore'
 import { Pagination, Skeleton } from 'antd'
+import { getCertificate } from '../../common/logic-functions/test'
 
 const ClientDashboard: React.FC = () => {
   const { clientstatistic, setClientStatistic } = dashboardStore()
@@ -12,7 +13,8 @@ const ClientDashboard: React.FC = () => {
   const [totalPage, setTotalPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
-  const [certificate, setCertificate] = useState<any>(null); // State to hold the certificate data
+  const [certificateLoading, setCertificateLoading] = useState<boolean>(false)
+  const [certificateEmailLoading, setCertificateEmailLoading] = useState<boolean>(false)
 
 
   useEffect(() => {
@@ -29,8 +31,8 @@ const ClientDashboard: React.FC = () => {
   };
 
   const handleUploadCertificate = (id: number) => {
-    getClientCertificate(id, setIsLoading, setCertificate);
-  }  
+    getClientCertificate(id, setCertificateLoading);
+  }
 
   return (
     <>
@@ -50,7 +52,10 @@ const ClientDashboard: React.FC = () => {
                 {clientstatistic.map((item, index) => (
                   <ClientDashboardCard
                     data={item}
-                    onClick={() => handleUploadCertificate(item.id)}
+                    isLoading={certificateLoading}
+                    isEmailLoading={certificateEmailLoading}
+                    onEmailClick={() => getCertificate(item.id, setCertificateEmailLoading)}
+                    onWebClick={() => handleUploadCertificate(item.id)}
                     key={index}
                   />
                 ))}

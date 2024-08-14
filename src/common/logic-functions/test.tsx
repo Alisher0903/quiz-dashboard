@@ -41,7 +41,7 @@ export const sendResults = async (id: string | undefined, duration: number, coun
     if (data.success) {
       consoleClear();
       navigate('/client/quiz/result');
-      await getCertificate(data.body, setResult, setLoading);
+      await getCertificate(data.body, setLoading, setResult);
       setIsLoading(false);
       setCurrentIndex(0);
       setQuizData({
@@ -67,12 +67,12 @@ export const sendResults = async (id: string | undefined, duration: number, coun
   }
 };
 
-export const getCertificate = async (id: number, setResult: (val: string) => void, setIsLoading: (val: boolean) => void) => {
+export const getCertificate = async (id: number, setIsLoading: (val: boolean) => void, setResult?: (val: string) => void) => {
   setIsLoading(true);
   try {
-    const { data } = await axios.post(`${certificate}${id}`, {}, config);
+    const { data } = await axios.post(`${certificate}/${id}`, {}, config);
     setIsLoading(false);
-    setResult(data);
+    setResult ? setResult(data) : toast.success('Сертификат электрон почтангизга муваффақиятли юборилди')
     consoleClear();
   } catch {
     consoleClear();

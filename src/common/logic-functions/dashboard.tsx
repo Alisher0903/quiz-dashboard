@@ -48,12 +48,14 @@ export const downloadFile = (url: string) => {
     .catch(() => consoleClear());
 };
 
-export const getClientCertificate = async (id: number, setIsLoading: (val: boolean) => void, setCertifcate: (val: any) => void) => {
+export const getClientCertificate = async (id: number, setIsLoading: (val: boolean) => void) => {
   setIsLoading(true);
   try {
     const { data } = await axios.get(`${get_certificate_id}/${id}`, config);
-    if (data.success) downloadFile(`${get_certificate}/${data.body}`);
-    else {
+    if (data.success) {
+      downloadFile(`${get_certificate}/${data.body}`)
+      setIsLoading(false);
+    } else {
       setIsLoading(false);
       consoleClear();
     }
