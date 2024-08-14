@@ -6,17 +6,19 @@ import categoryStore from '../common/state-management/categoryStore.tsx';
 import { useEffect, useState } from 'react';
 import { getAdminCategory } from '../common/logic-functions/category.tsx';
 import testStore from '../common/state-management/testStore.tsx';
-import { adminTestCrud, allFilterOrGet } from '../common/logic-functions/test.tsx';
+import { adminTestCrud, allFilterOrGet, questionTransfer } from '../common/logic-functions/test.tsx';
 import TestCrudCheck from '../components/test-crud-check.tsx';
 import GlobalModal from '../components/modal/modal.tsx';
 import globalStore from '../common/state-management/globalStore.tsx';
 import toast from 'react-hot-toast';
 import ImageUpload from '../components/img-upload.tsx';
-import { Pagination, Select } from 'antd';
+import { Pagination, Popover, Select } from 'antd';
 import SelectForm from '../components/select/Select.tsx';
 import { TestList } from '../types/test.ts';
 import { consoleClear } from '../common/console-clear/console-clear.tsx';
 import { CategoryList } from '../types/category.ts';
+import CheckboxTest from '../components/Checkboxes/CheckboxTest.tsx';
+import { FaCheck } from 'react-icons/fa';
 
 const thead: IThead[] = [
   { id: 1, name: 'Т/р' },
@@ -54,6 +56,9 @@ const Test = () => {
     isMain: false
   });
   const [isModal, setIsModal] = useState(false);
+  const [isModalTest, setIsModalTest] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<any[]>([]);
+  const [transferCategoryID, setTransferCategoryID] = useState('');
   const defData = {
     name: '',
     categoryId: '',
@@ -106,6 +111,7 @@ const Test = () => {
   }, [resData]);
 
   const openModal = () => setIsModal(true);
+  const openModalTest = () => setIsModalTest(true);
 
   const closeModal = () => {
     setIsModal(false);
@@ -115,6 +121,11 @@ const Test = () => {
     serEditOrDeleteID('');
     setDefQuiz('');
     setImgUpload(null);
+  };
+  const closeModalTest = () => {
+    setIsModalTest(false);
+    setSelectedIds([]);
+    setTransferCategoryID('');
   };
 
   const handleChange = (name: string, value: string | any) => {
@@ -131,6 +142,13 @@ const Test = () => {
     else if (type === 'MANY_CHOICE') return 'Кўп тўғри жавобли тест';
     else if (type === 'ANY_CORRECT') return 'Ҳар қандай тўғри';
   };
+
+  const handleCheckboxChange = (id: any, checked: boolean) => {
+    if (checked) setSelectedIds((prevSelectedIds) => [...prevSelectedIds, id]);
+    else setSelectedIds((prevSelectedIds) => prevSelectedIds.filter(selectedId => selectedId !== id));
+  };
+
+  console.log(selectedIds);
 
   return (
     <>
@@ -205,6 +223,19 @@ const Test = () => {
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
                     {item.categoryName}
+
+                    {!item.categoryId && (
+                      <div className={`flex justify-start items-center`}>
+                        <CheckboxTest
+                          id={item.id}
+                          handleChange={e => handleCheckboxChange(item.id, e.target.checked)}
+                        />
+                        <Popover title="Бошқа категорияга кучириш">
+                          {selectedIds.includes(item.id) &&
+                            <FaCheck className="text-xl hover:cursor-pointer" onClick={openModalTest} />}
+                        </Popover>
+                      </div>
+                    )}
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
@@ -358,6 +389,28 @@ const Test = () => {
               }}
             />
           </div>
+        </div>
+      </GlobalModal>
+
+      {/*test ni kuchirish uchun modal*/}
+      <GlobalModal onClose={closeModalTest} isOpen={isModalTest}>
+        <div className={`min-w-54 sm:w-64 md:w-96 lg:w-[40rem] pt-10`}>
+          <SelectForm
+            val={transferCategoryID}
+            onChange={e => setTransferCategoryID(e.target.value)}
+            defOption={`Категория танлаш`}
+            child={categoryData && categoryData.map((item: CategoryList | any) => (
+              <option value={item.id} key={item.id}>{item.name}</option>
+            ))}
+          />
+        </div>
+        <div className={`flex justify-end items-center mt-5 mb-3 gap-5`}>
+          <AddButtons children={`Ёпиш`} onClick={closeModalTest} />
+          <AddButtons
+            disabled={!transferCategoryID}
+            children={`Сақлаш`}
+            onClick={() => questionTransfer(selectedIds, transferCategoryID, setTestList, page, setTotalPage, setIsLoading, closeModalTest)}
+          />
         </div>
       </GlobalModal>
     </>
