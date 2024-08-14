@@ -13,7 +13,7 @@ export interface ProfileDataTypes {
     street: string,
     districtName: string,
     regionName: string
-    districtId: number,
+    districtId: number | null,
     regionId: number
     fileId: number
 }

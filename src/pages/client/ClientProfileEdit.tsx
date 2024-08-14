@@ -46,6 +46,8 @@ const ClientProfileEdit: React.FC = () => {
             userData.lastName &&
             userData.regionName &&
             userData.districtName &&
+            userData.districtId &&
+            userData.regionId &&
             userData.email &&
             userData.street &&
             userData.phoneNumber &&
@@ -139,7 +141,7 @@ const ClientProfileEdit: React.FC = () => {
                                         className='w-full rounded h-12'
                                         value={userData?.regionId}
                                         onChange={(e) => {
-                                            setUserData({ ...userData, regionId: e })
+                                            setUserData({ ...userData, regionId: e, districtId: null })
                                         }}
 
                                     >
@@ -216,7 +218,7 @@ const ClientProfileEdit: React.FC = () => {
                                         id="inputBirthday"
                                         placeholder='Туғилган кунингизни киринг'
                                         onChange={(date) => setUserData({ ...userData, dateOfBirth: `${date.year()}-${date.month() + 1 > 0 && date.month() + 1 < 10 ? `0${date.month() + 1}` : date.month() + 1}-${date.date() > 0 && date.date() < 10 ? `0${date.date()}` : date.date()}` })}
-                                        value={moment(userData.dateOfBirth, "YYYY-MM-DD")}
+                                        value={userData.dateOfBirth ? moment(userData.dateOfBirth, "YYYY-MM-DD") : null}
                                     />
                                 </div>
                             </div>
