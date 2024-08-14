@@ -13,9 +13,9 @@ const useTestStore = create<Test>((set) => ({
     remainingTime: 0
   },
   resultId: 0,
-  result: '',
+  // result: '',
+  // setResult: (val: string) => set({ result: val }),
   setResultId: (val: number) => set({ resultId: val }),
-  setResult: (val: string) => set({ result: val }),
   setQuizData: (val: TestMainData) => set({ quizData: val }),
   currentIndex: 0,
   setCurrentIndex: (val: number) => set({ currentIndex: val }),

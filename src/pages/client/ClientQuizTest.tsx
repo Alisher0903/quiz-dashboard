@@ -11,7 +11,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { unReload } from '../../common/privacy-features/privacy-features';
 
 const ClientQuizTest = () => {
-  const { quizData, setQuizData, setCurrentIndex, currentIndex, setResult } = useTestStore();
+  const { quizData, setQuizData, setCurrentIndex, currentIndex } = useTestStore();
   const { isLoading, setIsLoading } = globalStore();
   const [remainingTime, setRemainingTime] = useState<number>(0);
   const [answers, setAnswers] = useState<{ [key: number]: any }>({});
@@ -84,7 +84,7 @@ const ClientQuizTest = () => {
             setHasSubmitted(true);
             alert('Вақт бўлди!');
             navigate('/');
-            sendResults(id, time, quizData.quiz.countAnswers, payload, navigate, setResult, setIsBtnLoading, setIsLoading, setCurrentIndex, setQuizData);
+            sendResults(id, time, quizData.quiz.countAnswers, payload, navigate, setIsBtnLoading, setCurrentIndex, setQuizData);
           }
           return 0;
         }
@@ -95,7 +95,7 @@ const ClientQuizTest = () => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [id, navigate, payload, quizData.quiz.countAnswers, setIsBtnLoading, setIsLoading, setResult, hasSubmitted]);
+  }, [id, navigate, payload, quizData.quiz.countAnswers, setIsBtnLoading, hasSubmitted]);
 
   const time = quizData.remainingTime - Math.round(remainingTime / 60);
 
@@ -322,7 +322,7 @@ const ClientQuizTest = () => {
               </AddButtons>
               <AddButtons
                 onClick={currentIndex + 1 === quizData.quizList.length ? () => {
-                  sendResults(id, time === 0 ? 1 : time, quizData.quiz.countAnswers, payload, navigate, setResult, setIsBtnLoading, setIsLoading, setCurrentIndex, setQuizData);
+                  sendResults(id, time === 0 ? 1 : time, quizData.quiz.countAnswers, payload, navigate, setIsBtnLoading, setCurrentIndex, setQuizData);
                 } : handleNextQuestion}
                 disabled={isBtnLoading ? isBtnLoading : isNextDisabled}>{currentIndex + 1 === quizData.quizList.length ? `${isBtnLoading ? 'Юкланмоқда...' : 'Юбориш'}` : 'Кейингиси'}
               </AddButtons>

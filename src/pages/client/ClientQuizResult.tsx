@@ -4,7 +4,7 @@ import useTestStore from '../../common/state-management/testStore';
 import { Link } from 'react-router-dom';
 
 const ClientQuizResult = () => {
-  const { result } = useTestStore();
+  // const { result } = useTestStore();
   const { isLoading } = globalStore();
 
   if (isLoading) {
@@ -15,7 +15,6 @@ const ClientQuizResult = () => {
     );
   }
 
-  if (result) {
     return (
       <div className="bg-white flex flex-col items-center dark:bg-[#24303F] w-full rounded-xl p-5">
         <div className="flex justify-center items-center flex-col">
@@ -25,7 +24,7 @@ const ClientQuizResult = () => {
             <img src="https://media.tenor.com/hDY7src9Lw4AAAAi/dear-harsh-beta.gif" alt="sertificate img" />
           </div>
           <div>
-            <Link to={'https://gmail.com/'} className='text-center' target={`_blank`}>{result}</Link>
+            {/* <Link to={'https://gmail.com/'} className='text-center' target={`_blank`}>{result}</Link> */}
             <p className={`text-center my-3`}>
               <Link className="text-blue-600 hover:underline" to={'/client/dashboard'}>Бош саҳифага қайтиш</Link>
             </p>
@@ -33,16 +32,15 @@ const ClientQuizResult = () => {
         </div>
       </div>
     );
-  }
 
-  return (
-    <div className="bg-white flex flex-col items-center dark:bg-[#24303F] w-full rounded-xl p-5">
-      <div className="flex justify-center items-center flex-col">
-        <p>Илтимос тест жавобини олиш учун биринчи тест ечинг</p>
-        <Link className="text-blue-600" to={'/client/dashboard'}>Тест ечишга ўтиш</Link>
-      </div>
-    </div>
-  );
+  // return (
+  //   <div className="bg-white flex flex-col items-center dark:bg-[#24303F] w-full rounded-xl p-5">
+  //     <div className="flex justify-center items-center flex-col">
+  //       <p>Илтимос тест жавобини олиш учун биринчи тест ечинг</p>
+  //       <Link className="text-blue-600" to={'/client/dashboard'}>Тест ечишга ўтиш</Link>
+  //     </div>
+  //   </div>
+  // );
 };
 
 export default ClientQuizResult;

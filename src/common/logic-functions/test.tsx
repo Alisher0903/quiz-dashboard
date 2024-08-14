@@ -34,14 +34,13 @@ export const fetchQuiz = async (id: string | undefined, setQuizData: (val: TestM
   }
 };
 
-export const sendResults = async (id: string | undefined, duration: number, countAnswers: number, payload: any[], navigate: (path: string) => void, setResult: (val: string) => void, setIsLoading: (val: boolean) => void, setLoading: (val: boolean) => void, setCurrentIndex: (val: number) => void, setQuizData: (val: TestMainData) => void) => {
+export const sendResults = async (id: string | undefined, duration: number, countAnswers: number, payload: any[], navigate: (path: string) => void, setIsLoading: (val: boolean) => void, setCurrentIndex: (val: number) => void, setQuizData: (val: TestMainData) => void) => {
   setIsLoading(true);
   try {
     const { data } = await axios.post(`${quiz_pass}/${id}?duration=${duration}&countAnswers=${countAnswers}`, payload, config);
     if (data.success) {
       consoleClear();
       navigate('/client/quiz/result');
-      await getCertificate(data.body, setLoading, setResult);
       setIsLoading(false);
       setCurrentIndex(0);
       setQuizData({
@@ -67,13 +66,15 @@ export const sendResults = async (id: string | undefined, duration: number, coun
   }
 };
 
-export const getCertificate = async (id: number, setIsLoading: (val: boolean) => void, setResult?: (val: string) => void) => {
+export const getCertificate = async (id: number, setIsLoading: (val: boolean) => void) => {
   setIsLoading(true);
   try {
     const { data } = await axios.post(`${certificate}/${id}`, {}, config);
-    setIsLoading(false);
-    setResult ? setResult(data) : toast.success('Сертификат электрон почтангизга муваффақиятли юборилди')
-    consoleClear();
+    if (data.success) {
+      setIsLoading(false);
+      toast.success('Сертификат электрон почтангизга муваффақиятли юборилди')
+      consoleClear();
+    } else setIsLoading(false)
   } catch {
     consoleClear();
     setIsLoading(false);
