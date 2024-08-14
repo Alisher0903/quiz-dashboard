@@ -148,7 +148,15 @@ export const adminTestCrud = async (
   } else if (urlType === 'put') {
     try {
       if (editOrDeleteID) {
-        const { data } = await axios.put(`${question_crud}/${editOrDeleteID}`, crudData, config);
+        const { data } = await axios.put(`${question_crud}/${editOrDeleteID}`, {
+          name: crudData.name,
+          categoryId: crudData.categoryId,
+          type: crudData.type,
+          difficulty: crudData.difficulty,
+          score: crudData.score,
+          attachmentIds: crudData.attachmentIds ? crudData.attachmentIds : [],
+          optionDtos: crudData.optionDtos
+        }, config);
         if (data.success) {
           consoleClear();
           setResData(true);
