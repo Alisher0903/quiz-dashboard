@@ -131,6 +131,7 @@ const Category = () => {
     input: 'w-full rounded-lg border border-stroke bg-transparent py-2 px-5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
   };
 
+  console.log(addValue);
   return (
     <>
       <Breadcrumb pageName="Категория" />
@@ -418,9 +419,10 @@ const Category = () => {
               <AddButtons children={`Ёпиш`} onClick={closeModal} />
               <AddButtons
                 children={isLoading ? 'юкланмоқда...' : `Сақлаш`}
-                disabled={isLoading || !addValue?.fileId}
+                disabled={isLoading}
                 type={`submit`}
               />
+              {/*|| !addValue?.fileId  => img isRequired*/}
             </div>
           </form>
         </div>
