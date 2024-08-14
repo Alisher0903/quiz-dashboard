@@ -59,7 +59,6 @@ const ClientQuizStart: React.FC = () => {
             ))}
             <div className='mt-3'>
               <Pagination
-                showSizeChanger
                 current={currentPage}
                 pageSize={pageSize}
                 total={totalPage}

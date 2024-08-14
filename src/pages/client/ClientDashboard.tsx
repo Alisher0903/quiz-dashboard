@@ -54,17 +54,9 @@ const ClientDashboard: React.FC = () => {
                     key={index}
                   />
                 ))}
-                {clientstatistic.map((item, index) => (
-                  <ClientDashboardCard
-                    data={item}
-                    onClick={() => handleUploadCertificate(item.id)}
-                    key={index}
-                  />
-                ))}
               </div>
               <div className="mt-5">
                 <Pagination
-                  showSizeChanger
                   current={currentPage}
                   pageSize={pageSize}
                   total={totalPage}
