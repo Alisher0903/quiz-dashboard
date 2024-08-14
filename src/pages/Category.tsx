@@ -168,7 +168,7 @@ const Category = () => {
                     onClick={() => {
                       if (item.fileId) {
                         openImageMOdal();
-                        setImageId(item.id);
+                        setImageId(item.fileId);
                       } else {
                         openImageMOdal();
                         setImageId('');
