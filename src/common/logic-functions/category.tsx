@@ -96,7 +96,16 @@ export const addCategory = async (
         retakeDate: addData.retakeDate,
         fileId: addData.fileId,
         main: addData.main,
-      }, config) : await axios.post(category_all, addData, config);
+      }, config) : await axios.post(category_all, {
+        name: addData.name,
+        description: addData.description,
+        questionCount: addData.questionCount,
+        extraQuestionCount: addData.extraQuestionCount,
+        durationTime: addData.durationTime,
+        retakeDate: addData.retakeDate,
+        fileId: addData.fileId ? addData.fileId : 0,
+        main: addData.main,
+      }, config);
       if (data.success) {
         consoleClear();
         setLoading(false);
