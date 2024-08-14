@@ -1,7 +1,7 @@
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import CheckboxFive from '../../components/Checkboxes/CheckboxFive';
 import CheckboxFour from '../../components/Checkboxes/CheckboxFour';
-import CheckboxOne from '../../components/Checkboxes/CheckboxOne';
+import CheckboxOne from '../../components/Checkboxes/CheckboxTest.tsx';
 import CheckboxThree from '../../components/Checkboxes/CheckboxThree';
 // import CheckboxIsActive from '../../components/Checkboxes/CheckboxIsActive.tsx';
 import SwitcherFour from '../../components/Switchers/SwitcherFour';
