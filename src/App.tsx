@@ -35,7 +35,7 @@ function App() {
 
   useEffect(() => {
     screenshotBlocked();
-    // siteSecurity()
+    siteSecurity()
   }, []);
 
   useEffect(() => {

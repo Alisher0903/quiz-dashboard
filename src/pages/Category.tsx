@@ -17,6 +17,10 @@ import image from '../images/default.png';
 import ImageUpload from '../components/img-upload.tsx';
 import { Pagination } from 'antd';
 import PendingLoader from '../common/Loader/pending-loader.tsx';
+import toast from 'react-hot-toast';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { CategoryList } from '../types/category.ts';
+import { unReload } from '../common/privacy-features/privacy-features.tsx';
 
 const thead: IThead[] = [
   { id: 1, name: 'Т/р' },
@@ -31,8 +35,8 @@ const thead: IThead[] = [
   { id: 10, name: 'Давомийлик вақти' },
   { id: 11, name: 'Қайта қабул қилиш санаси' },
   { id: 12, name: 'Яратган' },
-  // { id: 13, name: 'Узгартирган' },
-  // { id: 14, name: 'Учирган' },
+  { id: 13, name: 'Категория холати' },
+  { id: 14, name: 'Учирган' },
   { id: 15, name: 'Ҳаракат' }
 ];
 
@@ -61,6 +65,7 @@ const Category = () => {
 
   useEffect(() => {
     getAdminCategoryPage({ setData: setCategoryData, page, setTotalPage, setIsLoading });
+    unReload()
   }, []);
 
   useEffect(() => {
@@ -130,7 +135,7 @@ const Category = () => {
       <UniversalTable thead={thead}>
         {isLoading ? <PendingLoader /> : (
           categoryData ? (
-            categoryData.map((item, i) => (
+            categoryData.map((item: CategoryList | any, i) => (
               <tr key={i}>
                 <td className="border-b border-[#eee] p-5 dark:border-strokedark">
                   <h5 className="font-medium text-black dark:text-white">
@@ -138,10 +143,18 @@ const Category = () => {
                   </h5>
                 </td>
                 <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
-                  <img
-                    src={item.fileId ? `${api_videos_files}${item.fileId}` : image}
+                  {/*<img*/}
+                  {/*  src={item.fileId ? `${api_videos_files}${item.fileId}` : image}*/}
+                  {/*  alt={item.name}*/}
+                  {/*  className={`w-14 h-14 rounded-full object-cover hover:cursor-pointer scale-125`}*/}
+                  {/*/>*/}
+                  <LazyLoadImage
                     alt={item.name}
-                    className={`w-14 h-14 rounded-full object-cover hover:cursor-pointer scale-125`}
+                    src={item.fileId ? `${api_videos_files}${item.fileId}` : image}
+                    className={'w-10 h-10 scale-[1.4] rounded-full object-cover hover:cursor-pointer'}
+                    effect="blur"
+                    onClick={() => {
+                    }}
                   />
                 </td>
                 <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
@@ -194,25 +207,28 @@ const Category = () => {
                     {item.createdBy}
                   </p>
                 </td>
-                {/*<td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">*/}
-                {/*  <p className="text-black dark:text-white">*/}
-                {/*    /!*{item.updatedBy}*!/*/}
-                {/*  </p>*/}
-                {/*</td>*/}
-                {/*<td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">*/}
-                {/*  <p className="text-black dark:text-white">*/}
-                {/*    /!*{item.deletedBy}*!/*/}
-                {/*  </p>*/}
-                {/*</td>*/}
+                <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.deleted && 'Учирилган'}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.deletedBy}
+                  </p>
+                </td>
                 <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
                   <div className="flex items-center space-x-3.5">
                     <button className="hover:text-yellow-500">
                       <MdEdit
                         className={`text-2xl duration-300`}
                         onClick={() => {
-                          openModal();
-                          setAddValue(item);
-                          setEditStatus('edit');
+                          if (item.deleted) toast.error('Бу категория учирилган, буни холатини узгартира олмайсиз');
+                          else {
+                            openModal();
+                            setAddValue(item);
+                            setEditStatus('edit');
+                          }
                         }}
                       />
                     </button>
@@ -220,8 +236,11 @@ const Category = () => {
                       <MdDelete
                         className={`text-2xl duration-300`}
                         onClick={() => {
-                          openModalDelete();
-                          item.id && setEditStatus(item.id);
+                          if (item.deleted) toast.error('Бу категория учирилган, буни холатини узгартира олмайсиз');
+                          else {
+                            openModalDelete();
+                            item.id && setEditStatus(item.id);
+                          }
                         }}
                       />
                     </button>

@@ -9,7 +9,7 @@ export const screenshotBlocked = () => {
 
       setTimeout(() => {
         if (notification) notification.classList.add('hidden');
-      }, 2000);
+      }, 2500);
     }
   };
 

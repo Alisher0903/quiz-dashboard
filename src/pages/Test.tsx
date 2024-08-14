@@ -19,6 +19,7 @@ import { consoleClear } from '../common/console-clear/console-clear.tsx';
 import { CategoryList } from '../types/category.ts';
 import CheckboxTest from '../components/Checkboxes/CheckboxTest.tsx';
 import { FaCheck } from 'react-icons/fa';
+import { unReload } from '../common/privacy-features/privacy-features.tsx';
 
 const thead: IThead[] = [
   { id: 1, name: 'Т/р' },
@@ -74,6 +75,7 @@ const Test = () => {
     getAdminCategory(setCategoryData);
     allFilterOrGet(setTestList, page, setTotalPage, setIsLoading);
     consoleClear();
+    unReload()
   }, []);
 
   useEffect(() => {

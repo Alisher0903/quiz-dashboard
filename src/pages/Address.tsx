@@ -9,6 +9,7 @@ import { MdDelete, MdEdit, MdOutlineAddCircle } from "react-icons/md";
 import AddButtons from "../components/buttons/buttons";
 import GlobalModal from "../components/modal/modal";
 import SelectForm from "../components/select/Select";
+import { unReload } from '../common/privacy-features/privacy-features.tsx';
 
 const regionsThead: IThead[] = [
   { id: 1, name: 'Т/р' },
@@ -53,6 +54,10 @@ const Address = () => {
     setRegionId
   } = useAddressStore();
   const { isLoading, setIsLoading } = globalStore()
+
+  useEffect(() => {
+    unReload()
+  }, []);
 
   useEffect(() => {
     getRegions(setRegions, setIsLoading)

@@ -51,7 +51,7 @@ const Dashboard: React.FC = () => {
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-        <CardDataStats title="Умумий тоифа" total={`${statisticsCard ? statisticsCard.categoryCount : 0}`} rate="">
+        <CardDataStats title="Умумий категория" total={`${statisticsCard ? statisticsCard.categoryCount : 0}`} rate="">
           <div className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
             <BiCategory className={`text-2xl`} />
           </div>
