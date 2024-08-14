@@ -87,7 +87,7 @@ export const addCategory = async (
   setLoading(true);
   try {
     if (addData) {
-      const { data } = edit ? await axios.put(category_all, addData, config) : await axios.post(category_all, addData, config);
+      const { data } = edit ? await axios.put(`${category_all}/${addData.id}`, addData, config) : await axios.post(category_all, addData, config);
       if (data.success) {
         consoleClear();
         setLoading(false);

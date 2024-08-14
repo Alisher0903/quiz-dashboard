@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import lightLogo from '../../images/logo/geodeziya_light.png';
+import darkLogo from '../../images/logo/geodeziya_dark.png';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -52,9 +54,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       }`}
     >
       {/* <!-- SIDEBAR HEADER --> */}
-      <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
+      <div className="flex justify-start items-center gap-2 px-6 pb-5.5 lg:pb-6.5">
         <NavLink to="/">
-          <p>Геодезия</p>
+          <div className={`flex justify-start items-center w-full px-4 lg:px-6`}>
+            <img src={darkLogo} alt="logo" className={`w-full h-20 scale-[2.5] dark:inline hidden`} />
+            <img src={lightLogo} alt="logo" className={`w-full h-20 scale-[2.5] dark:hidden inline`} />
+          </div>
         </NavLink>
 
         <button
