@@ -75,7 +75,7 @@ const Test = () => {
     getAdminCategory(setCategoryData);
     allFilterOrGet(setTestList, page, setTotalPage, setIsLoading);
     consoleClear();
-    unReload()
+    unReload();
   }, []);
 
   useEffect(() => {
@@ -215,9 +215,13 @@ const Test = () => {
                     {(+page * 10) + idx + 1}
                   </h5>
                 </td>
-                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark max-w-[500px]">
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark min-w-[300px]">
                   <p className="text-black dark:text-white">
-                    {item.name}
+                    {item.name.length > 100 ? <>
+                      <Popover title={item.name} overlayStyle={{ width: '70%' }}>
+                        {`${item.name.slice(0, 100)}...`}
+                      </Popover>
+                    </> : item.name}
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">

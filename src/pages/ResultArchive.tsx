@@ -9,7 +9,7 @@ import { MdKeyboardBackspace } from 'react-icons/md';
 import { Popover } from 'antd';
 
 const ResultArchive = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const { isLoading, setIsLoading } = globalStore();
   const { resultList, setResultList } = userStore();
@@ -21,7 +21,7 @@ const ResultArchive = () => {
   return (
     <>
       <Breadcrumb pageName={`Архив`} />
-      <Popover title="Орқага қайтиш">
+      <Popover title="Орқага қайтиш" overlayStyle={{ textAlign: 'center' }}>
         <MdKeyboardBackspace
           onClick={() => navigate('/user')}
           className={`text-3xl hover:cursor-pointer hover:text-primary duration-300 mb-5`}
