@@ -6,9 +6,10 @@ import { TestOptionDtos } from '../../types/test';
 import AddButtons from '../../components/buttons/buttons';
 import { api_videos_files } from '../../common/api/api';
 import globalStore from '../../common/state-management/globalStore';
-import { Image, Skeleton } from 'antd';
+import { Image, ProgressProps, Skeleton } from 'antd';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { unReload } from '../../common/privacy-features/privacy-features';
+import { Progress } from 'antd';
 
 const ClientQuizTest = () => {
   const { quizData, setQuizData, setCurrentIndex, currentIndex } = useTestStore();
@@ -20,6 +21,7 @@ const ClientQuizTest = () => {
   const [isVisibleIndex, setIsVisibleIndex] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false); // New state variable to track if results have been sent
   const navigate = useNavigate();
+  const [totalTime, setTotalTime] = useState<number>(0); // New state to track the total time
   const { id } = useParams<{ id: string }>();
 
   const payload = quizData.quizList.map((question) => {
@@ -58,7 +60,7 @@ const ClientQuizTest = () => {
 
   useEffect(() => {
     if (id) {
-      fetchQuiz(id, setQuizData, setIsLoading);
+      fetchQuiz(id, setQuizData, setIsLoading, setTotalTime);
     }
   }, [id, setQuizData, setIsLoading]);
 
@@ -277,72 +279,86 @@ const ClientQuizTest = () => {
     const seconds = time % 60;
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
+  const progressPercent = totalTime > 0 ? (remainingTime / totalTime) * 100 : 0;
+  const conicColors: ProgressProps['strokeColor'] = {
+    '0%': '#FF0000',
+    '30%': '#e6cc00',
+    '50%': '#ffe58f',
+    '100%': '#008000',
+  };
 
   return (
-    <div className="dark:bg-[#24303F] bg-white shadow-lg w-full p-5 rounded-2xl">
-      {isLoading ? <div>
-        <Skeleton />
-      </div> : quizData.quizList[currentIndex] ?
-        <div>
-          <div className="">
-            <p
-              className="text-center text-red-600 dark:text-blue-600 text-3xl font-bold">{quizData.quizList[currentIndex]?.categoryName}</p>
-          </div>
+    <div>
+      <div className="dark:bg-[#24303F] bg-white my-3 shadow-lg w-full p-5 rounded-2xl">
+        <Progress percent={progressPercent} showInfo={false} strokeColor={conicColors} />
+      </div>
+      <div className="dark:bg-[#24303F] bg-white shadow-lg w-full p-5 rounded-2xl">
+        {isLoading ? <div>
+          <Skeleton />
+        </div> : quizData.quizList[currentIndex] ?
           <div>
-            {sortQuiz(
-              currentIndex + 1,
-              quizData.quizList[currentIndex]?.type,
-              quizData.quizList[currentIndex]?.optionDtos,
-              quizData.quizList[currentIndex]?.name,
-              quizData.quizList[currentIndex]?.attachmentIds
-            )}
-          </div>
-          <div className="flex flex-col md:flex-row gap-2 flex-wrap justify-between mt-5">
-            <p>Қолган вақт: {formatTime(remainingTime ? remainingTime : 0)}</p>
-            <div className='relative flex justify-start md:justify-center items-center'>
-              {isVisibleIndex &&
-                <div className='bg-red-600 absolute w-[17rem] p-5 rounded-xl bottom-11 dark:bg-blue-600 flex flex-wrap gap-2'>
-                  {quizData.quizList.map((_, index) => (
-                    <div
-                      onClick={() => {
-                        setCurrentIndex(index);
-                        currentIndex !== index && toggleVisibleIndex()
-                      }}
-                      className={currentIndex === index ? 'w-8 rounded-lg bg-white h-8 border-2 flex justify-center items-center cursor-pointer border-white p-3' : 'w-8 rounded-lg cursor-pointer h-8 border-2 flex justify-center items-center border-white p-3'}
-                    >
-                      <p className={currentIndex === index ? `text-black` : `text-white`}>{index + 1}</p>
-                    </div>
-                  ))}
+            <div>
+            </div>
+            <div className="">
+              <p
+                className="text-center text-red-600 dark:text-blue-600 text-3xl font-bold">{quizData.quizList[currentIndex]?.categoryName}</p>
+            </div>
+            <div>
+              {sortQuiz(
+                currentIndex + 1,
+                quizData.quizList[currentIndex]?.type,
+                quizData.quizList[currentIndex]?.optionDtos,
+                quizData.quizList[currentIndex]?.name,
+                quizData.quizList[currentIndex]?.attachmentIds
+              )}
+            </div>
+            <div className="flex flex-col md:flex-row gap-2 flex-wrap justify-between mt-5">
+              <p>Қолган вақт: {formatTime(remainingTime ? remainingTime : 0)}</p>
+              <div className='relative flex justify-start md:justify-center items-center'>
+                {isVisibleIndex &&
+                  <div className='bg-red-600 absolute w-[17rem] p-5 rounded-xl bottom-11 dark:bg-blue-600 flex flex-wrap gap-2'>
+                    {quizData.quizList.map((_, index) => (
+                      <div
+                        onClick={() => {
+                          setCurrentIndex(index);
+                          currentIndex !== index && toggleVisibleIndex()
+                        }}
+                        className={currentIndex === index ? 'w-8 rounded-lg bg-white h-8 border-2 flex justify-center items-center cursor-pointer border-white p-3' : 'w-8 rounded-lg cursor-pointer h-8 border-2 flex justify-center items-center border-white p-3'}
+                      >
+                        <p className={currentIndex === index ? `text-black` : `text-white`}>{index + 1}</p>
+                      </div>
+                    ))}
+                  </div>
+                }
+                <div onClick={toggleVisibleIndex} className='bg-red-600 flex items-center justify-center gap-3 py-2 px-4 rounded-xl dark:bg-blue-600'>
+                  <p className='text-white'>Саволлар {currentIndex + 1} / {quizData && quizData.quizList.length} </p>
+                  {isVisibleIndex ? <IoIosArrowDown className='text-white text-xl' /> : <IoIosArrowUp className='text-white text-xl' />}
                 </div>
-              }
-              <div onClick={toggleVisibleIndex} className='bg-red-600 flex items-center justify-center gap-3 py-2 px-4 rounded-xl dark:bg-blue-600'>
-                <p className='text-white'>Саволлар {currentIndex + 1} / {quizData && quizData.quizList.length} </p>
-                {isVisibleIndex ? <IoIosArrowDown className='text-white text-xl' /> : <IoIosArrowUp className='text-white text-xl' />}
+
+              </div>
+              <div className="flex gap-5">
+                <AddButtons disabled={currentIndex === 0} onClick={() => setCurrentIndex(currentIndex - 1)}>
+                  Орқага
+                </AddButtons>
+                <AddButtons
+                  onClick={currentIndex + 1 === quizData.quizList.length ? () => {
+                    sendResults(id, time === 0 ? 1 : time, quizData.quiz.countAnswers, payload, navigate, setIsBtnLoading, setCurrentIndex, setQuizData);
+                  } : handleNextQuestion}
+                  disabled={isBtnLoading ? isBtnLoading : isNextDisabled}>{currentIndex + 1 === quizData.quizList.length ? `${isBtnLoading ? 'Юкланмоқда...' : 'Юбориш'}` : 'Кейингиси'}
+                </AddButtons>
               </div>
 
             </div>
-            <div className="flex gap-5">
-              <AddButtons disabled={currentIndex === 0} onClick={() => setCurrentIndex(currentIndex - 1)}>
-                Орқага
-              </AddButtons>
-              <AddButtons
-                onClick={currentIndex + 1 === quizData.quizList.length ? () => {
-                  sendResults(id, time === 0 ? 1 : time, quizData.quiz.countAnswers, payload, navigate, setIsBtnLoading, setCurrentIndex, setQuizData);
-                } : handleNextQuestion}
-                disabled={isBtnLoading ? isBtnLoading : isNextDisabled}>{currentIndex + 1 === quizData.quizList.length ? `${isBtnLoading ? 'Юкланмоқда...' : 'Юбориш'}` : 'Кейингиси'}
-              </AddButtons>
+          </div>
+          :
+          <div className="flex justify-center flex-col h-100 items-center">
+            <p>Бу туркумда тестлар мавжуд эмас</p>
+            <div>
+              <Link className="text-blue-600" to={'/client/dashboard'}>Ортга қайтиш</Link>
             </div>
-
           </div>
-        </div>
-        :
-        <div className="flex justify-center flex-col h-100 items-center">
-          <p>Бу туркумда тестлар мавжуд эмас</p>
-          <div>
-            <Link className="text-blue-600" to={'/client/dashboard'}>Ортга қайтиш</Link>
-          </div>
-        </div>
-      }
+        }
+      </div>
     </div>
   );
 };

@@ -10,7 +10,7 @@ import {
 import toast from 'react-hot-toast';
 import { consoleClear } from '../console-clear/console-clear.tsx';
 
-export const fetchQuiz = async (id: string | undefined, setQuizData: (val: TestMainData) => void, setIsLoading: (val: boolean) => void) => {
+export const fetchQuiz = async (id: string | undefined, setQuizData: (val: TestMainData) => void, setIsLoading: (val: boolean) => void, setTotalTime: (Val: number) => void) => {
   setIsLoading(true);
   try {
     const { data } = await axios.get(`${quiz_start}${id}`, config);
@@ -22,6 +22,7 @@ export const fetchQuiz = async (id: string | undefined, setQuizData: (val: TestM
         currentQuestionIndex: 0,
         remainingTime: data.body.duration
       });
+      setTotalTime(data.body.duration * 60)
       setIsLoading(false);
     } else {
       consoleClear();
