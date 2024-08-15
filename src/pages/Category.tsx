@@ -25,7 +25,7 @@ import ImageModal from '../components/modal/image-modal.tsx';
 
 const thead: IThead[] = [
   { id: 1, name: 'Т/р' },
-  { id: 2, name: 'Категория rasmi' },
+  { id: 2, name: 'Категория расми' },
   { id: 3, name: 'Категория номи' },
   { id: 4, name: 'Тавсиф' },
   { id: 5, name: 'Саволлар сони' },
@@ -93,7 +93,7 @@ const Category = () => {
 
   const openModal = () => setIsModalOpen(true);
   const openModalDelete = () => setIsModalDelete(true);
-  const openImageMOdal = () => setImageModal(true);
+  const openImageModal = () => setImageModal(true);
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -131,7 +131,6 @@ const Category = () => {
     input: 'w-full rounded-lg border border-stroke bg-transparent py-2 px-5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
   };
 
-  console.log(addValue);
   return (
     <>
       <Breadcrumb pageName="Категория" />
@@ -168,10 +167,10 @@ const Category = () => {
                     effect="blur"
                     onClick={() => {
                       if (item.fileId) {
-                        openImageMOdal();
+                        openImageModal();
                         setImageId(item.fileId);
                       } else {
-                        openImageMOdal();
+                        openImageModal();
                         setImageId('');
                       }
                     }}

@@ -186,7 +186,7 @@ const User = () => {
           openStatusEdit();
           setStatus('testDateUpdate');
           setResID(user.userId);
-          setCategoryID(user.categoryId);
+          setCategoryDateID(user.categoryId);
         } else toast.error('Бу фойдаланувчи тест ишлаши мумкин');
       }
     }
