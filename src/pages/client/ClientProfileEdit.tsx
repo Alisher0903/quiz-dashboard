@@ -139,7 +139,7 @@ const ClientProfileEdit: React.FC = () => {
                                         id='inputRegionName'
                                         placeholder={`Вилоятингизни танланг`}
                                         className='w-full rounded h-12'
-                                        value={userData?.regionId}
+                                        value={userData.regionId ? userData.regionId : null}
                                         onChange={(e) => {
                                             setUserData({ ...userData, regionId: e, districtId: null })
                                         }}
@@ -158,7 +158,7 @@ const ClientProfileEdit: React.FC = () => {
                                         id='inputDistrictName'
                                         placeholder={`Туманингизни танланг`}
                                         className={`w-full rounded h-12`}
-                                        value={userData?.districtId}
+                                        value={userData.districtId ? userData.districtId : null}
                                         onChange={(e) => setUserData({ ...userData, districtId: +e })}
                                     >
                                         {district && district.map(item => (
