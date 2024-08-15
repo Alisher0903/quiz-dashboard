@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import { Popover } from 'antd';
 
 // master global table
 export interface IMasterTableProps {
@@ -24,7 +25,12 @@ const UniversalTable: React.FC<IMasterTableProps> = ({ thead, children }) => {
                 key={item.id}
                 className="min-w-[150px] p-5 font-medium text-black dark:text-white"
               >
-                {item.name}
+                {item.name.length > 15 ? <>
+                  <Popover
+                    title={item.name}
+                    overlayStyle={{ textAlign: 'center' }}
+                  >{item.name.slice(0, 15)}...</Popover>
+                </> : item.name}
               </th>
             ))}
           </tr>

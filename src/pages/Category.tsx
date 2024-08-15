@@ -243,12 +243,11 @@ const Category = () => {
                       <MdEdit
                         className={`text-2xl duration-300`}
                         onClick={() => {
-                          if (item.deleted) toast.error('Бу категория учирилган, буни холатини узгартира олмайсиз');
-                          else {
+                          if (!item.deleted) {
                             openModal();
                             setAddValue(item);
                             setEditStatus('edit');
-                          }
+                          } else toast.error('Бу категория учирилган, буни холатини узгартира олмайсиз');
                         }}
                       />
                     </button>
@@ -256,11 +255,10 @@ const Category = () => {
                       <MdDelete
                         className={`text-2xl duration-300`}
                         onClick={() => {
-                          if (item.deleted) toast.error('Бу категория учирилган, буни холатини узгартира олмайсиз');
-                          else {
+                          if (!item.deleted) {
                             openModalDelete();
                             item.id && setEditStatus(item.id);
-                          }
+                          } else toast.error('Бу категория учирилган, буни холатини узгартира олмайсиз');
                         }}
                       />
                     </button>

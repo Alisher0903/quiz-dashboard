@@ -218,7 +218,10 @@ const Test = () => {
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark min-w-[300px]">
                   <p className="text-black dark:text-white">
                     {item.name.length > 100 ? <>
-                      <Popover title={item.name} overlayStyle={{ width: '70%' }}>
+                      <Popover
+                        title={item.name}
+                        overlayStyle={{ width: '70%' }}
+                      >
                         {`${item.name.slice(0, 100)}...`}
                       </Popover>
                     </> : item.name}
