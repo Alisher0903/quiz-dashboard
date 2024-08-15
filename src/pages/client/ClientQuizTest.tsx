@@ -297,9 +297,9 @@ const ClientQuizTest = () => {
               quizData.quizList[currentIndex]?.attachmentIds
             )}
           </div>
-          <div className="flex flex-wrap justify-between mt-5">
+          <div className="flex flex-col md:flex-row gap-2 flex-wrap justify-between mt-5">
             <p>Қолган вақт: {formatTime(remainingTime ? remainingTime : 0)}</p>
-            <div className='relative flex justify-center items-center'>
+            <div className='relative flex justify-start md:justify-center items-center'>
               {isVisibleIndex &&
                 <div className='bg-red-600 absolute w-[17rem] p-5 rounded-xl bottom-11 dark:bg-blue-600 flex flex-wrap gap-2'>
                   {quizData.quizList.map((_, index) => (
