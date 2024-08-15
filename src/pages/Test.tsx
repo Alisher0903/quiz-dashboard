@@ -166,7 +166,7 @@ const Test = () => {
           </div>}
         />
         <div
-          className={`w-full lg:max-w-[70%] flex justify-start xl:justify-between items-center flex-wrap md:flex-nowrap gap-5`}>
+          className={`w-full lg:max-w-[60%] flex justify-start xl:justify-between items-center flex-wrap md:flex-nowrap gap-5`}>
           <input
             onChange={e => setNameFilter(e.target.value)}
             placeholder="🔎  Қидирмоқ..."
