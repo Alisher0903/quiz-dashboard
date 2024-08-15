@@ -179,8 +179,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   </li>
                   <li>
                     <NavLink
-                      to="/client/quiz/start"
-                      className={`${styles.sidebar} ${pathname === '/client/quiz/start' && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
+                      to="/client/test/start"
+                      className={`${styles.sidebar} ${pathname === '/client/test/start' && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
                     >
                       Тест
                     </NavLink>

@@ -244,7 +244,7 @@ function App() {
           }
         />
         <Route
-          path="/client/quiz/start"
+          path="/client/test/start"
           element={
             <>
               <PageTitle title="Client | Quiz" />
