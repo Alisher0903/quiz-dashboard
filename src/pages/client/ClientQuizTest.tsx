@@ -139,9 +139,6 @@ const ClientQuizTest = () => {
     }
   };
 
-  console.log('PAYLOAD', payload);
-
-
   const toggleVisibleIndex = () => setIsVisibleIndex(!isVisibleIndex);
 
   const sortQuiz = (index: number, type: string, optionList: TestOptionDtos[] | undefined, name: string, attachmentIds: string[]) => {
