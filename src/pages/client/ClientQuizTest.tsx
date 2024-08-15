@@ -280,17 +280,10 @@ const ClientQuizTest = () => {
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
   const progressPercent = totalTime > 0 ? (remainingTime / totalTime) * 100 : 0;
-  const conicColors: ProgressProps['strokeColor'] = {
-    '0%': '#FF0000',
-    '30%': '#e6cc00',
-    '50%': '#ffe58f',
-    '100%': '#008000',
-  };
-
   return (
     <div>
       <div className="dark:bg-[#24303F] bg-white my-3 shadow-lg w-full p-5 rounded-2xl">
-        <Progress percent={progressPercent} showInfo={false} strokeColor={conicColors} />
+        <Progress percent={progressPercent} showInfo={false}  />
       </div>
       <div className="dark:bg-[#24303F] bg-white shadow-lg w-full p-5 rounded-2xl">
         {isLoading ? <div>
