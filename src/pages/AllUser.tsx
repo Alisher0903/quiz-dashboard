@@ -12,6 +12,7 @@ import { consoleClear } from '../common/console-clear/console-clear.tsx';
 import axios from 'axios';
 import { user_list } from '../common/api/api.tsx';
 import { config } from '../common/api/token.tsx';
+import moment from 'moment';
 
 const { Option } = Select;
 
@@ -212,7 +213,7 @@ const AllUser = () => {
               </p>
               <p className="flex justify-between">
                 <strong>Туғулган куни:</strong>
-                <div className="text-blue-400">{userDetails.dateOfBirth}</div>
+                <div className="text-blue-400">{userDetails.dateOfBirth && moment(userDetails.dateOfBirth).format('DD.MM.YYYY')}</div>
               </p>
               <p className="flex justify-between">
                 <strong>Телефон рақами:</strong>
