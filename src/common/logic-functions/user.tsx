@@ -89,7 +89,7 @@ export const statusUpdate = async ({ status, ball, resultID, getUser, close }: {
     } else {
       getUser();
       close();
-      toast.success(`Нимадур хатолик юз берди`);
+      toast.error(`Нимадур хатолик юз берди`);
     }
   } catch (err) {
     close();
@@ -98,26 +98,26 @@ export const statusUpdate = async ({ status, ball, resultID, getUser, close }: {
 };
 
 //qayta test ga ruxsat berish
-export const backTestEditDate = async ({ userId, expiredDate, categoryId, closeModal, fetchData }: {
+export const backTestEditDate = async ({ userId, categoryId, closeModal, fetchData }: {
   userId: string | number,
-  expiredDate: number | string,
+  // expiredDate: number | string,
   categoryId: string,
   closeModal: () => void,
   fetchData: () => void
 }) => {
   try {
-    const { data } = await axios.put(`${result_date_edit}?userId=${userId}&expiredDate=${expiredDate}&categoryId=${categoryId}`, '', config);
+    const { data } = await axios.put(`${result_date_edit}?userId=${userId}&categoryId=${categoryId}`, '', config);
     if (data.success) {
       closeModal();
       fetchData();
-      toast.success(`Сиз ${expiredDate} кундан кейин тест ишлашга рухсат бердингиз`);
+      toast.success(`Сиз тест ишлашга рухсат бердингиз`);
     } else {
       fetchData();
       closeModal();
-      toast.success(`Нимадур хатолик юз берди`);
+      toast.error(`Нимадур хатолик юз берди`);
     }
   } catch (err) {
-    toast.success(`Нимадур хатолик юз берди`);
+    toast.error(`Нимадур хатолик юз берди`);
     closeModal();
     consoleClear();
   }

@@ -3,7 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import ClickOutside from '../ClickOutside';
 import globalStore from '../../common/state-management/globalStore.tsx';
 import { api_videos_files } from '../../common/api/api.tsx';
-import userIMage from '../../images/user.jpg'
+import userIMage from '../../images/user.jpg';
+import { Popover } from 'antd';
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -63,7 +64,13 @@ const DropdownUser = () => {
                   <li>
                     <p
                       className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
-                      {getMeData && getMeData.email}
+                      {getMeData && (
+                        getMeData.email.length > 22 ? <>
+                          <Popover title={getMeData.email} overlayStyle={{ alignItems: 'center', zIndex: 10000 }}>
+                            {getMeData.email.slice(0, 22)}...
+                          </Popover>
+                        </> : getMeData.email
+                      )}
                     </p>
                   </li>
                 )}
@@ -138,7 +145,13 @@ const DropdownUser = () => {
                   <li>
                     <p
                       className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
-                      {getMeData && getMeData.email}
+                      {getMeData && (
+                        getMeData.email.length > 22 ? <>
+                          <Popover title={getMeData.email} overlayStyle={{ textAlign: 'center', zIndex: 10000 }}>
+                            {getMeData.email.slice(0, 22)}...
+                          </Popover>
+                        </> : getMeData.email
+                      )}
                     </p>
                   </li>
                 )}

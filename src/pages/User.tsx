@@ -16,8 +16,7 @@ import AddButtons from '../components/buttons/buttons.tsx';
 import { backTestEditDate, statusUpdate } from '../common/logic-functions/user.tsx';
 import { getAdminCategory } from '../common/logic-functions/category.tsx';
 import categoryStore from '../common/state-management/categoryStore.tsx';
-import { CategoryList } from '../types/category.ts';
-import SelectForm from '../components/select/Select.tsx';
+import toast from 'react-hot-toast';
 
 const { Option } = Select;
 
@@ -28,6 +27,7 @@ interface IUser {
   phoneNumber: null | string;
   status: null | string;
   email?: string;
+  expiredDate: string;
 }
 
 interface IUserDetails {
@@ -54,8 +54,9 @@ const thead: IThead[] = [
   { id: 2, name: 'Тўлиқ исм' },
   { id: 3, name: 'Категория' },
   { id: 4, name: 'Телефон' },
+  { id: 6, name: 'Қайта тест топшириш учун қолган вақт' },
   { id: 5, name: 'Статус' },
-  { id: 6, name: 'Ҳаракат' }
+  { id: 7, name: 'Ҳаракат' }
 ];
 
 const User = () => {
@@ -181,12 +182,22 @@ const User = () => {
       label: 'Қайта топшириш вақтини белгилаш',
       key: '4',
       onClick: () => {
-        openStatusEdit();
-        setStatus('testDateUpdate');
-        setResID(user.userId);
+        if (+calculateDaysDifference(moment(user.expiredDate).format('YYYY-MM-DD')) !== 0) {
+          openStatusEdit();
+          setStatus('testDateUpdate');
+          setResID(user.userId);
+          setCategoryDateID(user.categoryId);
+        } else toast.error('Бу фойдаланувчи тест ишлаши мумкин');
       }
     }
   ];
+
+  const calculateDaysDifference = (date: string): number => {
+    const today = moment();
+    const targetDate = moment(date);
+
+    return targetDate.diff(today, 'days');
+  };
 
   return (
     <>
@@ -225,24 +236,32 @@ const User = () => {
         {loading ? <PendingLoader /> : (
           users ? users.map((user, index) => (
             <tr key={user.id}>
-              <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+              <td className="border-b border-[#eee] py-5 px-5 dark:border-strokedark">
                 <h5 className="font-medium text-black dark:text-white">{(currentPage * 10) + index + 1}</h5>
               </td>
-              <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+              <td className="border-b border-[#eee] py-5 px-5 dark:border-strokedark">
                 <p className="text-black dark:text-white">{user.fullName}</p>
               </td>
-              <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+              <td className="border-b border-[#eee] py-5 px-5 dark:border-strokedark">
                 <p className="text-black dark:text-white">{user.categoryName}</p>
               </td>
-              <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+              <td className="border-b border-[#eee] py-5 px-5 dark:border-strokedark">
                 <p className="text-black dark:text-white">{user.phoneNumber}</p>
               </td>
-              <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+              <td className="border-b border-[#eee] py-5 px-5 dark:border-strokedark">
+                <p className="text-black dark:text-white">
+                  {+calculateDaysDifference(moment(user.expiredDate).format('YYYY-MM-DD')) === 0
+                    ? 'Тестни ишлаш мумкин'
+                    : `${calculateDaysDifference(moment(user.expiredDate).format('YYYY-MM-DD'))} кун қолди`
+                  }
+                </p>
+              </td>
+              <td className="border-b border-[#eee] py-5 px-5 dark:border-strokedark">
                 <p className={`text-black dark:text-white py-1 rounded-xl text-center ${statusColor(user.status)}`}>
                   {statusN(user.status)}
                 </p>
               </td>
-              <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+              <td className="border-b border-[#eee] py-5 px-5 dark:border-strokedark">
                 <div className="flex items-center space-x-3.5 ms-6">
                   <Dropdown overlay={
                     <Menu items={getItems(user)} />
@@ -283,22 +302,24 @@ const User = () => {
       <GlobalModal onClose={closeModalEdit} isOpen={statusEdit}>
         <div className="gap-3 ml-1 min-w-60 sm:min-w-96 lg:min-w-[35rem]">
           {status === 'testDateUpdate' ? <>
-            <input
-              type={`number`}
-              value={statusVal}
-              onChange={(e) => setStatusVal(e.target.value)}
-              placeholder="Қайта ишлаш учун вақтни киритинг"
-              className="w-full rounded-lg border border-stroke bg-transparent py-3 px-5 my-4 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-            />
-            <SelectForm
-              val={categoryDateID}
-              onChange={e => setCategoryDateID(e.target.value)}
-              defOption={`Категорияни танланг`}
-              child={categoryData && (
-                categoryData.map((item: CategoryList | any) => (
-                  <option value={item.id} key={item.id}>{item.name}</option>
-                )))}
-            />
+            {/*<input*/}
+            {/*  type={`number`}*/}
+            {/*  value={statusVal}*/}
+            {/*  onChange={(e) => setStatusVal(e.target.value)}*/}
+            {/*  placeholder="Қайта ишлаш учун вақтни киритинг"*/}
+            {/*  className="w-full rounded-lg border border-stroke bg-transparent py-3 px-5 my-4 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"*/}
+            {/*/>*/}
+            {/*<SelectForm*/}
+            {/*  val={categoryDateID}*/}
+            {/*  onChange={e => setCategoryDateID(e.target.value)}*/}
+            {/*  defOption={`Категорияни танланг`}*/}
+            {/*  child={categoryData && (*/}
+            {/*    categoryData.map((item: CategoryList | any) => (*/}
+            {/*      <option value={item.id} key={item.id}>{item.name}</option>*/}
+            {/*    )))}*/}
+            {/*/>*/}
+            <p className={`text-center text-base lg:text-lg`}>Ростан хам бу фойдаланувчига қайтадан тест топширишга
+              рухсат бермоқчимисиз?</p>
           </> : (<>
             <h2 className="text-center md:text-2xl py-5 font-semibold">
               {status === 'APPROVED' ? 'Натижани тасдиқламоқчимисиз' : 'Натижани бекор қилмоқчимисиз'}
@@ -316,11 +337,11 @@ const User = () => {
             <AddButtons children={`Ёпиш`} onClick={closeModalEdit} />
             {status === 'testDateUpdate' ? (
               <AddButtons
-                children={`Сақлаш`}
-                disabled={!(statusVal && categoryDateID)}
+                children={`Ха`}
+                // disabled={!(statusVal && categoryDateID)}
                 onClick={() => backTestEditDate({
                   userId: resID,
-                  expiredDate: statusVal,
+                  // expiredDate: statusVal,
                   categoryId: categoryDateID,
                   closeModal: closeModalEdit,
                   fetchData: fetchUsers
