@@ -15,7 +15,8 @@ export const authRegister = (
   confirmPassword: string,
   setLoading: (loading: boolean) => void,
   setResData: (val: boolean) => void,
-  phoneNumber: string
+  phoneNumber: string,
+  gender: string | null
 ): void => {
   event.preventDefault();
   const sliceNumber = (num: string) => {
@@ -33,10 +34,10 @@ export const authRegister = (
     phoneNumber: sliceNumber(phoneNumber)
   };
 
-  if (firstname && lastname && email && password && confirmPassword && data.phoneNumber) {
+  if (firstname && lastname && email && password && confirmPassword && data.phoneNumber && gender) {
     setLoading(true);
     if (password === confirmPassword) {
-      axios.post(auth_register, data)
+      axios.post(`${auth_register}?genderType=${gender}`, data)
         .then(res => {
           consoleClear();
           setLoading(false);
@@ -103,13 +104,13 @@ export const handleSubmit = async (
     try {
       const { data } = await axios.post(auth_login, authData);
       if (data.success) {
-        consoleClear();
         setLoading(false);
         const expiryTime = new Date().getTime() + 24 * 60 * 60 * 1000;
         localStorage.setItem('tokenExpiry', expiryTime.toString());
         localStorage.setItem('ROLE', data.role);
         localStorage.setItem('token', `Bearer ${data.token}`);
         setResData(true);
+        consoleClear();
       } else {
         setLoading(false);
         toast.error('Сиз хали руйхатдан утмагансиз');

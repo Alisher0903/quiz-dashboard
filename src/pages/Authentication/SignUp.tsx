@@ -4,6 +4,7 @@ import globalStore from '../../common/state-management/globalStore.tsx';
 import { authRegister } from '../../common/logic-functions/auth.tsx';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
+import CheckboxGender from '../../components/Checkboxes/CheckboxGender.tsx';
 import darkLogo from '../../images/logo/geodeziya_dark.png';
 import lightLogo from '../../images/logo/geodeziya_light.png';
 
@@ -21,7 +22,9 @@ const SignUp = () => {
     setEmail,
     setLastName,
     setPassword,
-    setPrePassword
+    setPrePassword,
+    gender,
+    setGender
   } = authStore();
   const { isLoading, setIsLoading, resData, setResData, passwordShow, setPasswordShow } = globalStore();
 
@@ -34,6 +37,7 @@ const SignUp = () => {
       setFirstName('');
       setLastName('');
       setPhoneNumber('');
+      setGender('');
       toast.success('Руйхатдан утдингиз, тасдиқлаш кодини киритинг');
       navigate('/auth/confirm');
     }
@@ -43,7 +47,8 @@ const SignUp = () => {
 
   return (
     <>
-      <div className="rounded-2xl xl:rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div
+        className="rounded-2xl xl:rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center min-h-screen">
 
           {/*one qism*/}
@@ -191,7 +196,7 @@ const SignUp = () => {
               </h2>
 
               <form
-                onSubmit={e => authRegister(e, firstName, lastName, email, password, prePassword, setIsLoading, setResData, phoneNumber)}>
+                onSubmit={e => authRegister(e, firstName, lastName, email, password, prePassword, setIsLoading, setResData, phoneNumber, gender)}>
                 {/*first name*/}
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
@@ -426,8 +431,10 @@ const SignUp = () => {
                   </div>
                 </div>
 
+                <CheckboxGender />
+
                 {/*confirm button*/}
-                <div className="mb-5">
+                <div className="my-5">
                   <input
                     type="submit"
                     disabled={isLoading}
