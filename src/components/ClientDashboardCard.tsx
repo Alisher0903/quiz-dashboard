@@ -29,7 +29,7 @@ const ClientDashboardCard: React.FC<{ data: ClientDashboardStatisticsList, onEma
                     <div className='flex flex-col items-end'>
                         <strong>{`${data.correctAnswers}/${data.countAnswers}`}</strong>
                         <strong>{`${data.durationTime}`}</strong>
-                        <strong>0</strong>
+                        <strong>{data.testScore | 0}</strong>
                         <strong>{moment(data.createdAt).format('LL')}</strong>
                     </div>
                 </div>

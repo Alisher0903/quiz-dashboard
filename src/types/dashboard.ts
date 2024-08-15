@@ -32,6 +32,7 @@ export interface ClientDashboardStatisticsList {
   correctAnswers: number;
   countAnswers: number;
   durationTime: number;
+  testScore: number;
   createdAt: string;
   status: string;
 }
