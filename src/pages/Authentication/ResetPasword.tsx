@@ -4,6 +4,8 @@ import globalStore from '../../common/state-management/globalStore.tsx';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { resetPassword } from '../../common/logic-functions/auth.tsx';
+import darkLogo from '../../images/logo/geodeziya_dark.png';
+import lightLogo from '../../images/logo/geodeziya_light.png';
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -32,12 +34,17 @@ const ResetPassword = () => {
 
   return (
     <>
-      <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className="flex flex-wrap items-center">
+      <div className="rounded-2xl xl:rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+        <div className="flex flex-wrap items-center min-h-screen">
 
           {/*one qism*/}
           <div className="hidden w-full xl:block xl:w-1/2">
-            <div className="py-17.5 px-26 text-center">
+            <div className="py-17.5 px-26 text-center flex flex-col justify-center items-center">
+              <Link className="mb-5.5 inline-block" to="/auth/reset-password">
+                <img className="hidden dark:block w-full h-40 scale-[2]" src={darkLogo} alt="Logo" />
+                <img className="dark:hidden w-full h-40 scale-[2]" src={lightLogo} alt="Logo" />
+              </Link>
+
               <span className="inline-block">
                 <svg
                   width="350"
@@ -226,7 +233,7 @@ const ResetPassword = () => {
 
                     <span
                       className={`absolute right-4 top-4 hover:cursor-pointer hover:text-primary duration-300`}
-                          onClick={passwordToggle}
+                      onClick={passwordToggle}
                     >
                       <svg
                         className="fill-current"
@@ -268,7 +275,7 @@ const ResetPassword = () => {
 
                     <span
                       className={`absolute right-4 top-4 hover:cursor-pointer hover:text-primary duration-300`}
-                          onClick={passwordToggle}
+                      onClick={passwordToggle}
                     >
                       <svg
                         className="fill-current"

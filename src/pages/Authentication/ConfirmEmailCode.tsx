@@ -4,6 +4,8 @@ import globalStore from '../../common/state-management/globalStore.tsx';
 import { forgotPasswordEmail, registerClientActive } from '../../common/logic-functions/auth.tsx';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
+import darkLogo from '../../images/logo/geodeziya_dark.png';
+import lightLogo from '../../images/logo/geodeziya_light.png';
 
 const ConfirmEmailCode = () => {
   const { confirmEmailCode, setConfirmEmailCode, email, setEmail } = authStore();
@@ -30,11 +32,16 @@ const ConfirmEmailCode = () => {
 
   return (
     <>
-      <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className="flex flex-wrap items-center">
+      <div className="rounded-2xl xl:rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+        <div className="flex flex-wrap items-center min-h-screen">
           {/*one qism*/}
           <div className="hidden w-full xl:block xl:w-1/2">
-            <div className="py-17.5 px-26 text-center">
+            <div className="py-17.5 px-26 text-center flex flex-col justify-center items-center">
+              <Link className="mb-5.5 inline-block" to="/auth/confirm">
+                <img className="hidden dark:block w-full h-40 scale-[2]" src={darkLogo} alt="Logo" />
+                <img className="dark:hidden w-full h-40 scale-[2]" src={lightLogo} alt="Logo" />
+              </Link>
+
               <span className="inline-block">
                 <svg
                   width="350"

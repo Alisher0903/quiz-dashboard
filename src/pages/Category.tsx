@@ -21,6 +21,7 @@ import toast from 'react-hot-toast';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { CategoryList } from '../types/category.ts';
 import { unReload } from '../common/privacy-features/privacy-features.tsx';
+import ImageModal from '../components/modal/image-modal.tsx';
 
 const thead: IThead[] = [
   { id: 1, name: 'Т/р' },
@@ -62,15 +63,17 @@ const Category = () => {
   const [editStatus, setEditStatus] = useState<string | number>('');
   const [page, setPage] = useState<number>(0);
   const [totalPage, setTotalPage] = useState<number>(0);
+  const [imageId, setImageId] = useState('');
+  const [imageModal, setImageModal] = useState(false);
 
   useEffect(() => {
     getAdminCategoryPage({ setData: setCategoryData, page, setTotalPage, setIsLoading });
-    unReload()
+    unReload();
   }, []);
 
   useEffect(() => {
     getAdminCategoryPage({ setData: setCategoryData, page, setTotalPage, setIsLoading });
-  }, [page])
+  }, [page]);
 
   useEffect(() => {
     if (addValue && imgUpload) addValue.fileId = imgUpload;
@@ -84,22 +87,26 @@ const Category = () => {
       closeModal();
       closeModalDelete();
       setEditStatus('');
-      setImgUpload(null)
+      setImgUpload(null);
     }
   }, [resData]);
 
   const openModal = () => setIsModalOpen(true);
   const openModalDelete = () => setIsModalDelete(true);
+  const openImageMOdal = () => setImageModal(true);
 
   const closeModal = () => {
     setIsModalOpen(false);
     setEditStatus('');
     setAddValue(defVal);
   };
-
   const closeModalDelete = () => {
     setIsModalDelete(false);
     setEditStatus('');
+  };
+  const closeImageModal = () => {
+    setImageModal(false);
+    setImageId('');
   };
 
   const handleInputChange = (name: string, value: string | boolean) => {
@@ -124,6 +131,7 @@ const Category = () => {
     input: 'w-full rounded-lg border border-stroke bg-transparent py-2 px-5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
   };
 
+  console.log(addValue);
   return (
     <>
       <Breadcrumb pageName="Категория" />
@@ -159,6 +167,13 @@ const Category = () => {
                     className={'w-10 h-10 scale-[1.4] rounded-full object-cover hover:cursor-pointer'}
                     effect="blur"
                     onClick={() => {
+                      if (item.fileId) {
+                        openImageMOdal();
+                        setImageId(item.fileId);
+                      } else {
+                        openImageMOdal();
+                        setImageId('');
+                      }
                     }}
                   />
                 </td>
@@ -404,9 +419,10 @@ const Category = () => {
               <AddButtons children={`Ёпиш`} onClick={closeModal} />
               <AddButtons
                 children={isLoading ? 'юкланмоқда...' : `Сақлаш`}
-                disabled={isLoading || !addValue?.fileId}
+                disabled={isLoading}
                 type={`submit`}
               />
+              {/*|| !addValue?.fileId  => img isRequired*/}
             </div>
           </form>
         </div>
@@ -426,6 +442,9 @@ const Category = () => {
           </div>
         </div>
       </GlobalModal>
+
+      {/*img modal*/}
+      <ImageModal isOpen={imageModal} onClose={() => closeImageModal()} imgID={imageId} />
     </>
   );
 };

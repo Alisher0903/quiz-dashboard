@@ -87,7 +87,25 @@ export const addCategory = async (
   setLoading(true);
   try {
     if (addData) {
-      const { data } = edit ? await axios.put(`${category_all}/${addData.id}`, addData, config) : await axios.post(category_all, addData, config);
+      const { data } = edit ? await axios.put(`${category_all}/${addData.id}`, {
+        name: addData.name,
+        description: addData.description,
+        questionCount: addData.questionCount,
+        extraQuestionCount: addData.extraQuestionCount,
+        durationTime: addData.durationTime,
+        retakeDate: addData.retakeDate,
+        fileId: addData.fileId ? addData.fileId : 0,
+        main: addData.main,
+      }, config) : await axios.post(category_all, {
+        name: addData.name,
+        description: addData.description,
+        questionCount: addData.questionCount,
+        extraQuestionCount: addData.extraQuestionCount,
+        durationTime: addData.durationTime,
+        retakeDate: addData.retakeDate,
+        fileId: addData.fileId ? addData.fileId : 0,
+        main: addData.main,
+      }, config);
       if (data.success) {
         consoleClear();
         setLoading(false);
