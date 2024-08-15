@@ -45,8 +45,6 @@ const ClientProfileEdit: React.FC = () => {
         const isValid =
             userData.firstName &&
             userData.lastName &&
-            userData.regionName &&
-            userData.districtName &&
             userData.districtId &&
             userData.regionId &&
             userData.email &&

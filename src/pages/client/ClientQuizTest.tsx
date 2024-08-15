@@ -139,6 +139,9 @@ const ClientQuizTest = () => {
     }
   };
 
+  console.log('PAYLOAD', payload);
+
+
   const toggleVisibleIndex = () => setIsVisibleIndex(!isVisibleIndex);
 
   const sortQuiz = (index: number, type: string, optionList: TestOptionDtos[] | undefined, name: string, attachmentIds: string[]) => {
@@ -151,22 +154,27 @@ const ClientQuizTest = () => {
             <div className="flex py-5 justify-center">
               <p className="text-xl">{`${index}. ${name}`}</p>
             </div>
-            {attachmentIds && attachmentIds.length > 0 && <div className="flex justify-center items-center py-5">
-              <Image
-                style={{ maxWidth: '40rem', maxHeight: '300px', objectFit: 'contain' }}
-                src={api_videos_files + attachmentIds[0]}
-                alt="img"
-              />
-            </div>}
+            {attachmentIds && attachmentIds.length > 0 && (
+              <div className="flex justify-center items-center py-5">
+                <Image
+                  style={{ maxWidth: '40rem', maxHeight: '300px', objectFit: 'contain' }}
+                  src={api_videos_files + attachmentIds[0]}
+                  alt="img"
+                />
+              </div>
+            )}
 
             <div className="flex flex-col">
-              <label htmlFor={`input[${currentIndex}]`}
-                className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-white">
+              <label
+                htmlFor={`input[${currentIndex}]`}
+                className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
                 Жавобингизни киритинг
               </label>
               <input
                 id={`input[${currentIndex}]`}
                 placeholder="Жавоб"
+                value={answers[optionList[0]?.questionId] || ''} // Set the value to the stored answer if available
                 onChange={(e) => handleAnswerChange(optionList[0]?.questionId, e.target.value)}
                 className="rounded-lg px-2 py-1 border text-[#000]"
                 type="text"
