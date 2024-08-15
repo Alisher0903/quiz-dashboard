@@ -26,11 +26,31 @@ export const fetchQuiz = async (id: string | undefined, setQuizData: (val: TestM
     } else {
       consoleClear();
       setIsLoading(false);
+      setQuizData({
+        quizList: [],
+        quiz: {
+          questionDtoList: [],
+          countAnswers: 0,
+          duration: 0
+        },
+        currentQuestionIndex: 0,
+        remainingTime: 0
+      });
     }
   } catch (err: any) {
     consoleClear();
     toast.error(err.response.data.message);
     setIsLoading(false);
+    setQuizData({
+      quizList: [],
+      quiz: {
+        questionDtoList: [],
+        countAnswers: 0,
+        duration: 0
+      },
+      currentQuestionIndex: 0,
+      remainingTime: 0
+    });
   }
 };
 
