@@ -1,12 +1,9 @@
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import CheckboxFive from '../../components/Checkboxes/CheckboxFive';
-import CheckboxFour from '../../components/Checkboxes/CheckboxFour';
-import CheckboxOne from '../../components/Checkboxes/CheckboxTest.tsx';
+import CheckboxGender from '../../components/Checkboxes/CheckboxGender.tsx';
 import CheckboxThree from '../../components/Checkboxes/CheckboxThree';
-// import CheckboxIsActive from '../../components/Checkboxes/CheckboxIsActive.tsx';
 import SwitcherFour from '../../components/Switchers/SwitcherFour';
 import SwitcherOne from '../../components/Switchers/SwitcherOne';
-// import SwitcherIsActive from '../../components/Switchers/SwitcherIsActive.tsx';
 import SwitcherTwo from '../../components/Switchers/SwitcherTwo';
 import DatePickerOne from '../../components/Forms/DatePicker/DatePickerOne';
 import DatePickerTwo from '../../components/Forms/DatePicker/DatePickerTwo';
@@ -74,7 +71,6 @@ const FormElements = () => {
             <div className="flex flex-col gap-5.5 p-6.5">
               <SwitcherOne />
               <SwitcherTwo />
-              {/*<SwitcherIsActive />*/}
               <SwitcherFour />
             </div>
           </div>
@@ -176,9 +172,8 @@ const FormElements = () => {
               </h3>
             </div>
             <div className="flex flex-col gap-5.5 p-6.5">
-              <CheckboxOne />
               <CheckboxThree />
-              <CheckboxFour />
+              <CheckboxGender />
               <CheckboxFive />
             </div>
           </div>

@@ -13,4 +13,6 @@ export interface Auth {
   setConfirmEmailCode(val: string): void;
   phoneNumber: string
   setPhoneNumber(val: string): void;
+  gender: string|null
+  setGender(val: string|null): void;
 }
