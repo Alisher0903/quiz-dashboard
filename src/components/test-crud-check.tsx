@@ -28,18 +28,19 @@ const TestCrudCheck = ({ type, defQues }: { type: string, defQues?: any }) => {
   }, [questions]);
 
   useEffect(() => {
-    setQuestions([{ id: 1, answer: '', isCorrect: false, file: 0 }]);
+    const initialQuestions = [{ id: 1, answer: '', isCorrect: type === 'SUM', file: 0 }];
+    setQuestions(initialQuestions);
   }, [type]);
 
   useEffect(() => {
-    defQues && setQuestions(defQues);
+    if (defQues) setQuestions(defQues);
   }, [defQues]);
 
   const addQuestion = () => {
     const newQuestion = {
       id: questions.length + 1,
       answer: '',
-      isCorrect: false,
+      isCorrect: type === 'SUM',
       file: 0
     };
     setQuestions([...questions, newQuestion]);
@@ -101,7 +102,6 @@ const TestCrudCheck = ({ type, defQues }: { type: string, defQues?: any }) => {
     }
   };
 
-
   return (
     <>
       <div className="mt-4">
@@ -112,8 +112,8 @@ const TestCrudCheck = ({ type, defQues }: { type: string, defQues?: any }) => {
             <div key={question.id} className="flex items-center mb-2">
               <input
                 type="checkbox"
-                checked
-                onChange={() => handleCheckboxChange(question.id)}
+                checked={true}
+                readOnly
                 className="form-checkbox h-8 w-8 text-blue-600"
               />
               <input
@@ -129,7 +129,8 @@ const TestCrudCheck = ({ type, defQues }: { type: string, defQues?: any }) => {
                 className="ml-3 w-40"
               />
             </div>
-          )))}
+          ))
+        )}
 
         {/*================================ONE_CHOICE===============================*/}
         {type === 'ONE_CHOICE' && (
@@ -161,7 +162,8 @@ const TestCrudCheck = ({ type, defQues }: { type: string, defQues?: any }) => {
               >-
               </button>
             </div>
-          )))}
+          ))
+        )}
 
         {/*===============================MANY_CHOICE================================*/}
         {type === 'MANY_CHOICE' && (
@@ -193,7 +195,8 @@ const TestCrudCheck = ({ type, defQues }: { type: string, defQues?: any }) => {
               >-
               </button>
             </div>
-          )))}
+          ))
+        )}
 
         {/*================================ANY_CORRECT================================*/}
         {type === 'ANY_CORRECT' && (
@@ -225,7 +228,8 @@ const TestCrudCheck = ({ type, defQues }: { type: string, defQues?: any }) => {
               >-
               </button>
             </div>
-          )))}
+          ))
+        )}
       </div>
     </>
   );

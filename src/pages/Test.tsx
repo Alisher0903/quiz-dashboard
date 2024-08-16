@@ -26,7 +26,7 @@ const thead: IThead[] = [
   { id: 2, name: 'Савол' },
   { id: 3, name: 'Категория номи' },
   { id: 4, name: 'Тури' },
-  { id: 5, name: 'Балл' },
+  // { id: 5, name: 'Балл' },
   { id: 6, name: 'Яратган одам' },
   { id: 7, name: 'Ҳаракат' }
 ];
@@ -51,7 +51,7 @@ const Test = () => {
     categoryId: '',
     difficulty: '',
     type: '',
-    score: '',
+    // score: '',
     attachmentIds: [],
     optionDtos: optionDto,
     isMain: false
@@ -65,7 +65,7 @@ const Test = () => {
     categoryId: '',
     difficulty: '',
     type: '',
-    score: '',
+    // score: '',
     attachmentIds: [],
     optionDtos: null,
     isMain: false
@@ -250,11 +250,11 @@ const Test = () => {
                     {typeTranslate(item.type)}
                   </p>
                 </td>
-                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <p className="text-black dark:text-white">
-                    {item.score}
-                  </p>
-                </td>
+                {/*<td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">*/}
+                {/*  <p className="text-black dark:text-white">*/}
+                {/*    {item.score}*/}
+                {/*  </p>*/}
+                {/*</td>*/}
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
                     {item.createdByName}
@@ -321,13 +321,13 @@ const Test = () => {
                 placeholder="Саволни киритинг"
                 className="w-full rounded-lg border border-stroke bg-transparent py-2 px-5 my-4 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
               />
-              <input
-                type="number"
-                value={crudTest.score}
-                onChange={(e) => handleChange('score', e.target.value)}
-                placeholder="Баллни киритинг"
-                className="w-full rounded-lg border border-stroke bg-transparent py-2 px-5 mb-4 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-              />
+              {/*<input*/}
+              {/*  type="number"*/}
+              {/*  value={crudTest.score}*/}
+              {/*  onChange={(e) => handleChange('score', e.target.value)}*/}
+              {/*  placeholder="Баллни киритинг"*/}
+              {/*  className="w-full rounded-lg border border-stroke bg-transparent py-2 px-5 mb-4 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"*/}
+              {/*/>*/}
               <div className={`flex flex-col gap-4`}>
                 <SelectForm
                   val={`${crudTest.categoryId}`}
@@ -382,7 +382,7 @@ const Test = () => {
             <AddButtons children={`Ёпиш`} onClick={closeModal} />
             <AddButtons
               children={isLoading ? 'юкланмоқда...' : `${editOrDeleteStatus === 'delete' ? 'Ҳа' : 'Сақлаш'}`}
-              disabled={editOrDeleteStatus === 'post' ? !(crudTest.type && crudTest.score && crudTest.name && crudTest.categoryId && crudTest.optionDtos) : false}
+              disabled={editOrDeleteStatus === 'post' ? !(crudTest.type && crudTest.name && crudTest.categoryId && crudTest.optionDtos) : false}
               onClick={() => {
                 editOrDeleteStatus ? (
                   adminTestCrud({

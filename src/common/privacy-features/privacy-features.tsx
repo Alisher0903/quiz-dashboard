@@ -24,8 +24,6 @@ export const siteSecurity = () => {
   });
 
   document.addEventListener('keydown', function(e) {
-    console.log(e.keyCode);
-    
     if ((e.ctrlKey && (
       e.key === 'shift' ||
       e.key === 'u' ||
@@ -48,6 +46,16 @@ export const siteSecurity = () => {
 
 // ================browser reload qilishni ogohlantirish uchun==================
 export const unReload = () => {
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey && (
+      e.keyCode === 84 ||
+      e.keyCode === 87
+    ))) {
+      alert('Саҳифани тарк этмоқчимисиз, узгаришлар сақланмаслиги мумкин');
+      e.preventDefault();
+    }
+  });
+
   const handleBeforeUnload = (e: BeforeUnloadEvent) => {
     const confirmationMessage = 'Сиз киритган ўзгаришлар сақланмаслиги мумкин';
     e.preventDefault();
