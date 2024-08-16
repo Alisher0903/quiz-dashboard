@@ -5,6 +5,16 @@ import toast from 'react-hot-toast';
 import React from 'react';
 import { consoleClear } from '../console-clear/console-clear.tsx';
 
+export const sliceNumber = (num: string) => {
+  if (num.startsWith('+')) return num.slice(1, 13);
+  else if (+num.length === 9) return `998${num}`;
+  else if (num.startsWith('998')) return num;
+  else {
+    toast.error('Телефон рақамни туғри киритинг. Намуна: +998912223344');
+    return '';
+  }
+};
+
 // register
 export const authRegister = (
   event: React.FormEvent<HTMLFormElement>,
@@ -19,11 +29,6 @@ export const authRegister = (
   gender: string | null
 ): void => {
   event.preventDefault();
-  const sliceNumber = (num: string) => {
-    if (num.startsWith('+')) return num.slice(1, 13);
-    else if (num.length === 9) return `998${num.slice(0, 9)}`;
-    else return '';
-  };
 
   const data = {
     firstname,

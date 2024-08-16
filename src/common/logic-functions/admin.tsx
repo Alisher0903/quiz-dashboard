@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import { addAdmin, adminIsActives, getAdminList } from '../api/api.tsx';
 import { config } from '../api/token.tsx';
+import { sliceNumber } from './auth.tsx';
 
 export const adminIsActive = async (id: number | string, setData: (val: AdminDataList[] | null) => void, setLoading: (val: boolean) => void, page: any, setTotalPage: (val: any) => void) => {
   try {
@@ -33,23 +34,37 @@ export const postAdmin = async (
 
   try {
     if (addData.password === addData.confirmPassword) {
-      const { data } = await axios.post(addAdmin, addData, config);
-      if (data.success) {
-        setResData(true);
-        setLoading(false);
-        toast.success('Admin muvaffaqiyatli qushildi');
+      if (addData.firstname && addData.lastname && addData.email && sliceNumber(addData.phoneNumber) && addData.role && addData.password && addData.confirmPassword) {
+        const { data } = await axios.post(addAdmin, {
+          firstname: addData.firstname,
+          lastname: addData.lastname,
+          email: addData.email,
+          phoneNumber: sliceNumber(addData.phoneNumber),
+          role: addData.role,
+          password: addData.password,
+          confirmPassword: addData.confirmPassword
+        }, config);
+        if (data.success) {
+          setResData(true);
+          setLoading(false);
+          toast.success('Админ муваффақиятли қушилди');
+        } else {
+          setLoading(false);
+          toast.error('Нимадур хатолик юз берди, кейинроқ қайта уриниб куринг');
+        }
       } else {
+        toast.error('Малумотлар тулиқлигини текшириб куринг');
         setLoading(false);
-        toast.error('Nimadur xatolik yuz berdi, keyinroq qayta urinib kuring');
       }
     } else {
       setLoading(false);
-      toast.error('Parollar mosligi tug\'ri kelmadi');
+      toast.error('Пароллар мослиги туғри келмади');
       consoleClear();
     }
-  } catch {
+  } catch (err: any) {
     setLoading(false);
-    toast.error('Bu email bazada mavjud boshqa email bilan urinib kuring');
+    if (err.response.data.message === 'This email exist') toast.error('Бу электрон почта мавжуд бошқа электрон почта билан уриниб куринг');
+    else toast.error('Нимадур хатолик юз берди, кейинроқ қайта уриниб куринг');
     consoleClear();
   }
 };
