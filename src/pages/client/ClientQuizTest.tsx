@@ -37,7 +37,6 @@ const ClientQuizTest = () => {
         return answer !== undefined ? {
           questionId: question.id,
           answer,
-          optionId: 0,
           optionIds: []
         } : null;
       case 'ANY_CORRECT':
