@@ -174,7 +174,7 @@ export const adminTestCrud = async (
           categoryId: crudData.categoryId,
           type: crudData.type,
           difficulty: crudData.difficulty,
-          score: crudData.score,
+          // score: crudData.score,
           attachmentIds: crudData.attachmentIds ? crudData.attachmentIds : [],
           optionDtos: crudData.optionDtos
         }, config);
