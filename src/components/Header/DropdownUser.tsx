@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import ClickOutside from '../ClickOutside';
 import globalStore from '../../common/state-management/globalStore.tsx';
 import { api_videos_files } from '../../common/api/api.tsx';
-import userIMage from '../../images/user.jpg';
+import userIMage from '../../images/avatar.jpg';
 import { Popover } from 'antd';
 
 const DropdownUser = () => {
