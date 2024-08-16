@@ -16,7 +16,7 @@ import AddButtons from '../components/buttons/buttons.tsx';
 import { backTestEditDate, statusUpdate } from '../common/logic-functions/user.tsx';
 import { getAdminCategory } from '../common/logic-functions/category.tsx';
 import categoryStore from '../common/state-management/categoryStore.tsx';
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
 
 const { Option } = Select;
 
@@ -182,12 +182,12 @@ const User = () => {
       label: 'Қайта топшириш вақтини белгилаш',
       key: '4',
       onClick: () => {
-        if (+calculateDaysDifference(moment(user.expiredDate).format('YYYY-MM-DD')) !== 0) {
-          openStatusEdit();
-          setStatus('testDateUpdate');
-          setResID(user.userId);
-          setCategoryDateID(user.categoryId);
-        } else toast.error('Бу фойдаланувчи тест ишлаши мумкин');
+        // if (+calculateDaysDifference(moment(user.expiredDate).format('YYYY-MM-DD')) !== 0) {
+        openStatusEdit();
+        setStatus('testDateUpdate');
+        setResID(user.userId);
+        setCategoryDateID(user.categoryId);
+        // } else toast.error('Бу фойдаланувчи тест ишлаши мумкин');
       }
     }
   ];
@@ -196,7 +196,7 @@ const User = () => {
     const today = moment();
     const targetDate = moment(date);
 
-    return targetDate.diff(today, 'days');
+    return targetDate.diff(today, 'day');
   };
 
   return (
