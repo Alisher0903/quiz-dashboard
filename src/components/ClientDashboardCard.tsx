@@ -8,8 +8,9 @@ import { Popover } from 'antd';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const ClientDashboardCard: React.FC<{ data: ClientDashboardStatisticsList, onEmailClick: () => void, onWebClick: () => void, isLoading: boolean, isEmailLoading: boolean }> = ({ data, onEmailClick, onWebClick, isLoading, isEmailLoading }) => {
+    data.status = 'APPROVED'
     return (
-        <div className="w-full lg:w-[32%] sm:w-[48%] border-2 border-black dark:border-white p-4 rounded-md">
+        <div className="w-full lg:w-auto md:w-[48%] sm:w-[48%] border-2 border-black dark:border-white p-4 rounded-md">
             <div className="flex items-center justify-center mb-4">
                 <img
                     src={data.fileId ? api_videos_files + data.fileId : defaultIMage}
@@ -21,10 +22,10 @@ const ClientDashboardCard: React.FC<{ data: ClientDashboardStatisticsList, onEma
                 <p className="font-bold text-lg text-red-600 dark:text-blue-600 mb-2">{data.categoryName}</p>
                 <div className='flex justify-between'>
                     <div className='flex flex-col items-start'>
-                        <p>Тўғри жавоблар:</p>
-                        <p>Вақт:</p>
-                        <p>Балл:</p>
-                        <p>Сана:</p>
+                        <p className='text-start'>Тўғри жавоблар:</p>
+                        <p className='text-start'>Вақт:</p>
+                        <p className='text-start'>Балл:</p>
+                        <p className='text-start'>Сана:</p>
                     </div>
                     <div className='flex flex-col items-end'>
                         <strong>{`${data.correctAnswers}/${data.countAnswers}`}</strong>
@@ -34,7 +35,7 @@ const ClientDashboardCard: React.FC<{ data: ClientDashboardStatisticsList, onEma
                     </div>
                 </div>
             </div>
-            <div className={data.status === 'APPROVED' ? 'flex justify-between items-center' : ''}>
+            <div className={data.status === 'APPROVED' ? 'flex lg:gap-2 justify-between items-center' : ''}>
                 <div className={data.status === 'APPROVED' ? 'mt-4 bg-green-600 w-[70%] text-white py-2 px-4 flex justify-center items-center rounded' : data.status === 'WAITING' ? 'mt-4 bg-yellow-600 text-white py-2 px-4 flex justify-center items-center rounded' : 'mt-4 bg-red-600 text-white py-2 px-4 flex justify-center items-center rounded'}>
                     {data.status === 'APPROVED' ? 'Тасдиқланди' : data.status === 'WAITING' ? 'Кутилмоқда' : 'Бекор қилинди'}
                 </div>

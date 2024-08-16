@@ -59,6 +59,7 @@ const ClientDashboard: React.FC = () => {
                     key={index}
                   />
                 ))}
+
               </div>
               <div className="mt-5">
                 <Pagination

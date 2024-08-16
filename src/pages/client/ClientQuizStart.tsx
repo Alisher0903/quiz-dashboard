@@ -45,8 +45,8 @@ const ClientQuizStart: React.FC = () => {
           <div>
             <Skeleton />
           </div> :
-          clientCategoryData ? <div>
-            {clientCategoryData.map((item) => (
+          clientCategoryData?.length !== 0 ? <div>
+            {clientCategoryData && clientCategoryData.map((item) => (
               <div>
                 <CategoryCard
                   data={item}
