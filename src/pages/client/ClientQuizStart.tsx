@@ -77,7 +77,10 @@ const ClientQuizStart: React.FC = () => {
               <p className='text-center sm:text-[17px]'>Сиз аниқ буу тестни бошламоқчимисиз ?</p>
               <div className='flex gap-3 mt-4'>
                 <AddButtons onClick={toggleModal}>Орқага</AddButtons>
-                <AddButtons onClick={() => navigation(`/client/quiz/${categoryId}`)}>Бошлаш</AddButtons>
+                <AddButtons onClick={() => {
+                  navigation(`/client/quiz/${categoryId}`)
+                  localStorage.removeItem('remainingTime')
+                }}>Бошлаш</AddButtons>
               </div>
             </div>
           </div>
