@@ -49,7 +49,6 @@ const ClientQuizTest = () => {
         return answer && answer.length > 0 ? {
           questionId: question.id,
           optionIds: answer,
-          optionId: 0,
           answer: ''
         } : null;
       default:
