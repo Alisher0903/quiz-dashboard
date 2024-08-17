@@ -36,8 +36,8 @@ const DropdownUser = () => {
 
         <span className="h-12 w-12 rounded-full object-cover overflow-hidden">
           <img
-            src={(getMeData && getMeData.videoFileName)
-              ? `${api_videos_files}${getMeData.videoFileName}`
+            src={(getMeData && getMeData.fileId)
+              ? `${api_videos_files}${getMeData.fileId}`
               : userIMage
             }
             alt="User"
