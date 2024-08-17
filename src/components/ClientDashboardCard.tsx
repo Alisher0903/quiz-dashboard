@@ -8,7 +8,6 @@ import { Popover } from 'antd';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const ClientDashboardCard: React.FC<{ data: ClientDashboardStatisticsList, onEmailClick: () => void, onWebClick: () => void, isLoading: boolean, isEmailLoading: boolean }> = ({ data, onEmailClick, onWebClick, isLoading, isEmailLoading }) => {
-    data.status = 'APPROVED'
     return (
         <div className="w-full lg:w-auto md:w-[48%] sm:w-[48%] border-2 border-black dark:border-white p-4 rounded-md">
             <div className="flex items-center justify-center mb-4">
