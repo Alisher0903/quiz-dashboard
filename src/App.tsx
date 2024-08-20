@@ -18,7 +18,7 @@ import ClientQuizResult from './pages/client/ClientQuizResult.tsx';
 import { setConfig } from './common/api/token.tsx';
 import { consoleClear } from './common/console-clear/console-clear.tsx';
 import UserAdmin from './pages/UserAdmin.tsx';
-import { screenshotBlocked, siteSecurity } from './common/privacy-features/privacy-features.tsx';
+import { screenshotBlocked, siteSecurity, viewportIsActive } from './common/privacy-features/privacy-features.tsx';
 import ClientQuizStart from './pages/client/ClientQuizStart.tsx';
 import AllUser from './pages/AllUser.tsx';
 import ResultArchive from './pages/ResultArchive.tsx';
@@ -27,6 +27,7 @@ import Address from './pages/Address.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
+  const [isCursorOutside, setIsCursorOutside] = useState<boolean>(true);
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const tokens = localStorage.getItem('token');
@@ -35,7 +36,8 @@ function App() {
 
   useEffect(() => {
     screenshotBlocked();
-    // siteSecurity();
+    siteSecurity();
+    viewportIsActive(setIsCursorOutside);
   }, []);
 
   useEffect(() => {
@@ -96,6 +98,11 @@ function App() {
       <div id="screenshot-warning" className="hidden">
         Скрееншот олиш тақиқланган❗❌
       </div>
+
+      {(isCursorOutside && role === 'ROLE_CLIENT') && <div id="screenshot-warning">
+        Сайтнинг хавфсизлик сиёсати туфайли сиз буердан чиқиб кетишингиз мумкин эмас. Сайтдан курсор фокуси узилиб
+        қолди❗❌
+      </div>}
 
       <Routes>
         <Route

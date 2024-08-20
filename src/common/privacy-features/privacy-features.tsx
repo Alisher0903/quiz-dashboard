@@ -66,3 +66,36 @@ export const unReload = () => {
   window.addEventListener('beforeunload', handleBeforeUnload);
   return () => window.removeEventListener('beforeunload', handleBeforeUnload);
 };
+
+export const viewportIsActive = (setIsCursorOutside: (val: boolean) => void) => {
+  const handleMouseMove = (event: MouseEvent) => {
+    const { clientX, clientY } = event;
+
+    if (
+      clientX <= 0 ||
+      clientY <= 0 ||
+      clientX >= window.innerWidth ||
+      clientY >= window.innerHeight
+    ) {
+      setIsCursorOutside(true);
+    } else {
+      setIsCursorOutside(false);
+    }
+  };
+
+  const handleMouseLeave = (event: MouseEvent) => {
+    if (event.clientY <= 0 || event.clientX <= 0 ||
+      event.clientX >= window.innerWidth ||
+      event.clientY >= window.innerHeight) {
+      setIsCursorOutside(true);
+    }
+  };
+
+  document.addEventListener('mousemove', handleMouseMove);
+  document.addEventListener('mouseleave', handleMouseLeave);
+
+  return () => {
+    document.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('mouseleave', handleMouseLeave);
+  };
+};
