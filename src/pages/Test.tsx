@@ -148,7 +148,7 @@ const Test = () => {
   const difficultyTranslate = (type: string) => {
     if (type === 'EASY') return 'Осон';
     else if (type === 'MEDIUM') return 'Ўрта';
-    else if (type === 'HART') return 'Қийин';
+    else if (type === 'HARD') return 'Қийин';
   };
 
   const handleCheckboxChange = (id: any, checked: boolean) => {
