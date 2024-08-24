@@ -26,7 +26,7 @@ const thead: IThead[] = [
   { id: 2, name: 'Савол' },
   { id: 3, name: 'Категория номи' },
   { id: 4, name: 'Тури' },
-  // { id: 5, name: 'Балл' },
+  { id: 5, name: 'Қийинлик даражаси' },
   { id: 6, name: 'Яратган одам' },
   { id: 7, name: 'Ҳаракат' }
 ];
@@ -145,6 +145,12 @@ const Test = () => {
     else if (type === 'ANY_CORRECT') return 'Ҳар қандай тўғри';
   };
 
+  const difficultyTranslate = (type: string) => {
+    if (type === 'EASY') return 'Осон';
+    else if (type === 'MEDIUM') return 'Ўрта';
+    else if (type === 'HART') return 'Қийин';
+  };
+
   const handleCheckboxChange = (id: any, checked: boolean) => {
     if (checked) setSelectedIds((prevSelectedIds) => [...prevSelectedIds, id]);
     else setSelectedIds((prevSelectedIds) => prevSelectedIds.filter(selectedId => selectedId !== id));
@@ -220,7 +226,7 @@ const Test = () => {
                     {item.name.length > 100 ? <>
                       <Popover
                         title={item.name}
-                        overlayStyle={{ width: '70%' }}
+                        overlayStyle={{ width: '50%' }}
                       >
                         {`${item.name.slice(0, 100)}...`}
                       </Popover>
@@ -248,6 +254,11 @@ const Test = () => {
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
                     {typeTranslate(item.type)}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {difficultyTranslate(item.difficulty)}
                   </p>
                 </td>
                 {/*<td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">*/}

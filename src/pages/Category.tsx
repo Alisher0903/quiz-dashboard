@@ -15,7 +15,7 @@ import SelectForm from '../components/select/Select.tsx';
 import { api_videos_files } from '../common/api/api.tsx';
 import image from '../images/default.png';
 import ImageUpload from '../components/img-upload.tsx';
-import { Pagination } from 'antd';
+import { Pagination, Popover } from 'antd';
 import PendingLoader from '../common/Loader/pending-loader.tsx';
 import toast from 'react-hot-toast';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -181,9 +181,16 @@ const Category = () => {
                     {item.name}
                   </p>
                 </td>
-                <td className="border-b border-[#eee] p-5 dark:border-strokedark max-w-[400px]">
+                <td className="border-b border-[#eee] p-5 dark:border-strokedark min-w-[300px]">
                   <p className="text-black dark:text-white">
-                    {item.description}
+                    {item.description.length > 100 ? <>
+                      <Popover
+                        title={item.description}
+                        overlayStyle={{ width: '50%' }}
+                      >
+                        {`${item.description.slice(0, 100)}...`}
+                      </Popover>
+                    </> : item.description}
                   </p>
                 </td>
                 <td className="border-b border-[#eee] min-w-[200px] p-5 dark:border-strokedark">
