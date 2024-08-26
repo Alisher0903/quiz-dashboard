@@ -74,17 +74,13 @@ const Test = () => {
   useEffect(() => {
     getAdminCategory(setCategoryData);
     allFilterOrGet(setTestList, page, setTotalPage, setIsLoading);
-    consoleClear();
     unReload();
+    consoleClear();
   }, []);
 
   useEffect(() => {
-    allFilterOrGet(setTestList, page, setTotalPage, setIsLoading);
-    consoleClear();
-  }, [page]);
-
-  useEffect(() => {
     allFilterOrGet(setTestList, page, setTotalPage, setIsLoading, nameFilter && nameFilter, categoryFilter && categoryFilter, typeFilter && typeFilter);
+    consoleClear();
   }, [nameFilter, categoryFilter, typeFilter, page]);
 
   useEffect(() => {
