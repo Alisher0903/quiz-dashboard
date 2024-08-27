@@ -7,7 +7,7 @@ import AddButtons from '../../components/buttons/buttons';
 import { api_videos_files } from '../../common/api/api';
 import globalStore from '../../common/state-management/globalStore';
 import { Image, Skeleton } from 'antd';
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { unReload } from '../../common/privacy-features/privacy-features';
 import { Progress } from 'antd';
 import MathFormula from '../../components/math-formula.tsx';
@@ -65,7 +65,7 @@ const ClientQuizTest = () => {
 
   useEffect(() => {
     unReload();
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (quizData && quizData.remainingTime !== undefined) {
@@ -210,14 +210,14 @@ const ClientQuizTest = () => {
                         width={100}
                         height={70}
                         src={api_videos_files + item.file}
-                        className='object-cover'
+                        className="object-cover"
                       />
                     }
                     <label
                       htmlFor={`radio-${index}`}
                       className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
-                      {item.answer}
+                      <MathFormula text={item.answer} />
                     </label>
                   </div>
                 </li>
@@ -260,7 +260,7 @@ const ClientQuizTest = () => {
                       htmlFor={`checkbox-${index}`}
                       className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
-                      {item.answer}
+                      <MathFormula text={item.answer} />
                     </label>
                   </div>
                 </li>
@@ -282,7 +282,7 @@ const ClientQuizTest = () => {
   return (
     <div>
       <div className="dark:bg-[#24303F] bg-white my-3 shadow-lg w-full p-5 rounded-2xl">
-        <Progress percent={progressPercent} showInfo={false}  />
+        <Progress percent={progressPercent} showInfo={false} />
       </div>
       <div className="dark:bg-[#24303F] bg-white shadow-lg w-full p-5 rounded-2xl">
         {isLoading ? <div>
@@ -306,14 +306,15 @@ const ClientQuizTest = () => {
             </div>
             <div className="flex flex-col md:flex-row gap-2 flex-wrap justify-between mt-5">
               <p>Қолган вақт: {formatTime(remainingTime ? remainingTime : 0)}</p>
-              <div className='relative flex justify-start md:justify-center items-center'>
+              <div className="relative flex justify-start md:justify-center items-center">
                 {isVisibleIndex &&
-                  <div className='bg-red-600 absolute w-[17rem] p-5 rounded-xl bottom-11 dark:bg-blue-600 flex flex-wrap gap-2'>
+                  <div
+                    className="bg-red-600 absolute w-[17rem] p-5 rounded-xl bottom-11 dark:bg-blue-600 flex flex-wrap gap-2">
                     {quizData.quizList.map((_, index) => (
                       <div
                         onClick={() => {
                           setCurrentIndex(index);
-                          currentIndex !== index && toggleVisibleIndex()
+                          currentIndex !== index && toggleVisibleIndex();
                         }}
                         className={currentIndex === index ? 'w-8 rounded-lg bg-white h-8 border-2 flex justify-center items-center cursor-pointer border-white p-3' : 'w-8 rounded-lg cursor-pointer h-8 border-2 flex justify-center items-center border-white p-3'}
                       >
@@ -322,9 +323,11 @@ const ClientQuizTest = () => {
                     ))}
                   </div>
                 }
-                <div onClick={toggleVisibleIndex} className='bg-red-600 flex items-center justify-center gap-3 py-2 px-4 rounded-xl dark:bg-blue-600'>
-                  <p className='text-white'>Саволлар {currentIndex + 1} / {quizData && quizData.quizList.length} </p>
-                  {isVisibleIndex ? <IoIosArrowDown className='text-white text-xl' /> : <IoIosArrowUp className='text-white text-xl' />}
+                <div onClick={toggleVisibleIndex}
+                     className="bg-red-600 flex items-center justify-center gap-3 py-2 px-4 rounded-xl dark:bg-blue-600">
+                  <p className="text-white">Саволлар {currentIndex + 1} / {quizData && quizData.quizList.length} </p>
+                  {isVisibleIndex ? <IoIosArrowDown className="text-white text-xl" /> :
+                    <IoIosArrowUp className="text-white text-xl" />}
                 </div>
 
               </div>
