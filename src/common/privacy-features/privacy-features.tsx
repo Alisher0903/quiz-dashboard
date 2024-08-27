@@ -70,18 +70,15 @@ export const unReload = () => {
 export const viewportIsActive = (setIsCursorOutside: (val: boolean) => void) => {
   const handleMouseMove = (event: MouseEvent) => {
     const { clientX, clientY } = event;
-    screenshotBlocked()
+    screenshotBlocked();
 
     if (
       clientX <= 0 ||
       clientY <= 0 ||
       clientX >= window.innerWidth ||
       clientY >= window.innerHeight
-    ) {
-      setIsCursorOutside(true);
-    } else {
-      setIsCursorOutside(false);
-    }
+    ) setIsCursorOutside(true);
+    else setIsCursorOutside(false);
   };
 
   const handleMouseLeave = (event: MouseEvent) => {

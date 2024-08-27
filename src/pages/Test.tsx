@@ -20,6 +20,7 @@ import { CategoryList } from '../types/category.ts';
 import CheckboxTest from '../components/Checkboxes/CheckboxTest.tsx';
 import { FaCheck } from 'react-icons/fa';
 import { unReload } from '../common/privacy-features/privacy-features.tsx';
+import MathFormula from '../components/math-formula.tsx';
 
 const thead: IThead[] = [
   { id: 1, name: 'Т/р' },
@@ -217,16 +218,17 @@ const Test = () => {
                     {(+page * 10) + idx + 1}
                   </h5>
                 </td>
-                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark min-w-[300px]">
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark min-w-[400px]">
                   <p className="text-black dark:text-white">
-                    {item.name.length > 100 ? <>
-                      <Popover
-                        title={item.name}
-                        overlayStyle={{ width: '50%' }}
-                      >
-                        {`${item.name.slice(0, 100)}...`}
-                      </Popover>
-                    </> : item.name}
+                    <MathFormula text={item.name} />
+                    {/*{item.name.length > 100 ? <>*/}
+                    {/*  <Popover*/}
+                    {/*    title={item.name}*/}
+                    {/*    overlayStyle={{ width: '50%' }}*/}
+                    {/*  >*/}
+                    {/*    {`${item.name.slice(0, 100)}...`}*/}
+                    {/*  </Popover>*/}
+                    {/*</> : item.name}*/}
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
