@@ -149,8 +149,9 @@ const ClientQuizTest = () => {
       case 'SUM':
         return (
           <div>
-            <div className="flex py-5 justify-center">
-              <p className="text-xl">{`${index}. ${<MathFormula text={name} />}`}</p>
+            <div className="flex py-5 justify-center items-start gap-3">
+              <p className="">{`${index}.`}</p>
+              <MathFormula text={name} />
             </div>
             {attachmentIds && attachmentIds.length > 0 && (
               <div className="flex justify-center items-center py-5">
@@ -184,8 +185,9 @@ const ClientQuizTest = () => {
       case 'ANY_CORRECT':
         return (
           <div>
-            <div className="flex py-5 justify-center">
-              <p className="text-xl">{`${index}. ${<MathFormula text={name} />}`}</p>
+            <div className="flex py-5 justify-center items-start gap-3">
+              <p className="">{`${index}.`}</p>
+              <MathFormula text={name} />
             </div>
             {attachmentIds && attachmentIds.length > 0 && <div className="flex justify-center items-center py-5">
               <Image
@@ -228,8 +230,9 @@ const ClientQuizTest = () => {
       case 'MANY_CHOICE':
         return (
           <div>
-            <div className="flex py-5 justify-center">
-              <p className="text-xl">{`${index}. ${<MathFormula text={name} />}`}</p>
+            <div className="flex py-5 justify-center items-start gap-3">
+              <p className="">{`${index}.`}</p>
+              <MathFormula text={name} />
             </div>
             {attachmentIds && attachmentIds.length > 0 && <div className="flex justify-center items-center py-5">
               <Image
