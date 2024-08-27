@@ -6,10 +6,11 @@ import { TestOptionDtos } from '../../types/test';
 import AddButtons from '../../components/buttons/buttons';
 import { api_videos_files } from '../../common/api/api';
 import globalStore from '../../common/state-management/globalStore';
-import { Image, ProgressProps, Skeleton } from 'antd';
+import { Image, Skeleton } from 'antd';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { unReload } from '../../common/privacy-features/privacy-features';
 import { Progress } from 'antd';
+import MathFormula from '../../components/math-formula.tsx';
 
 const ClientQuizTest = () => {
   const { quizData, setQuizData, setCurrentIndex, currentIndex } = useTestStore();
@@ -149,7 +150,7 @@ const ClientQuizTest = () => {
         return (
           <div>
             <div className="flex py-5 justify-center">
-              <p className="text-xl">{`${index}. ${name}`}</p>
+              <p className="text-xl">{`${index}. ${<MathFormula text={name} />}`}</p>
             </div>
             {attachmentIds && attachmentIds.length > 0 && (
               <div className="flex justify-center items-center py-5">
@@ -184,7 +185,7 @@ const ClientQuizTest = () => {
         return (
           <div>
             <div className="flex py-5 justify-center">
-              <p className="text-xl">{`${index}. ${name}`}</p>
+              <p className="text-xl">{`${index}. ${<MathFormula text={name} />}`}</p>
             </div>
             {attachmentIds && attachmentIds.length > 0 && <div className="flex justify-center items-center py-5">
               <Image
@@ -228,7 +229,7 @@ const ClientQuizTest = () => {
         return (
           <div>
             <div className="flex py-5 justify-center">
-              <p className="text-xl">{`${index}. ${name}`}</p>
+              <p className="text-xl">{`${index}. ${<MathFormula text={name} />}`}</p>
             </div>
             {attachmentIds && attachmentIds.length > 0 && <div className="flex justify-center items-center py-5">
               <Image
