@@ -250,7 +250,7 @@ const User = () => {
               </td>
               <td className="border-b border-[#eee] py-5 px-5 dark:border-strokedark">
                 <p className="text-black dark:text-white">
-                  {+calculateDaysDifference(moment(user.expiredDate).format('YYYY-MM-DD')) === 0
+                  {(+calculateDaysDifference(moment(user.expiredDate).format('YYYY-MM-DD')) <= 0)
                     ? 'Тестни ишлаш мумкин'
                     : `${calculateDaysDifference(moment(user.expiredDate).format('YYYY-MM-DD'))} кун қолди`
                   }
