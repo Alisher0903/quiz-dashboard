@@ -16,8 +16,10 @@ const MathFormula = ({ text }: { text: string }) => {
   };
 
   const processText = async (inputText: any) => {
+    const formattedText = inputText.replace(/〖/g, '').replace(/〗/g, '');
+
     const model = await loadModel();
-    const parts = inputText.split(/(\s+)/);
+    const parts = formattedText.split(/(\s+)/);
     const predictions = model.predict(parts);
 
     const renderedOutput = parts
