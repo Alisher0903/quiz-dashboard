@@ -8,7 +8,9 @@ const MathFormula = ({ text }: { text: string }) => {
   const loadModel = async () => {
     return {
       predict: (input: any) => {
-        return input.map((str: any) => (/[\^\\]/.test(str) ? 'math' : 'text'));
+        return input.map((str: any) =>
+          /[^a-zA-Z0-9\s]/.test(str) ? 'symbol' : 'text'
+        );
       }
     };
   };
@@ -18,16 +20,18 @@ const MathFormula = ({ text }: { text: string }) => {
     const parts = inputText.split(/(\s+)/);
     const predictions = model.predict(parts);
 
-    const renderedOutput = parts.map((part: any, index: any) => {
-      if (predictions[index] === 'math') {
-        try {
-          return katex.renderToString(part, { throwOnError: false });
-        } catch (error) {
-          return part;
+    const renderedOutput = parts
+      .map((part: any, index: any) => {
+        if (predictions[index] === 'symbol') {
+          try {
+            return katex.renderToString(part, { throwOnError: false });
+          } catch (error) {
+            return katex.renderToString(part.replace(/([#%&_{}~^\\])/g, '\\$1'), { throwOnError: false });
+          }
         }
-      }
-      return part;
-    }).join('');
+        return part;
+      })
+      .join('');
 
     setOutput(renderedOutput);
   };
