@@ -23,7 +23,7 @@ const ResultArchive = () => {
       <Breadcrumb pageName={`Архив`} />
       <Popover title="Орқага қайтиш" overlayStyle={{ textAlign: 'center' }}>
         <MdKeyboardBackspace
-          onClick={() => navigate('/user')}
+          onClick={() => navigate(-1)}
           className={`text-3xl hover:cursor-pointer hover:text-primary duration-300 mb-5`}
         />
       </Popover>
