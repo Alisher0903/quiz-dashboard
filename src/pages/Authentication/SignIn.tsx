@@ -36,8 +36,8 @@ const SignIn = () => {
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="py-17.5 px-26 text-center flex flex-col justify-center items-center">
               <Link className="mb-5.5 inline-block" to="/auth/signin">
-                <img className="hidden dark:block w-full h-40 scale-[2]" src={darkLogo} alt="Logo" />
-                <img className="dark:hidden w-full h-40 scale-[2]" src={lightLogo} alt="Logo" />
+                <img className="hidden dark:block w-full h-40 scale-[2] -translate-x-6" src={darkLogo} alt="Logo" />
+                <img className="dark:hidden w-full h-40 scale-[2] -translate-x-6" src={lightLogo} alt="Logo" />
               </Link>
 
               {/*<p className="2xl:px-20">*/}
@@ -216,7 +216,7 @@ const SignIn = () => {
                 {/*password*/}
                 <div className="mb-6">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Парол
+                    Пароль
                   </label>
                   <div className="relative">
                     <input
@@ -253,7 +253,7 @@ const SignIn = () => {
                       </svg>
                     </span>
                   </div>
-                  <p>Парол камида 5 та ҳарф ёки рақамдан иборат бўлиши керак</p>
+                  <p>Пароль камида 5 та ҳарф ёки рақамдан иборат бўлиши керак</p>
                 </div>
 
                 {/*confirm button*/}
@@ -268,7 +268,7 @@ const SignIn = () => {
 
                 <div className="mt-6 text-center flex justify-between items-center">
                   <p>
-                    Ҳисобингиз ёъқми?{' '}
+                    Ҳисобингиз ёқми?{' '}
                     <Link to="/auth/signup" className="text-primary">
                       Рўйхатдан ўтиш
                     </Link>

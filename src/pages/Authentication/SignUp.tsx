@@ -55,8 +55,8 @@ const SignUp = () => {
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="py-17.5 px-26 text-center flex flex-col justify-center items-center">
               <Link className="mb-5.5 inline-block" to="/auth/signup">
-                <img className="hidden dark:block w-full h-40 scale-[2]" src={darkLogo} alt="Logo" />
-                <img className="dark:hidden w-full h-40 scale-[2]" src={lightLogo} alt="Logo" />
+                <img className="hidden dark:block w-full h-40 scale-[2] -translate-x-6" src={darkLogo} alt="Logo" />
+                <img className="dark:hidden w-full h-40 scale-[2] -translate-x-6" src={lightLogo} alt="Logo" />
               </Link>
               {/*<p className="2xl:px-20">*/}
               {/*  Lorem ipsum dolor sit amet, consectetur adipiscing elit*/}
@@ -349,7 +349,7 @@ const SignUp = () => {
                 {/*password*/}
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Парол
+                    Пароль
                   </label>
                   <div className="relative">
                     <input
@@ -386,7 +386,7 @@ const SignUp = () => {
                       </svg>
                     </span>
                   </div>
-                  <p>Парол камида 5 та ҳарф ёки рақамдан иборат бўлиши керак</p>
+                  <p>Пароль камида 5 та ҳарф ёки рақамдан иборат бўлиши керак.</p>
                 </div>
 
                 {/*pre password*/}
@@ -432,6 +432,13 @@ const SignUp = () => {
                 </div>
 
                 <CheckboxGender />
+                <p className={`mt-6`}>
+                  check {' '}
+                  <Link to="#" className="text-primary">
+                    Оммавий оферта
+                  </Link>
+                  {' '} шартларига розимисиз
+                </p>
 
                 {/*confirm button*/}
                 <div className="my-5">
@@ -443,7 +450,7 @@ const SignUp = () => {
                   />
                 </div>
 
-                <div className="mt-6 text-center">
+                <div className="mt-6 flex flex-col gap-5">
                   <p>
                     Ҳисобингиз борми?{' '}
                     <Link to="/auth/signin" className="text-primary">
