@@ -15,7 +15,7 @@ import { unReload } from '../common/privacy-features/privacy-features.tsx';
 import { AdminDataList } from '../types/admin.ts';
 
 const thead: IThead[] = [
-  { id: 1, name: 'Т/р' },
+  { id: 1, name: 'Т/Р' },
   { id: 2, name: 'Исм' },
   { id: 3, name: 'Фамилия' },
   { id: 4, name: 'Электрон почта' },
