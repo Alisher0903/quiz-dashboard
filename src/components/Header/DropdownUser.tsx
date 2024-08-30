@@ -179,7 +179,7 @@ const DropdownUser = () => {
                         fill=""
                       />
                     </svg>
-                    Профиле
+                    Профиль
                   </Link>
                 </li>
               </ul>

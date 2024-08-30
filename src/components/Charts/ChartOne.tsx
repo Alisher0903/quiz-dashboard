@@ -55,6 +55,13 @@ const ChartOne: React.FC = () => {
     }
   };
 
+  // let maxCHart = chart[0]?.value;
+  // for (let i = 0; i < chart.length; i++) {
+  //   if (maxCHart && chart[i].value) {
+  //     if (maxCHart > chart[i]?.value) maxCHart = chart[i].value;
+  //   }
+  // }
+
   const options: ApexOptions = {
     legend: {
       show: false,
@@ -146,7 +153,7 @@ const ChartOne: React.FC = () => {
         }
       },
       min: 0,
-      max: 100
+      max: 200
     }
   };
 
