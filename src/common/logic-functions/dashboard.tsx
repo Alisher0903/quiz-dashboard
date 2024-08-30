@@ -56,11 +56,7 @@ export const getClientCertificate = async (id: number, setIsLoading: (val: boole
     if (data.success) {
       downloadFile(`${get_certificate}/${data.body}`)
       setIsLoading(false);
-      consoleClear();
-    } else {
-      setIsLoading(false);
-      consoleClear();
-    }
+    } else setIsLoading(false);
   } catch {
     setIsLoading(false);
     consoleClear();
@@ -71,10 +67,7 @@ export const getAdminDashboardStatisticCard = async (setData: (val: null | Dashb
   try {
     const { data } = await axios.get(statistics_card, config);
     if (data.success) setData(data.body);
-    else {
-      setData(null);
-      consoleClear();
-    }
+    else setData(null);
   } catch {
     consoleClear();
     setData(null);
@@ -93,10 +86,7 @@ export const getAdminDashboardStatisticAll = async (setData: (val: null | Dashbo
     if (data.success) {
       setData(data.body.body);
       setTotalPage(data.body.totalElements);
-    } else {
-      consoleClear();
-      setData(null);
-    }
+    } else setData(null);
   } catch {
     consoleClear();
     setData(null);

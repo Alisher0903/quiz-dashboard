@@ -15,7 +15,6 @@ export const fetchQuiz = async (id: string | undefined, setQuizData: (val: TestM
   try {
     const { data } = await axios.get(`${quiz_start}${id}`, config);
     if (data.success) {
-      consoleClear();
       setQuizData({
         quizList: data.body.questionDtoList,
         quiz: data.body,
@@ -25,7 +24,6 @@ export const fetchQuiz = async (id: string | undefined, setQuizData: (val: TestM
       setTotalTime(data.body.duration * 60)
       setIsLoading(false);
     } else {
-      consoleClear();
       setIsLoading(false);
       setQuizData({
         quizList: [],
@@ -60,7 +58,6 @@ export const sendResults = async (id: string | undefined, duration: number, coun
   try {
     const { data } = await axios.post(`${quiz_pass}/${id}?duration=${duration}&countAnswers=${countAnswers}`, payload, config);
     if (data.success) {
-      consoleClear();
       navigate('/client/quiz/result');
       setIsLoading(false);
       setCurrentIndex(0);
@@ -76,10 +73,7 @@ export const sendResults = async (id: string | undefined, duration: number, coun
       });
       localStorage.removeItem('remainingTime');
       localStorage.removeItem('currentIndex');
-    } else {
-      consoleClear();
-      setIsLoading(false);
-    }
+    } else setIsLoading(false);
   } catch {
     consoleClear();
     setIsLoading(false);
@@ -118,7 +112,6 @@ export const allFilterOrGet = async (setData: (val: null | TestList[]) => void, 
       setLoading(false);
       setData(data.body.body);
       setTotalPage(data.body.totalElements);
-      consoleClear();
     } else {
       setData(null);
       setLoading(false);
@@ -152,12 +145,10 @@ export const adminTestCrud = async (
     try {
       const { data } = await axios.post(question_crud, crudData, config);
       if (data.success) {
-        consoleClear();
         setResData(true);
         setLoading(false);
         toast.success('Тест муваффақиятли сақланди');
       } else {
-        consoleClear();
         toast.error('Тест сақлашда хатолик юз берди');
         setLoading(false);
       }
@@ -179,12 +170,10 @@ export const adminTestCrud = async (
           optionDtos: crudData.optionDtos
         }, config);
         if (data.success) {
-          consoleClear();
           setResData(true);
           setLoading(false);
           toast.success('Тест муваффақиятли таҳрирланди');
         } else {
-          consoleClear();
           toast.error('Хатолик юз берди');
           setLoading(false);
         }
@@ -206,7 +195,7 @@ export const adminTestCrud = async (
           consoleClear();
           setResData(true);
           setLoading(false);
-          toast.success('Тест муваффақиятли учирилди');
+          toast.success('Тест муваффақиятли ўчирилди');
         } else {
           consoleClear();
           toast.error('Хатолик юз берди');
@@ -242,15 +231,15 @@ export const questionTransfer = async (
     const { data } = await axios.put(question_transfer, transferData, config);
     if (data.success) {
       await allFilterOrGet(setData, page, setTotalPage, setLoading);
-      toast.success('Тест муваффақиятли кучирилди');
+      toast.success('Тест муваффақиятли кўчирилди');
       closeModalTest();
     } else {
-      toast.error('Тест кучиришда қандайдур хатолик юз берди');
+      toast.error('Тест кўчиришда қандайдир хатолик юз берди');
       closeModalTest();
     }
   } catch (err) {
     closeModalTest();
-    toast.error('Тест кучиришда қандайдур хатолик юз берди');
+    toast.error('Тест кўчиришда қандайдир хатолик юз берди');
     consoleClear();
   }
 };

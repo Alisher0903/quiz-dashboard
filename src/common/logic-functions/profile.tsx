@@ -4,6 +4,7 @@ import { config } from '../api/token';
 import { ProfileDataTypes } from '../../types/profile';
 import toast from 'react-hot-toast';
 import { getMe } from '../global-functions';
+import { consoleClear } from '../console-clear/console-clear.tsx';
 
 export const getUserData = async (setUserData: (val: ProfileDataTypes) => void, setIsLoading: (val: boolean) => void) => {
   setIsLoading(true);
@@ -16,7 +17,6 @@ export const getUserData = async (setUserData: (val: ProfileDataTypes) => void, 
   } catch (error) {
     setIsLoading(false);
     console.log(error);
-
   }
 };
 
@@ -41,6 +41,6 @@ export const updateUserData = async (userData: ProfileDataTypes, attachmentId: n
     } else setIsLoading(false);
   } catch (error) {
     setIsLoading(false);
-    console.log(error);
+    consoleClear()
   }
 };

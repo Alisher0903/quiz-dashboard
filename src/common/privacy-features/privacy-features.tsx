@@ -38,7 +38,7 @@ export const siteSecurity = () => {
       e.keyCode === 85 ||
       e.keyCode === 73
     )) || e.key === 'F12') {
-      toast.error('Бу сайтнинг махфийлик сиёсати қушимча харакатларни тақиқлайди');
+      toast.error('Бу сайтнинг махфийлик сиёсати қушимча ҳаракатларни тақиқлайди');
       e.preventDefault();
     }
   });

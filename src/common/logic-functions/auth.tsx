@@ -10,7 +10,7 @@ export const sliceNumber = (num: string) => {
   else if (+num.length === 9) return `998${num}`;
   else if (num.startsWith('998')) return num;
   else {
-    toast.error('Телефон рақамни туғри киритинг. Намуна: +998912223344');
+    toast.error('Телефон рақамини тўғри киритинг. Намуна: +998912223344');
     return '';
   }
 };
@@ -52,16 +52,16 @@ export const authRegister = (
         .catch((err) => {
           consoleClear();
           setLoading(false);
-          if (err.response.data.message === 'This email exist') toast.error('Бу эмаил билан руйхатдан утилган!!!');
+          if (err.response.data.message === 'This email exist') toast.error('Бу э-маил билан рўйхатдан утилган!!!');
           else toast.error('Нимадир хато кетди, қайта уриниб кўринг!!!');
         });
     } else {
       setLoading(false);
-      toast.error('Парол ва такрорий парол мослигини текшириб қайтадан уриниб куринг');
+      toast.error('Пароль ва такрорий пароль мослигини текшириб қайтадан уриниб кўринг');
     }
   } else {
     setLoading(false);
-    toast.error('Малумотлар тулиқлигини текшириб куринг!!!');
+    toast.error('Маълумотлар тўлиқлигини текшириб кўринг!!!');
   }
 };
 
@@ -78,7 +78,6 @@ export const registerClientActive = async (
     if (code) {
       const { data } = await axios.put(`${auth_activate}?code=${code}`, '');
       if (data.success) {
-        consoleClear();
         setResData(true);
         setLoading(false);
       } else toast.error('Нимадир хато кетди, қайта уриниб кўринг!!!');
@@ -115,10 +114,9 @@ export const handleSubmit = async (
         localStorage.setItem('ROLE', data.role);
         localStorage.setItem('token', `Bearer ${data.token}`);
         setResData(true);
-        consoleClear();
       } else {
         setLoading(false);
-        toast.error('Сиз хали руйхатдан утмагансиз');
+        toast.error('Сиз ҳали рўйхатдан ўтмагансиз.');
         consoleClear();
       }
     } catch (err: any) {
@@ -129,7 +127,7 @@ export const handleSubmit = async (
     }
   } else {
     setLoading(false);
-    toast.error('Малумотлар тулиқлигини текшириб куринг!!!');
+    toast.error('Маълумотлар тўлиқлигини текшириб кўринг!!!');
   }
 };
 
@@ -148,13 +146,11 @@ export const forgotPasswordEmail = async (
     if (email) {
       const { data } = await axios.put(auth_forgot_password, forgotData);
       if (data.success) {
-        consoleClear();
         setResData(true);
         setLoading(false);
       } else {
-        consoleClear();
         setLoading(false);
-        toast.error('Нимадур хатолик юз берди, кейинроқ қайта уриниб куринг!!!');
+        toast.error('Нимадир хатолик юз берди, кейинроқ қайта уриниб кўринг!!!');
       }
     } else {
       consoleClear();
@@ -162,7 +158,7 @@ export const forgotPasswordEmail = async (
     }
   } catch (err: any) {
     if (err.response.data['message: '] === 'User not found') toast.error('Бу фойдаланувчи мавжуд эмас!!!');
-    else toast.error('Нимадур хатолик юз берди, кейинроқ қайта уриниб куринг!!!');
+    else toast.error('Нимадир хатолик юз берди, кейинроқ қайта уриниб кўринг!!!');
     consoleClear();
     setLoading(false);
   }
@@ -185,27 +181,26 @@ export const resetPassword = async (
       if (passwordToken && newPassword && confirmPassword) {
         const { data } = await axios.put(auth_reset_password, resetData);
         if (data.success) {
-          consoleClear();
           setResData(true);
           setLoading(false);
         } else {
           consoleClear();
           setLoading(false);
-          toast.error('Нимадур хатолик юз берди, кейинроқ қайта уриниб куринг!!!');
+          toast.error('Нимадир хатолик юз берди, кейинроқ қайта уриниб кўринг!!!');
         }
       } else {
         consoleClear();
         setLoading(false);
-        toast.error('Малумотлар тулиқ эмас қайтадан уриниб куринг!!!');
+        toast.error('Маълумотлар тўлиқ эмас қайтадан уриниб кўринг!!!');
       }
     } else {
       consoleClear();
       setLoading(false);
-      toast.error('Пароллар мослиги туғри келмади, текшириб қайтадан уриниб куринг!!!');
+      toast.error('Пароллар мослиги тўғри келмади, текшириб қайтадан уриниб кўринг!!!');
     }
   } catch {
     consoleClear();
     setLoading(false);
-    toast.error('Нимадур хатолик юз берди, кейинроқ қайта уриниб куринг!!!');
+    toast.error('Нимадир хатолик юз берди, кейинроқ қайта уриниб кўринг!!!');
   }
 };

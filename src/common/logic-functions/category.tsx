@@ -15,7 +15,6 @@ export const getClientCategory = async (size: number, page: number, setClientCat
       setClientCategory(data.body.body);
       setTotalPage(data.body.totalElements)
       setIsLoading(false);
-      consoleClear();
     } else {
       setClientCategory(null);
       setIsLoading(false);
@@ -62,13 +61,8 @@ export const getAdminCategoryPage = async (
 export const getAdminCategory = async (setData: (val: null | CategoryList[]) => void) => {
   try {
     const { data } = await axios.get(category_admin, config);
-    if (data.success) {
-      setData(data.body);
-      consoleClear();
-    } else {
-      setData(null);
-      consoleClear();
-    }
+    if (data.success) setData(data.body);
+    else setData(null);
   } catch {
     setData(null);
     consoleClear();
