@@ -15,15 +15,16 @@ import ClientQuizTest from './pages/client/ClientQuizTest.tsx';
 import ClientDashboard from './pages/client/ClientDashboard.tsx';
 import ResetPassword from './pages/Authentication/ResetPasword.tsx';
 import ClientQuizResult from './pages/client/ClientQuizResult.tsx';
-import { setConfig } from './common/api/token.tsx';
-import { consoleClear } from './common/console-clear/console-clear.tsx';
 import UserAdmin from './pages/UserAdmin.tsx';
-import { screenshotBlocked, siteSecurity, viewportIsActive } from './common/privacy-features/privacy-features.tsx';
-import ClientQuizStart from './pages/client/ClientQuizStart.tsx';
-import AllUser from './pages/AllUser.tsx';
+import Address from './pages/Address.tsx';
 import ResultArchive from './pages/ResultArchive.tsx';
 import ClientProfileEdit from './pages/client/ClientProfileEdit.tsx';
-import Address from './pages/Address.tsx';
+import ClientQuizStart from './pages/client/ClientQuizStart.tsx';
+import AllUser from './pages/AllUser.tsx';
+import PublicOffer from './pages/Authentication/PublicOffer.tsx';
+import { consoleClear } from './common/console-clear/console-clear.tsx';
+import { screenshotBlocked, siteSecurity, viewportIsActive } from './common/privacy-features/privacy-features.tsx';
+import { setConfig } from './common/api/token.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -221,6 +222,15 @@ function App() {
             <>
               <PageTitle title="Reset password" />
               <ResetPassword />
+            </>
+          }
+        />
+        <Route
+          path="/auth/offer"
+          element={
+            <>
+              <PageTitle title="Offer" />
+              <PublicOffer />
             </>
           }
         />

@@ -2,11 +2,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import authStore from '../../common/state-management/authStore.tsx';
 import globalStore from '../../common/state-management/globalStore.tsx';
 import { authRegister } from '../../common/logic-functions/auth.tsx';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import CheckboxGender from '../../components/Checkboxes/CheckboxGender.tsx';
 import darkLogo from '../../images/logo/geodeziya_dark.png';
 import lightLogo from '../../images/logo/geodeziya_light.png';
+import CheckboxOffer from '../../components/Checkboxes/CheckboxOffer.tsx';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ const SignUp = () => {
     setGender
   } = authStore();
   const { isLoading, setIsLoading, resData, setResData, passwordShow, setPasswordShow } = globalStore();
+  const [isChecked, setIsChecked] = useState<boolean>(false);
 
   useEffect(() => {
     if (resData) {
@@ -196,7 +198,12 @@ const SignUp = () => {
               </h2>
 
               <form
-                onSubmit={e => authRegister(e, firstName, lastName, email, password, prePassword, setIsLoading, setResData, phoneNumber, gender)}>
+                onSubmit={e => {
+                  e.preventDefault()
+                  if (isChecked) authRegister(e, firstName, lastName, email, password, prePassword, setIsLoading, setResData, phoneNumber, gender);
+                  else toast.error('Оммавий оферта шартларини қабул қилмадингиз')
+                }}
+              >
                 {/*first name*/}
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
@@ -432,12 +439,12 @@ const SignUp = () => {
                 </div>
 
                 <CheckboxGender />
-                <p className={`mt-6`}>
-                  check {' '}
-                  <Link to="#" className="text-primary">
+                <p className={`mt-6 flex justify-start items-center`}>
+                  <CheckboxOffer setIsChecked={setIsChecked} isChecked={isChecked} />
+                  <Link to="/auth/offer" className="text-primary hover:underline mr-2">
                     Оммавий оферта
                   </Link>
-                  {' '} шартларига розимисиз
+                  шартларига розимисиз
                 </p>
 
                 {/*confirm button*/}

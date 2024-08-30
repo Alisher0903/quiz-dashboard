@@ -1,22 +1,16 @@
-import { useState } from 'react';
-
-const CheckboxThree = () => {
-  const [isChecked, setIsChecked] = useState<boolean>(false);
-
+const CheckboxOffer = ({ isChecked, setIsChecked }: { setIsChecked: (val: boolean) => void, isChecked: boolean }) => {
   return (
     <div>
       <label
-        htmlFor="checkboxLabelThree"
+        htmlFor="checkboxOffer"
         className="flex cursor-pointer select-none items-center"
       >
         <div className="relative">
           <input
             type="checkbox"
-            id="checkboxLabelThree"
+            id="checkboxOffer"
             className="sr-only"
-            onChange={() => {
-              setIsChecked(!isChecked);
-            }}
+            onChange={() => setIsChecked(!isChecked)}
           />
           <div
             className={`box mr-4 flex h-5 w-5 items-center justify-center rounded border ${
@@ -24,9 +18,7 @@ const CheckboxThree = () => {
             }`}
           >
             <span
-              className={`text-primary opacity-0 ${
-                isChecked && '!opacity-100'
-              }`}
+              className={`text-primary opacity-0 ${isChecked && '!opacity-100'}`}
             >
               <svg
                 className="h-3.5 w-3.5 stroke-current"
@@ -38,16 +30,15 @@ const CheckboxThree = () => {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
+                  d="M5 13l4 4L19 7"
                 ></path>
               </svg>
             </span>
           </div>
         </div>
-        Checkbox Text
       </label>
     </div>
   );
 };
 
-export default CheckboxThree;
+export default CheckboxOffer;
