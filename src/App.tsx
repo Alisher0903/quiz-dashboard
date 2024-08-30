@@ -87,8 +87,9 @@ function App() {
     if (!tokens && !pathname.startsWith('/auth')) navigate('/auth/signin');
     if (!tokens && pathname.startsWith('/auth')) sessionStorage.removeItem('refreshes');
 
-    // console clear u/n
-    consoleClear();
+    setTimeout(() => {
+      consoleClear();
+    }, 10000);
   }, [pathname, tokens, navigate]);
 
   return loading ? (

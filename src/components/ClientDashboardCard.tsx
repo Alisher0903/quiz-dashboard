@@ -21,14 +21,14 @@ const ClientDashboardCard: React.FC<{ data: ClientDashboardStatisticsList, onEma
                 <p className="font-bold text-lg text-red-600 dark:text-blue-600 mb-2">{data.categoryName}</p>
                 <div className='flex justify-between'>
                     <div className='flex flex-col items-start'>
-                        <p className='text-start'>Тўғри жавоблар:</p>
-                        <p className='text-start'>Вақт:</p>
-                        <p className='text-start'>Балл:</p>
-                        <p className='text-start'>Сана:</p>
+                        <p className='text-start'>Жавоб / Савол:</p>
+                        <p className='text-start'>Вақт давомийлиги:</p>
+                        <p className='text-start'>Тўпланган балл:</p>
+                        <p className='text-start'>Ишланган сана:</p>
                     </div>
                     <div className='flex flex-col items-end'>
                         <strong>{`${data.correctAnswers}/${data.countAnswers}`}</strong>
-                        <strong>{`${data.durationTime}`}</strong>
+                        <strong>{`${data.durationTime} (мин)`}</strong>
                         <strong>{data.testScore | 0}</strong>
                         <strong>{moment(data.createdAt).format('LL')}</strong>
                     </div>
@@ -39,14 +39,14 @@ const ClientDashboardCard: React.FC<{ data: ClientDashboardStatisticsList, onEma
                     {data.status === 'APPROVED' ? 'Тасдиқланди' : data.status === 'WAITING' ? 'Кутилмоқда' : 'Бекор қилинди'}
                 </div>
                 {data.status === 'APPROVED' &&
-                    <Popover title="Сертификатни электрон почтадан юклаш">
+                    <Popover title="Сертификатни электрон почта орқали юклаб олиш">
                         <div onClick={onEmailClick} className=' bg-green-600 py-3 cursor-pointer px-3 mt-4 rounded-full'>
                             {isEmailLoading ? <AiOutlineLoading3Quarters className='spin' color='#fff' /> : <LuUploadCloud color='#fff' />}
                         </div>
                     </Popover>
                 }
                 {data.status === 'APPROVED' &&
-                    <Popover title="Сертификатни сайтдан юклаш">
+                    <Popover title="Сертификатни сайтдан юклаб олиш">
                         <div onClick={onWebClick} className=' bg-green-600 py-3 cursor-pointer px-3 mt-4 rounded-full'>
                             {isLoading ? <AiOutlineLoading3Quarters className='spin' color='#fff' /> : <LuUploadCloud color='#fff' />}
                         </div>

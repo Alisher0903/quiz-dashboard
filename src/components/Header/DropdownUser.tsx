@@ -41,7 +41,7 @@ const DropdownUser = () => {
               : userIMage
             }
             alt="User"
-            className={`w-full h-full`}
+            className={`w-full h-full object-cover`}
           />
         </span>
       </Link>

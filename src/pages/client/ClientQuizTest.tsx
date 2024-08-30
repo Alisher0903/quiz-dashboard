@@ -58,9 +58,7 @@ const ClientQuizTest = () => {
   }).filter(answer => answer !== null);
 
   useEffect(() => {
-    if (id) {
-      fetchQuiz(id, setQuizData, setIsLoading, setTotalTime);
-    }
+    if (id) fetchQuiz(id, setQuizData, setIsLoading, setTotalTime);
   }, [id, setQuizData, setIsLoading]);
 
   useEffect(() => {
@@ -135,9 +133,7 @@ const ClientQuizTest = () => {
   };
 
   const handleNextQuestion = () => {
-    if (currentIndex < quizData.quizList.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-    }
+    if (currentIndex < quizData.quizList.length - 1) setCurrentIndex(currentIndex + 1);
   };
 
   const toggleVisibleIndex = () => setIsVisibleIndex(!isVisibleIndex);
@@ -282,6 +278,7 @@ const ClientQuizTest = () => {
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
   const progressPercent = totalTime > 0 ? (remainingTime / totalTime) * 100 : 0;
+
   return (
     <div>
       <div className="dark:bg-[#24303F] bg-white my-3 shadow-lg w-full p-5 rounded-2xl">
@@ -295,8 +292,9 @@ const ClientQuizTest = () => {
             <div>
             </div>
             <div className="">
-              <p
-                className="text-center text-red-600 dark:text-blue-600 text-3xl font-bold">{quizData.quizList[currentIndex]?.categoryName}</p>
+              <p className="text-center text-red-600 dark:text-blue-600 text-3xl font-bold">
+                {quizData.quizList[currentIndex]?.categoryName}
+              </p>
             </div>
             <div>
               {sortQuiz(
@@ -319,28 +317,33 @@ const ClientQuizTest = () => {
                           setCurrentIndex(index);
                           currentIndex !== index && toggleVisibleIndex();
                         }}
-                        className={currentIndex === index ? 'w-8 rounded-lg bg-white h-8 border-2 flex justify-center items-center cursor-pointer border-white p-3' : 'w-8 rounded-lg cursor-pointer h-8 border-2 flex justify-center items-center border-white p-3'}
+                        className={currentIndex === index
+                          ? 'w-8 rounded-lg bg-white h-8 border-2 flex justify-center items-center cursor-pointer border-white p-3'
+                          : 'w-8 rounded-lg cursor-pointer h-8 border-2 flex justify-center items-center border-white p-3'}
                       >
                         <p className={currentIndex === index ? `text-black` : `text-white`}>{index + 1}</p>
                       </div>
                     ))}
                   </div>
                 }
-                <div onClick={toggleVisibleIndex}
-                     className="bg-red-600 flex items-center justify-center gap-3 py-2 px-4 rounded-xl dark:bg-blue-600">
-                  <p className="text-white">Саволлар {currentIndex + 1} / {quizData && quizData.quizList.length} </p>
-                  {isVisibleIndex ? <IoIosArrowDown className="text-white text-xl" /> :
-                    <IoIosArrowUp className="text-white text-xl" />}
+                <div
+                  onClick={toggleVisibleIndex}
+                  className="bg-red-600 flex items-center justify-center gap-3 py-2 px-4 rounded-xl dark:bg-blue-600"
+                >
+                  <p className="text-white">Саволлар {currentIndex + 1} / {quizData && quizData.quizList.length}</p>
+                  {isVisibleIndex
+                    ? <IoIosArrowDown className="text-white text-xl" />
+                    : <IoIosArrowUp className="text-white text-xl" />
+                  }
                 </div>
-
               </div>
               <div className="flex gap-5">
                 <AddButtons disabled={currentIndex === 0} onClick={() => setCurrentIndex(currentIndex - 1)}>
                   Орқага
                 </AddButtons>
                 <AddButtons
-                  onClick={currentIndex + 1 === quizData.quizList.length ? () => {
-                    sendResults(id, time === 0 ? 1 : time, quizData.quiz.countAnswers, payload, navigate, setIsBtnLoading, setCurrentIndex, setQuizData);
+                  onClick={currentIndex + 1 === quizData.quizList.length ? async () => {
+                    await sendResults(id, time === 0 ? 1 : time, quizData.quiz.countAnswers, payload, navigate, setIsBtnLoading, setCurrentIndex, setQuizData);
                   } : handleNextQuestion}
                   disabled={isBtnLoading ? isBtnLoading : isNextDisabled}>{currentIndex + 1 === quizData.quizList.length ? `${isBtnLoading ? 'Юкланмоқда...' : 'Юбориш'}` : 'Кейингиси'}
                 </AddButtons>
