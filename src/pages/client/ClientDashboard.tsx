@@ -35,9 +35,9 @@ const ClientDashboard: React.FC = () => {
     <>
       <div>
         <div>
-          <p className="text-center text-red-600 dark:text-blue-600 text-3xl font-bold">Булар сизнинг натижаларингиз</p>
+          <p className="text-center text-red-600 dark:text-blue-600 text-3xl font-bold">Сизнинг натижаларингиз</p>
           <p className="text-black dark:text-white text-xl font-bold mt-3">
-            Ҳуш келибсиз, {getMee?.fullName || 'Guest'}
+            {getMee?.fullName || 'Меҳмон'}
           </p>
         </div>
         {isLoading ? <Skeleton />

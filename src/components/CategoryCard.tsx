@@ -23,15 +23,15 @@ const CategoryCard: React.FC<{ data: CategoryClientList, onClick: () => void }> 
                     <span className="font-semibold text">{data.name}</span>
                 </div>
                 <div className="flex justify-between items-center mb-2">
-                    <span className="font-semibold">Вақт:</span>
-                    <span className="text-gray-700">{data.duration} (мин)</span>
+                    <span className="font-semibold">Тест ишлашга ажратилган вақт:</span>
+                    <span className="text-gray-700">{data.duration} (дақ.)</span>
                 </div>
                 <div className="flex justify-between items-center mb-2">
-                    <span className="font-semibold">Саволлар:</span>
+                    <span className="font-semibold">Саволлар сони:</span>
                     <span className="text-gray-700">{data.questionCount} та</span>
                 </div>
                 <div className="flex justify-between items-center mb-2">
-                    <span className="font-semibold">Қайта топшириш мумкин:</span>
+                    <span className="font-semibold">Қайта топшириш вақти:</span>
                     <span className="text-gray-700">{data.retakeDate} кундан кейин</span>
                 </div>
                 <div className="text-right">

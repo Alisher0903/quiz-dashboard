@@ -21,10 +21,10 @@ const ClientDashboardCard: React.FC<{ data: ClientDashboardStatisticsList, onEma
                 <p className="font-bold text-lg text-red-600 dark:text-blue-600 mb-2">{data.categoryName}</p>
                 <div className='flex justify-between'>
                     <div className='flex flex-col items-start'>
-                        <p className='text-start'>Жавоб / Савол:</p>
+                        <p className='text-start'>Тўғри жавоблар:</p>
                         <p className='text-start'>Вақт давомийлиги:</p>
                         <p className='text-start'>Тўпланган балл:</p>
-                        <p className='text-start'>Ишланган сана:</p>
+                        <p className='text-start'>Тест топширилган сана:</p>
                     </div>
                     <div className='flex flex-col items-end'>
                         <strong>{`${data.correctAnswers}/${data.countAnswers}`}</strong>

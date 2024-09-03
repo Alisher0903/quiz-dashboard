@@ -15,7 +15,7 @@ const DropdownUser = () => {
   function roles(param: string | null) {
     if (param === 'ROLE_SUPER_ADMIN') return 'Супер админ';
     else if (param === 'ROLE_ADMIN' || param === 'ROLE_TESTER') return 'Ходим';
-    else if (param === 'ROLE_CLIENT') return 'Мижоз';
+    else if (param === 'ROLE_CLIENT') return 'Фойдаланувчи';
   }
 
   return (

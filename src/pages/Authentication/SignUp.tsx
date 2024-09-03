@@ -194,7 +194,7 @@ const SignUp = () => {
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                Рўйхатдан ўтиш шакли
+                Рўйхатдан ўтиш
               </h2>
 
               <form
@@ -356,7 +356,7 @@ const SignUp = () => {
                 {/*password*/}
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Пароль
+                    Парол
                   </label>
                   <div className="relative">
                     <input
@@ -393,7 +393,7 @@ const SignUp = () => {
                       </svg>
                     </span>
                   </div>
-                  <p>Пароль камида 5 та ҳарф ёки рақамдан иборат бўлиши керак.</p>
+                  <p>Парол камида 5 та ҳарф ёки рақамдан иборат бўлиши керак.</p>
                 </div>
 
                 {/*pre password*/}
@@ -452,7 +452,7 @@ const SignUp = () => {
                   <input
                     type="submit"
                     disabled={isLoading}
-                    value={isLoading ? 'Юкланмоқда...' : 'Ҳисоб яратиш'}
+                    value={isLoading ? 'Юкланмоқда...' : 'Рўйхатдан ўтиш'}
                     className={`w-full ${isLoading ? 'cursor-not-allowed bg-slate-500' : 'cursor-pointer bg-primary'} rounded-lg border border-primary p-4 text-white transition hover:bg-opacity-90`}
                   />
                 </div>

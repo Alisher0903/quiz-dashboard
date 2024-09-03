@@ -39,7 +39,7 @@ const ClientQuizStart: React.FC = () => {
       <div>
         <div>
           <p className="text-center text-red-600 dark:text-blue-600 text-3xl font-bold">Йўналишлар</p>
-          <p className="text-black dark:text-white text-xl font-bold">Ҳуш келибсиз, {getMee && getMee.fullName}</p>
+          {/* <p className="text-black dark:text-white text-xl font-bold">Ҳуш келибсиз, {getMee && getMee.fullName}</p> */}
         </div>
         {isLoading ? <Skeleton /> :
           clientCategoryData?.length !== 0 ? <div>
@@ -70,7 +70,7 @@ const ClientQuizStart: React.FC = () => {
           <div className="w-54 sm:w-64 md:w-96 lg:w-[40rem]">
             <div className="flex flex-col justify-center items-center">
               <MdOutlineNotStarted className="text-red-600 dark:text-blue-600" size={100} />
-              <p className="text-center sm:text-[17px]">Сиз аниқ <span className={`font-bold text-red-600`}>{categoryId.name}</span> йўналиши бўйича тестни бошламоқчимисиз?</p>
+              <p className="text-center sm:text-[17px]">Ҳақиқатдан ҳам <span className={`font-bold text-red-600`}>{categoryId.name}</span> йўналиш бўйича тест бошламоқчимисиз?</p>
               <div className="flex gap-3 mt-4">
                 <AddButtons onClick={toggleModal}>Орқага</AddButtons>
                 <AddButtons onClick={() => {

@@ -216,7 +216,7 @@ const SignIn = () => {
                 {/*password*/}
                 <div className="mb-6">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Пароль
+                    Парол
                   </label>
                   <div className="relative">
                     <input
@@ -253,7 +253,7 @@ const SignIn = () => {
                       </svg>
                     </span>
                   </div>
-                  <p>Пароль камида 5 та ҳарф ёки рақамдан иборат бўлиши керак</p>
+                  <p>Парол камида 5 та ҳарф ёки рақамдан иборат бўлиши керак</p>
                 </div>
 
                 {/*confirm button*/}
@@ -268,7 +268,6 @@ const SignIn = () => {
 
                 <div className="mt-6 text-center flex justify-between items-center">
                   <p>
-                    Ҳисобингиз ёқми?{' '}
                     <Link to="/auth/signup" className="text-primary">
                       Рўйхатдан ўтиш
                     </Link>

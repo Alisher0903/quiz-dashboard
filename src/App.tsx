@@ -112,7 +112,7 @@ function App() {
           path={`/dashboard`}
           element={
             <>
-              <PageTitle title="Admin | Dashboard" />
+              <PageTitle title="Админ | Бошқарув панели" />
               <Dashboard />
             </>
           }
@@ -121,7 +121,7 @@ function App() {
           path="/category"
           element={
             <>
-              <PageTitle title="Admin | Category" />
+              <PageTitle title="Админ | Туркум" />
               <Category />
             </>
           }
@@ -130,7 +130,7 @@ function App() {
           path="/test"
           element={
             <>
-              <PageTitle title="Admin | Test" />
+              <PageTitle title="Админ | Тест" />
               <Test />
             </>
           }
@@ -139,7 +139,7 @@ function App() {
           path="/all-user"
           element={
             <>
-              <PageTitle title="Admin | All User" />
+              <PageTitle title="Админ | Барча фойдаланувчи" />
               <AllUser />
             </>
           }
@@ -148,7 +148,7 @@ function App() {
           path="/address"
           element={
             <>
-              <PageTitle title="Admin | Address" />
+              <PageTitle title="Админ | Манзил" />
               <Address />
             </>
           }
@@ -157,7 +157,7 @@ function App() {
           path="/user"
           element={
             <>
-              <PageTitle title="Admin | User" />
+              <PageTitle title="Админ | Фойдаланувчи" />
               <User />
             </>
           }
@@ -166,7 +166,7 @@ function App() {
           path="/archive/:id"
           element={
             <>
-              <PageTitle title="Result Archive" />
+              <PageTitle title="Натижа архиви" />
               <ResultArchive />
             </>
           }
@@ -175,7 +175,7 @@ function App() {
           path="/employees"
           element={
             <>
-              <PageTitle title="Admin | Employees" />
+              <PageTitle title="Админ | Ходимлар" />
               <UserAdmin />
             </>
           }
@@ -184,7 +184,7 @@ function App() {
           path="/inspector-admin"
           element={
             <>
-              <PageTitle title="Admin | Inspector" />
+              <PageTitle title="Админ | Инспектор" />
               <User />
             </>
           }
@@ -193,7 +193,7 @@ function App() {
           path="/auth/signin"
           element={
             <>
-              <PageTitle title="Signin" />
+              <PageTitle title="Тизимга кириш" />
               <SignIn />
             </>
           }
@@ -211,7 +211,7 @@ function App() {
           path="/auth/confirm"
           element={
             <>
-              <PageTitle title="Confirm" />
+              <PageTitle title="Тасдиқланг" />
               <ConfirmEmailCode />
             </>
           }
@@ -220,7 +220,7 @@ function App() {
           path="/auth/reset-password"
           element={
             <>
-              <PageTitle title="Reset password" />
+              <PageTitle title="Паролни тиклаш" />
               <ResetPassword />
             </>
           }
@@ -238,7 +238,7 @@ function App() {
           path="/client/quiz/:id"
           element={
             <>
-              <PageTitle title="Client | Quiz test" />
+              <PageTitle title="Мижоз | Викторина тести" />
               <ClientQuizTest />
             </>
           }
@@ -247,7 +247,7 @@ function App() {
           path="/client/quiz/result"
           element={
             <>
-              <PageTitle title="Client | Quiz Result" />
+              <PageTitle title="Мижоз | Викторина натижаси" />
               <ClientQuizResult />
             </>
           }
@@ -256,7 +256,7 @@ function App() {
           path="/client/dashboard"
           element={
             <>
-              <PageTitle title="Client | Dashboard" />
+              <PageTitle title="Мижоз | Бошқарув панели" />
               <ClientDashboard />
             </>
           }
@@ -265,7 +265,7 @@ function App() {
           path="/client/test/start"
           element={
             <>
-              <PageTitle title="Client | Quiz" />
+              <PageTitle title="Мижоз | Викторина" />
               <ClientQuizStart />
             </>
           }
@@ -274,7 +274,7 @@ function App() {
           path="/client/profile"
           element={
             <>
-              <PageTitle title="Client | Profile" />
+              <PageTitle title="Мижоз | Профил" />
               <ClientProfileEdit />
             </>
           }

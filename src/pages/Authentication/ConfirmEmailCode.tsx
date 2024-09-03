@@ -209,9 +209,9 @@ const ConfirmEmailCode = () => {
                   />
                 </div>
 
-                <div className="mt-6 text-center">
+                {/* <div className="mt-6 text-center">
                   <p>
-                    Руйхатдан утиш саҳифасига қайтиш{' '}
+                    Рўйхатдан ўтиш саҳифасига қайтиш{' '}
                     <Link
                       to="/auth/signup"
                       className="text-primary"
@@ -220,7 +220,7 @@ const ConfirmEmailCode = () => {
                       Рўйхатдан ўтиш
                     </Link>
                   </p>
-                </div>
+                </div> */}
               </form>
             </div>
           </div>

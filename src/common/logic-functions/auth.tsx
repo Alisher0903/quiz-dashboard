@@ -57,7 +57,7 @@ export const authRegister = (
         });
     } else {
       setLoading(false);
-      toast.error('Пароль ва такрорий пароль мослигини текшириб қайтадан уриниб кўринг');
+      toast.error('Парол ва такрорий парол мослигини текшириб қайтадан уриниб кўринг');
     }
   } else {
     setLoading(false);
