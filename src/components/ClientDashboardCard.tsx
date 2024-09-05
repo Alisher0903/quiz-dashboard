@@ -19,7 +19,7 @@ const ClientDashboardCard: React.FC<{ data: ClientDashboardStatisticsList, onEma
             </div>
             <div className="text-center">
                 <p className="font-bold text-lg text-red-600 dark:text-blue-600 mb-2">{data.categoryName}</p>
-                <div className='flex justify-between'>
+                <div className='flex justify-between gap-10'>
                     <div className='flex flex-col items-start'>
                         <p className='text-start'>Тўғри жавоблар:</p>
                         <p className='text-start'>Вақт давомийлиги:</p>
@@ -28,9 +28,9 @@ const ClientDashboardCard: React.FC<{ data: ClientDashboardStatisticsList, onEma
                     </div>
                     <div className='flex flex-col items-end'>
                         <strong>{`${data.correctAnswers}/${data.countAnswers}`}</strong>
-                        <strong>{`${data.durationTime} (мин)`}</strong>
+                        <strong>{`${data.durationTime} (дақ.)`}</strong>
                         <strong>{data.testScore | 0}</strong>
-                        <strong>{moment(data.createdAt).format('LL')}</strong>
+                        <strong>{moment(data.createdAt).format('DD.MM.YYYY')}</strong>
                     </div>
                 </div>
             </div>

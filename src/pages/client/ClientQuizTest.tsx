@@ -189,6 +189,7 @@ const ClientQuizTest = () => {
               <Image
                 style={{ maxWidth: '40rem', maxHeight: '300px', objectFit: 'contain' }}
                 src={api_videos_files + attachmentIds[0]}
+                prefix='Ammmmm'
                 alt="img"
               />
             </div>}
