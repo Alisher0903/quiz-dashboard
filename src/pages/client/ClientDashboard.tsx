@@ -13,8 +13,7 @@ const ClientDashboard: React.FC = () => {
   const [totalPage, setTotalPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
-  const [certificateLoading, setCertificateLoading] = useState<boolean>(false);
-  const [certificateEmailLoading, setCertificateEmailLoading] = useState<boolean>(false);
+  const [loadingStates, setLoadingStates] = useState<{ [key: number]: { certificate: boolean, email: boolean } }>({});
 
   useEffect(() => {
     getMe(setGetMee);
@@ -29,7 +28,15 @@ const ClientDashboard: React.FC = () => {
     setPageSize(pageSize);
   };
 
-  const handleUploadCertificate = (id: number) => getClientCertificate(id, setCertificateLoading);
+  const handleUploadCertificate = (id: number) => {
+    setLoadingStates(prev => ({ ...prev, [id]: { ...prev[id], certificate: true } }));
+    getClientCertificate(id, setLoadingStates);
+  };
+
+  const handleEmailClick = (id: number) => {
+    setLoadingStates(prev => ({ ...prev, [id]: { ...prev[id], email: true } }));
+    getCertificate(id, setLoadingStates);
+  };
 
   return (
     <>
@@ -47,9 +54,9 @@ const ClientDashboard: React.FC = () => {
                 {clientstatistic.map((item, index) => (
                   <ClientDashboardCard
                     data={item}
-                    isLoading={certificateLoading}
-                    isEmailLoading={certificateEmailLoading}
-                    onEmailClick={() => getCertificate(item.id, setCertificateEmailLoading)}
+                    isLoading={loadingStates[item.id]?.certificate || false}
+                    isEmailLoading={loadingStates[item.id]?.email || false}
+                    onEmailClick={() => handleEmailClick(item.id)}
                     onWebClick={() => handleUploadCertificate(item.id)}
                     key={index}
                   />

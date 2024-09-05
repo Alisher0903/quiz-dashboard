@@ -81,18 +81,18 @@ export const sendResults = async (id: string | undefined, duration: number, coun
   }
 };
 
-export const getCertificate = async (id: number, setIsLoading: (val: boolean) => void) => {
-  setIsLoading(true);
+export const getCertificate = async (id: number, setIsLoading: (val: any) => void) => {
+  setIsLoading((prev: any) => ({ ...prev, [id]: { ...prev[id], email: true } }))
   try {
     const { data } = await axios.post(`${certificate}/${id}`, {}, config);
     if (data.success) {
-      setIsLoading(false);
       toast.success('Сертификат электрон почтангизга муваффақиятли юборилди')
       consoleClear();
-    } else setIsLoading(false)
+    }
   } catch {
     consoleClear();
-    setIsLoading(false);
+  } finally {
+    setIsLoading((prev: any) => ({ ...prev, [id]: { ...prev[id], email: false } }))
   }
 };
 
