@@ -21,7 +21,7 @@ export const fetchQuiz = async (id: string | undefined, setQuizData: (val: TestM
         currentQuestionIndex: 0,
         remainingTime: data.body.duration
       });
-      setTotalTime(data.body.duration * 60)
+      setTotalTime(data.body.duration * 60);
       setIsLoading(false);
     } else {
       setIsLoading(false);
@@ -82,17 +82,17 @@ export const sendResults = async (id: string | undefined, duration: number, coun
 };
 
 export const getCertificate = async (id: number, setIsLoading: (val: any) => void) => {
-  setIsLoading((prev: any) => ({ ...prev, [id]: { ...prev[id], email: true } }))
+  setIsLoading((prev: any) => ({ ...prev, [id]: { ...prev[id], email: true } }));
   try {
     const { data } = await axios.post(`${certificate}/${id}`, {}, config);
     if (data.success) {
-      toast.success('Сертификат электрон почтангизга муваффақиятли юборилди')
+      toast.success('Сертификат электрон почтангизга муваффақиятли юборилди');
       consoleClear();
     }
   } catch {
     consoleClear();
   } finally {
-    setIsLoading((prev: any) => ({ ...prev, [id]: { ...prev[id], email: false } }))
+    setIsLoading((prev: any) => ({ ...prev, [id]: { ...prev[id], email: false } }));
   }
 };
 
@@ -165,7 +165,7 @@ export const adminTestCrud = async (
           categoryId: crudData.categoryId,
           type: crudData.type,
           difficulty: crudData.difficulty,
-          // score: crudData.score,
+          finiteError: crudData.finiteError ? crudData.finiteError : 0,
           attachmentIds: crudData.attachmentIds ? crudData.attachmentIds : [],
           optionDtos: crudData.optionDtos
         }, config);
