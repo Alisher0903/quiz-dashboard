@@ -202,7 +202,7 @@ function App() {
           path="/auth/signup"
           element={
             <>
-              <PageTitle title="Signup" />
+              <PageTitle title="Рўйхатдан ўтиш" />
               <SignUp />
             </>
           }
@@ -229,7 +229,7 @@ function App() {
           path="/auth/offer"
           element={
             <>
-              <PageTitle title="Offer" />
+              <PageTitle title="Оферта шартлари" />
               <PublicOffer />
             </>
           }
