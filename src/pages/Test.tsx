@@ -52,7 +52,7 @@ const Test = () => {
     categoryId: '',
     difficulty: '',
     type: '',
-    // score: '',
+    finiteError: 0,
     attachmentIds: [],
     optionDtos: optionDto,
     isMain: false
@@ -66,7 +66,7 @@ const Test = () => {
     categoryId: '',
     difficulty: '',
     type: '',
-    // score: '',
+    finiteError: 0,
     attachmentIds: [],
     optionDtos: null,
     isMain: false
@@ -381,6 +381,15 @@ const Test = () => {
               ) : (
                 <TestCrudCheck type={categoryMain.main ? 'ANY_CORRECT' : crudTest.type ? crudTest.type : testType} />
               )}
+              {(crudTest.type ? crudTest.type === 'SUM' : testType === 'SUM') && (
+                <input
+                  type="number"
+                  value={crudTest.finiteError}
+                  onChange={e => handleChange('finiteError', e.target.value)}
+                  placeholder="Чекли хатолик оралиғини киритинг рақамда"
+                  className="w-full rounded-lg border border-stroke bg-transparent py-2 px-5 mt-3 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                />
+              )}
               <div className={`flex justify-center items-center mt-10`}>
                 <ImageUpload />
               </div>
@@ -392,7 +401,7 @@ const Test = () => {
             <AddButtons
               children={isLoading ? 'юкланмоқда...' : `${editOrDeleteStatus === 'delete' ? 'Ҳа' : 'Сақлаш'}`}
               disabled={editOrDeleteStatus === 'post' ? !(crudTest.type && crudTest.name && crudTest.categoryId && crudTest.optionDtos) : false}
-              onClick={() => { 
+              onClick={() => {
                 editOrDeleteStatus ? (
                   adminTestCrud({
                     urlType: editOrDeleteStatus,
