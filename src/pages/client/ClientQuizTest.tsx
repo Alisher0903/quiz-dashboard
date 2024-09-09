@@ -164,7 +164,7 @@ const ClientQuizTest = () => {
                 htmlFor={`input[${currentIndex}]`}
                 className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Жавобингизни киритинг
+                Ҳисоблаб тўғри жавобни ёзинг
               </label>
               <input
                 id={`input[${currentIndex}]`}
@@ -174,6 +174,7 @@ const ClientQuizTest = () => {
                 className="rounded-lg px-2 py-1 border text-[#000]"
                 type="text"
               />
+              
             </div>
           </div>
         );
@@ -194,6 +195,9 @@ const ClientQuizTest = () => {
               />
             </div>}
             <ul className="text-sm flex  flex-col gap-2 font-medium dark:border-gray-600 dark:text-white">
+              <div className='text-red-500 font-bold mb-3'>
+               Фақат битта тўғри жавобни белгиланг
+              </div>
               {optionList.map((item, index) => (
                 <li key={index} className="w-full border rounded-lg border-gray-200 dark:border-gray-600">
                   <div className="flex items-center ps-3">
@@ -212,6 +216,7 @@ const ClientQuizTest = () => {
                         className="object-cover"
                       />
                     }
+
                     <label
                       htmlFor={`radio-${index}`}
                       className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -239,6 +244,9 @@ const ClientQuizTest = () => {
               />
             </div>}
             <ul className="text-sm flex flex-col gap-2 font-medium dark:border-gray-600 dark:text-white">
+            <div className='text-red-500 font-bold mb-3'>
+              Бир неча тўғри жавобларни белгиланг
+            </div>
               {optionList.map((item, index) => (
                 <li key={index} className="w-full border rounded-lg border-gray-200 dark:border-gray-600">
                   <div className="flex items-center ps-3">

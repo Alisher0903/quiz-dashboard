@@ -22,7 +22,7 @@ const ClientQuizResult = () => {
           <img src="https://media.tenor.com/hDY7src9Lw4AAAAi/dear-harsh-beta.gif" alt="sertificate img" />
         </div>
         <div>
-          <p className={`text-center my-3`}>
+          <p className={`text-center my-3 dark:text-white`}>
             Тест ишлаш жараёни муваффақиятли якунланди. {" "}
             <Link className="text-blue-600 hover:underline" to={'/client/dashboard'}>Бош саҳифага</Link>
             {" "}

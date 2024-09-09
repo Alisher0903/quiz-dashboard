@@ -392,7 +392,7 @@ const Test = () => {
             <AddButtons
               children={isLoading ? 'юкланмоқда...' : `${editOrDeleteStatus === 'delete' ? 'Ҳа' : 'Сақлаш'}`}
               disabled={editOrDeleteStatus === 'post' ? !(crudTest.type && crudTest.name && crudTest.categoryId && crudTest.optionDtos) : false}
-              onClick={() => {
+              onClick={() => { 
                 editOrDeleteStatus ? (
                   adminTestCrud({
                     urlType: editOrDeleteStatus,
