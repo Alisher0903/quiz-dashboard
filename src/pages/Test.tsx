@@ -382,13 +382,16 @@ const Test = () => {
                 <TestCrudCheck type={categoryMain.main ? 'ANY_CORRECT' : crudTest.type ? crudTest.type : testType} />
               )}
               {(crudTest.type ? crudTest.type === 'SUM' : testType === 'SUM') && (
-                <input
-                  type="number"
-                  value={crudTest.finiteError}
-                  onChange={e => handleChange('finiteError', e.target.value)}
-                  placeholder="Чекли хатолик оралиғини киритинг рақамда"
-                  className="w-full rounded-lg border border-stroke bg-transparent py-2 px-5 mt-3 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                />
+                <div className={`flex items-center`}>
+                  <span className={`flex justify-center items-center py-1 px-5 mt-3 rounded-l-lg border border-r-0 border-stroke text-2xl`}>±</span>
+                  <input
+                    type="number"
+                    value={crudTest.finiteError}
+                    onChange={e => handleChange('finiteError', e.target.value)}
+                    placeholder="Чекли хатолик оралиғини киритинг рақамда"
+                    className="w-full rounded-r-lg border border-stroke bg-transparent py-2 px-5 mt-3 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  />
+                </div>
               )}
               <div className={`flex justify-center items-center mt-10`}>
                 <ImageUpload />

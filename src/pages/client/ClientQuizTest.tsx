@@ -138,7 +138,7 @@ const ClientQuizTest = () => {
 
   const toggleVisibleIndex = () => setIsVisibleIndex(!isVisibleIndex);
 
-  const sortQuiz = (index: number, type: string, optionList: TestOptionDtos[] | undefined, name: string, attachmentIds: string[]) => {
+  const sortQuiz = (index: number, type: string, optionList: TestOptionDtos[] | undefined, name: string, attachmentIds: string[], finiteError:any) => {
     if (!optionList) return <div></div>;
 
     switch (type) {
@@ -164,7 +164,7 @@ const ClientQuizTest = () => {
                 htmlFor={`input[${currentIndex}]`}
                 className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Ҳисоблаб тўғри жавобни ёзинг
+                Ҳисоблаб тўғри жавобни ёзинг (Ҳисоблашда адашиш хатолиги: <span className={`text-red-600`}>±{finiteError}</span>)
               </label>
               <input
                 id={`input[${currentIndex}]`}
@@ -311,7 +311,8 @@ const ClientQuizTest = () => {
                 quizData.quizList[currentIndex]?.type,
                 quizData.quizList[currentIndex]?.optionDtos,
                 quizData.quizList[currentIndex]?.name,
-                quizData.quizList[currentIndex]?.attachmentIds
+                quizData.quizList[currentIndex]?.attachmentIds,
+                quizData.quizList[currentIndex]?.finiteError
               )}
             </div>
             <div className="flex flex-col md:flex-row gap-2 flex-wrap justify-between mt-5">
