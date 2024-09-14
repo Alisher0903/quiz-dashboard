@@ -8,7 +8,7 @@ import darkLogo from '../../images/logo/geodeziya_dark.png';
 import lightLogo from '../../images/logo/geodeziya_light.png';
 
 const ConfirmEmailCode = () => {
-  const { confirmEmailCode, setConfirmEmailCode, email, setEmail } = authStore();
+  const { confirmEmailCode, setConfirmEmailCode, email, setEmail, setPassword } = authStore();
   const { isLoading, setIsLoading, setResData, resData } = globalStore();
   const navigate = useNavigate();
   const forgot = sessionStorage.getItem('forgot');
@@ -18,6 +18,7 @@ const ConfirmEmailCode = () => {
       setResData(false);
       toast.success('Сиз рўйхатдан ўтдингиз');
       setConfirmEmailCode('');
+      setPassword('')
       navigate('/auth/signin');
     }
 
@@ -25,6 +26,7 @@ const ConfirmEmailCode = () => {
       sessionStorage.removeItem('forgot');
       toast.success('Электрон почтангизни текширинг ва янги парол ўрнатинг');
       setEmail('')
+      setPassword('')
       setResData(false)
       navigate('/auth/reset-password')
     }

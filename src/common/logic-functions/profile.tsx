@@ -35,9 +35,9 @@ export const updateUserData = async (userData: ProfileDataTypes, attachmentId: n
   try {
     const { data } = await axios.put(user_profile_update, payload, config);
     if (data.success) {
-      getUserData(setUserData, setIsLoading);
+      await getUserData(setUserData, setIsLoading);
       toast.success('Сизнинг маълумотларингиз муваффақиятли ўзгартирилди');
-      setMeData && getMe(setMeData);
+      setMeData && await getMe(setMeData);
     } else setIsLoading(false);
   } catch (error) {
     setIsLoading(false);

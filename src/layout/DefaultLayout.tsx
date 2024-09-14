@@ -46,6 +46,7 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
               localStorage.removeItem('tokenExpiry');
               localStorage.removeItem('ROLE');
               sessionStorage.clear();
+              toggleLogout()
             }} />
           </div>
         </div>

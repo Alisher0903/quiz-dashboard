@@ -43,7 +43,7 @@ export const addRegion = async (setRegions: (val: RegionsType[]) => void, setIsL
   try {
     const { data } = await axios.post(region_all, { name }, config);
     if (data.success) {
-      getRegions(setRegions, setIsLoading);
+      await getRegions(setRegions, setIsLoading);
       toast.success('Вилоят муваффақиятли қўшилди');
       toggleDistrictModal();
     } else setIsLoading(false);
@@ -64,7 +64,7 @@ export const addDistrict = async (name: string, regionId: number, setDistrics: (
   try {
     const { data } = await axios.post(district_all, { name, regionId }, config);
     if (data.success) {
-      getDistrics(setDistrics, setIsLoading);
+      await getDistrics(setDistrics, setIsLoading);
       toast.success('Туман муваффақиятли қўшилди');
       toggleDistrictModal();
     }
@@ -80,8 +80,8 @@ export const deleteRegion = async (id: number, setRegions: (val: RegionsType[]) 
   try {
     const { data } = await axios.delete(`${region_all}/${id}`, config);
     if (data.success) {
-      getRegions(setRegions, setIsLoading);
-      getDistrics(setDistrics, setIsLoading);
+      await getRegions(setRegions, setIsLoading);
+      await getDistrics(setDistrics, setIsLoading);
       toast.success('Вилоят муваффақиятли ўчирилди');
       toggleDeleteRegionModal();
     } else {
@@ -99,7 +99,7 @@ export const deleteDistrict = async (id: number, setDistrics: (val: DistricsType
   try {
     const { data } = await axios.delete(`${district_all}/${id}`, config);
     if (data.success) {
-      getDistrics(setDistrics, setIsLoading);
+      await getDistrics(setDistrics, setIsLoading);
       toggleDeleteRegionModal();
       toast.success('Туман муваффақиятли ўчирилди');
     } else {
@@ -122,8 +122,8 @@ export const updateRegion = async (id: number, name: string, setRegions: (val: R
   try {
     const { data } = await axios.put(`${region_all}/${id}`, { name }, config);
     if (data.success) {
-      getRegions(setRegions, setIsLoading);
-      getDistrics(setDistrics, setIsLoading);
+      await getRegions(setRegions, setIsLoading);
+      await getDistrics(setDistrics, setIsLoading);
       toast.success('Вилоят номи муваффақиятли таҳрирланди');
       toggleEditRegionModal();
     } else {
@@ -146,7 +146,7 @@ export const updateDistrict = async (id: number, name: string, regionId: number,
   try {
     const { data } = await axios.put(district_all, { id, name, regionId }, config);
     if (data.success) {
-      getDistrics(setDistrics, setIsLoading);
+      await getDistrics(setDistrics, setIsLoading);
       toast.success('Туман номи муваффақиятли таҳрирланди');
       toggleEditDistrictModal();
     } else {
