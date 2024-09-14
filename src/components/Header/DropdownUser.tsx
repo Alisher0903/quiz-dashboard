@@ -1,14 +1,13 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ClickOutside from '../ClickOutside';
 import globalStore from '../../common/state-management/globalStore.tsx';
 import { api_videos_files } from '../../common/api/api.tsx';
 import userIMage from '../../images/avatar.jpg';
 import { Popover } from 'antd';
 
-const DropdownUser = () => {
+const DropdownUser = ({ toggleModalLogout }: { toggleModalLogout?: () => void }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const navigate = useNavigate();
   const { getMeData } = globalStore();
   const role = localStorage.getItem('ROLE');
 
@@ -188,13 +187,7 @@ const DropdownUser = () => {
 
           <button
             className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
-            onClick={() => {
-              navigate('/auth/signin');
-              localStorage.removeItem('token');
-              localStorage.removeItem('tokenExpiry');
-              localStorage.removeItem('ROLE');
-              sessionStorage.clear();
-            }}
+            onClick={() => toggleModalLogout ? toggleModalLogout() : {}}
           >
             <svg
               className="fill-current"

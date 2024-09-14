@@ -4,7 +4,6 @@ import categoryStore from '../../common/state-management/categoryStore';
 import { getClientCategory } from '../../common/logic-functions/category';
 import { Pagination, Skeleton } from 'antd';
 import { MdOutlineNotStarted } from 'react-icons/md';
-import { getMe } from '../../common/global-functions';
 import GlobalModal from '../../components/modal/modal';
 import AddButtons from '../../components/buttons/buttons';
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +14,6 @@ const ClientQuizStart: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isModal, setIsModal] = useState<boolean>(false);
   const [categoryId, setCategoryId] = useState<any>('');
-  const [getMee, setGetMee] = useState<any>({});
   const [totalPage, setTotalPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
@@ -23,10 +21,6 @@ const ClientQuizStart: React.FC = () => {
   useEffect(() => {
     getClientCategory(pageSize, currentPage, setClientCategoryData, setTotalPage, setIsLoading);
   }, [pageSize, currentPage, setClientCategoryData]);
-
-  useEffect(() => {
-    getMe(setGetMee);
-  }, [setGetMee]);
 
   const toggleModal = () => setIsModal(!isModal);
   const onPageChange = (page: number, pageSize: number) => {
@@ -38,7 +32,7 @@ const ClientQuizStart: React.FC = () => {
     <>
       <div>
         <div>
-          <p className="text-center text-red-600 dark:text-blue-600 text-3xl font-bold">Йўналишлар</p>
+          <p className="text-center text-red-600 dark:text-blue-600 text-3xl font-bold mb-5">Йўналишлар</p>
           {/* <p className="text-black dark:text-white text-xl font-bold">Ҳуш келибсиз, {getMee && getMee.fullName}</p> */}
         </div>
         {isLoading ? <Skeleton /> :

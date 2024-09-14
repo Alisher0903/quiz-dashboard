@@ -7,6 +7,7 @@ import globalStore from '../../common/state-management/globalStore.tsx';
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
   setSidebarOpen: (arg0: boolean) => void;
+  toggleLogout: () => void
 }) => {
   const { setGetMeData } = globalStore();
 
@@ -59,7 +60,6 @@ const Header = (props: {
               </span>
             </span>
           </button>
-
           {/* <!-- Hamburger Toggle BTN --> */}
         </div>
 
@@ -73,7 +73,7 @@ const Header = (props: {
           </ul>
 
           {/* <!-- User Area --> */}
-          <DropdownUser />
+          <DropdownUser toggleModalLogout={props.toggleLogout} />
           {/* <!-- User Area --> */}
         </div>
       </div>
