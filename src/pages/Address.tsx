@@ -20,6 +20,7 @@ import GlobalModal from '../components/modal/modal';
 import SelectForm from '../components/select/Select';
 import { unReload } from '../common/privacy-features/privacy-features.tsx';
 import { Pagination } from 'antd';
+import { getRegions } from '../common/global-functions';
 
 const regionsThead: IThead[] = [
   { id: 1, name: 'Т/Р' },
@@ -68,9 +69,11 @@ const Address = () => {
   const [pageRegions, setPageRegions] = useState(0);
   const [totalDistricts, setTotalDistricts] = useState(0);
   const [pageDistricts, setPageDistricts] = useState(0);
+  const [regionsSelect, setRegionsSelect] = useState<any[] | null>(null);
 
   useEffect(() => {
     unReload();
+    getRegions(setRegionsSelect);
   }, []);
 
   useEffect(() => {
@@ -116,8 +119,6 @@ const Address = () => {
     setId(0);
     setIsEditDistrictModal(!isEditDistrictModal);
   };
-
-  console.log(districs);
 
   return (
     <>
@@ -334,7 +335,7 @@ const Address = () => {
                   onChange={e => setId(e.target.value)}
                   defOption={`Вилоятни танланг`}
                   child={<>
-                    {regions.map((item, index) => (
+                    {regionsSelect && regionsSelect.map((item, index) => (
                       <option key={index} value={item.id}>{item.name}</option>
                     ))}
                   </>}
@@ -349,7 +350,7 @@ const Address = () => {
               />
             </div>
             <div className={`flex justify-end items-center gap-5`}>
-              <AddButtons children={`Ёпиш`} onClick={toggleRegionModal} />
+              <AddButtons children={`Ёпиш`} onClick={toggleDistrictModal} />
               <AddButtons
                 children={isLoading ? 'юкланмоқда...' : `Сақлаш`}
                 onClick={() => addDistrict(name, id, setDistrics, setIsLoading, toggleDistrictModal, pageDistricts, setTotalDistricts)}
@@ -382,7 +383,7 @@ const Address = () => {
                   defOption={`Вилоятни танланг`}
                   val={regionId}
                   child={<>
-                    {regions.map((item, index) => (
+                    {regionsSelect && regionsSelect.map((item, index) => (
                       <option key={index} value={item.id}>{item.name}</option>
                     ))}
                   </>}
