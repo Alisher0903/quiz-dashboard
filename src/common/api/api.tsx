@@ -55,7 +55,7 @@ export const auth_login: string = `${base_url}auth/login`; //login
 //================VIDEO UPLOAD CONTROLLER====================== 
 export const api_videos_upload: string = `${base_url}api/videos/upload`; // Video apload qilish admin busa kere
 export const api_videos_files: string = `${base_url}api/videos/files/`; // video get qilish client uchun busa kerak
-// export const api_videos_files_update: string = `${base_url}api/videos/update/`; // video update qilish c
+export const api_videos_files_update: string = `${base_url}api/videos/update/`; // video update qilish c
 // export const api_videos_delete: string = `${base_url}api/videos/delete/`; // video delete qilish Id bilan
 
 //================QUIZ CONTROLLER======================

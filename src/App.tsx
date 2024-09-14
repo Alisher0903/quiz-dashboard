@@ -23,12 +23,12 @@ import ClientQuizStart from './pages/client/ClientQuizStart.tsx';
 import AllUser from './pages/AllUser.tsx';
 import PublicOffer from './pages/Authentication/PublicOffer.tsx';
 import { consoleClear } from './common/console-clear/console-clear.tsx';
-import { screenshotBlocked, siteSecurity, viewportIsActive } from './common/privacy-features/privacy-features.tsx';
+import { screenshotBlocked, siteSecurity } from './common/privacy-features/privacy-features.tsx';
 import { setConfig } from './common/api/token.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
-  const [isCursorOutside, setIsCursorOutside] = useState<boolean>(true);
+  // const [isCursorOutside, setIsCursorOutside] = useState<boolean>(true);
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const tokens = localStorage.getItem('token');
@@ -38,7 +38,9 @@ function App() {
   useEffect(() => {
     screenshotBlocked();
     siteSecurity();
-    viewportIsActive(setIsCursorOutside);
+
+    // viewport dan chiqib ketishni bildirish
+    // viewportIsActive(setIsCursorOutside);
   }, []);
 
   useEffect(() => {
@@ -101,10 +103,11 @@ function App() {
         Скрееншот олиш тақиқланган❗❌
       </div>
 
-      {(isCursorOutside && role === 'ROLE_CLIENT') && <div id="screenshot-warning">
-        Сайтнинг хавфсизлик сиёсати туфайли сиз буердан чиқиб кетишингиз мумкин эмас. Сайтдан курсор фокуси узилиб
-        қолди❗❌
-      </div>}
+      {/*==========viewport dan chiqib ketishni bildirish===========*/}
+      {/*{(isCursorOutside && role === 'ROLE_CLIENT') && <div id="screenshot-warning">*/}
+      {/*  Сайтнинг хавфсизлик сиёсати туфайли сиз буердан чиқиб кетишингиз мумкин эмас. Сайтдан курсор фокуси узилиб*/}
+      {/*  қолди❗❌*/}
+      {/*</div>}*/}
 
       <Routes>
         <Route

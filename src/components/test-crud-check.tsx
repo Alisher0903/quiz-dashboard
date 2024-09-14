@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import testStore from '../common/state-management/testStore.tsx';
 import axios from 'axios';
-import { api_videos_upload } from '../common/api/api.tsx';
+import { api_videos_files_update, api_videos_upload } from '../common/api/api.tsx';
 import { config } from '../common/api/token.tsx';
 
 export const checkImgUpload = async (fileData: any) => {
@@ -13,6 +13,19 @@ export const checkImgUpload = async (fileData: any) => {
 
     if (res.data.success) return res.data.body;
     else return null;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const checkImgUpdate = async (fileData: any, id: any) => {
+  try {
+    const formData = new FormData();
+    formData.append('file', fileData);
+
+    const res = await axios.put(api_videos_files_update + id, formData, config);
+
+    return res.data.id;
   } catch (error) {
     return null;
   }

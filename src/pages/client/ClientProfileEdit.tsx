@@ -10,7 +10,7 @@ import moment from 'moment';
 import PendingLoader from '../../common/Loader/pending-loader';
 import { api_videos_files } from '../../common/api/api';
 import userIMage from '../../images/user.jpg';
-import { checkImgUpload } from '../../components/test-crud-check';
+import { checkImgUpdate, checkImgUpload } from '../../components/test-crud-check';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const ClientProfileEdit: React.FC = () => {
@@ -56,7 +56,11 @@ const ClientProfileEdit: React.FC = () => {
   const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      const uploadedIMage = await checkImgUpload(file);
+      let uploadedIMage;
+
+      if (userData && userData.fileId) uploadedIMage = await checkImgUpdate(file, userData.fileId);
+      else uploadedIMage = await checkImgUpload(file);
+
       setAttachmentId(uploadedIMage);
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -208,14 +212,18 @@ const ClientProfileEdit: React.FC = () => {
                     className="w-full p-3 border border-gray-300 rounded"
                     id="inputPhone"
                     type="tel"
-                    onChange={(e) => setUserData({ ...userData, phoneNumber: e.target.value })}
+                    onChange={(e) => {
+                      const phoneValue = e.target.value;
+                      const cleanedValue = phoneValue.replace(/[^0-9+]/g, '');
+                      setUserData({ ...userData, phoneNumber: cleanedValue });
+                    }}
                     placeholder="Телефон рақамингизни киритинг"
                     value={userData.phoneNumber ? userData.phoneNumber : '+998'}
                   />
                 </div>
                 <div className="w-full md:w-1/2 px-2 mb-4">
                   <label className="text-sm mb-1 block" htmlFor="inputBirthday">
-                    Туғилган кунингиз
+                    Туғилган кунингиз <span className={`text-red-600`}>(намуна: йил-ой-кун: 2003-02-09)</span>
                   </label>
                   <DatePicker
                     className="w-full p-3 border border-gray-300 rounded"
@@ -230,9 +238,11 @@ const ClientProfileEdit: React.FC = () => {
                 </div>
               </div>
               <div>
-                <AddButtons onClick={handleUpdate} disabled={!isFormValid}>
-                  Ўзгаришларни сақланг
-                </AddButtons>
+                <a href={`/client/profile`}>
+                  <AddButtons onClick={handleUpdate} disabled={!isFormValid}>
+                    Ўзгаришларни сақланг
+                  </AddButtons>
+                </a>
               </div>
             </form>
           </div>

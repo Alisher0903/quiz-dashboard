@@ -16,7 +16,7 @@ export const getUserData = async (setUserData: (val: ProfileDataTypes) => void, 
     } else setIsLoading(false);
   } catch (error) {
     setIsLoading(false);
-    console.log(error);
+    consoleClear();
   }
 };
 
