@@ -5,12 +5,14 @@ import { district_all, region_all } from '../api/api';
 import { DistricsType, RegionsType } from '../../types/address';
 import toast from 'react-hot-toast';
 
-export const getRegions = async (setRegions: (val: RegionsType[]) => void, setIsLoading: (val: boolean) => void) => {
+export const getRegionsPage = async (setRegions: (val: RegionsType[]) => void, page: number, setTotalElement: (val: number) => void, setIsLoading: (val: boolean) => void) => {
   setIsLoading(true);
   try {
-    const { data } = await axios.get(region_all, config);
-    if (data.success) setRegions(data.body);
-    else setRegions([]);
+    const { data } = await axios.get(region_all + `/getAllRegionPage?page=${page}&size=10`, config);
+    if (data.success) {
+      setTotalElement(data.body.totalElements);
+      setRegions(data.body.body);
+    } else setRegions([]);
   } catch {
     setRegions([]);
   } finally {
@@ -19,21 +21,23 @@ export const getRegions = async (setRegions: (val: RegionsType[]) => void, setIs
   }
 };
 
-export const getDistrics = async (setDistrics: (val: DistricsType[]) => void, setIsLoading: (val: boolean) => void) => {
+export const getDistrictPage = async (setDistricts: (val: DistricsType[]) => void, setIsLoading: (val: boolean) => void, page: number, setTotalElement: (val: number) => void) => {
   setIsLoading(true);
   try {
-    const { data } = await axios.get(district_all, config);
-    if (data.success) setDistrics(data.body);
-    else setDistrics([]);
+    const { data } = await axios.get(district_all + `/getAllDistrictPage?page=${page}&size=10`, config);
+    if (data.success) {
+      setTotalElement(data.body.totalElements);
+      setDistricts(data.body.body);
+    } else setDistricts([]);
   } catch {
-    setDistrics([]);
+    setDistricts([]);
   } finally {
     setIsLoading(false);
     consoleClear();
   }
 };
 
-export const addRegion = async (setRegions: (val: RegionsType[]) => void, setIsLoading: (val: boolean) => void, name: string, toggleDistrictModal: () => void) => {
+export const addRegion = async (setRegions: (val: RegionsType[]) => void, setIsLoading: (val: boolean) => void, name: string, toggleDistrictModal: () => void, page: number, setTotalRegions: (val: number) => void) => {
   if (!name.trim()) {
     toast.error('Исм бўш бўлиши мумкин эмас');
     return;
@@ -43,7 +47,7 @@ export const addRegion = async (setRegions: (val: RegionsType[]) => void, setIsL
   try {
     const { data } = await axios.post(region_all, { name }, config);
     if (data.success) {
-      await getRegions(setRegions, setIsLoading);
+      await getRegionsPage(setRegions, page, setTotalRegions, setIsLoading);
       toast.success('Вилоят муваффақиятли қўшилди');
       toggleDistrictModal();
     } else setIsLoading(false);
@@ -54,7 +58,7 @@ export const addRegion = async (setRegions: (val: RegionsType[]) => void, setIsL
   }
 };
 
-export const addDistrict = async (name: string, regionId: number, setDistrics: (val: DistricsType[]) => void, setIsLoading: (val: boolean) => void, toggleDistrictModal: () => void) => {
+export const addDistrict = async (name: string, regionId: number, setDistrics: (val: DistricsType[]) => void, setIsLoading: (val: boolean) => void, toggleDistrictModal: () => void, page: number, totalElement: (val: number) => void) => {
   if (!name.trim() && !regionId) {
     toast.error('Исм ва вилоятни киритинг');
     return;
@@ -64,24 +68,24 @@ export const addDistrict = async (name: string, regionId: number, setDistrics: (
   try {
     const { data } = await axios.post(district_all, { name, regionId }, config);
     if (data.success) {
-      await getDistrics(setDistrics, setIsLoading);
+      await getDistrictPage(setDistrics, setIsLoading, page, totalElement);
       toast.success('Туман муваффақиятли қўшилди');
       toggleDistrictModal();
     }
-  } catch {}
-  finally {
+  } catch {
+  } finally {
     setIsLoading(false);
     consoleClear();
   }
 };
 
-export const deleteRegion = async (id: number, setRegions: (val: RegionsType[]) => void, setDistrics: (val: DistricsType[]) => void, setIsLoading: (val: boolean) => void, toggleDeleteRegionModal: () => void) => {
+export const deleteRegion = async (id: number, setRegions: (val: RegionsType[]) => void, setDistrics: (val: DistricsType[]) => void, setIsLoading: (val: boolean) => void, toggleDeleteRegionModal: () => void, page: number, setTotalRegions: (val: number) => void, pageDistrict: number, totalElementDistrict: (val: number) => void) => {
   setIsLoading(true);
   try {
     const { data } = await axios.delete(`${region_all}/${id}`, config);
     if (data.success) {
-      await getRegions(setRegions, setIsLoading);
-      await getDistrics(setDistrics, setIsLoading);
+      await getRegionsPage(setRegions, page, setTotalRegions, setIsLoading);
+      await getDistrictPage(setDistrics, setIsLoading, pageDistrict, totalElementDistrict);
       toast.success('Вилоят муваффақиятли ўчирилди');
       toggleDeleteRegionModal();
     } else {
@@ -94,12 +98,12 @@ export const deleteRegion = async (id: number, setRegions: (val: RegionsType[]) 
   }
 };
 
-export const deleteDistrict = async (id: number, setDistrics: (val: DistricsType[]) => void, setIsLoading: (val: boolean) => void, toggleDeleteRegionModal: () => void) => {
+export const deleteDistrict = async (id: number, setDistrics: (val: DistricsType[]) => void, setIsLoading: (val: boolean) => void, toggleDeleteRegionModal: () => void, pageDistrict: number, totalElementDistrict: (v: number) => void) => {
   setIsLoading(true);
   try {
     const { data } = await axios.delete(`${district_all}/${id}`, config);
     if (data.success) {
-      await getDistrics(setDistrics, setIsLoading);
+      await getDistrictPage(setDistrics, setIsLoading, pageDistrict, totalElementDistrict);
       toggleDeleteRegionModal();
       toast.success('Туман муваффақиятли ўчирилди');
     } else {
@@ -112,7 +116,7 @@ export const deleteDistrict = async (id: number, setDistrics: (val: DistricsType
   }
 };
 
-export const updateRegion = async (id: number, name: string, setRegions: (val: RegionsType[]) => void, setDistrics: (val: DistricsType[]) => void, setIsLoading: (val: boolean) => void, toggleEditRegionModal: () => void) => {
+export const updateRegion = async (id: number, name: string, setRegions: (val: RegionsType[]) => void, setDistrics: (val: DistricsType[]) => void, setIsLoading: (val: boolean) => void, toggleEditRegionModal: () => void, page: number, setTotalRegions: (val: number) => void, pageDistrict: number, totalElementDistrict: (v: number) => void) => {
   if (!name.trim()) {
     toast.error('Исм бўш бўлиши мумкин эмас');
     return;
@@ -122,8 +126,8 @@ export const updateRegion = async (id: number, name: string, setRegions: (val: R
   try {
     const { data } = await axios.put(`${region_all}/${id}`, { name }, config);
     if (data.success) {
-      await getRegions(setRegions, setIsLoading);
-      await getDistrics(setDistrics, setIsLoading);
+      await getRegionsPage(setRegions, page, setTotalRegions, setIsLoading);
+      await getDistrictPage(setDistrics, setIsLoading, pageDistrict, totalElementDistrict);
       toast.success('Вилоят номи муваффақиятли таҳрирланди');
       toggleEditRegionModal();
     } else {
@@ -136,7 +140,7 @@ export const updateRegion = async (id: number, name: string, setRegions: (val: R
   }
 };
 
-export const updateDistrict = async (id: number, name: string, regionId: number, setDistrics: (val: DistricsType[]) => void, setIsLoading: (val: boolean) => void, toggleEditDistrictModal: () => void) => {
+export const updateDistrict = async (id: number, name: string, regionId: number, setDistrics: (val: DistricsType[]) => void, setIsLoading: (val: boolean) => void, toggleEditDistrictModal: () => void, pageDistrict: number, totalElementDistrict: (v: number) => void) => {
   if (!name.trim() && !regionId) {
     toast.error('Исм ва вилоятни киритинг');
     return;
@@ -146,7 +150,7 @@ export const updateDistrict = async (id: number, name: string, regionId: number,
   try {
     const { data } = await axios.put(district_all, { id, name, regionId }, config);
     if (data.success) {
-      await getDistrics(setDistrics, setIsLoading);
+      await getDistrictPage(setDistrics, setIsLoading, pageDistrict, totalElementDistrict);
       toast.success('Туман номи муваффақиятли таҳрирланди');
       toggleEditDistrictModal();
     } else {

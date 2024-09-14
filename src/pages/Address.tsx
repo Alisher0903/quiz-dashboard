@@ -1,12 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useAddressStore from '../common/state-management/address';
 import {
   addDistrict,
   addRegion,
   deleteDistrict,
   deleteRegion,
-  getDistrics,
-  getRegions,
+  getDistrictPage,
+  getRegionsPage,
   updateDistrict,
   updateRegion
 } from '../common/logic-functions/address';
@@ -19,6 +19,7 @@ import AddButtons from '../components/buttons/buttons';
 import GlobalModal from '../components/modal/modal';
 import SelectForm from '../components/select/Select';
 import { unReload } from '../common/privacy-features/privacy-features.tsx';
+import { Pagination } from 'antd';
 
 const regionsThead: IThead[] = [
   { id: 1, name: 'Т/Р' },
@@ -63,18 +64,22 @@ const Address = () => {
     setRegionId
   } = useAddressStore();
   const { isLoading, setIsLoading } = globalStore();
+  const [totalRegions, setTotalRegions] = useState(0);
+  const [pageRegions, setPageRegions] = useState(0);
+  const [totalDistricts, setTotalDistricts] = useState(0);
+  const [pageDistricts, setPageDistricts] = useState(0);
 
   useEffect(() => {
     unReload();
   }, []);
 
   useEffect(() => {
-    getRegions(setRegions, setIsLoading);
-  }, [setRegions]);
+    getRegionsPage(setRegions, pageRegions, setTotalRegions, setIsLoading);
+  }, [setRegions, pageRegions]);
 
   useEffect(() => {
-    getDistrics(setDistrics, setIsLoading);
-  }, [setDistrics]);
+    getDistrictPage(setDistrics, setIsLoading, pageDistricts, setTotalDistricts);
+  }, [setDistrics, pageDistricts]);
 
   const toggleRegionModal = () => {
     setIsRegionModal(!isRegionModal);
@@ -112,6 +117,8 @@ const Address = () => {
     setIsEditDistrictModal(!isEditDistrictModal);
   };
 
+  console.log(districs);
+
   return (
     <>
       <div>
@@ -134,7 +141,7 @@ const Address = () => {
             {regions.length !== 0 ? regions.map((item, index) => (
               <tr key={index}>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <h5 className="font-medium text-black dark:text-white">{index + 1}</h5>
+                  <h5 className="font-medium text-black dark:text-white">{(pageRegions * 10) + index + 1}</h5>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">{item.name}</p>
@@ -174,6 +181,16 @@ const Address = () => {
               </tr>
             </>)}
           </UniversalTable>
+          {totalRegions > 0 && (
+            <Pagination
+              showSizeChanger={false}
+              responsive={true}
+              defaultCurrent={1}
+              total={totalRegions}
+              onChange={(page: number): void => setPageRegions(page - 1)}
+              rootClassName={`mt-10 mb-5`}
+            />
+          )}
         </div>
         <div>
           <div className="flex justify-between items-center">
@@ -192,7 +209,7 @@ const Address = () => {
             {districs.length !== 0 ? districs.map((item, index) => (
               <tr key={index}>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <h5 className="font-medium text-black dark:text-white">{index + 1}</h5>
+                  <h5 className="font-medium text-black dark:text-white">{(pageDistricts * 10) + index + 1}</h5>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">{item.name}</p>
@@ -237,6 +254,17 @@ const Address = () => {
             </>)}
           </UniversalTable>
         </div>
+        {totalDistricts > 0 && (
+          <Pagination
+            showSizeChanger={false}
+            responsive={true}
+            defaultCurrent={1}
+            total={totalDistricts}
+            onChange={(page: number): void => setPageDistricts(page - 1)}
+            rootClassName={`mt-10 mb-5`}
+          />
+        )}
+
         <GlobalModal isOpen={isRegionModal} onClose={toggleRegionModal}>
           <div className="gap-3 ml-1 min-w-60 sm:min-w-96 lg:min-w-[35rem]">
             <p className="text-black dark:text-white text-2xl text-center my-3">Вилоят қўшиш</p>
@@ -253,7 +281,7 @@ const Address = () => {
               <AddButtons children={`Ёпиш`} onClick={toggleRegionModal} />
               <AddButtons
                 children={isLoading ? 'юкланмоқда...' : `Сақлаш`}
-                onClick={() => addRegion(setRegions, setIsLoading, name, toggleRegionModal)}
+                onClick={() => addRegion(setRegions, setIsLoading, name, toggleRegionModal, pageRegions, setTotalRegions)}
                 disabled={isLoading}
                 type={`submit`}
               />
@@ -277,7 +305,7 @@ const Address = () => {
               <AddButtons children={`Ёпиш`} onClick={toggleEditRegionModal} />
               <AddButtons
                 children={isLoading ? 'юкланмоқда...' : `Сақлаш`}
-                onClick={() => updateRegion(id, name, setRegions, setDistrics, setIsLoading, toggleEditRegionModal)}
+                onClick={() => updateRegion(id, name, setRegions, setDistrics, setIsLoading, toggleEditRegionModal, pageRegions, setTotalRegions, pageDistricts, setTotalDistricts)}
                 disabled={isLoading}
                 type={`submit`}
               />
@@ -292,7 +320,7 @@ const Address = () => {
               <AddButtons
                 children={isLoading ? 'юкланмоқда...' : `Учириш`}
                 disabled={isLoading}
-                onClick={() => deleteRegion(id, setRegions, setDistrics, setIsLoading, toggleDeleteRegionModal)}
+                onClick={() => deleteRegion(id, setRegions, setDistrics, setIsLoading, toggleDeleteRegionModal, pageRegions, setTotalRegions, pageDistricts, setTotalDistricts)}
               />
             </div>
           </div>
@@ -324,7 +352,7 @@ const Address = () => {
               <AddButtons children={`Ёпиш`} onClick={toggleRegionModal} />
               <AddButtons
                 children={isLoading ? 'юкланмоқда...' : `Сақлаш`}
-                onClick={() => addDistrict(name, id, setDistrics, setIsLoading, toggleDistrictModal)}
+                onClick={() => addDistrict(name, id, setDistrics, setIsLoading, toggleDistrictModal, pageDistricts, setTotalDistricts)}
                 disabled={isLoading}
                 type={`submit`}
               />
@@ -339,7 +367,7 @@ const Address = () => {
               <AddButtons
                 children={isLoading ? 'юкланмоқда...' : `Учириш`}
                 disabled={isLoading}
-                onClick={() => deleteDistrict(id, setDistrics, setIsLoading, toggleDeleteDistricModal)}
+                onClick={() => deleteDistrict(id, setDistrics, setIsLoading, toggleDeleteDistricModal, pageDistricts, setTotalDistricts)}
               />
             </div>
           </div>
@@ -373,7 +401,7 @@ const Address = () => {
               <AddButtons children={`Ёпиш`} onClick={toggleEditDistricModal} />
               <AddButtons
                 children={isLoading ? 'юкланмоқда...' : `Сақлаш`}
-                onClick={() => updateDistrict(id, name, regionId, setDistrics, setIsLoading, toggleEditDistricModal)}
+                onClick={() => updateDistrict(id, name, regionId, setDistrics, setIsLoading, toggleEditDistricModal, pageDistricts, setTotalDistricts)}
                 disabled={isLoading}
                 type={`submit`}
               />
