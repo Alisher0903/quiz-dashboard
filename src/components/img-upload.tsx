@@ -4,6 +4,7 @@ import globalStore from '../common/state-management/globalStore.tsx';
 import axios from 'axios';
 import { config } from '../common/api/token.tsx';
 import { api_videos_upload } from '../common/api/api.tsx';
+import { consoleClear } from '../common/console-clear/console-clear.tsx';
 
 const ImageUpload = () => {
   const [selectedImage, setSelectedImage] = useState<any>(null);
@@ -21,6 +22,7 @@ const ImageUpload = () => {
       }).catch(err => {
       console.error(err);
       setImgUpload(null);
+      consoleClear();
     });
 
     if (file) {
