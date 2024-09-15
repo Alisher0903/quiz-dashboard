@@ -27,9 +27,10 @@ import { screenshotBlocked, siteSecurity } from './common/privacy-features/priva
 import { setConfig } from './common/api/token.tsx';
 
 function App() {
-  const [loading, setLoading] = useState<boolean>(true);
-  // const [isCursorOutside, setIsCursorOutside] = useState<boolean>(true);
   const { pathname } = useLocation();
+  let profilePath = pathname === '/client/profile' ? false : true
+  const [loading, setLoading] = useState<boolean>(profilePath);
+  // const [isCursorOutside, setIsCursorOutside] = useState<boolean>(true);
   const navigate = useNavigate();
   const tokens = localStorage.getItem('token');
   const role = localStorage.getItem('ROLE');
