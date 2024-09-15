@@ -206,7 +206,7 @@ const ClientProfileEdit: React.FC = () => {
               <div className="flex flex-wrap -mx-2 mb-4">
                 <div className="w-full md:w-1/2 px-2 mb-4">
                   <label className="text-sm mb-1 block" htmlFor="inputPhone">
-                    Телефон рақамингиз
+                    Телефон рақамингиз <span className={`text-red-600 lowercase`}>(Намуна: 998912345678)</span>
                   </label>
                   <Input
                     className="w-full p-3 border border-gray-300 rounded"
@@ -215,10 +215,11 @@ const ClientProfileEdit: React.FC = () => {
                     onChange={(e) => {
                       const phoneValue = e.target.value;
                       const cleanedValue = phoneValue.replace(/[^0-9+]/g, '');
-                      setUserData({ ...userData, phoneNumber: cleanedValue });
+                      if (cleanedValue.length <= 13) setUserData({ ...userData, phoneNumber: cleanedValue });
                     }}
                     placeholder="Телефон рақамингизни киритинг"
                     value={userData.phoneNumber ? userData.phoneNumber : '+998'}
+                    maxLength={13}
                   />
                 </div>
                 <div className="w-full md:w-1/2 px-2 mb-4">
