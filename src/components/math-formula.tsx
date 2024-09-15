@@ -16,10 +16,14 @@ const MathFormula = ({ text }: { text: string }) => {
   };
 
   const processText = async (inputText: any) => {
-    const formattedText = inputText.replace(/〖/g, '').replace(/〗/g, '');
+    const formattedText = inputText.replace(/〖/g, '').replace(/〗/g, '').replace(/▒/g, '');
+
+    const modifiedText = formattedText.replace(/√\(([^&]+)&([^()]+)\)/g, (match:any, index:any, value:any) => {
+      return `\\sqrt[${index}]{${value}}`;
+    });
 
     const model = await loadModel();
-    const parts = formattedText.split(/(\s+)/);
+    const parts = modifiedText.split(/(\s+)/);
     const predictions = model.predict(parts);
 
     const renderedOutput = parts
