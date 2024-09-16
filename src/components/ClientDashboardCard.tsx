@@ -35,7 +35,7 @@ const ClientDashboardCard: React.FC<{
           <div className='flex flex-col items-end'>
             <strong>{`${data.correctAnswers}/${data.countAnswers}`}</strong>
             <strong>{`${data.durationTime} (дақ.)`}</strong>
-            <strong>{data.testScore | 0}</strong>
+            <strong>{data.testScore ? data.testScore.toFixed(2) : 0}</strong>
             <strong>{moment(data.createdAt).format('DD.MM.YYYY')}</strong>
           </div>
         </div>

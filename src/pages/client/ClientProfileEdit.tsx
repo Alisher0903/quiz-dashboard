@@ -12,8 +12,10 @@ import { api_videos_files } from '../../common/api/api';
 import userIMage from '../../images/user.jpg';
 import { checkImgUpdate, checkImgUpload } from '../../components/test-crud-check';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { useNavigate } from 'react-router-dom';
 
 const ClientProfileEdit: React.FC = () => {
+  const navigate = useNavigate();
   const { userData, setUserData } = useProfileStore();
   const { isLoading, setIsLoading, region, district, setDistrict, setRegion, setGetMeData } = globalStore();
   const [isFormValid, setIsFormValid] = useState(false);
@@ -37,7 +39,7 @@ const ClientProfileEdit: React.FC = () => {
   }, [userData]);
 
   const handleUpdate = async () => {
-    await updateUserData(userData, attachmentId ? attachmentId : userData.fileId, setUserData, setIsLoading, setGetMeData);
+    await updateUserData(userData, attachmentId ? attachmentId : userData.fileId, setUserData, setIsLoading, setGetMeData, navigate);
   };
 
   const validateForm = () => {

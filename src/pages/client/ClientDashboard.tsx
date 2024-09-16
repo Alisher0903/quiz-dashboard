@@ -28,14 +28,14 @@ const ClientDashboard: React.FC = () => {
     setPageSize(pageSize);
   };
 
-  const handleUploadCertificate = (id: number) => {
+  const handleUploadCertificate = async (id: number) => {
     setLoadingStates(prev => ({ ...prev, [id]: { ...prev[id], certificate: true } }));
-    getClientCertificate(id, setLoadingStates);
+    await getClientCertificate(id, setLoadingStates);
   };
 
-  const handleEmailClick = (id: number) => {
+  const handleEmailClick = async (id: number) => {
     setLoadingStates(prev => ({ ...prev, [id]: { ...prev[id], email: true } }));
-    getCertificate(id, setLoadingStates);
+    await getCertificate(id, setLoadingStates);
   };
 
   return (

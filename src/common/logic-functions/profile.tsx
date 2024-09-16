@@ -20,7 +20,7 @@ export const getUserData = async (setUserData: (val: ProfileDataTypes) => void, 
   }
 };
 
-export const updateUserData = async (userData: ProfileDataTypes, attachmentId: number, setUserData: (val: ProfileDataTypes) => void, setIsLoading: (val: boolean) => void, setMeData?: (val: any) => void) => {
+export const updateUserData = async (userData: ProfileDataTypes, attachmentId: number, setUserData: (val: ProfileDataTypes) => void, setIsLoading: (val: boolean) => void, setMeData?: (val: any) => void, navigate?: (path: string) => void) => {
   const payload = {
     firstName: userData.firstName,
     lastName: userData.lastName,
@@ -38,10 +38,10 @@ export const updateUserData = async (userData: ProfileDataTypes, attachmentId: n
       toast.success('Сизнинг маълумотларингиз муваффақиятли ўзгартирилди');
       await getUserData(setUserData, setIsLoading);
       setMeData && await getMe(setMeData);
-      window.location.reload()
+      navigate && navigate('/client/dashboard');
     } else setIsLoading(false);
   } catch (error) {
     setIsLoading(false);
-    consoleClear()
+    consoleClear();
   }
 };
