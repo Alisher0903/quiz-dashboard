@@ -21,10 +21,15 @@ import CheckboxTest from '../components/Checkboxes/CheckboxTest.tsx';
 import { FaCheck } from 'react-icons/fa';
 import { unReload } from '../common/privacy-features/privacy-features.tsx';
 import MathFormula from '../components/math-formula.tsx';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { api_videos_files } from '../common/api/api.tsx';
+import image from '../images/default.png';
+import ImageModal from '../components/modal/image-modal.tsx';
 
 const thead: IThead[] = [
   { id: 1, name: 'Т/Р' },
-  { id: 2, name: 'Савол' },
+  { id: 2, name: 'Тест расми' },
+  { id: 8, name: 'Савол' },
   { id: 3, name: 'Категория номи' },
   { id: 4, name: 'Савол тури' },
   { id: 5, name: 'Қийинлик даражаси' },
@@ -59,8 +64,10 @@ const Test = () => {
   });
   const [isModal, setIsModal] = useState(false);
   const [isModalTest, setIsModalTest] = useState(false);
+  const [imageModal, setImageModal] = useState(false);
   const [selectedIds, setSelectedIds] = useState<any[]>([]);
   const [transferCategoryID, setTransferCategoryID] = useState('');
+  const [imageId, setImageId] = useState('');
   const defData = {
     name: '',
     categoryId: '',
@@ -153,6 +160,12 @@ const Test = () => {
     else setSelectedIds((prevSelectedIds) => prevSelectedIds.filter(selectedId => selectedId !== id));
   };
 
+  const openImageModal = () => setImageModal(true);
+  const closeImageModal = () => {
+    setImageModal(false);
+    setImageId('');
+  };
+
   return (
     <>
       <Breadcrumb pageName="Тест" />
@@ -217,6 +230,23 @@ const Test = () => {
                   <h5 className="font-medium text-black dark:text-white">
                     {(+page * 10) + idx + 1}
                   </h5>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <LazyLoadImage
+                    alt={item.name}
+                    src={item.attachmentIds ? `${api_videos_files}${item.attachmentIds}` : image}
+                    className={'w-10 h-10 scale-[1.4] rounded-full object-cover hover:cursor-pointer'}
+                    effect="blur"
+                    onClick={() => {
+                      if (item.attachmentIds) {
+                        openImageModal();
+                        setImageId(item.attachmentIds);
+                      } else {
+                        openImageModal();
+                        setImageId('');
+                      }
+                    }}
+                  />
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark min-w-[400px]">
                   <p className="text-black dark:text-white">
@@ -383,7 +413,8 @@ const Test = () => {
               )}
               {(crudTest.type ? crudTest.type === 'SUM' : testType === 'SUM') && (
                 <div className={`flex items-center`}>
-                  <span className={`flex justify-center items-center py-1 px-5 mt-3 rounded-l-lg border border-r-0 border-stroke text-2xl`}>±</span>
+                  <span
+                    className={`flex justify-center items-center py-1 px-5 mt-3 rounded-l-lg border border-r-0 border-stroke text-2xl`}>±</span>
                   <input
                     type="number"
                     value={crudTest.finiteError}
@@ -441,6 +472,9 @@ const Test = () => {
           />
         </div>
       </GlobalModal>
+
+      {/*img modal*/}
+      <ImageModal isOpen={imageModal} onClose={() => closeImageModal()} imgID={imageId} />
     </>
   );
 };
