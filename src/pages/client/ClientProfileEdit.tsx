@@ -36,8 +36,8 @@ const ClientProfileEdit: React.FC = () => {
     validateForm();
   }, [userData]);
 
-  const handleUpdate = () => {
-    updateUserData(userData, attachmentId ? attachmentId : userData.fileId, setUserData, setIsLoading, setGetMeData);
+  const handleUpdate = async () => {
+    await updateUserData(userData, attachmentId ? attachmentId : userData.fileId, setUserData, setIsLoading, setGetMeData);
   };
 
   const validateForm = () => {
@@ -86,7 +86,7 @@ const ClientProfileEdit: React.FC = () => {
               <LazyLoadImage
                 effect="blur"
                 className="rounded-full object-cover h-40 w-40 mb-4"
-                src={userData.fileId ? imagePreviewUrl ? imagePreviewUrl : api_videos_files + userData.fileId : userIMage}
+                src={imagePreviewUrl ? imagePreviewUrl : userData.fileId ? api_videos_files + userData.fileId : userIMage}
                 alt="Your profile image"
               />
               <div
@@ -239,11 +239,9 @@ const ClientProfileEdit: React.FC = () => {
                 </div>
               </div>
               <div>
-                <a href={`/client/profile`}>
-                  <AddButtons onClick={handleUpdate} disabled={!isFormValid}>
-                    Ўзгаришларни сақланг
-                  </AddButtons>
-                </a>
+                <AddButtons onClick={handleUpdate} disabled={!isFormValid}>
+                  Ўзгаришларни сақланг
+                </AddButtons>
               </div>
             </form>
           </div>
