@@ -173,7 +173,7 @@ const User = () => {
       }
     },
     {
-      label: 'Қайта топшириш вақтини белгилаш',
+      label: 'Қайта топширишга рухсат бериш',
       key: '4',
       onClick: () => {
         // if (+calculateDaysDifference(moment(user.expiredDate).format('YYYY-MM-DD')) !== 0) {

@@ -37,8 +37,7 @@ export const fetchQuiz = async (id: string | undefined, setQuizData: (val: TestM
       });
     }
   } catch (err: any) {
-    consoleClear();
-    toast.error(err.response.data.message);
+    toast.error(err.response.data.message && 'Бир неча кундан сўнг тест ишлашингиз мумкин');
     setIsLoading(false);
     setQuizData({
       quizList: [],
@@ -50,6 +49,7 @@ export const fetchQuiz = async (id: string | undefined, setQuizData: (val: TestM
       currentQuestionIndex: 0,
       remainingTime: 0
     });
+    consoleClear();
   }
 };
 

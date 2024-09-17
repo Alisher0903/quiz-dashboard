@@ -8,4 +8,5 @@ export interface ResultArchive {
   answer: string[];
   correctAnswer: null | string[];
   correct: boolean;
+  categoryName: string;
 }

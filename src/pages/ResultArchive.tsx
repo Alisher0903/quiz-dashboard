@@ -36,6 +36,7 @@ const ResultArchive = () => {
               key={index}
               className={`p-4 rounded-md ${q.correct ? 'bg-green-100 dark:bg-green-400' : 'bg-red-100 dark:bg-red-400'}`}
             >
+              <p className={`text-xl text-center font-semibold`}>{q.categoryName}</p>
               <p className="text-lg font-semibold mb-2 dark:text-form-input flex gap-3">
                 {index + 1}. <MathFormula text={q.question} />
               </p>
