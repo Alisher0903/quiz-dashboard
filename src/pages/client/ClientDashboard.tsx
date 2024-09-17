@@ -5,13 +5,13 @@ import { getClientCertificate, getClientDashboardStatistic } from '../../common/
 import dashboardStore from '../../common/state-management/dashboardStore';
 import { Pagination, Skeleton } from 'antd';
 import { getCertificate } from '../../common/logic-functions/test';
+import { ClientDashboardStatisticsList } from '../../types/dashboard.ts';
 
 const ClientDashboard: React.FC = () => {
   const { clientstatistic, setClientStatistic } = dashboardStore();
   const [getMee, setGetMee] = useState<any>({});
   const [isLoading, setIsLoading] = useState(false);
   const [totalPage, setTotalPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
   const [loadingStates, setLoadingStates] = useState<{ [key: number]: { certificate: boolean, email: boolean } }>({});
 
@@ -20,13 +20,8 @@ const ClientDashboard: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    getClientDashboardStatistic(currentPage, pageSize, setClientStatistic, setTotalPage, setIsLoading);
-  }, [pageSize, currentPage, setClientStatistic]);
-
-  const onPageChange = (page: number, pageSize: number) => {
-    setCurrentPage(page - 1);
-    setPageSize(pageSize);
-  };
+    getClientDashboardStatistic(currentPage, setClientStatistic, setTotalPage, setIsLoading);
+  }, [currentPage, setClientStatistic]);
 
   const handleUploadCertificate = async (id: number) => {
     setLoadingStates(prev => ({ ...prev, [id]: { ...prev[id], certificate: true } }));
@@ -37,6 +32,8 @@ const ClientDashboard: React.FC = () => {
     setLoadingStates(prev => ({ ...prev, [id]: { ...prev[id], email: true } }));
     await getCertificate(id, setLoadingStates);
   };
+
+  const onPageChange = (page: number): void => setCurrentPage(page - 1);
 
   return (
     <>
@@ -50,8 +47,8 @@ const ClientDashboard: React.FC = () => {
         {isLoading ? <Skeleton />
           : clientstatistic ?
             <div className="mt-4">
-              <div className="flex gap-5 flex-wrap">
-                {clientstatistic.map((item, index) => (
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+                {clientstatistic.map((item: ClientDashboardStatisticsList | any, index: number) => (
                   <ClientDashboardCard
                     data={item}
                     isLoading={loadingStates[item.id]?.certificate || false}
@@ -62,19 +59,21 @@ const ClientDashboard: React.FC = () => {
                   />
                 ))}
               </div>
-              <div className="mt-5">
-                <Pagination
-                  current={currentPage}
-                  pageSize={pageSize}
-                  total={totalPage}
-                  onChange={onPageChange}
-                />
-              </div>
             </div>
             : <div className="flex h-[67vh] justify-center items-center">
               <p className="text-xl">Натижалар топилмади</p>
             </div>
         }
+        {totalPage > 0 && (
+          <Pagination
+            showSizeChanger={false}
+            responsive={true}
+            defaultCurrent={1}
+            total={totalPage}
+            onChange={onPageChange}
+            rootClassName={`mt-10 mb-5`}
+          />
+        )}
       </div>
     </>
   );

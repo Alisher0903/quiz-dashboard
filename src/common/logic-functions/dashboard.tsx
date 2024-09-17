@@ -14,10 +14,10 @@ import {
 } from '../../types/dashboard.ts';
 import { consoleClear } from '../console-clear/console-clear.tsx';
 
-export const getClientDashboardStatistic = async (page: number, size: number, setClientData: (val: null | ClientDashboardStatisticsList[]) => void, setTotalPage: (val: number) => void, setIsLoading: (val: boolean) => void) => {
+export const getClientDashboardStatistic = async (page: number, setClientData: (val: null | ClientDashboardStatisticsList[]) => void, setTotalPage: (val: number) => void, setIsLoading: (val: boolean) => void) => {
   setIsLoading(true);
   try {
-    const { data } = await axios.get(`${statistics_client}?page=${page}&size=${size}`, config);
+    const { data } = await axios.get(`${statistics_client}?page=${page}&size=10`, config);
     if (data.success) {
       setClientData(data.body.body);
       setTotalPage(data.body.totalElements);
