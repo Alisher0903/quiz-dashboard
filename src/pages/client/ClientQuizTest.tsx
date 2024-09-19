@@ -41,9 +41,9 @@ const ClientQuizTest = () => {
           optionIds: []
         } : null;
       case 'ANY_CORRECT':
-        return answer !== undefined ? {
+        return answer && answer.length > 0 ? {
           questionId: question.id,
-          optionIds: [answer],
+          optionIds: answer,
           answer: ''
         } : null;
       case 'MANY_CHOICE':
@@ -108,10 +108,10 @@ const ClientQuizTest = () => {
     if (currentQuestion) {
       switch (currentQuestion.type) {
         case 'ONE_CHOICE':
-        case 'ANY_CORRECT':
           hasSelected = answers[currentQuestion.id] !== undefined;
           break;
         case 'MANY_CHOICE':
+        case 'ANY_CORRECT':
           hasSelected = answers && answers[currentQuestion.id]?.length > 0;
           break;
         case 'SUM':
@@ -135,10 +135,11 @@ const ClientQuizTest = () => {
   const handleNextQuestion = () => {
     if (currentIndex < quizData.quizList.length - 1) setCurrentIndex(currentIndex + 1);
   };
+  console.log(payload, quizData.quizList[currentIndex]?.type);
 
   const toggleVisibleIndex = () => setIsVisibleIndex(!isVisibleIndex);
 
-  const sortQuiz = (index: number, type: string, optionList: TestOptionDtos[] | undefined, name: string, attachmentIds: string[], finiteError:any) => {
+  const sortQuiz = (index: number, type: string, optionList: TestOptionDtos[] | undefined, name: string, attachmentIds: string[], finiteError: any) => {
     if (!optionList) return <div></div>;
 
     switch (type) {
@@ -174,12 +175,11 @@ const ClientQuizTest = () => {
                 className="rounded-lg px-2 py-1 border text-[#000]"
                 type="text"
               />
-              
+
             </div>
           </div>
         );
       case 'ONE_CHOICE':
-      case 'ANY_CORRECT':
         return (
           <div>
             <div className="flex py-5 justify-center items-start gap-3">
@@ -196,7 +196,7 @@ const ClientQuizTest = () => {
             </div>}
             <ul className="text-sm flex  flex-col gap-2 font-medium dark:border-gray-600 dark:text-white">
               <div className='text-red-500 font-bold mb-3'>
-               Фақат битта тўғри жавобни белгиланг
+                Фақат битта тўғри жавобни белгиланг
               </div>
               {optionList.map((item, index) => (
                 <li key={index} className="w-full border rounded-lg border-gray-200 dark:border-gray-600">
@@ -230,6 +230,7 @@ const ClientQuizTest = () => {
           </div>
         );
       case 'MANY_CHOICE':
+      case 'ANY_CORRECT':
         return (
           <div>
             <div className="flex py-5 justify-center items-start gap-3">
@@ -244,9 +245,9 @@ const ClientQuizTest = () => {
               />
             </div>}
             <ul className="text-sm flex flex-col gap-2 font-medium dark:border-gray-600 dark:text-white">
-            <div className='text-red-500 font-bold mb-3'>
-              Бир неча тўғри жавобларни белгиланг
-            </div>
+              <div className='text-red-500 font-bold mb-3'>
+                Бир неча тўғри жавобларни белгиланг
+              </div>
               {optionList.map((item, index) => (
                 <li key={index} className="w-full border rounded-lg border-gray-200 dark:border-gray-600">
                   <div className="flex items-center ps-3">
@@ -338,7 +339,7 @@ const ClientQuizTest = () => {
                 }
                 <div
                   onClick={toggleVisibleIndex}
-                  className="bg-red-600 flex items-center justify-center gap-3 py-2 px-4 rounded-xl dark:bg-blue-600"
+                  className="bg-red-600 flex items-center justify-center transition ease-out gap-3 py-2 px-4 cursor-pointer rounded-xl dark:bg-blue-600"
                 >
                   <p className="text-white">Саволлар {currentIndex + 1} / {quizData && quizData.quizList.length}</p>
                   {isVisibleIndex
