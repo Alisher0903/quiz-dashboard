@@ -288,18 +288,17 @@ const SignUp = () => {
                   <div className="relative">
                     <input
                       required
-                      type="text"
+                      type="number"
                       value={phoneNumber}
                       onChange={e => {
-                        const value = e.target.value;
-                        if (!isNaN(value) && value.length <= 15) { 
-                          setPhoneNumber(value);
+                        const newValue = e.target.value.replace(/\D/g, '');
+                        if (newValue.length <= 12) {
+                          setPhoneNumber(newValue);
                         }
                       }}
                       placeholder="Телефон рақамни киритинг"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
-
                     <span className="absolute right-4 top-4">
                       <svg
                         className="fill-current"
@@ -338,6 +337,7 @@ const SignUp = () => {
                       placeholder="Электрон почтангизни киритинг"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
+
                     <span className="absolute right-4 top-4">
                       <svg
                         className="fill-current"
