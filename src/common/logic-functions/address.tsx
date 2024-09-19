@@ -60,7 +60,7 @@ export const addRegion = async (setRegions: (val: RegionsType[]) => void, setIsL
 
 export const addDistrict = async (name: string, regionId: number, setDistrics: (val: DistricsType[]) => void, setIsLoading: (val: boolean) => void, toggleDistrictModal: () => void, page: number, totalElement: (val: number) => void) => {
   if (!name.trim() && !regionId) {
-    toast.error('Исм ва вилоятни киритинг');
+    toast.error('Вилоят ва туман номини киритинг');
     return;
   }
 
