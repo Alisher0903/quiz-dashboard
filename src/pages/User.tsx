@@ -76,6 +76,7 @@ const User = () => {
   const [statusName, setStatusName] = useState('');
   const [categoryID, setCategoryID] = useState('');
   const [categoryDateID, setCategoryDateID] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     fetchUsers();
@@ -124,6 +125,24 @@ const User = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setUserDetails(null);
+  };
+
+  // bal qo'yguncha tekshiradi 
+  const handleChange = (e:any) => {
+    const value = e.target.value;
+    if (value === '') {
+      setStatusVal('');
+      setErrorMessage('');
+    } else {
+      const numberValue = Number(value);
+      if (numberValue < 1 || numberValue > 10) {
+        setStatusVal('');
+        setErrorMessage("1 дан 10 гача бўлган балл қўя оласиз");
+      } else {
+        setStatusVal(numberValue);
+        setErrorMessage('');
+      }
+    }
   };
 
   const openStatusEdit = () => setStatusEdit(true);
@@ -320,15 +339,26 @@ const User = () => {
             <h2 className="text-center md:text-2xl py-5 font-semibold">
               {status === 'APPROVED' ? 'Натижани тасдиқламоқчимисиз' : 'Натижани бекор қилмоқчимисиз'}
             </h2>
+
             {status === 'APPROVED' && (
-              <input
-                value={statusVal}
-                onChange={e => setStatusVal(e.target.value)}
-                placeholder="Амалий баҳони киритинг"
-                className="w-full rounded-lg border border-stroke bg-transparent py-3 px-5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark bg-white dark:text-form-input dark:focus:border-primary"
-              />
+              <div>
+                <input
+                  type='number'
+                  value={statusVal}
+                  onChange={handleChange}
+                  placeholder="Амалий баҳони киритинг"
+                  min="1"
+                  max="10"
+                  className="w-full rounded-lg border border-stroke bg-transparent py-3 px-5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark bg-white dark:text-form-input dark:focus:border-primary"
+                />
+                {errorMessage && (
+                  <p className="text-red-500 mt-2">{errorMessage}</p>
+                )}
+              </div>
             )}
-          </>)}
+
+          </>
+          )}
           <div className={`flex justify-end items-center mt-5 mb-3 gap-5`}>
             <AddButtons children={`Ёпиш`} onClick={closeModalEdit} />
             {status === 'testDateUpdate' ? (
