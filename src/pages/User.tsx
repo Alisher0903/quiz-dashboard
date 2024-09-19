@@ -323,7 +323,11 @@ const User = () => {
             {status === 'APPROVED' && (
               <input
                 value={statusVal}
-                onChange={e => setStatusVal(e.target.value)}
+                type="number"
+                onChange={e => {
+                  const value = e.target.value;
+                  if (value === '' || (Number(value) >= 0 && Number(value) <= 10)) setStatusVal(value);
+                }}
                 placeholder="Амалий баҳони киритинг"
                 className="w-full rounded-lg border border-stroke bg-transparent py-3 px-5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark bg-white dark:text-form-input dark:focus:border-primary"
               />
