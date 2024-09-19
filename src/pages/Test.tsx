@@ -116,6 +116,11 @@ const Test = () => {
     }
   }, [resData]);
 
+  useEffect(() => {
+    crudTest.type = '';
+    setTestType('')
+  }, [crudTest.categoryId]);
+
   const openModal = () => setIsModal(true);
   const openModalTest = () => setIsModalTest(true);
 

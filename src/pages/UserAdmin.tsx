@@ -178,11 +178,16 @@ const UserAdmin = () => {
               <label className="block text-gray-700 mb-2" htmlFor="phoneNumber">Телефон рақам</label>
               <input
                 required
+                type={`number`}
                 value={addData.phoneNumber}
-                onChange={e => handleInputChange('phoneNumber', e.target.value)}
+                onChange={e => {
+                  const val = e.target.value;
+                  if (val.length <= 12) handleInputChange('phoneNumber', e.target.value);
+                }}
                 className={styles.input}
                 id="phoneNumber"
                 placeholder="Телефон рақамни киритинг"
+                maxLength={12}
               />
             </div>
             <div className="mb-4">
