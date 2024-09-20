@@ -13,7 +13,15 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <Router>
       <App />
-      <Toaster position={`top-center`} reverseOrder={false} />
+      <Toaster
+        position={`top-center`}
+        reverseOrder={false}
+        toastOptions={{
+          style: {
+            zIndex: 10000
+          }
+        }}
+      />
     </Router>
-  </React.StrictMode>,
+  </React.StrictMode>
 );
