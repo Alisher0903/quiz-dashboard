@@ -116,10 +116,10 @@ const Test = () => {
     }
   }, [resData]);
 
-  useEffect(() => {
-    crudTest.type = '';
-    setTestType('')
-  }, [crudTest.categoryId]);
+  // useEffect(() => {
+  //   crudTest.type = '';
+  //   setTestType('')
+  // }, [crudTest.categoryId]);
 
   const openModal = () => setIsModal(true);
   const openModalTest = () => setIsModalTest(true);
@@ -437,6 +437,7 @@ const Test = () => {
           )}
           <div className={`flex justify-end items-center mt-5 mb-3 gap-5`}>
             <AddButtons children={`Ёпиш`} onClick={closeModal} />
+            {/*{console.log(crudTest)}*/}
             <AddButtons
               children={isLoading ? 'юкланмоқда...' : `${editOrDeleteStatus === 'delete' ? 'Ҳа' : 'Сақлаш'}`}
               disabled={editOrDeleteStatus === 'post' ? !(crudTest.type && crudTest.name && crudTest.categoryId && crudTest.optionDtos) : false}
