@@ -142,20 +142,34 @@ export const adminTestCrud = async (
 ) => {
   setLoading(true);
   if (urlType === 'post') {
-    try {
-      const { data } = await axios.post(question_crud, crudData, config);
-      if (data.success) {
-        setResData(true);
-        setLoading(false);
-        toast.success('Тест муваффақиятли сақланди');
-      } else {
+    let addData = {
+      name: crudData.name,
+      categoryId: crudData.categoryId,
+      finiteError: crudData.finiteError,
+      type: crudData.type,
+      difficulty: crudData.difficulty,
+      attachmentIds: crudData.attachmentIds,
+      optionDtos: crudData.optionDtos
+    };
+    if (addData.name && addData.categoryId && addData.finiteError && addData.difficulty && addData.type) {
+      try {
+        const { data } = await axios.post(question_crud, addData, config);
+        if (data.success) {
+          setResData(true);
+          setLoading(false);
+          toast.success('Тест муваффақиятли сақланди');
+        } else {
+          toast.error('Тест сақлашда хатолик юз берди');
+          setLoading(false);
+        }
+      } catch {
+        consoleClear();
         toast.error('Тест сақлашда хатолик юз берди');
         setLoading(false);
       }
-    } catch {
-      consoleClear();
-      toast.error('Тест сақлашда хатолик юз берди');
-      setLoading(false);
+    } else {
+      setLoading(false)
+      toast.error('Маълумотлар тўлиқлигини текшириб қайтадан уриниб кўринг');
     }
   } else if (urlType === 'put') {
     try {
@@ -178,9 +192,9 @@ export const adminTestCrud = async (
           setLoading(false);
         }
       } else {
-        consoleClear();
         toast.error('Хатолик юз берди');
         setLoading(false);
+        consoleClear();
       }
     } catch {
       consoleClear();
