@@ -165,7 +165,7 @@ const ClientQuizTest = () => {
                 htmlFor={`input[${currentIndex}]`}
                 className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Ҳисоблаб тўғри жавобни ёзинг (Ҳисоблашда адашиш хатолиги: <span className={`text-red-600`}>±{finiteError}</span>)
+                Ҳисоблаб тўғри жавобни ёзинг (Чекли хато: <span className={`text-red-600`}>±{finiteError}</span>)
               </label>
               <input
                 id={`input[${currentIndex}]`}
