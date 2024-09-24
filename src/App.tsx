@@ -38,7 +38,7 @@ function App() {
 
   useEffect(() => {
     screenshotBlocked();
-    // siteSecurity();
+    siteSecurity();
 
     // viewport dan chiqib ketishni bildirish
     // viewportIsActive(setIsCursorOutside);
