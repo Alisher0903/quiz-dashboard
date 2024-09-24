@@ -28,7 +28,7 @@ import { setConfig } from './common/api/token.tsx';
 
 function App() {
   const { pathname } = useLocation();
-  let profilePath = pathname === '/client/profile' ? false : true
+  let profilePath = pathname === '/profile' ? false : true
   const [loading, setLoading] = useState<boolean>(profilePath);
   // const [isCursorOutside, setIsCursorOutside] = useState<boolean>(true);
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ function App() {
 
   useEffect(() => {
     screenshotBlocked();
-    siteSecurity();
+    // siteSecurity();
 
     // viewport dan chiqib ketishni bildirish
     // viewportIsActive(setIsCursorOutside);
@@ -275,7 +275,7 @@ function App() {
           }
         />
         <Route
-          path="/client/profile"
+          path="/profile"
           element={
             <>
               <PageTitle title="Мижоз | Профил" />

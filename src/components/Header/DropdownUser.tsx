@@ -24,13 +24,13 @@ const DropdownUser = ({ toggleModalLogout }: { toggleModalLogout?: () => void })
         className="flex items-center gap-4"
         to="#"
       >
-          <span className="hidden text-right lg:block">
+        <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
             {getMeData ? getMeData.fullName : roles(role)}
           </span>
-            <span className="block text-xs lowercase">
-              {roles(role)}
-            </span>
+          <span className="block text-xs lowercase">
+            {roles(role)}
+          </span>
         </span>
 
         <span className="h-12 w-12 rounded-full object-cover overflow-hidden">
@@ -78,7 +78,7 @@ const DropdownUser = ({ toggleModalLogout }: { toggleModalLogout?: () => void })
                 <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
                   <li>
                     <Link
-                      to="/user"
+                      to="/profile"
                       className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
                     >
                       <svg
@@ -98,7 +98,7 @@ const DropdownUser = ({ toggleModalLogout }: { toggleModalLogout?: () => void })
                           fill=""
                         />
                       </svg>
-                      Фойдаланувчилар натижаси
+                      Профил
                     </Link>
                   </li>
                   <li>
@@ -158,7 +158,7 @@ const DropdownUser = ({ toggleModalLogout }: { toggleModalLogout?: () => void })
               <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
                 <li>
                   <Link
-                    to="/client/profile"
+                    to="/profile"
                     className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
                   >
                     <svg
@@ -178,7 +178,7 @@ const DropdownUser = ({ toggleModalLogout }: { toggleModalLogout?: () => void })
                         fill=""
                       />
                     </svg>
-                    Профиль
+                    Профил
                   </Link>
                 </li>
               </ul>
