@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { config } from '../api/token';
-import { TestList, TestMainData } from '../../types/test';
+import { TestList, TestMainData, TestOneAdmin } from '../../types/test';
 import {
   certificate, question_all_filter,
   question_crud, question_transfer,
@@ -168,7 +168,7 @@ export const adminTestCrud = async (
         setLoading(false);
       }
     } else {
-      setLoading(false)
+      setLoading(false);
       toast.error('Маълумотлар тўлиқлигини текшириб қайтадан уриниб кўринг');
     }
   } else if (urlType === 'put') {
@@ -254,6 +254,25 @@ export const questionTransfer = async (
   } catch (err) {
     closeModalTest();
     toast.error('Тест кўчиришда қандайдир хатолик юз берди');
+    consoleClear();
+  }
+};
+
+export const testGetOne = async (setData: (val: null | TestOneAdmin) => void, setLoading: (val: boolean) => void, id: string | number) => {
+  setLoading(true);
+  try {
+    const { data } = await axios.get(`${question_crud}/${id}`, config);
+    if (data.success) {
+      setLoading(false);
+      setData(data.body);
+    } else {
+      setData(null);
+      setLoading(false);
+      consoleClear();
+    }
+  } catch {
+    setData(null);
+    setLoading(false);
     consoleClear();
   }
 };

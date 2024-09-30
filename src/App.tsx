@@ -25,6 +25,7 @@ import PublicOffer from './pages/Authentication/PublicOffer.tsx';
 import { consoleClear } from './common/console-clear/console-clear.tsx';
 import { screenshotBlocked, siteSecurity } from './common/privacy-features/privacy-features.tsx';
 import { setConfig } from './common/api/token.tsx';
+import TestOneAdmin from './pages/TestOneAdmin.tsx';
 
 function App() {
   const { pathname } = useLocation();
@@ -172,6 +173,15 @@ function App() {
             <>
               <PageTitle title="Натижа архиви" />
               <ResultArchive />
+            </>
+          }
+        />
+        <Route
+          path="/test/:id"
+          element={
+            <>
+              <PageTitle title="Битта савол" />
+              <TestOneAdmin />
             </>
           }
         />

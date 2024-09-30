@@ -25,6 +25,8 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { api_videos_files } from '../common/api/api.tsx';
 import image from '../images/default.png';
 import ImageModal from '../components/modal/image-modal.tsx';
+import { GrView } from 'react-icons/gr';
+import { useNavigate } from 'react-router-dom';
 
 const thead: IThead[] = [
   { id: 1, name: 'Т/Р' },
@@ -39,6 +41,7 @@ const thead: IThead[] = [
 const { Option } = Select;
 
 const Test = () => {
+  const navigate = useNavigate();
   const { categoryData, setCategoryData } = categoryStore();
   const { testList, setTestList, optionDto } = testStore();
   const { isLoading, setIsLoading, resData, setResData, imgUpload, setImgUpload } = globalStore();
@@ -323,6 +326,12 @@ const Test = () => {
                           setEditOrDeleteStatus('delete');
                           openModal();
                         }}
+                      />
+                    </button>
+                    <button className="hover:text-blue-600">
+                      <GrView
+                        className={`text-2xl duration-300`}
+                        onClick={() => navigate(`/test/${item.id}`)}
                       />
                     </button>
                   </div>

@@ -75,3 +75,16 @@ export interface OptionsDto {
   answer: string;
   isCorrect: boolean;
 }
+
+export interface TestOneAdmin {
+  id: number;
+  name: string;
+  categoryName: string;
+  categoryId: number;
+  finiteError: number;
+  type: string;
+  difficulty: string;
+  attachmentIds: null | number[];
+  optionDtos: TestOptionDtos[];
+  createdByName: string;
+}
