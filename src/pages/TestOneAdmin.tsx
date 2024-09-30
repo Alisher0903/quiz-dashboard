@@ -1,5 +1,5 @@
-import { Image } from 'antd';
-import { useParams } from 'react-router-dom';
+import { Image, Popover } from 'antd';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { api_videos_files } from '../common/api/api.tsx';
 import { TestOneAdmin } from '../types/test';
@@ -8,8 +8,10 @@ import Breadcrumb from '../components/Breadcrumbs/Breadcrumb.tsx';
 import MathFormula from '../components/math-formula.tsx';
 import PendingLoader from '../common/Loader/pending-loader.tsx';
 import globalStore from '../common/state-management/globalStore.tsx';
+import { MdKeyboardBackspace } from 'react-icons/md';
 
 const TestAdminOne = () => {
+  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const { isLoading, setIsLoading } = globalStore();
   const [testOneData, setTestOneData] = useState<null | TestOneAdmin>(null);
@@ -190,6 +192,12 @@ const TestAdminOne = () => {
   return (
     <>
       <Breadcrumb pageName={`Битта савол`} />
+      <Popover title="Орқага қайтиш" overlayStyle={{ textAlign: 'center' }}>
+        <MdKeyboardBackspace
+          onClick={() => navigate(-1)}
+          className={`text-3xl hover:cursor-pointer hover:text-primary duration-300 mb-5`}
+        />
+      </Popover>
       <p className={`text-xl text-center my-5`}>
         Админ саволни мижозларга қандай кўринишини билиб олиш учун намуна
       </p>
