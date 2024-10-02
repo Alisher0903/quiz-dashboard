@@ -38,7 +38,7 @@ export const updateUserData = async (userData: ProfileDataTypes, attachmentId: n
       toast.success('Сизнинг маълумотларингиз муваффақиятли ўзгартирилди');
       await getUserData(setUserData, setIsLoading);
       setMeData && await getMe(setMeData);
-      navigate && navigate('/client/dashboard');
+      navigate && navigate('/');
     } else setIsLoading(false);
   } catch (error) {
     setIsLoading(false);
