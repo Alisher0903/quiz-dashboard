@@ -151,7 +151,7 @@ export const adminTestCrud = async (
       attachmentIds: crudData.attachmentIds,
       optionDtos: crudData.optionDtos
     };
-    if (addData.name && addData.categoryId && addData.finiteError && addData.difficulty && addData.type) {
+    if (addData.name && addData.categoryId && addData.difficulty && addData.type) {
       try {
         const { data } = await axios.post(question_crud, addData, config);
         if (data.success) {
