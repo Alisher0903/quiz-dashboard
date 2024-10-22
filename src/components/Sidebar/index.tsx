@@ -171,18 +171,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <>
                   <li>
                     <NavLink
-                      to="/client/dashboard"
-                      className={`${styles.sidebar} ${pathname === '/client/dashboard' && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
-                    >
-                      Бошқарув панели
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
                       to="/client/test/start"
                       className={`${styles.sidebar} ${pathname === '/client/test/start' && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
                     >
                       Тест
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/client/dashboard"
+                      className={`${styles.sidebar} ${pathname === '/client/dashboard' && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
+                    >
+                      Бошқарув панели
                     </NavLink>
                   </li>
                 </>
