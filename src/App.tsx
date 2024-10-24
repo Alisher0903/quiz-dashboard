@@ -29,8 +29,8 @@ import TestOneAdmin from './pages/TestOneAdmin.tsx';
 
 function App() {
   const { pathname } = useLocation();
-  let profilePath = pathname === '/profile' ? false : true
-  const [loading, setLoading] = useState<boolean>(profilePath);
+  // let profilePath = pathname === '/profile' ? false : true
+  const [loading, setLoading] = useState<boolean>(true);
   // const [isCursorOutside, setIsCursorOutside] = useState<boolean>(true);
   const navigate = useNavigate();
   const tokens = localStorage.getItem('token');
@@ -91,6 +91,11 @@ function App() {
 
     if (!tokens && !pathname.startsWith('/auth')) navigate('/auth/signin');
     if (!tokens && pathname.startsWith('/auth')) sessionStorage.removeItem('refreshes');
+    if (pathname === '/auth/signin') {
+      localStorage.removeItem('token');
+      localStorage.removeItem('tokenExpiry');
+      localStorage.removeItem('ROLE');
+    }
 
     setTimeout(() => {
       consoleClear();
@@ -168,7 +173,7 @@ function App() {
           }
         />
         <Route
-          path="/archive/:id"
+          path="/archive/:id/:fullName"
           element={
             <>
               <PageTitle title="Натижа архиви" />

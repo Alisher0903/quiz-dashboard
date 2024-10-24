@@ -182,7 +182,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       to="/client/dashboard"
                       className={`${styles.sidebar} ${pathname === '/client/dashboard' && 'bg-slate-200 dark:bg-graydark dark:bg-meta-4'}`}
                     >
-                      Бошқарув панели
+                      Натижалар бўлими
                     </NavLink>
                   </li>
                 </>

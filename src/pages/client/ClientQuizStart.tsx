@@ -38,7 +38,7 @@ const ClientQuizStart: React.FC = () => {
         {isLoading ? <Skeleton /> :
           clientCategoryData?.length !== 0 ? <div>
             {clientCategoryData && clientCategoryData.map((item) => (
-              <div>
+              <div key={item.id}>
                 <CategoryCard
                   data={item}
                   onClick={() => {

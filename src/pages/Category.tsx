@@ -151,7 +151,7 @@ const Category = () => {
         </> : (
           categoryData ? (
             categoryData.map((item: CategoryList | any, i) => (
-              <tr key={i}>
+              <tr key={i} className={`${item.deleted && 'border border-red-300 bg-red-200'}`}>
                 <td className="border-b border-[#eee] p-5 dark:border-strokedark">
                   <h5 className="font-medium text-black dark:text-white">
                     {(page * 10) + i + 1}

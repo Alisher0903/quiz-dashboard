@@ -58,7 +58,8 @@ export const sendResults = async (id: string | undefined, duration: number, coun
   try {
     const { data } = await axios.post(`${quiz_pass}/${id}?duration=${duration}&countAnswers=${countAnswers}`, payload, config);
     if (data.success) {
-      navigate('/client/quiz/result');
+      const queryString = new URLSearchParams({ data: JSON.stringify(data.body) }).toString();
+      navigate(`/client/quiz/result?${queryString}`);
       setIsLoading(false);
       setCurrentIndex(0);
       setQuizData({
@@ -75,9 +76,9 @@ export const sendResults = async (id: string | undefined, duration: number, coun
       localStorage.removeItem('currentIndex');
     } else setIsLoading(false);
   } catch {
-    consoleClear();
     setIsLoading(false);
     toast.error('Илтимос кейинроқ уриниб кўринг');
+    consoleClear();
   }
 };
 

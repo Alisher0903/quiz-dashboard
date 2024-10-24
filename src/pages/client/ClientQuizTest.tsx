@@ -58,7 +58,7 @@ const ClientQuizTest = () => {
   }).filter(answer => answer !== null);
 
   useEffect(() => {
-    if (id) fetchQuiz(id, setQuizData, setIsLoading, setTotalTime);
+    if (id) fetchQuiz(id, setQuizData, setIsLoading, setTotalTime).then(() => console.log('response'));
   }, [id, setQuizData, setIsLoading]);
 
   useEffect(() => {
@@ -83,7 +83,9 @@ const ClientQuizTest = () => {
             setHasSubmitted(true);
             alert('Вақт бўлди!');
             navigate('/');
-            sendResults(id, time, quizData.quiz.countAnswers, payload, navigate, setIsBtnLoading, setCurrentIndex, setQuizData);
+            sendResults(id, time, quizData.quiz.countAnswers, payload, navigate, setIsBtnLoading, setCurrentIndex, setQuizData).then(res => {
+              console.log('send response data', res);
+            });
           }
           return 0;
         }
@@ -101,6 +103,12 @@ const ClientQuizTest = () => {
   useEffect(() => {
     setIsNextDisabled(true);
   }, [currentIndex]);
+
+  const difficultyTranslate = (type: string) => {
+    if (type === 'EASY') return 'Осон';
+    else if (type === 'MEDIUM') return 'Ўрта';
+    else if (type === 'HARD') return 'Қийин';
+  };
 
   useEffect(() => {
     const currentQuestion = quizData.quizList[currentIndex];
@@ -135,17 +143,17 @@ const ClientQuizTest = () => {
   const handleNextQuestion = () => {
     if (currentIndex < quizData.quizList.length - 1) setCurrentIndex(currentIndex + 1);
   };
-  console.log(payload, quizData.quizList[currentIndex]?.type);
 
   const toggleVisibleIndex = () => setIsVisibleIndex(!isVisibleIndex);
 
-  const sortQuiz = (index: number, type: string, optionList: TestOptionDtos[] | undefined, name: string, attachmentIds: string[], finiteError: any) => {
+  const sortQuiz = (index: number, type: string, optionList: TestOptionDtos[] | undefined, name: string, attachmentIds: string[], finiteError: any, difficulty: string) => {
     if (!optionList) return <div></div>;
 
     switch (type) {
       case 'SUM':
         return (
           <div>
+            <p>Қийинлик даражаси: {difficultyTranslate(difficulty)}</p>
             <div className="flex py-5 justify-center items-start gap-3">
               <p className="">{`${index}.`}</p>
               <MathFormula text={name} />
@@ -159,7 +167,6 @@ const ClientQuizTest = () => {
                 />
               </div>
             )}
-
             <div className="flex flex-col">
               <label
                 htmlFor={`input[${currentIndex}]`}
@@ -182,6 +189,7 @@ const ClientQuizTest = () => {
       case 'ONE_CHOICE':
         return (
           <div>
+            <p>Қийинлик даражаси: {difficultyTranslate(difficulty)}</p>
             <div className="flex py-5 justify-center items-start gap-3">
               <p className="">{`${index}.`}</p>
               <MathFormula text={name} />
@@ -190,12 +198,12 @@ const ClientQuizTest = () => {
               <Image
                 style={{ maxWidth: '40rem', maxHeight: '300px', objectFit: 'contain' }}
                 src={api_videos_files + attachmentIds[0]}
-                prefix='Ammmmm'
+                prefix="Ammmmm"
                 alt="img"
               />
             </div>}
             <ul className="text-sm flex  flex-col gap-2 font-medium dark:border-gray-600 dark:text-white">
-              <div className='text-red-500 font-bold mb-3'>
+              <div className="text-red-500 font-bold mb-3">
                 Фақат битта тўғри жавобни белгиланг
               </div>
               {optionList.map((item, index) => (
@@ -233,6 +241,7 @@ const ClientQuizTest = () => {
       case 'ANY_CORRECT':
         return (
           <div>
+            <p>Қийинлик даражаси: {difficultyTranslate(difficulty)}</p>
             <div className="flex py-5 justify-center items-start gap-3">
               <p className="">{`${index}.`}</p>
               <MathFormula text={name} />
@@ -245,7 +254,7 @@ const ClientQuizTest = () => {
               />
             </div>}
             <ul className="text-sm flex flex-col gap-2 font-medium dark:border-gray-600 dark:text-white">
-              <div className='text-red-500 font-bold mb-3'>
+              <div className="text-red-500 font-bold mb-3">
                 Бир неча тўғри жавобларни белгиланг
               </div>
               {optionList.map((item, index) => (
@@ -313,7 +322,8 @@ const ClientQuizTest = () => {
                 quizData.quizList[currentIndex]?.optionDtos,
                 quizData.quizList[currentIndex]?.name,
                 quizData.quizList[currentIndex]?.attachmentIds,
-                quizData.quizList[currentIndex]?.finiteError
+                quizData.quizList[currentIndex]?.finiteError,
+                quizData.quizList[currentIndex]?.difficulty
               )}
             </div>
             <div className="flex flex-col md:flex-row gap-2 flex-wrap justify-between mt-5">
@@ -322,19 +332,24 @@ const ClientQuizTest = () => {
                 {isVisibleIndex &&
                   <div
                     className="bg-red-600 absolute w-[17rem] p-5 rounded-xl bottom-11 dark:bg-blue-600 flex flex-wrap gap-2">
-                    {quizData.quizList.map((_, index) => (
-                      <div
-                        onClick={() => {
-                          setCurrentIndex(index);
-                          currentIndex !== index && toggleVisibleIndex();
-                        }}
-                        className={currentIndex === index
-                          ? 'w-8 rounded-lg bg-white h-8 border-2 flex justify-center items-center cursor-pointer border-white p-3'
-                          : 'w-8 rounded-lg cursor-pointer h-8 border-2 flex justify-center items-center border-white p-3'}
-                      >
-                        <p className={currentIndex === index ? `text-black` : `text-white`}>{index + 1}</p>
-                      </div>
-                    ))}
+                    {quizData.quizList.map((item, index) => {
+                      const isInPayload = payload.length > 0 && payload.some(payloadItem => payloadItem?.questionId === item.id);
+
+                      return (
+                        <div
+                          key={index}
+                          onClick={() => {
+                            setCurrentIndex(index);
+                            currentIndex !== index && toggleVisibleIndex();
+                          }}
+                          className={`${currentIndex === index ? 'bg-white' : isInPayload ? 'bg-green-500' : ''} w-8 rounded-lg h-8 border-2 flex justify-center items-center cursor-pointer border-white p-3`}
+                        >
+                          <p className={currentIndex === index ? 'text-black' : 'text-white'}>
+                            {index + 1}
+                          </p>
+                        </div>
+                      );
+                    })}
                   </div>
                 }
                 <div
@@ -356,7 +371,10 @@ const ClientQuizTest = () => {
                   onClick={currentIndex + 1 === quizData.quizList.length ? async () => {
                     await sendResults(id, time === 0 ? 1 : time, quizData.quiz.countAnswers, payload, navigate, setIsBtnLoading, setCurrentIndex, setQuizData);
                   } : handleNextQuestion}
-                  disabled={isBtnLoading ? isBtnLoading : isNextDisabled}>{currentIndex + 1 === quizData.quizList.length ? `${isBtnLoading ? 'Юкланмоқда...' : 'Юбориш'}` : 'Кейингиси'}
+                  // disabled={isBtnLoading ? isBtnLoading : isNextDisabled} //old version
+                  disabled={isBtnLoading} //new version
+                >
+                  {currentIndex + 1 === quizData.quizList.length ? `${isBtnLoading ? 'Юкланмоқда...' : 'Юбориш'}` : 'Кейингиси'}
                 </AddButtons>
               </div>
 
@@ -366,7 +384,7 @@ const ClientQuizTest = () => {
           <div className="flex justify-center flex-col h-100 items-center">
             <p>Бу туркумда тестлар мавжуд эмас</p>
             <div>
-              <Link className="text-blue-600" to={'/client/dashboard'}>Ортга қайтиш</Link>
+              <Link className="text-blue-600" to={'/'}>Ортга қайтиш</Link>
             </div>
           </div>
         }

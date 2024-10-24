@@ -166,7 +166,7 @@ const User = () => {
     {
       label: 'Архивни кўриш',
       key: '0',
-      onClick: () => navigate(`/archive/${user.id}`)
+      onClick: () => navigate(`/archive/${user.id}/${user.fullName}`)
     },
     {
       label: 'Натижани кўриш',

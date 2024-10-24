@@ -20,7 +20,6 @@ export interface TestMainData {
   quiz: TestData,
   currentQuestionIndex: number,
   remainingTime: number
-
 }
 
 export interface TestData {
@@ -39,7 +38,8 @@ export interface TestQuestionDtoList {
   attachmentIds: string[],
   optionDtos: TestOptionDtos[],
   isMain: null
-  finiteError: any
+  finiteError: any,
+  difficulty: string
 }
 
 export interface TestOptionDtos {

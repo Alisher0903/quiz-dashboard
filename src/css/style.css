@@ -23,6 +23,29 @@ body {
     padding-top: 25vh;
 }
 
+/* Scrollbarning umumiy kengligini belgilash */
+::-webkit-scrollbar {
+    width: 6px;
+    /*height: 10px;*/
+}
+
+/* Scrollbar ichidagi trekining rangi */
+::-webkit-scrollbar-track {
+    background: #C4DAD2;
+}
+
+/* Scrollbarning tugmasi (thumb) */
+::-webkit-scrollbar-thumb {
+    background-color: #445067;
+    border-radius: 10px;
+}
+
+/* Hover qilganda scroll tugmasi o'zgaradi */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #1C2434;
+    cursor: pointer;
+}
+
 .hidden {
     display: none;
 }

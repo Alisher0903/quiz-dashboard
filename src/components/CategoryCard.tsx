@@ -36,7 +36,7 @@ const CategoryCard: React.FC<{ data: CategoryClientList, onClick: () => void }> 
         </div>
         <div className="text-right">
           <AddButtons
-            className={'text-[1.5rem] py-4 px-14 shadow-switcher rounded-3xl hover:bg-green-500 duration-300 hover:dark:bg-white hover:dark:text-black'}
+            className={'shadow-switcher rounded-3xl scale-150 mr-5 hover:bg-green-500 duration-300 hover:dark:bg-white hover:dark:text-black'}
             onClick={onClick}
           >
             Бошлаш
