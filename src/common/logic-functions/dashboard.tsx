@@ -34,8 +34,8 @@ export const getClientDashboardStatistic = async (page: number, setClientData: (
   }
 };
 
-export const downloadFile = (url: string, name?: string) => {
-  axios.get(url, { ...config, responseType: 'blob' })
+export const downloadFile = async (url: string, name?: string) => {
+  await axios.get(url, { ...config, responseType: 'blob' })
     .then((res) => {
       const blob = new Blob([res.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       const url = window.URL.createObjectURL(blob);
@@ -53,9 +53,7 @@ export const getClientCertificate = async (id: number, setIsLoading: (val: any) 
   setIsLoading((prev: any) => ({ ...prev, [id]: { ...prev[id], certificate: true } }));
   try {
     const { data } = await axios.get(`${get_certificate_id}/${id}`, config);
-    if (data.success) {
-      downloadFile(`${get_certificate}/${data.body}`)
-    }
+    if (data.success) await downloadFile(`${get_certificate}/${data.body}`)
   } catch {
     consoleClear();
   } finally {

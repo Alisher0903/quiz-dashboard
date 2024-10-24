@@ -1,6 +1,6 @@
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb.tsx';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { UserResultArchive } from '../common/logic-functions/user.tsx';
 import globalStore from '../common/state-management/globalStore.tsx';
 import userStore from '../common/state-management/userStore.tsx';
@@ -8,12 +8,16 @@ import PendingLoader from '../common/Loader/pending-loader.tsx';
 import { MdKeyboardBackspace } from 'react-icons/md';
 import { Popover } from 'antd';
 import MathFormula from '../components/math-formula.tsx';
+import Buttons from '../components/buttons/buttons.tsx';
+import { downloadFile } from '../common/logic-functions/dashboard.tsx';
+import { base_url } from '../common/api/api.tsx';
 
 const ResultArchive = () => {
   const navigate = useNavigate();
   const { id, fullName } = useParams<{ id: string, fullName: string }>();
   const { isLoading, setIsLoading } = globalStore();
   const { resultList, setResultList } = userStore();
+  const [pdfLoading, setPdfLoading] = useState(false);
 
   useEffect(() => {
     id && UserResultArchive({ setData: setResultList, setLoading: setIsLoading, resultID: id });
@@ -67,7 +71,13 @@ const ResultArchive = () => {
           />
         </Popover>
         <h2 className={'text-2xl font-bold'}>{fullName} ишлаган тест натижалари</h2>
-        <p></p>
+        <Buttons
+          onClick={() => {
+            setPdfLoading(true);
+            downloadFile(`${base_url}api/videos/archive/${id}/pdf`, `${fullName}.pdf`).finally(() => setPdfLoading(false));
+          }}
+          disabled={pdfLoading}
+        >{pdfLoading ? 'Юкланмоқда...' : 'Чоп этиш'}</Buttons>
       </div>
 
       <div className="space-y-4">
